@@ -43,7 +43,7 @@
     }
 
     .text-selected {
-        @apply text-ct-blue dark:text-ct-yellow;
+        @apply text-primary dark:text-primary-dark;
     }
 
     .ct-card {
@@ -63,7 +63,7 @@
     }
 
     .cta-button {
-        @apply bg-ct-blue hover:bg-ct-dark-blue dark:text-ct-bg-dark flex h-8 items-center justify-center space-x-2 rounded border-none px-2 text-sm text-white transition duration-200 ease-out dark:bg-[#e8bd70] dark:hover:bg-[#edd185];
+        @apply flex h-8 items-center justify-center space-x-2 rounded border-none bg-primary px-2 text-sm text-white transition duration-200 ease-out hover:bg-indigo-800 dark:bg-[#e8bd70] dark:text-primary-dark dark:hover:bg-[#edd185];
     }
 
     .input-field {

@@ -4,7 +4,7 @@ import DarkModeButtonIcon from '@/components/DarkModeButtonIcon';
 
 const Sidebar = ({ setScreen }: any) => {
     return (
-        <div className='absolute left-0 top-0 flex h-screen w-14 flex-col items-center justify-center space-y-4 border-r py-2 dark:border-secondary-dark'>
+        <div className='absolute left-0 top-0 flex h-screen w-14 flex-col items-center justify-center space-y-4 border-r bg-gray-50 py-2 dark:border-secondary-dark'>
             <Image src='/logo.png' alt='shield logo' width={36} height={36} />
             <div className='flex flex-1 flex-grow flex-col space-y-3'>
                 <nav className='sidebar-button' onClick={() => setScreen('Dashboard')}>

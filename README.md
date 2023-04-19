@@ -1,4 +1,6 @@
-# Front end template, includes:
+# MoneyShield
+
+Personal Finances Dashboard
 
 React
 Typescript

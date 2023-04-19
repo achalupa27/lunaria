@@ -5,11 +5,16 @@ import Save from './Save';
 import Spend from './Spend';
 import Settings from './Settings';
 
-const Activity = ({ screen }: { screen: string }) => {
+type Props = {
+    screen: string;
+    receipts: any;
+};
+
+const Activity = ({ screen, receipts }: Props) => {
     if (screen === 'Dashboard') return <Dashboard />;
     else if (screen === 'Make') return <Make />;
     else if (screen === 'Save') return <Save />;
-    else if (screen === 'Spend') return <Spend />;
+    else if (screen === 'Spend') return <Spend receipts={receipts} />;
     else if (screen === 'Settings') return <Settings />;
 
     return <div>Error</div>;
