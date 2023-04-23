@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { spendingCategories } from '../data/constants';
 import NewSpend from './NewSpend';
-import Receipt from './Receipt';
+import SpendReceipt from './SpendReceipt';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
@@ -34,7 +34,7 @@ export const data = {
     ],
 };
 
-const Spend = ({ receipts }: any) => {
+const Spend = ({ spends }: any) => {
     const [newTransactionIsOpen, setNewTransactionIsOpen] = useState(false);
 
     return (
@@ -52,8 +52,8 @@ const Spend = ({ receipts }: any) => {
                     </button>
                 </div>
                 <div className='space-y-2'>
-                    {receipts.map((receipt: any) => (
-                        <Receipt key={receipt.id} receipt={receipt} />
+                    {spends.map((spend: Spend) => (
+                        <SpendReceipt key={spend.id} spend={spend} />
                     ))}
                 </div>
             </div>

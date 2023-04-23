@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import NewSave from './NewSave';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import SaveReceipt from './SaveReceipt';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -32,7 +33,7 @@ export const data = {
     ],
 };
 
-const Save = () => {
+const Save = ({ saves }: any) => {
     const [newSaveIsOpen, setNewSaveIsOpen] = useState(false);
 
     return (
@@ -49,8 +50,11 @@ const Save = () => {
                         + Add
                     </button>
                 </div>
-                <div className='rounded-xl border border-primary p-2 text-primary dark:border-primary-dark dark:text-primary-dark'>+$304</div>
-                <div className='rounded-xl border p-2'>-$124</div>
+                <div className='space-y-2'>
+                    {saves.map((save: any) => (
+                        <SaveReceipt key={save.id} save={save} />
+                    ))}
+                </div>
             </div>
         </div>
     );

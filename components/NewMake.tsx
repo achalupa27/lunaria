@@ -17,8 +17,33 @@ const NewMake = ({ isOpen, createIncome, closeForm }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
         console.log('Raw transaction: ', transaction);
-        createIncome(transaction);
+        addSave(transaction);
     };
+
+    async function addSave(transaction: Make) {
+        try {
+            const response = await fetch('/api/add-make', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    source: transaction.source,
+                    amount: transaction.amount,
+                    date: transaction.date,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.message);
+            } else {
+                console.error('An error occurred');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const [type, setType] = useState('Deposit');
     if (isOpen) {
@@ -34,6 +59,10 @@ const NewMake = ({ isOpen, createIncome, closeForm }: Props) => {
                     <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
                         <div className='flex items-center justify-between'>
                             <div className='flex'>
+                                <div className='basic-button w-32'>
+                                    <i className='fi fi-rr-dollar'></i>
+                                    <input {...register('source')} placeholder='Source*' className='input-field' required />
+                                </div>
                                 <div className='basic-button w-32'>
                                     <i className='fi fi-rr-dollar'></i>
                                     <input {...register('amount')} placeholder='Amount*' className='input-field' required />

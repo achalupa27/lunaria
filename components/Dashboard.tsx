@@ -1,6 +1,9 @@
 import React from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import SpendReceipt from './SpendReceipt';
+import SaveReceipt from './SaveReceipt';
+import MakeReceipt from './MakeReceipt';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -43,12 +46,32 @@ export const data = {
     ],
 };
 
-const Dashboard = () => {
+const Dashboard = ({ makes, saves, spends }: any) => {
     return (
         <div className='flex h-screen w-screen flex-col items-center'>
             <h1 className='py-8'>Dashboard</h1>
             <div className='h-[300px] w-[700px]'>
                 <Line options={options} data={data} />
+            </div>
+            <div className='flex space-x-3'>
+                <div className='flex flex-col items-center space-y-2'>
+                    <h3>Make</h3>
+                    {makes.map((make: Make) => (
+                        <MakeReceipt key={make.id} make={make} />
+                    ))}
+                </div>
+                <div className='flex flex-col items-center space-y-2'>
+                    <h3>Save</h3>
+                    {saves.map((save: Save) => (
+                        <SaveReceipt key={save.id} save={save} />
+                    ))}
+                </div>
+                <div className='flex flex-col items-center space-y-2'>
+                    <h3>Spend</h3>
+                    {spends.map((spend: Spend) => (
+                        <SpendReceipt key={spend.id} spend={spend} />
+                    ))}
+                </div>
             </div>
         </div>
     );

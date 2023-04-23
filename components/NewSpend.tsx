@@ -17,8 +17,33 @@ const NewSpend = ({ isOpen, createTransaction, closeForm }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
         console.log('Raw transaction: ', transaction);
-        createTransaction(transaction);
+        addSave(transaction);
     };
+
+    async function addSave(transaction: Spend) {
+        try {
+            const response = await fetch('/api/add-spend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    store: transaction.store,
+                    amount: transaction.amount,
+                    date: transaction.date,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.message);
+            } else {
+                console.error('An error occurred');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const {
         fields: items,
@@ -48,7 +73,7 @@ const NewSpend = ({ isOpen, createTransaction, closeForm }: Props) => {
                                         <input {...register('store')} placeholder='Store*' className='input-field uppercase' required />
                                     </div>
                                     <div className='basic-button w-20 '>
-                                        <input {...register('number')} placeholder='Amount' type='number' className='input-field  w-20 pr-4 text-center' required />
+                                        <input {...register('amount')} placeholder='Amount' type='number' className='input-field  w-20 pr-4 text-center' required />
                                     </div>
                                     <div className='basic-button w-36 justify-end'>
                                         <input {...register('date')} placeholder='Date' type='date' className='input-field' required />

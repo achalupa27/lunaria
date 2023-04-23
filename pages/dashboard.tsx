@@ -3,14 +3,13 @@ import Sidebar from '../components/Sidebar';
 import client from '../mongoClient';
 import Activity from '../components/Activity';
 
-const App = ({ receipts }: any) => {
-    console.log(receipts);
+const App = ({ makes, saves, spends }: any) => {
     const [screen, setScreen] = useState('Dashboard');
 
     return (
         <div className='flex h-screen w-screen dark:bg-secondary-dark'>
             <Sidebar screen={screen} setScreen={setScreen} />
-            <Activity screen={screen} receipts={receipts} />
+            <Activity screen={screen} makes={makes} saves={saves} spends={spends} />
         </div>
     );
 };
@@ -18,11 +17,20 @@ const App = ({ receipts }: any) => {
 export async function getServerSideProps(context: any) {
     await client.connect();
     const db = client.db('moneyshield');
-    const collection = db.collection('receipts');
-    const data = await collection.find({}).toArray();
+
+    const makeCollection = db.collection('make');
+    const makeData = await makeCollection.find({}).toArray();
+
+    const saveCollection = db.collection('save');
+    const saveData = await saveCollection.find({}).toArray();
+
+    const spendCollection = db.collection('spend');
+    const spendData = await spendCollection.find({}).toArray();
     return {
         props: {
-            receipts: JSON.parse(JSON.stringify(data)),
+            makes: JSON.parse(JSON.stringify(makeData)),
+            saves: JSON.parse(JSON.stringify(saveData)),
+            spends: JSON.parse(JSON.stringify(spendData)),
         },
     };
 }

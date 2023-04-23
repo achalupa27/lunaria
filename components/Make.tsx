@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import NewMake from './NewMake';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import MakeReceipt from './MakeReceipt';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -32,7 +33,7 @@ export const data = {
     ],
 };
 
-const Make = () => {
+const Make = ({ makes }: any) => {
     const [newIncomeIsOpen, setNewIncomeIsOpen] = useState(false);
 
     return (
@@ -49,8 +50,11 @@ const Make = () => {
                         + Add
                     </button>
                 </div>
-                <div className='rounded-xl border p-2'>+ $304</div>
-                <div className='rounded-xl border p-2'>+ $124</div>
+                <div className='space-y-2'>
+                    {makes.map((make: Make) => (
+                        <MakeReceipt key={make.id} make={make} />
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -18,8 +18,33 @@ const NewSave = ({ isOpen, createSave, closeForm }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
         console.log('Raw transaction: ', transaction);
-        createSave(transaction);
+        addSave(transaction);
     };
+
+    async function addSave(transaction: Save) {
+        try {
+            const response = await fetch('/api/add-save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: transaction.type,
+                    amount: transaction.amount,
+                    date: transaction.date,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.message);
+            } else {
+                console.error('An error occurred');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const [type, setType] = useState('Deposit');
     if (isOpen) {
@@ -37,10 +62,10 @@ const NewSave = ({ isOpen, createSave, closeForm }: Props) => {
                             <div className='flex'>
                                 <div className='basic-button w-32' onClick={() => (type === 'Deposit' ? setType('Withdrawal') : setType('Deposit'))}>
                                     <i className='fi fi-tr-sort-alt' />
-                                    <input readOnly className='text-selected read-input w-24 bg-transparent ' {...register('type')} value={type} />
+                                    <input readOnly className='text-selected read-input w-24 bg-transparent ' {...register('type')} value={type} required />
                                 </div>
                                 <div className='basic-button w-20 '>
-                                    <input {...register('number')} placeholder='Amount' type='number' className='input-field w-20 pr-4 text-end' required />
+                                    <input {...register('amount')} placeholder='Amount' type='number' className='input-field w-20 pr-4 text-center' required />
                                 </div>
                                 <div className='basic-button w-36 justify-end'>
                                     <input {...register('date')} placeholder='Date' type='date' className='input-field' required />
