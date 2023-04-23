@@ -49,25 +49,24 @@
     .ct-card {
         @apply dark:bg-ct-bg-dark rounded border bg-white p-1;
     }
+    .main-hover {
+        @apply transition duration-200 hover:bg-primary/20 dark:hover:bg-primary-dark/20;
+    }
 
     .sidebar-button {
         @apply main-hover flex h-10 w-10 cursor-pointer items-center justify-center space-x-1.5 rounded-full px-2 text-xl font-light transition duration-200 ease-out;
     }
 
     .basic-button {
-        @apply main-hover flex h-8 w-auto items-center justify-start space-x-1.5 rounded px-2 text-sm font-light transition duration-200 ease-out;
-    }
-
-    .main-hover {
-        @apply hover:bg-primary/10 dark:hover:bg-primary-dark/10;
+        @apply main-hover flex h-8 w-auto items-center justify-start space-x-1.5 rounded-lg px-2 text-sm font-light transition duration-200 ease-out;
     }
 
     .cta-button {
-        @apply flex h-8 items-center justify-center space-x-2 rounded border-none bg-primary px-2 text-sm text-white transition duration-200 ease-out hover:bg-indigo-800 dark:bg-[#e8bd70] dark:text-primary-dark dark:hover:bg-[#edd185];
+        @apply flex h-10 items-center justify-center space-x-2 rounded-full border-none bg-primary px-2 text-sm text-white transition duration-200 ease-out hover:bg-primary-hover dark:bg-primary-dark dark:text-secondary-dark dark:hover:bg-primary-dark-hover;
     }
 
     .input-field {
-        @apply text-selected bg-transparent outline-none transition duration-200 placeholder:normal-case placeholder:text-gray-600 focus:text-primary dark:placeholder:text-[#a39e93] dark:focus:text-[#D3CEC4];
+        @apply text-selected bg-transparent outline-none transition duration-200 placeholder:normal-case placeholder:text-gray-600 focus:text-primary dark:placeholder:text-[#a39e93] dark:focus:text-primary-dark;
     }
 
     .read-input {

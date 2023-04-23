@@ -11,3 +11,10 @@ type Item = {
     name: string;
     price: number;
 };
+
+type Feature = {
+    img: string;
+    name: string;
+    description: string;
+    comingSoon: boolean;
+};

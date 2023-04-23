@@ -18,7 +18,7 @@ function Header() {
             <div className='hidden flex-1 items-center justify-center space-x-6 lg:flex'>
                 <Link href='/features'>Features</Link>
                 <Link href='/pricing'>Pricing</Link>
-                <Link href='/learn' className='button-primary ml-4 py-1'>
+                <Link href='/tips' className='button-secondary ml-4 py-1'>
                     <i className='fi fi-rr-money-bill-wave -ml-[2px] pt-[2px] pr-2'></i>
                     <span>Money Tips</span>
                 </Link>

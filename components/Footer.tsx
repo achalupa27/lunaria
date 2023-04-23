@@ -10,7 +10,7 @@ function Footer() {
             <Link className='flex justify-center' href='/about'>
                 <span>About</span>
             </Link>
-            <Link className='flex justify-center' href='/faq'>
+            <Link className='flex justify-center' href='/help'>
                 <span>Help Center</span>
             </Link>
             <Link className='flex justify-center' href='/contact'>

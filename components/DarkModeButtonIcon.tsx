@@ -19,11 +19,11 @@ const DarkModeButtonIcon = () => {
     return (
         <div>
             {currentTheme === 'dark' ? (
-                <div className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
+                <div className='flex h-10 w-10 cursor-pointer items-center justify-center' onClick={() => setTheme('light')}>
                     <i className='fi fi-rr-brightness text-lg leading-none'></i>
                 </div>
             ) : (
-                <div className='flex cursor-pointer items-center' onClick={() => setTheme('dark')}>
+                <div className='flex h-10 w-10 cursor-pointer items-center justify-center' onClick={() => setTheme('dark')}>
                     <i className='fi fi-rr-moon text-lg leading-none'></i>
                 </div>
             )}

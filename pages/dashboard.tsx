@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '../components/Sidebar';
 import client from '../mongoClient';
-import Activity from '@/components/Activity';
+import Activity from '../components/Activity';
 
 const App = ({ receipts }: any) => {
     console.log(receipts);
     const [screen, setScreen] = useState('Dashboard');
 
     return (
-        <div className='flex h-screen w-screen'>
-            <Sidebar setScreen={setScreen} />
+        <div className='flex h-screen w-screen dark:bg-secondary-dark'>
+            <Sidebar screen={screen} setScreen={setScreen} />
             <Activity screen={screen} receipts={receipts} />
         </div>
     );

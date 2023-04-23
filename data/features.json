@@ -1,0 +1,14 @@
+[
+    {
+        "img": "",
+        "name": "Upcoming Feature",
+        "description": "Feature description.",
+        "comingSoon": true
+    },
+    {
+        "img": "",
+        "name": "Current Feature",
+        "description": "Feature description.",
+        "comingSoon": false
+    }
+]
