@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import DarkModeButton from './DarkModeButton';
+import DarkModeButton from '../DarkModeButton';
 
 const HeaderMenu = () => {
     const user = true;

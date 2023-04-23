@@ -1,4 +1,4 @@
-import { COMPANY_NAME } from '@/constants';
+import { COMPANY_NAME } from '../../constants';
 import Link from 'next/link';
 
 function Footer() {

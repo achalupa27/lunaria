@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import NewMake from './NewMake';
+import { useState } from 'react';
+import { spendingCategories } from '../../../data/constants';
+import NewSpend from './NewSpend';
+import SpendReceipt from './SpendReceipt';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import MakeReceipt from './MakeReceipt';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -25,34 +26,34 @@ export const data = {
     labels,
     datasets: [
         {
-            label: 'Dataset 1',
-            data: [12, 32, 34, 12, 43, 12, 43, 54, 23, 76, 13, 54],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            label: 'Income',
+            data: [23, 34, 23, 120, 31, 12, 21, 45, 12, 34, 53, 54],
+            borderColor: 'rgb(253, 224, 71)',
+            backgroundColor: 'rgba(253, 224, 71, 0.5)',
         },
     ],
 };
 
-const Make = ({ makes }: any) => {
-    const [newIncomeIsOpen, setNewIncomeIsOpen] = useState(false);
+const Spend = ({ spends }: any) => {
+    const [newTransactionIsOpen, setNewTransactionIsOpen] = useState(false);
 
     return (
         <div className='flex h-screen w-screen flex-col items-center'>
-            <NewMake isOpen={newIncomeIsOpen} createIncome={setNewIncomeIsOpen} closeForm={() => setNewIncomeIsOpen(false)} />
-            <h1 className='py-8 text-primary dark:text-primary-dark'>Make</h1>
-            <div className='h-[300px] w-[700px] rounded-2xl'>
+            <NewSpend isOpen={newTransactionIsOpen} createTransaction={setNewTransactionIsOpen} closeForm={() => setNewTransactionIsOpen(false)} />
+            <h1 className='py-8 text-yellow-300'>Spend</h1>
+            <div className='h-[300px] w-[700px]'>
                 <Line options={options} data={data} />
             </div>
             <div className='flex flex-col items-center space-y-2 py-6 '>
                 <div className='flex items-center justify-center space-x-2'>
-                    <h2 className='text-xl font-semibold'>Income</h2>
-                    <button className='cta-button w-fit px-4' onClick={() => setNewIncomeIsOpen(true)}>
+                    <h2 className='text-xl font-semibold'>Transactions</h2>
+                    <button className='cta-button w-fit px-4' onClick={() => setNewTransactionIsOpen(true)}>
                         + Add
                     </button>
                 </div>
                 <div className='space-y-2'>
-                    {makes.map((make: Make) => (
-                        <MakeReceipt key={make.id} make={make} />
+                    {spends.map((spend: Spend) => (
+                        <SpendReceipt key={spend.id} spend={spend} />
                     ))}
                 </div>
             </div>
@@ -60,4 +61,4 @@ const Make = ({ makes }: any) => {
     );
 };
 
-export default Make;
+export default Spend;

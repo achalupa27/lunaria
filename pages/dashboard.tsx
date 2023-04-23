@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Application/Sidebar';
 import client from '../mongoClient';
-import Activity from '../components/Activity';
+import Activity from '../components/Application/Activity';
 
 const App = ({ makes, saves, spends }: any) => {
     const [screen, setScreen] = useState('Dashboard');

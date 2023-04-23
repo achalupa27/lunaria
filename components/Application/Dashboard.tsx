@@ -1,9 +1,9 @@
 import React from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import SpendReceipt from './SpendReceipt';
-import SaveReceipt from './SaveReceipt';
-import MakeReceipt from './MakeReceipt';
+import SpendReceipt from './Spend/SpendReceipt';
+import SaveReceipt from './Save/SaveReceipt';
+import MakeReceipt from './Make/MakeReceipt';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 

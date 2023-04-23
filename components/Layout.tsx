@@ -1,5 +1,5 @@
-import Footer from './Footer';
-import Header from './Header';
+import Footer from './Website/Footer';
+import Header from './Website/Header';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 

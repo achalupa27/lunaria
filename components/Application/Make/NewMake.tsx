@@ -1,23 +1,17 @@
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import { useState } from 'react';
 
 type Props = {
     isOpen: boolean;
-    createIncome: any;
     closeForm: any;
+    makes: Make[];
 };
 
-const NewMake = ({ isOpen, createIncome, closeForm }: Props) => {
-    const {
-        register,
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+const NewMake = ({ isOpen, closeForm, makes }: Props) => {
+    const { register, handleSubmit } = useForm();
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
-        console.log('Raw transaction: ', transaction);
         addSave(transaction);
+        closeForm;
     };
 
     async function addSave(transaction: Make) {
@@ -45,7 +39,6 @@ const NewMake = ({ isOpen, createIncome, closeForm }: Props) => {
         }
     }
 
-    const [type, setType] = useState('Deposit');
     if (isOpen) {
         return (
             <div className='absolute top-0 left-0 h-screen w-screen  text-primary dark:text-primary-dark '>

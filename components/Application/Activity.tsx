@@ -1,8 +1,8 @@
 import React from 'react';
 import Dashboard from './Dashboard';
-import Make from './Make';
-import Save from './Save';
-import Spend from './Spend';
+import Make from './Make/Make';
+import Save from './Save/Save';
+import Spend from './Spend/Spend';
 import Settings from './Settings';
 
 type Props = {

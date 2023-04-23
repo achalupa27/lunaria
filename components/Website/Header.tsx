@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import DarkModeButtonIcon from './DarkModeButtonIcon';
+import DarkModeButtonIcon from '../DarkModeButtonIcon';
 import HeaderMenu from './HeaderMenu';
 import { useState } from 'react';
 import Image from 'next/image';
