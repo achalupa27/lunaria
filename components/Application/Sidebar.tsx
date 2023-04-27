@@ -31,9 +31,9 @@ const Sidebar = ({ screen, setScreen }: any) => {
                 <div className='main-hover rounded-full transition duration-200'>
                     <DarkModeButtonIcon />
                 </div>
-                <div className={`sidebar-button ${screen === 'Settings' ? 'text-primary dark:text-primary-dark' : null}`} onClick={() => setScreen('Settings')}>
+                {/* <div className={`sidebar-button ${screen === 'Settings' ? 'text-primary dark:text-primary-dark' : null}`} onClick={() => setScreen('Settings')}>
                     <i className='fi fi-rr-settings'></i>
-                </div>
+                </div> */}
             </div>
         </div>
     );

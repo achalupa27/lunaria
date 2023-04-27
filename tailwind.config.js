@@ -13,6 +13,8 @@ module.exports = {
                 'secondary-dark': '#27272a',
 
                 'ms-blue': '#36A2EB',
+                'ms-blue-hover': '#1a8edc',
+                'ms-blue-dark-hover': '#63b6ee',
             },
         },
     },

@@ -6,34 +6,32 @@ import MakeReceipt from './MakeReceipt';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-export const options = {
-    responsive: true,
-    plugins: {
-        legend: {
-            position: 'top' as const,
-        },
-        title: {
-            display: true,
-            text: 'Chart.js Line Chart',
-        },
-    },
+type Props = {
+    makes: Make[];
 };
 
-const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-export const data = {
-    labels,
-    datasets: [
-        {
-            label: 'Dataset 1',
-            data: [12, 32, 34, 12, 43, 12, 43, 54, 23, 76, 13, 54],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+const Make = ({ makes }: Props) => {
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'right' as const,
+            },
         },
-    ],
-};
+    };
 
-const Make = ({ makes }: any) => {
+    const data = {
+        labels: makes.map((make: Make) => make.date),
+        datasets: [
+            {
+                label: 'Making',
+                data: makes.map((make) => make.amount),
+                borderColor: 'rgb(39, 220, 116)',
+                backgroundColor: 'rgba(39, 220, 116, 0.5)',
+            },
+        ],
+    };
+
     const [newMakeIsOpen, setNewMakeIsOpen] = useState(false);
 
     return (
@@ -45,7 +43,7 @@ const Make = ({ makes }: any) => {
             </div>
             <div className='flex flex-col items-center space-y-2 py-6 '>
                 <div className='flex items-center justify-center space-x-2'>
-                    <h2 className='text-xl font-semibold'>Make</h2>
+                    <h2 className='text-xl font-semibold'>Income</h2>
                     <button className='cta-button w-fit px-4' onClick={() => setNewMakeIsOpen(true)}>
                         + Add
                     </button>

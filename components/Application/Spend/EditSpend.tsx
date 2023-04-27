@@ -1,18 +1,12 @@
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import ItemForm from './ItemForm';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Props = {
     isOpen: boolean;
     closeForm: any;
 };
 
-const NewSpend = ({ isOpen, closeForm }: Props) => {
-    const {
-        register,
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+const EditSpend = ({ isOpen, closeForm }: Props) => {
+    const { register, handleSubmit } = useForm();
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
         console.log('Raw transaction: ', transaction);
@@ -44,15 +38,6 @@ const NewSpend = ({ isOpen, closeForm }: Props) => {
         }
     }
 
-    const {
-        fields: items,
-        append: appendItem,
-        remove: removeItem,
-    } = useFieldArray({
-        control,
-        name: 'items',
-    });
-
     if (isOpen) {
         return (
             <div className='absolute top-0 left-0 h-screen w-screen  text-primary dark:text-primary-dark '>
@@ -79,18 +64,6 @@ const NewSpend = ({ isOpen, closeForm }: Props) => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className='flex items-center justify-between pt-4'>
-                                <h2 className='text-sm font-normal'>Items</h2>
-                                <button className='flex items-center rounded-md border border-primary/50 px-2 py-1 text-primary/50 transition duration-200 hover:border-green-500 hover:text-green-600 dark:border-primary/50 dark:text-primary/50' onClick={() => appendItem({})}>
-                                    <span>+ Add Item</span>
-                                </button>
-                            </div>
-                            <div className='scrollbar-thin scrollbar-thumb-ct-yellow max-h-[170px] space-y-1 overflow-y-auto'>
-                                {items.map((item, i) => (
-                                    <ItemForm key={item.id} control={control} index={i} remove={removeItem} />
-                                ))}
-                            </div> */}
-
                             <button type='submit' className='cta-button w-full'>
                                 <i className='fi fi-rr-check'></i>
                                 <label>Save</label>
@@ -104,4 +77,4 @@ const NewSpend = ({ isOpen, closeForm }: Props) => {
     return null;
 };
 
-export default NewSpend;
+export default EditSpend;

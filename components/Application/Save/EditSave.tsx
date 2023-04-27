@@ -7,7 +7,7 @@ type Props = {
     closeForm: any;
 };
 
-const NewSave = ({ isOpen, closeForm }: Props) => {
+const EditSave = ({ isOpen, closeForm }: Props) => {
     const {
         register,
         control,
@@ -83,4 +83,4 @@ const NewSave = ({ isOpen, closeForm }: Props) => {
     return null;
 };
 
-export default NewSave;
+export default EditSave;
