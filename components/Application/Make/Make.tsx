@@ -37,15 +37,14 @@ const Make = ({ makes }: Props) => {
     return (
         <div className='flex h-screen w-screen flex-col items-center'>
             <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makes} />
-            <h1 className='py-8 text-primary dark:text-primary-dark'>Make</h1>
+            <h1 className='py-8 text-green-300'>Making</h1>
             <div className='h-[300px] w-[700px] rounded-2xl'>
                 <Line options={options} data={data} />
             </div>
             <div className='flex flex-col items-center space-y-2 py-6 '>
                 <div className='flex items-center justify-center space-x-2'>
-                    <h2 className='text-xl font-semibold'>Income</h2>
-                    <button className='cta-button w-fit px-4' onClick={() => setNewMakeIsOpen(true)}>
-                        + Add
+                    <button className='w-48 rounded-md border border-green-300 p-2 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
+                        + Making
                     </button>
                 </div>
                 <div className='space-y-2'>

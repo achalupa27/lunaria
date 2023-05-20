@@ -35,7 +35,7 @@
     }
 
     .button-highlight {
-        @apply flex h-7 w-32 items-center justify-center rounded bg-gradient-to-r from-[#fd5392] to-[#f86f64] text-[0.75rem] font-medium text-white;
+        @apply flex h-7 w-32 items-center justify-center rounded bg-gradient-to-r from-amber-500 to-yellow-500 text-[0.75rem] font-medium text-secondary dark:text-primary;
     }
 
     .input-auth {

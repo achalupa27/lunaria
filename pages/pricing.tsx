@@ -51,15 +51,15 @@ function Pricing() {
     };
 
     return (
-        <div className='flex min-h-screen flex-col items-center gap-12 py-8'>
-            <h1>Take the next step.</h1>
-            <div className=' flex h-10 w-80 rounded bg-primary p-[2px] text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
-                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded text-sm font-semibold transition duration-200 ${term == 'Monthly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} onClick={() => handleTerm('Monthly')}>
+        <div className='flex min-h-screen flex-col items-center gap-12 pt-24 pb-8'>
+            <h1>Spend to Make.</h1>
+            <div className=' flex h-10 w-80 rounded-full bg-primary p-[2px] text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
+                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-full text-sm font-semibold transition duration-200 ${term == 'Monthly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} onClick={() => handleTerm('Monthly')}>
                     Monthly
                 </div>
-                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded text-sm font-semibold transition duration-200 ${term == 'Yearly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} id='optionYearly' onClick={() => handleTerm('Yearly')}>
+                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-full text-sm font-semibold transition duration-200 ${term == 'Yearly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} id='optionYearly' onClick={() => handleTerm('Yearly')}>
                     <p>Yearly</p>
-                    <div className='text-xs text-[#39c269] dark:text-amber-100'>
+                    <div className='text-xs text-[#39c269] dark:text-[#39c269]'>
                         <strong>SAVE 20%</strong>
                     </div>
                 </div>
@@ -90,33 +90,10 @@ function Pricing() {
 
                 <div className='flex h-[32rem] w-[18rem] flex-col rounded-3xl bg-primary p-1 text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
                     <div className='px-4 py-2'>
-                        <div className='text-2xl'>Basic</div>
-                        <div className='text-sm'>{term === 'Monthly' ? '$29.95' : '$23.96'} USD per month</div>
-                    </div>
-                    <div className='grow px-2'>
-                        {basicFeatures.map((feature, i) => (
-                            <div key={i} className='flex items-center gap-3 px-2 text-sm leading-8'>
-                                <i className='fi fi-rr-check'></i> <div>{feature.feature}</div>
-                            </div>
-                        ))}
-                    </div>
-                    {user ? (
-                        <button className='button-primary-alt hover:translate-y-[6px]' onClick={() => purchaseSubscription('Basic', selectedTerm)}>
-                            Start Trial
-                        </button>
-                    ) : (
-                        <Link href='/register'>
-                            <button className='button-primary-alt w-full hover:translate-y-[6px]'>Sign Up</button>
-                        </Link>
-                    )}
-                </div>
-
-                <div className='flex h-[32rem] w-[18rem] flex-col rounded-3xl bg-primary p-1 text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
-                    <div className='px-4 py-2'>
                         <div className='text-2xl'>
                             <strong>Professional</strong>
                         </div>
-                        <div className='text-sm'>{term === 'Monthly' ? '$39.95' : '$31.96'} USD per month</div>
+                        <div className='text-sm'>{term === 'Monthly' ? '$9.95' : '$7.95'} USD per month</div>
                     </div>
                     <div className='grow px-2'>
                         {professionalFeatures.map((feature, i) => (
@@ -137,8 +114,8 @@ function Pricing() {
                 </div>
             </div>
             <div className='flex flex-col items-center justify-center px-6'>
-                <p className='text-xl'>New features are always being added!</p>
-                <p className='mt-1 text-center text-xs'>That means prices will go up! Subscribe to Professional Yearly to lock in the current price for your subscription year.</p>
+                <p className='text-xl'>Could managing your money save you $8 a month?</p>
+                {/* <p className='mt-1 text-center text-xs'>If yo.</p> */}
             </div>
         </div>
     );

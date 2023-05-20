@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import Router from 'next/router';
 import ProgressBar from '@badrap/bar-of-progress';
 import { ThemeProvider } from 'next-themes';
+import { useState } from 'react';
 
 const progress = new ProgressBar({
     size: 4,

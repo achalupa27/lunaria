@@ -5,12 +5,13 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                primary: '#15803d',
-                'primary-hover': '#189e51',
+                primary: '#1a1a1a',
                 secondary: '#ffffff',
-                'primary-dark': '#27dc74',
+                'primary-dark': '#ffffff',
+                'secondary-dark': '#1a1a1a',
+
+                'primary-hover': '#189e51',
                 'primary-dark-hover': '#18f074',
-                'secondary-dark': '#27272a',
 
                 'ms-blue': '#36A2EB',
                 'ms-blue-hover': '#1a8edc',

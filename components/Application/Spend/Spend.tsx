@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Spend = ({ spends }: Props) => {
-    const [newTransactionIsOpen, setNewTransactionIsOpen] = useState(false);
+    const [newSpendIsOpen, setNewSpendIsOpen] = useState(false);
 
     const options = {
         responsive: true,
@@ -37,15 +37,14 @@ const Spend = ({ spends }: Props) => {
 
     return (
         <div className='flex h-screen w-screen flex-col items-center'>
-            <NewSpend isOpen={newTransactionIsOpen} closeForm={() => setNewTransactionIsOpen(false)} />
-            <h1 className='py-8 text-yellow-300'>Spend</h1>
+            <NewSpend isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} />
+            <h1 className='py-8 text-yellow-200'>Spending</h1>
             <div className='h-[300px] w-[700px]'>
                 <Line options={options} data={data} />
             </div>
             <div className='flex flex-col items-center space-y-2 py-6 '>
                 <div className='flex items-center justify-center space-x-2'>
-                    <h2 className='text-xl font-semibold'>Transactions</h2>
-                    <button className='cta-button w-fit bg-yellow-300 px-4 hover:bg-yellow-400 dark:bg-yellow-300 dark:hover:bg-yellow-200' onClick={() => setNewTransactionIsOpen(true)}>
+                    <button className='w-48 rounded-md border border-yellow-200 p-2 text-yellow-200 transition duration-200 hover:bg-yellow-200 hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
                         + Add
                     </button>
                 </div>

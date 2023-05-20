@@ -9,7 +9,7 @@ function Header() {
     const [headerMenu, setHeaderMenu] = useState(false);
 
     return (
-        <header className='flex w-full items-center p-4 px-6'>
+        <header className='absolute top-0 left-0 flex w-full items-center bg-transparent p-4 px-6'>
             <div className='basis-1/3'>
                 <Link href='/'>
                     <Image src='/logo.png' alt='shield logo' width={48} height={48} />
