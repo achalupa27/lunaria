@@ -4,9 +4,11 @@ import ItemForm from './ItemForm';
 type Props = {
     isOpen: boolean;
     closeForm: any;
+    spends: Spend[];
+    setSpends: any;
 };
 
-const NewSpend = ({ isOpen, closeForm }: Props) => {
+const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
     const {
         register,
         control,
@@ -15,9 +17,10 @@ const NewSpend = ({ isOpen, closeForm }: Props) => {
     } = useForm();
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
-        console.log('Raw transaction: ', transaction);
         addSave(transaction);
         closeForm();
+        let newSpends = [...spends, transaction];
+        setSpends(newSpends);
     };
 
     async function addSave(transaction: Spend) {
@@ -61,7 +64,7 @@ const NewSpend = ({ isOpen, closeForm }: Props) => {
                     <div className='h-full w-fit rounded-md bg-secondary p-2 pt-6 shadow-sm dark:bg-[#2c2c2c]'>
                         <div className='text-[14px] font-light'>
                             <div className='mb-4 flex items-center justify-between'>
-                                <h2 className='text-selected flex w-full justify-center text-base'>New Spending Transaction</h2>
+                                <h2 className='text-selected flex w-full justify-center text-base'>Money Spent!</h2>
                                 <div className='flex basis-1/3 cursor-pointer justify-end text-gray-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
                                     <i className='fi fi-rr-cross text-sm'></i>
                                 </div>
@@ -71,7 +74,7 @@ const NewSpend = ({ isOpen, closeForm }: Props) => {
                                     <div className='flex'>
                                         <div className='basic-button w-60'>
                                             <i className='fi fi-rr-shop'></i>
-                                            <input {...register('store')} placeholder='Store*' className='input-field uppercase' required />
+                                            <input {...register('store')} placeholder='Store*' className='input-field' required />
                                         </div>
                                         <div className='basic-button w-20 '>
                                             <input {...register('amount')} placeholder='Amount' type='number' className='input-field  w-20 pr-4 text-center' required />

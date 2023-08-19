@@ -4,14 +4,17 @@ type Props = {
     isOpen: boolean;
     closeForm: any;
     makes: Make[];
+    setMakes: any;
 };
 
-const NewMake = ({ isOpen, closeForm, makes }: Props) => {
+const NewMake = ({ isOpen, closeForm, makes, setMakes }: Props) => {
     const { register, handleSubmit } = useForm();
 
-    const onSubmit: SubmitHandler<any> = (transaction: any) => {
+    const onSubmit: SubmitHandler<any> = (transaction: Make) => {
         addSave(transaction);
         closeForm();
+        let newMakes = [...makes, transaction];
+        setMakes(newMakes);
     };
 
     async function addSave(transaction: Make) {
@@ -45,7 +48,7 @@ const NewMake = ({ isOpen, closeForm, makes }: Props) => {
                 <div className='z-40 flex h-full justify-end'>
                     <div className='h-full w-fit rounded-md bg-secondary p-2 pt-6 shadow-sm dark:bg-[#2c2c2c]'>
                         <div className='mb-4 flex items-center justify-between'>
-                            <h2 className='text-selected flex w-full justify-center text-base font-normal'>New Making Transaction</h2>
+                            <h2 className='text-selected flex w-full justify-center text-base font-normal'>Made Money!</h2>
                             <div className='absolute right-6 cursor-pointer text-gray-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
                                 <i className='fi fi-rr-cross text-sm'></i>
                             </div>

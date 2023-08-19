@@ -2,10 +2,12 @@ import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 function Banner() {
     const [mounted, setMounted] = useState(false);
-    const { systemTheme, theme, setTheme } = useTheme();
+    const { data: session } = useSession();
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -14,36 +16,54 @@ function Banner() {
         return null;
     }
 
-    const currentTheme = theme === 'system' ? systemTheme : theme;
-    const user = true;
     return (
-        <div className='flex min-h-screen flex-col-reverse items-center justify-around px-12 pb-36 lg:flex-row lg:pb-12 2xl:px-0'>
+        <div className='banner flex min-h-screen flex-col-reverse items-center justify-around px-12 pb-36 lg:flex-row lg:pb-12 2xl:px-0'>
             <div className='flex h-1/2 flex-col items-center md:ml-16 md:mt-16 md:h-auto'>
-                <div className='text-4xl font-semibold'>
-                    <span className=''>Make. </span>
-                    <span className=''>Save. </span>
-                    <span className=''>Spend.</span>
+                <div className='flex flex-col items-center space-y-3 text-4xl font-extrabold md:text-6xl'>
+                    <span className=''>Blossoming Finances, </span>
+                    <span className=''>Blooming Dreams. </span>
                 </div>
-                <div className='text-2xl'>A simple approach to guarding your money.</div>
-
-                <div className='flex basis-1/2 items-center justify-center p-16'>
-                    <div className='relative h-[24rem] w-[24rem]'>{<Image fill alt='banner' object-fit='contain' src={theme === 'light' ? '/banner.png' : '/banner.png'} />}</div>
+                <div className='stars-container absolute top-0 left-0 z-10'>
+                    <div className='stars'></div>
+                    <div className='stars'></div>
+                    <div className='stars'></div>
+                    <div className='stars'></div>
                 </div>
-                <div className='mt-8 flex w-[420px] flex-col space-y-2 lg:flex-row lg:space-x-3 lg:space-y-0'>
-                    {user ? (
-                        <Link href='/dashboard' className='button-primary hover:scale-105 active:scale-90 lg:w-1/2'>
-                            <i className='fi fi-rr-arrow-up-right -ml-[3px] mt-[2px] pr-2'></i>
-                            <span>Open Dashboard</span>
+                <ul className='circles [&li>]rounded-full z-0'>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <div className='z-10 flex basis-1/2 items-center justify-center p-16'>
+                    <div className='flex h-12 w-12 items-center justify-center rounded-full border border-white bg-white/20 text-xl transition duration-500 hover:bg-white hover:shadow-xl hover:shadow-white' />
+                    <div className='flex h-12 w-12 items-center justify-center rounded-full border border-white bg-white/20 text-xl transition duration-500 hover:bg-white hover:shadow-xl hover:shadow-white' />
+                    <div className='flex h-12 w-12 items-center justify-center rounded-full border border-white bg-white/20 text-xl transition duration-500 hover:bg-white hover:shadow-xl hover:shadow-white' />
+                    <div className='flex h-12 w-12 items-center justify-center rounded-full border border-white bg-white/20 text-xl transition duration-500 hover:bg-white hover:shadow-xl hover:shadow-white' />
+                    <div className='flex h-12 w-12 items-center justify-center rounded-full border border-white bg-white/20 text-xl transition duration-500 hover:bg-white hover:shadow-xl hover:shadow-white' />
+                </div>
+                <div className='z-10 mt-8 flex'>
+                    {session ? (
+                        <Link href='/dashboard'>
+                            <div className='flex items-center justify-center'>
+                                <button className='btn transition duration-200 hover:scale-105'>Open Dashboard</button>
+                                <button className='btn2'></button>
+                            </div>
                         </Link>
                     ) : (
-                        <Link href='/register' className='button-primary space-x-2 font-semibold lg:w-1/2'>
-                            <span>Get Started</span>
-                            <i className='fi fi-rr-arrow-right'></i>
+                        <Link href='/register'>
+                            <div className='flex items-center justify-center'>
+                                <button className='btn transition duration-200 hover:scale-105'>Start Your Journey</button>
+                                <button className='btn2'></button>
+                            </div>
                         </Link>
                     )}
-                    <Link href='/how-it-works' className='button-secondary active:scale-90 lg:w-1/2'>
-                        How it works
-                    </Link>
                 </div>
             </div>
         </div>

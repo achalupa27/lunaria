@@ -5,9 +5,11 @@ import { useState } from 'react';
 type Props = {
     isOpen: boolean;
     closeForm: any;
+    saves: Save[];
+    setSaves: any;
 };
 
-const NewSave = ({ isOpen, closeForm }: Props) => {
+const NewSave = ({ isOpen, closeForm, saves, setSaves }: Props) => {
     const {
         register,
         control,
@@ -16,9 +18,10 @@ const NewSave = ({ isOpen, closeForm }: Props) => {
     } = useForm();
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
-        console.log('Raw transaction: ', transaction);
         addSave(transaction);
         closeForm();
+        let newSaves = [...saves, transaction];
+        setSaves(newSaves);
     };
 
     async function addSave(transaction: Save) {
@@ -53,7 +56,7 @@ const NewSave = ({ isOpen, closeForm }: Props) => {
                 <div className='z-40 flex h-full justify-end'>
                     <div className='h-full w-fit rounded-md bg-secondary p-2 pt-6 shadow-sm dark:bg-[#2c2c2c]'>
                         <div className='mb-4 flex items-center justify-between'>
-                            <h2 className='text-selected flex w-full justify-center text-base'>New Saving Transaction</h2>
+                            <h2 className='text-selected flex w-full justify-center text-base'>Savings Affected!</h2>
                             <div className='absolute right-6 cursor-pointer text-gray-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
                                 <i className='fi fi-rr-cross text-sm'></i>
                             </div>

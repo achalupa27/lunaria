@@ -11,6 +11,7 @@ type Props = {
 };
 
 const Save = ({ saves }: Props) => {
+    const [savesIn, setSaves] = useState(saves);
     const [newSaveIsOpen, setNewSaveIsOpen] = useState(false);
 
     const options = {
@@ -35,20 +36,20 @@ const Save = ({ saves }: Props) => {
     };
 
     return (
-        <div className='flex h-screen w-screen flex-col items-center'>
-            <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} />
-            <h1 className='py-8 text-blue-300'>Saving</h1>
-            <div className='h-[300px] w-[700px]'>
-                <Line options={options} data={data} />
-            </div>
-            <div className='flex flex-col items-center space-y-2 py-6 '>
-                <div className='flex items-center justify-center space-x-2'>
-                    <button className='w-48 rounded-md border border-blue-300 p-2 text-blue-300 transition duration-200 hover:bg-blue-300 hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
-                        + Saving
-                    </button>
+        <div className='flex h-screen w-screen p-4'>
+            <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} saves={savesIn} setSaves={setSaves} />
+            <div>
+                <h1 className='py-8 text-center text-blue-300'>Saving</h1>
+                <div className='h-[300px] w-[700px]'>
+                    <Line options={options} data={data} />
                 </div>
+            </div>
+            <div className='flex flex-col items-center space-y-2 '>
+                <button className='w-48 rounded-md border border-blue-300 p-2 text-blue-300 transition duration-200 hover:bg-blue-300 hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
+                    + Saving
+                </button>
                 <div className='space-y-2'>
-                    {saves.map((save: any) => (
+                    {savesIn.map((save: any) => (
                         <SaveReceipt key={save.id} save={save} />
                     ))}
                 </div>

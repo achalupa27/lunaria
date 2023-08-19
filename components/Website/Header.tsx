@@ -3,25 +3,33 @@ import DarkModeButtonIcon from '../DarkModeButtonIcon';
 import HeaderMenu from './HeaderMenu';
 import { useState } from 'react';
 import Image from 'next/image';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 function Header() {
-    const user = true;
+    const { data: session } = useSession();
     const [headerMenu, setHeaderMenu] = useState(false);
 
+    const handleSignIn = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.preventDefault();
+        await signIn();
+    };
+    const handleSignOut = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.preventDefault();
+        await signOut();
+    };
+
     return (
-        <header className='absolute top-0 left-0 flex w-full items-center bg-transparent p-4 px-6'>
+        <header className='absolute top-0 left-0 z-20 flex w-full items-center bg-transparent p-4 px-6'>
             <div className='basis-1/3'>
-                <Link href='/'>
-                    <Image src='/logo.png' alt='shield logo' width={48} height={48} />
+                <Link href='/' className='flex items-center space-x-2'>
+                    <div className='flex h-7 w-7 items-center justify-center rounded-full border border-white/70 bg-white/30 text-xl transition duration-500 hover:bg-white hover:shadow-xl hover:shadow-white'></div>
+                    <span className='text-3xl font-semibold'>lunaria</span>
                 </Link>
             </div>
-            <div className='hidden flex-1 items-center justify-center space-x-6 lg:flex'>
+            <div className='hidden flex-1 items-center justify-center space-x-12 lg:flex'>
                 <Link href='/features'>Features</Link>
                 <Link href='/pricing'>Pricing</Link>
-                <Link href='/tips' className='button-secondary ml-4 py-1'>
-                    <i className='fi fi-rr-money-bill-wave -ml-[2px] pt-[2px] pr-2'></i>
-                    <span>Money Tips</span>
-                </Link>
+                <Link href='/basics'>Basics</Link>
             </div>
             <div className='flex basis-1/3 lg:hidden'></div>
             <div className='flex basis-1/3 justify-end lg:hidden'>
@@ -36,8 +44,8 @@ function Header() {
                 <div className='mr-2 pt-1'>
                     <DarkModeButtonIcon />
                 </div>
-                <Link href={`${user ? '/dashboard' : '/login'}`}>
-                    <div className='button-secondary py-1'>{user ? 'Dashboard' : 'Sign In'}</div>
+                <Link href={`${session ? '/dashboard' : '/dashboard'}`}>
+                    <div className='button-secondary py-1'>{session ? 'Dashboard' : 'Sign In'}</div>
                 </Link>
             </div>
         </header>

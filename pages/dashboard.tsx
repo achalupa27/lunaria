@@ -26,6 +26,7 @@ export async function getServerSideProps(context: any) {
 
     const spendCollection = db.collection('spend');
     const spendData = await spendCollection.find({}).toArray();
+
     return {
         props: {
             makes: JSON.parse(JSON.stringify(makeData)),

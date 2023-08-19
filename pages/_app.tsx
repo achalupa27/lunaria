@@ -5,7 +5,8 @@ import Layout from '../components/Layout';
 import Router from 'next/router';
 import ProgressBar from '@badrap/bar-of-progress';
 import { ThemeProvider } from 'next-themes';
-import { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
+import { SessionProvider } from 'next-auth/react';
 
 const progress = new ProgressBar({
     size: 4,
@@ -21,9 +22,12 @@ Router.events.on('routeChangeError', progress.finish);
 function App({ Component, pageProps }: AppProps) {
     return (
         <ThemeProvider enableSystem={false} attribute='class'>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            <SessionProvider session={pageProps.session}>
+                <Layout>
+                    <Component {...pageProps} />
+                    <Analytics />
+                </Layout>
+            </SessionProvider>
         </ThemeProvider>
     );
 }

@@ -22,13 +22,15 @@ const Sidebar = ({ screen, setScreen }: any) => {
                 </div>
             </div>
             <div className='flex-col items-center space-y-3'>
-                <div className='main-hover rounded-full transition duration-200'>
-                    <DarkModeButtonIcon />
-                </div>
                 <Image src='/logo.png' alt='shield logo' width={36} height={36} className='relative cursor-pointer' onClick={() => setMenu(!menu)} />
                 {menu && (
-                    <div className='absolute bottom-2 left-12 z-40 w-48 rounded-md  bg-secondary p-2 shadow dark:bg-secondary-dark' onClick={() => setMenu(false)}>
-                        <span className='basic-button text-base'>Sign out</span>
+                    <div>
+                        <div className='absolute bottom-2 left-12 z-40 w-48 rounded-md  bg-secondary p-2 shadow dark:bg-secondary-dark' onClick={() => setMenu(false)}>
+                            <span className='basic-button text-base'>Sign out</span>
+                            <div className='main-hover rounded-md transition duration-200'>
+                                <DarkModeButtonIcon />
+                            </div>
+                        </div>
                     </div>
                 )}
                 {/* <div className={`sidebar-button ${screen === 'Settings' ? 'text-primary dark:text-primary-dark' : null}`} onClick={() => setScreen('Settings')}>

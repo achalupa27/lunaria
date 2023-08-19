@@ -9,7 +9,7 @@ function Layout({ children }: any) {
         return (
             <div className='bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark'>
                 <Head>
-                    <title>Moneyshield - Make. Save. Spend.</title>
+                    <title>lunaria - Personal Finance</title>
                 </Head>
                 <Header />
                 <main>{children}</main>
@@ -20,7 +20,7 @@ function Layout({ children }: any) {
         return (
             <>
                 <Head>
-                    <title>Moneyshield - Make. Save. Spend.</title>
+                    <title>lunaria - Personal Finance</title>
                 </Head>
                 <main>{children}</main>
             </>

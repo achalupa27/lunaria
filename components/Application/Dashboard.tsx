@@ -55,6 +55,10 @@ export const spendDoughnut = {
 };
 
 const Dashboard = ({ makes, saves, spends }: Props) => {
+    const [makesIn, setMakes] = useState(makes);
+    const [savesIn, setSaves] = useState(saves);
+    const [spendsIn, setSpends] = useState(spends);
+
     const options = {
         responsive: true,
         plugins: {
@@ -96,15 +100,15 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
 
     return (
         <div className='grid h-screen w-[calc(100vw-56px)] grid-cols-2 dark:bg-[#2c2c2c]'>
-            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makes} />
-            <NewSpend isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} />
-            <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} />
+            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makesIn} setMakes={setMakes} />
+            <NewSpend isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} spends={spendsIn} setSpends={setSpends} />
+            <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} saves={savesIn} setSaves={setSaves} />
             <div className='mt-2 ml-2 mb-1 flex items-center justify-center rounded-md bg-gray-100 p-4 dark:bg-primary'>
                 <div className='pl-8'>
                     <Line options={options} data={data} />
                 </div>
             </div>
-            <div className='mt-2 mr-2 ml-2 mb-1 rounded-md bg-gray-100 py-4 px-8 dark:bg-primary'>
+            <div className='ms-card mb-1 mt-2 mr-2 ml-2 py-4 px-8'>
                 <div className='flex justify-between pb-4'>
                     <h3 className='text-4xl text-green-300'>Making</h3>
                     <button className='w-48 rounded-md border border-green-300 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
@@ -112,17 +116,17 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
                     </button>
                 </div>
                 <div className='flex justify-between'>
-                    <div className='flex items-center justify-center'>
+                    <div>
                         <Doughnut options={options} data={makeDoughnut} />
                     </div>
                     <div className='flex flex-col space-y-2'>
-                        {makes.map((make: Make) => (
+                        {makesIn.map((make: Make) => (
                             <MakeReceipt key={make.id} make={make} />
                         ))}
                     </div>
                 </div>
             </div>
-            <div className='ml-2 mb-2 mt-1 rounded-md bg-gray-100 py-4 px-8 dark:bg-primary'>
+            <div className='ms-card ml-2 mb-2 mt-1 py-4 px-8'>
                 <div className='flex justify-between pb-4'>
                     <h3 className='text-4xl text-blue-300'>Saving</h3>
                     <button className='w-48 rounded-md border border-blue-300 text-blue-300 transition duration-200 hover:bg-blue-300 hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
@@ -130,17 +134,17 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
                     </button>
                 </div>
                 <div className='flex justify-between'>
-                    <div className='flex items-center justify-center'>
+                    <div>
                         <Doughnut options={options} data={saveDoughnut} />
                     </div>
-                    <div className='flex flex-col space-y-2'>
-                        {saves.map((save: Save) => (
+                    <div className='flex max-h-fit flex-col space-y-2 overflow-y-auto   '>
+                        {savesIn.map((save: Save) => (
                             <SaveReceipt key={save.id} save={save} />
                         ))}
                     </div>
                 </div>
             </div>
-            <div className='mb-2 mr-2 ml-2 mt-1 rounded-md bg-gray-100 py-4 px-8 dark:bg-primary'>
+            <div className=' ms-card mb-2 mr-2 ml-2 mt-1 py-4 px-8 '>
                 <div className='flex justify-between pb-4'>
                     <h3 className='text-4xl text-yellow-300 dark:text-yellow-200'>Spending</h3>
                     <button className='w-48 rounded-md border border-yellow-200 text-yellow-200 transition duration-200 hover:bg-yellow-200 hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
@@ -148,11 +152,11 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
                     </button>
                 </div>
                 <div className='flex justify-between'>
-                    <div className='flex items-center justify-center'>
+                    <div>
                         <Doughnut options={options} data={spendDoughnut} />
                     </div>
-                    <div className='flex flex-col space-y-2'>
-                        {spends.map((spend: Spend) => (
+                    <div className='flex max-h-fit flex-col space-y-2 overflow-y-auto'>
+                        {spendsIn.map((spend: Spend) => (
                             <SpendReceipt key={spend.id} spend={spend} />
                         ))}
                     </div>

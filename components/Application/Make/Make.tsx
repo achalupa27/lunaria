@@ -11,6 +11,7 @@ type Props = {
 };
 
 const Make = ({ makes }: Props) => {
+    const [makesIn, setMakes] = useState(makes);
     const options = {
         responsive: true,
         plugins: {
@@ -35,20 +36,20 @@ const Make = ({ makes }: Props) => {
     const [newMakeIsOpen, setNewMakeIsOpen] = useState(false);
 
     return (
-        <div className='flex h-screen w-screen flex-col items-center'>
-            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makes} />
-            <h1 className='py-8 text-green-300'>Making</h1>
-            <div className='h-[300px] w-[700px] rounded-2xl'>
-                <Line options={options} data={data} />
-            </div>
-            <div className='flex flex-col items-center space-y-2 py-6 '>
-                <div className='flex items-center justify-center space-x-2'>
-                    <button className='w-48 rounded-md border border-green-300 p-2 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
-                        + Making
-                    </button>
+        <div className='flex h-screen w-screen p-4'>
+            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makesIn} setMakes={setMakes} />
+            <div>
+                <h1 className='py-8 text-center text-green-300'>Making</h1>
+                <div className='h-[300px] w-[700px] rounded-2xl'>
+                    <Line options={options} data={data} />
                 </div>
+            </div>
+            <div className='flex flex-col items-center space-y-2 '>
+                <button className='w-60 rounded-md border border-green-300 p-2 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
+                    + Making
+                </button>
                 <div className='space-y-2'>
-                    {makes.map((make: Make) => (
+                    {makesIn.map((make: Make) => (
                         <MakeReceipt key={make.id} make={make} />
                     ))}
                 </div>

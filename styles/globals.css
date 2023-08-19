@@ -72,4 +72,8 @@
     .read-input {
         @apply cursor-default select-none caret-transparent outline-none;
     }
+
+    .ms-card {
+        @apply rounded-md bg-gray-100  dark:bg-primary;
+    }
 }
