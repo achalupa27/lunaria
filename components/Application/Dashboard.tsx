@@ -99,16 +99,16 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
     const [newSaveIsOpen, setNewSaveIsOpen] = useState(false);
 
     return (
-        <div className='grid h-screen w-[calc(100vw-56px)] grid-cols-2 dark:bg-[#2c2c2c]'>
+        <div className='grid h-screen w-[calc(100vw-56px)] grid-cols-2 gap-1 p-1 dark:bg-[#2c2c2c]'>
             <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makesIn} setMakes={setMakes} />
             <NewSpend isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} spends={spendsIn} setSpends={setSpends} />
             <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} saves={savesIn} setSaves={setSaves} />
-            <div className='mt-2 ml-2 mb-1 flex items-center justify-center rounded-md bg-gray-100 p-4 dark:bg-primary'>
+            <div className='flex items-center justify-center rounded-md bg-gray-100 p-4 dark:bg-primary'>
                 <div className='pl-8'>
                     <Line options={options} data={data} />
                 </div>
             </div>
-            <div className='ms-card mb-1 mt-2 mr-2 ml-2 py-4 px-8'>
+            <div className='ms-card py-4 px-8'>
                 <div className='flex justify-between pb-4'>
                     <h3 className='text-4xl text-green-300'>Making</h3>
                     <button className='w-48 rounded-md border border-green-300 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
@@ -126,7 +126,7 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
                     </div>
                 </div>
             </div>
-            <div className='ms-card ml-2 mb-2 mt-1 py-4 px-8'>
+            <div className='ms-card py-4 px-8'>
                 <div className='flex justify-between pb-4'>
                     <h3 className='text-4xl text-blue-300'>Saving</h3>
                     <button className='w-48 rounded-md border border-blue-300 text-blue-300 transition duration-200 hover:bg-blue-300 hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
@@ -144,7 +144,7 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
                     </div>
                 </div>
             </div>
-            <div className=' ms-card mb-2 mr-2 ml-2 mt-1 py-4 px-8 '>
+            <div className='ms-card py-4 px-8 '>
                 <div className='flex justify-between pb-4'>
                     <h3 className='text-4xl text-yellow-300 dark:text-yellow-200'>Spending</h3>
                     <button className='w-48 rounded-md border border-yellow-200 text-yellow-200 transition duration-200 hover:bg-yellow-200 hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>

@@ -26,10 +26,16 @@ function Header() {
                     <span className='text-3xl font-semibold'>lunaria</span>
                 </Link>
             </div>
-            <div className='hidden flex-1 items-center justify-center space-x-12 lg:flex'>
-                <Link href='/features'>Features</Link>
-                <Link href='/pricing'>Pricing</Link>
-                <Link href='/basics'>Basics</Link>
+            <div className='hidden flex-1 items-center justify-center space-x-6 lg:flex'>
+                <Link className='rounded-full px-6 py-2 transition duration-500 hover:bg-white/20' href='/features'>
+                    Features
+                </Link>
+                <Link className='rounded-full px-6 py-2 transition duration-500 hover:bg-white/20' href='/pricing'>
+                    Pricing
+                </Link>
+                <Link className='rounded-full px-6 py-2 transition duration-500 hover:bg-white/20' href='/basics'>
+                    Basics
+                </Link>
             </div>
             <div className='flex basis-1/3 lg:hidden'></div>
             <div className='flex basis-1/3 justify-end lg:hidden'>
@@ -41,11 +47,8 @@ function Header() {
             </div>
             {headerMenu && <div className='absolute top-0 left-0 z-40 h-screen w-screen bg-transparent' onClick={() => setHeaderMenu(false)}></div>}
             <div className='hidden basis-1/3 items-center justify-end space-x-2 lg:flex'>
-                <div className='mr-2 pt-1'>
-                    <DarkModeButtonIcon />
-                </div>
                 <Link href={`${session ? '/dashboard' : '/dashboard'}`}>
-                    <div className='button-secondary py-1'>{session ? 'Dashboard' : 'Sign In'}</div>
+                    <div className='button-secondary'>{session ? 'Dashboard' : 'Sign In'}</div>
                 </Link>
             </div>
         </header>

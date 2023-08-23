@@ -1,11 +1,13 @@
 import { COMPANY_NAME } from '../../constants';
 import Link from 'next/link';
 
-function Footer() {
+const Footer = () => {
     return (
-        <footer className='grid grid-cols-2 items-center justify-center gap-y-2 bg-transparent py-2 text-sm md:grid-cols-4 lg:grid-cols-8'>
-            <div className='flex items-center justify-center'>
-                <i className='fi fi-rr-copyright mr-2 pt-[3px]' /> 2023 {COMPANY_NAME}
+        <footer className='grid w-full grid-cols-2 items-center gap-y-2 border-t border-gray-800 bg-[#000127] py-2 text-sm md:grid-cols-4 lg:grid-cols-8'>
+            <div className='flex justify-center'>
+                <div className='flex w-fit items-center justify-center rounded bg-white px-2 font-medium text-secondary-dark'>
+                    <i className='fi fi-rr-copyright mr-2' /> 2023 {COMPANY_NAME}
+                </div>
             </div>
             <Link className='flex justify-center' href='/about'>
                 <span>About</span>
@@ -30,6 +32,6 @@ function Footer() {
             </Link>
         </footer>
     );
-}
+};
 
 export default Footer;

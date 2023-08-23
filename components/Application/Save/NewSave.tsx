@@ -52,25 +52,33 @@ const NewSave = ({ isOpen, closeForm, saves, setSaves }: Props) => {
     const [type, setType] = useState('Deposit');
     if (isOpen) {
         return (
-            <div className='absolute top-0 left-0 h-screen w-screen   text-primary dark:text-primary-dark'>
+            <div className='absolute top-0 left-0 h-screen w-screen text-primary dark:text-primary-dark'>
                 <div className='z-40 flex h-full justify-end'>
-                    <div className='h-full w-fit rounded-md bg-secondary p-2 pt-6 shadow-sm dark:bg-[#2c2c2c]'>
+                    <div className='h-full w-fit bg-secondary px-4 pt-6 shadow-sm dark:bg-[#1a1a1a]'>
                         <div className='mb-4 flex items-center justify-between'>
-                            <h2 className='text-selected flex w-full justify-center text-base'>Savings Affected!</h2>
+                            <h2 className='flex justify-center text-base'>New Savings Transaction</h2>
                             <div className='absolute right-6 cursor-pointer text-gray-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
-                                <i className='fi fi-rr-cross text-sm'></i>
+                                <i className='fi fi-rr-cross text-sm' />
                             </div>
                         </div>
+
                         <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
-                            <div className='flex items-center justify-between'>
-                                <div className='flex'>
-                                    <div className='basic-button w-32' onClick={() => (type === 'Deposit' ? setType('Withdrawal') : setType('Deposit'))}>
-                                        <i className='fi fi-tr-sort-alt' />
-                                        <input readOnly className='text-selected read-input w-24 bg-transparent ' {...register('type')} value={type} required />
+                            <div className='flex w-72 flex-col'>
+                                <div className='flex items-center justify-between'>
+                                    <div className='text-xs font-medium uppercase'>Type</div>
+                                    <div className='basic-button w-fit' onClick={() => (type === 'Deposit' ? setType('Withdrawal') : setType('Deposit'))}>
+                                        <input readOnly className='text-selected read-input w-20 bg-transparent text-right' {...register('type')} value={type} required />
+                                        <i className='fi fi-tr-sort-alt text-xs' />
                                     </div>
+                                </div>
+                                <div className='flex items-center justify-between'>
+                                    <div className='text-xs font-medium uppercase'>Amount</div>
                                     <div className='basic-button w-20 '>
-                                        <input {...register('amount')} placeholder='Amount' type='number' className='input-field w-20 pr-4 text-center' required />
+                                        <input {...register('amount')} placeholder='Amount' type='number' className='input-field w-20 pr-4 text-right' required />
                                     </div>
+                                </div>
+                                <div className='flex items-center justify-between'>
+                                    <div className='text-xs font-medium uppercase'>Date</div>
                                     <div className='basic-button w-36 justify-end'>
                                         <input {...register('date')} placeholder='Date' type='date' className='input-field' required />
                                     </div>

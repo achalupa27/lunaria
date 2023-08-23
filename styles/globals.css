@@ -27,7 +27,7 @@
     }
 
     .button-secondary {
-        @apply flex items-center justify-center rounded-full border border-primary bg-transparent px-4 py-2 text-primary transition duration-500 hover:bg-primary hover:text-secondary dark:border-primary-dark dark:text-primary-dark dark:hover:bg-primary-dark dark:hover:text-secondary-dark;
+        @apply flex items-center justify-center rounded-full bg-white/20 px-6 py-2 text-primary transition duration-500 hover:bg-primary hover:text-secondary  dark:text-primary-dark dark:hover:bg-primary-dark dark:hover:text-secondary-dark;
     }
 
     .button-secondary-alt {
@@ -62,7 +62,7 @@
     }
 
     .cta-button {
-        @apply flex h-10 items-center justify-center space-x-2 rounded-full border-none bg-primary px-2 text-sm text-white transition duration-200 ease-out hover:bg-primary-hover dark:bg-primary-dark dark:text-secondary-dark dark:hover:bg-primary-dark-hover;
+        @apply flex h-10 cursor-pointer items-center justify-center space-x-2 rounded-full border-none bg-primary px-2 text-sm text-white transition duration-200 ease-out hover:bg-primary-hover dark:bg-primary-dark dark:text-secondary-dark dark:hover:bg-primary-dark-hover;
     }
 
     .input-field {

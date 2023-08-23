@@ -18,15 +18,15 @@ function DarkModeButton({ icon }: { icon?: string }) {
     return (
         <div>
             {currentTheme === 'dark' ? (
-                <div className='flex items-center space-x-2' onClick={() => setTheme('light')}>
+                <button className='flex items-center space-x-2' onClick={() => setTheme('light')}>
                     {icon === 'bold' ? <i className='fi fi-rr-brightness'></i> : <i className='fi fi-tr-brightness'></i>}
                     <span>Light Mode</span>
-                </div>
+                </button>
             ) : (
-                <div className='flex items-center space-x-2' onClick={() => setTheme('dark')}>
+                <button className='flex items-center space-x-2' onClick={() => setTheme('dark')}>
                     {icon === 'bold' ? <i className='fi fi-rr-moon'></i> : <i className='fi fi-tr-moon'></i>}
                     <span>Dark Mode</span>
-                </div>
+                </button>
             )}
         </div>
     );
