@@ -53,11 +53,11 @@ function Pricing() {
     return (
         <div className='flex min-h-screen flex-col items-center gap-12 pt-24 pb-8'>
             <h1>Spend to Make.</h1>
-            <div className=' flex h-10 w-80 rounded-full bg-primary p-[2px] text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
-                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-full text-sm font-semibold transition duration-200 ${term == 'Monthly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} onClick={() => handleTerm('Monthly')}>
+            <div className=' flex h-10 w-80 rounded-xl bg-primary p-[2px] text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
+                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-xl text-sm font-semibold transition duration-200 ${term == 'Monthly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} onClick={() => handleTerm('Monthly')}>
                     Monthly
                 </div>
-                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-full text-sm font-semibold transition duration-200 ${term == 'Yearly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} id='optionYearly' onClick={() => handleTerm('Yearly')}>
+                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-xl text-sm font-semibold transition duration-200 ${term == 'Yearly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} id='optionYearly' onClick={() => handleTerm('Yearly')}>
                     <p>Yearly</p>
                     <div className='text-xs text-[#39c269] dark:text-[#39c269]'>
                         <strong>SAVE 20%</strong>
@@ -65,7 +65,7 @@ function Pricing() {
                 </div>
             </div>
             <div className='flex flex-wrap justify-center gap-8'>
-                <div className='flex h-[32rem] w-[18rem] flex-col rounded-3xl border border-primary p-1 dark:border-primary-dark'>
+                <div className='flex h-[32rem] w-[18rem] flex-col rounded-xl border border-primary p-1 dark:border-primary-dark'>
                     <div className='px-4 py-2'>
                         <div className='text-2xl'>Free</div>
                         <div className='text-sm'>No Credit Card required.</div>
@@ -88,7 +88,7 @@ function Pricing() {
                     )}
                 </div>
 
-                <div className='flex h-[32rem] w-[18rem] flex-col rounded-3xl bg-primary p-1 text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
+                <div className='flex h-[32rem] w-[18rem] flex-col rounded-xl bg-primary p-1 text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
                     <div className='px-4 py-2'>
                         <div className='text-2xl'>
                             <strong>Professional</strong>

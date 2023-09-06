@@ -1,8 +1,6 @@
 import Link from 'next/link';
-import DarkModeButtonIcon from '../DarkModeButtonIcon';
 import HeaderMenu from './HeaderMenu';
 import { useState } from 'react';
-import Image from 'next/image';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 function Header() {
@@ -27,13 +25,13 @@ function Header() {
                 </Link>
             </div>
             <div className='hidden flex-1 items-center justify-center space-x-6 lg:flex'>
-                <Link className='rounded-full px-6 py-2 transition duration-500 hover:bg-white/20' href='/features'>
+                <Link className='rounded-xl px-6 py-2 transition duration-500 hover:bg-white/20' href='/features'>
                     Features
                 </Link>
-                <Link className='rounded-full px-6 py-2 transition duration-500 hover:bg-white/20' href='/pricing'>
+                <Link className='rounded-xl px-6 py-2 transition duration-500 hover:bg-white/20' href='/pricing'>
                     Pricing
                 </Link>
-                <Link className='rounded-full px-6 py-2 transition duration-500 hover:bg-white/20' href='/basics'>
+                <Link className='rounded-xl px-6 py-2 transition duration-500 hover:bg-white/20' href='/basics'>
                     Basics
                 </Link>
             </div>

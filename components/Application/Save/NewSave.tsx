@@ -52,12 +52,12 @@ const NewSave = ({ isOpen, closeForm, saves, setSaves }: Props) => {
     const [type, setType] = useState('Deposit');
     if (isOpen) {
         return (
-            <div className='absolute top-0 left-0 h-screen w-screen text-primary dark:text-primary-dark'>
-                <div className='z-40 flex h-full justify-end'>
-                    <div className='h-full w-fit bg-secondary px-4 pt-6 shadow-sm dark:bg-[#1a1a1a]'>
+            <div className='absolute top-0 left-0 h-screen w-screen bg-gray-900/70 text-primary dark:text-primary-dark'>
+                <div className='z-40 flex h-screen items-center justify-center'>
+                    <div className='rounded-lg border-gray-700 bg-secondary py-4 px-6 shadow-md shadow-gray-400/30 dark:bg-[#1a1a1a]'>
                         <div className='mb-4 flex items-center justify-between'>
                             <h2 className='flex justify-center text-base'>New Savings Transaction</h2>
-                            <div className='absolute right-6 cursor-pointer text-gray-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
+                            <div className='relative right-2 cursor-pointer text-gray-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
                                 <i className='fi fi-rr-cross text-sm' />
                             </div>
                         </div>

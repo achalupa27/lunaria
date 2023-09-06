@@ -43,13 +43,11 @@ function Banner() {
             </ul>
             <div className='relative pt-12'>
                 <div className='flower-gradient absolute  animate-pulse' />
-                <Image className='relative' src='/blooming-flower.png' alt='' width={500} height={500} />
+                <Image className='relative' src='/blooming-flower-5.png' alt='' width={500} height={500} />
             </div>
             <div className='mt-12 flex flex-col items-center space-y-3 text-4xl font-extrabold md:text-6xl'>
                 <span className=''>Blooming Dreams. </span>
             </div>
-            <Image className='absolute left-[8%] bottom-[20%] opacity-75 blur-[2px]' src='/blooming-flower-2.png' alt='' width={120} height={120} />
-            <Image className='absolute right-[10%] top-[35%] opacity-75 blur-[1px]' src='/blooming-flower-3.png' alt='' width={120} height={120} />
             <PostBanner1 />
             <PostBanner2 />
             <PostBanner3 />

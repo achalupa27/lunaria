@@ -5,10 +5,7 @@ const HeaderMenu = () => {
     const user = true;
 
     return (
-        <div className='dark:border-ct-yellow dark:bg-ct-bg-dark dark:text-ct-yellow absolute top-16 z-50 w-48 rounded-2xl border bg-white p-1 text-black shadow-sm'>
-            <div className='basic-button'>
-                <DarkModeButton icon='bold' />
-            </div>
+        <div className='absolute top-16 z-50 w-48 rounded-2xl border bg-white p-1 text-black shadow-sm'>
             <Link href='/features' className='basic-button'>
                 <span>Features</span>
             </Link>

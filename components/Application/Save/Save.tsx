@@ -36,10 +36,10 @@ const Save = ({ saves }: Props) => {
     };
 
     return (
-        <div className='flex h-screen w-screen p-1'>
+        <div className='flex h-screen w-screen gap-2 p-2'>
             <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} saves={savesIn} setSaves={setSaves} />
-            <div className='ms-card flex flex-col items-center space-y-2 p-3'>
-                <button className='w-48 rounded-md border border-blue-300 p-2 text-blue-300 transition duration-200 hover:bg-blue-300 hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
+            <div className='ms-card flex flex-col items-center space-y-2 p-2'>
+                <button className='w-60 rounded-lg border border-blue-300 p-2 text-blue-300 transition duration-200 hover:bg-blue-300 hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
                     + Saving
                 </button>
                 <div className='space-y-2'>
@@ -48,11 +48,8 @@ const Save = ({ saves }: Props) => {
                     ))}
                 </div>
             </div>
-            <div>
-                <h1 className='py-8 text-center text-blue-300'>Saving</h1>
-                <div className='ms-card h-[400px] w-[800px] p-4 py-6'>
-                    <Line options={options} data={data} />
-                </div>
+            <div className='ms-card flex h-[400px] w-fit flex-1 p-4 py-6'>
+                <Line options={options} data={data} />
             </div>
         </div>
     );

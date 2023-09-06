@@ -7,7 +7,7 @@ function Layout({ children }: any) {
     const router = useRouter();
     if (router.pathname != '/dashboard') {
         return (
-            <div className='bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark'>
+            <div className='bg  text-primary-dark '>
                 <Head>
                     <title>lunaria - Personal Finance</title>
                 </Head>

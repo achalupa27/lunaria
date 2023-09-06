@@ -36,15 +36,9 @@ const Make = ({ makes }: Props) => {
     const [newMakeIsOpen, setNewMakeIsOpen] = useState(false);
 
     return (
-        <div className='flex h-screen w-screen p-4'>
+        <div className='flex h-screen w-screen gap-2 p-2'>
             <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makesIn} setMakes={setMakes} />
-            <div>
-                <h1 className='py-8 text-center text-green-300'>Making</h1>
-                <div className='h-[300px] w-[700px] rounded-2xl'>
-                    <Line options={options} data={data} />
-                </div>
-            </div>
-            <div className='flex flex-col items-center space-y-2 '>
+            <div className='ms-card flex flex-col items-center space-y-2 p-2'>
                 <button className='w-60 rounded-md border border-green-300 p-2 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
                     + Making
                 </button>
@@ -53,6 +47,9 @@ const Make = ({ makes }: Props) => {
                         <MakeReceipt key={make.id} make={make} />
                     ))}
                 </div>
+            </div>
+            <div className='ms-card flex h-[400px] w-fit flex-1 p-4 py-6'>
+                <Line options={options} data={data} />
             </div>
         </div>
     );

@@ -33,6 +33,11 @@ input[type='number'] {
     animation: banner 20s ease-in-out infinite;
 }
 
+.bg {
+    background: linear-gradient(to bottom, #000000, #000127);
+    background-size: 120% 120%;
+}
+
 @keyframes banner {
     0% {
         background-position: 50% 0%;
@@ -161,7 +166,7 @@ input[type='number'] {
     font-weight: 600;
     text-align: center;
     color: rgba(255, 255, 255, 0.9);
-    border-radius: 1000px;
+    border-radius: 12px;
     background: linear-gradient(-45deg, #338aff, #71bbf4, #087bd4);
     background-size: 600%;
     animation: anime 16s linear infinite;
