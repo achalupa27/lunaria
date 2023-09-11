@@ -40,10 +40,10 @@ const MakePanel = ({ makes }: { makes: Make[] }) => {
                 </button>
             </div>
             <div className='flex justify-between'>
-                <div>
+                <div className='h-fit'>
                     <Doughnut options={options} data={makeDoughnut} />
                 </div>
-                <div className='flex flex-col space-y-2'>
+                <div className='h-[200px] space-y-2 overflow-y-auto'>
                     {makesIn.map((make: Make) => (
                         <MakeReceipt key={make.id} make={make} />
                     ))}

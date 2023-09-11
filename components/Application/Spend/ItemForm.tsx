@@ -1,6 +1,6 @@
 const ItemForm = ({ control, index, remove, item }: any) => {
     return (
-        <div className='flex items-center'>
+        <div className='flex w-fit items-center '>
             <div className='space-y-1 rounded-md border border-primary/50 p-1 dark:border-primary/50 [&>div>div]:flex [&>div>div]:items-center [&>div]:space-x-1'>
                 <div className='flex items-center justify-between '>
                     <button className='basic-button w-32'>
@@ -19,7 +19,7 @@ const ItemForm = ({ control, index, remove, item }: any) => {
                 <input hidden readOnly {...control.register(`items[${index}].item_id`)} value={index} placeholder='ID' type='number' />
             </div>
             <i
-                className='fi fi-tr-square-minus ml-2 cursor-pointer text-xl text-primary/50 transition duration-200 hover:text-red-600 dark:text-primary/50'
+                className='fi fi-tr-square-minus '
                 onClick={() => {
                     remove(index);
                 }}

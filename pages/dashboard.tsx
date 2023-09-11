@@ -7,7 +7,7 @@ const App = ({ makes, saves, spends }: any) => {
     const [screen, setScreen] = useState('Dashboard');
 
     return (
-        <div className='flex h-screen w-screen dark:bg-[#2c2c2c]'>
+        <div className='flex h-screen w-screen dark:bg-gray-800'>
             <Sidebar screen={screen} setScreen={setScreen} />
             <Activity screen={screen} makes={makes} saves={saves} spends={spends} />
         </div>

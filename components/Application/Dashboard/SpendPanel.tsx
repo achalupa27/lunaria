@@ -35,15 +35,15 @@ const SpendPanel = ({ spends }: { spends: Spend[] }) => {
 
             <div className='flex justify-between pb-4'>
                 <h3 className='text-4xl text-yellow-300 dark:text-yellow-200'>Spending</h3>
-                <button className='w-48 rounded-md border border-yellow-200 text-yellow-200 transition duration-200 hover:bg-yellow-200 hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
+                <button className='w-48 rounded-lg border border-yellow-200 text-yellow-200 transition duration-200 hover:bg-yellow-200 hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
                     + Spending
                 </button>
             </div>
             <div className='flex justify-between'>
-                <div>
+                <div className='h-fit'>
                     <Doughnut options={options} data={spendDoughnut} />
                 </div>
-                <div className='space-y-2 overflow-y-auto'>
+                <div className='h-[200px] space-y-2 overflow-y-auto'>
                     {spendsIn.map((spend: Spend) => (
                         <SpendReceipt key={spend.id} spend={spend} />
                     ))}

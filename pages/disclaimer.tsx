@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Disclaimer = () => {
-    return <div>disclaimer</div>;
+    return <div className='min-h-screen'>disclaimer</div>;
 };
 
 export default Disclaimer;

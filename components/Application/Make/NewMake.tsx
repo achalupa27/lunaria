@@ -44,7 +44,7 @@ const NewMake = ({ isOpen, closeForm, makes, setMakes }: Props) => {
 
     if (isOpen) {
         return (
-            <div className='absolute top-0 left-0 h-screen w-screen  text-primary dark:text-primary-dark'>
+            <div className='absolute top-0 left-0 h-screen w-screen text-primary dark:text-primary-dark'>
                 <div className='z-40 flex h-full justify-end'>
                     <div className='h-full w-fit rounded-md bg-secondary p-2 pt-6 shadow-sm dark:bg-[#2c2c2c]'>
                         <div className='mb-4 flex items-center justify-between'>

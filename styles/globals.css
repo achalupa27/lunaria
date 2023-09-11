@@ -74,6 +74,6 @@
     }
 
     .ms-card {
-        @apply rounded-xl bg-gray-100  dark:bg-black;
+        @apply rounded-xl bg-gray-100 dark:bg-gray-900;
     }
 }

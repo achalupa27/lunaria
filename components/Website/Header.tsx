@@ -1,20 +1,11 @@
 import Link from 'next/link';
 import HeaderMenu from './HeaderMenu';
 import { useState } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 function Header() {
     const { data: session } = useSession();
     const [headerMenu, setHeaderMenu] = useState(false);
-
-    const handleSignIn = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.preventDefault();
-        await signIn();
-    };
-    const handleSignOut = async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.preventDefault();
-        await signOut();
-    };
 
     return (
         <header className='absolute top-0 left-0 z-20 flex w-full items-center bg-transparent p-4 px-6'>
@@ -45,9 +36,15 @@ function Header() {
             </div>
             {headerMenu && <div className='absolute top-0 left-0 z-40 h-screen w-screen bg-transparent' onClick={() => setHeaderMenu(false)}></div>}
             <div className='hidden basis-1/3 items-center justify-end space-x-2 lg:flex'>
-                <Link href={`${session ? '/dashboard' : '/dashboard'}`}>
-                    <div className='button-secondary'>{session ? 'Dashboard' : 'Sign In'}</div>
-                </Link>
+                {session ? (
+                    <Link href='/dashboard'>
+                        <div className='button-secondary'>Dashboard</div>
+                    </Link>
+                ) : (
+                    <button className='button-secondary' onClick={() => signIn()}>
+                        Sign In
+                    </button>
+                )}
             </div>
         </header>
     );

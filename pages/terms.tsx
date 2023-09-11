@@ -1,5 +1,5 @@
 const Terms = () => {
-    return <div>Terms</div>;
+    return <div className='min-h-screen'>Terms</div>;
 };
 
 export default Terms;

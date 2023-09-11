@@ -24,7 +24,7 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
         },
     };
 
-    const data = {
+    const data: any = {
         labels,
         datasets: [
             {
@@ -32,25 +32,28 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
                 data: makes.map((make) => make.amount),
                 borderColor: 'rgb(39, 220, 116)',
                 backgroundColor: 'rgb(39, 220, 116)',
+                cubicInterpolationMode: 'monotone',
             },
             {
                 label: 'Save',
                 data: saves.map((save) => save.amount),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgb(53, 162, 235)',
+                cubicInterpolationMode: 'monotone',
             },
             {
                 label: 'Spend',
                 data: spends.map((spend) => spend.amount),
                 borderColor: 'rgb(253, 224, 71)',
                 backgroundColor: 'rgb(253, 224, 71)',
+                cubicInterpolationMode: 'monotone',
             },
         ],
     };
 
     return (
         <div className='grid max-h-screen w-[calc(100vw-56px)] grid-cols-2 gap-2 p-2'>
-            <div className='ms-card'>
+            <div className='ms-card flex items-center justify-center p-4'>
                 <Line options={options} data={data} className='ms-card' />
             </div>
             <MakePanel makes={makes} />
