@@ -2,6 +2,7 @@ import Link from 'next/link';
 import HeaderMenu from './HeaderMenu';
 import { useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 function Header() {
     const { data: session } = useSession();
@@ -11,7 +12,7 @@ function Header() {
         <header className='absolute top-0 left-0 z-20 flex w-full items-center border-b border-white/10 bg-[#060012] p-4 px-6'>
             <div className='basis-1/3'>
                 <Link href='/' className='flex items-center space-x-2'>
-                    <img className='h-8 w-8' src='logo.png' />
+                    <Image className='h-8 w-8' src='logo.png' alt='logo' />
                     <span className='text-3xl font-semibold'>lunaria</span>
                 </Link>
             </div>

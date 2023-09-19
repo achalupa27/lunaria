@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 // import { bodyActivities, lifeActivities, mindActivities } from '@/constants';
+import Image from 'next/image';
 
 const Footer = () => {
     const [mounted, setMounted] = useState(false);
@@ -16,7 +17,7 @@ const Footer = () => {
         <footer className='mx-auto grid w-[95%] grid-cols-7 border-t border-white/10 bg-[#060012] py-16'>
             <div className='relative col-span-2 pl-8'>
                 <div className='flex'>
-                    <img src='/logo.png' className='h-12 w-12' />
+                    <Image src='/logo.png' alt='logo' className='h-12 w-12' />
                     <div className='pt-1 pl-2'>
                         <div className='text-3xl font-medium leading-none tracking-wide'>lunaria</div>
                         <div className='text-xs'>Your personal money database.</div>
