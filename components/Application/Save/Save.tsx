@@ -23,7 +23,7 @@ const Save = ({ saves }: Props) => {
         },
     };
 
-    const data = {
+    const data: any = {
         labels: saves.map((save: Save) => save.date),
         datasets: [
             {
@@ -31,6 +31,7 @@ const Save = ({ saves }: Props) => {
                 data: saves.map((save) => save.amount),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                cubicInterpolationMode: 'monotone',
             },
         ],
     };

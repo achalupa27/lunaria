@@ -8,10 +8,10 @@ function Header() {
     const [headerMenu, setHeaderMenu] = useState(false);
 
     return (
-        <header className='absolute top-0 left-0 z-20 flex w-full items-center bg-transparent p-4 px-6'>
+        <header className='absolute top-0 left-0 z-20 flex w-full items-center border-b border-white/10 bg-[#060012] p-4 px-6'>
             <div className='basis-1/3'>
                 <Link href='/' className='flex items-center space-x-2'>
-                    <div className='flex h-7 w-7 items-center justify-center rounded-full border border-white/70 bg-white/30 text-xl transition duration-500 hover:bg-white hover:shadow-xl hover:shadow-white'></div>
+                    <img className='h-8 w-8' src='logo.png' />
                     <span className='text-3xl font-semibold'>lunaria</span>
                 </Link>
             </div>

@@ -1,29 +1,37 @@
+import { spendingCategories } from '../../../data/constants';
+
 const ItemForm = ({ control, index, remove, item }: any) => {
     return (
-        <div className='flex w-fit items-center '>
-            <div className='space-y-1 rounded-md border border-primary/50 p-1 dark:border-primary/50 [&>div>div]:flex [&>div>div]:items-center [&>div]:space-x-1'>
-                <div className='flex items-center justify-between '>
-                    <button className='basic-button w-32'>
-                        <i className='fi fi-tr-hand-holding-usd' />
-                        <input {...control.register(`items[${index}].order_price`)} step='any' placeholder='Item' type='number' className='input-field w-24' />
-                    </button>
-                    <button className='basic-button w-16'>
-                        <i className='fi fi-tr-handshake' />
-                        <input {...control.register(`items[${index}].fill_price`)} step='any' placeholder='Price' type='number' className='input-field w-16' />
-                    </button>
-                    <button className='basic-button w-24'>
-                        <i className='fi fi-tr-coins' />
-                        <input {...control.register(`items[${index}].size`)} step='any' placeholder='Necessary?' type='number' className='input-field w-24' />
-                    </button>
+        <div className='relative flex items-center'>
+            <div className='py-1 [&>div>div]:flex [&>div>div]:items-center'>
+                <div className='flex w-fit items-center justify-between'>
+                    <i
+                        className='fi fi-rr-cross-small duration-50 mr-4 cursor-pointer text-gray-400 transition hover:text-red-500'
+                        onClick={() => {
+                            remove(index);
+                        }}
+                    />
+                    <div className='space-x-2'>
+                        <i className='fi fi-rr-hand-holding-box' />
+                        <input {...control.register(`items[${index}].item`)} step='any' placeholder='Item' type='number' className='input-field w-40' />
+                    </div>
+                    <div className='space-x-2'>
+                        <i className='fi fi-rr-dollar' />
+                        <input {...control.register(`items[${index}].price`)} step='any' placeholder='Price' type='number' className='input-field w-16' />
+                    </div>
+                    <div className='mr-2 space-x-2'>
+                        <i className='fi fi-rr-apps-sort' />
+                        <select {...control.register(`items[${index}].category`)} step='any' placeholder='Category' type='text' className='input-field w-20'>
+                            {spendingCategories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
                 <input hidden readOnly {...control.register(`items[${index}].item_id`)} value={index} placeholder='ID' type='number' />
             </div>
-            <i
-                className='fi fi-tr-square-minus '
-                onClick={() => {
-                    remove(index);
-                }}
-            />
         </div>
     );
 };

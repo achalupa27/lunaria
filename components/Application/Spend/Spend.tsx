@@ -24,7 +24,7 @@ const Spend = ({ spends }: Props) => {
         },
     };
 
-    const data = {
+    const data: any = {
         labels: spends.map((spends: Spend) => spends.date),
         datasets: [
             {
@@ -32,6 +32,7 @@ const Spend = ({ spends }: Props) => {
                 data: spends.map((spend) => spend.amount),
                 borderColor: 'rgb(253, 224, 71)',
                 backgroundColor: 'rgba(253, 224, 71, 0.5)',
+                cubicInterpolationMode: 'monotone',
             },
         ],
     };

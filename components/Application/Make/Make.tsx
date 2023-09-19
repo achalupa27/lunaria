@@ -21,7 +21,7 @@ const Make = ({ makes }: Props) => {
         },
     };
 
-    const data = {
+    const data: any = {
         labels: makes.map((make: Make) => make.date),
         datasets: [
             {
@@ -29,6 +29,7 @@ const Make = ({ makes }: Props) => {
                 data: makes.map((make) => make.amount),
                 borderColor: 'rgb(39, 220, 116)',
                 backgroundColor: 'rgba(39, 220, 116, 0.5)',
+                cubicInterpolationMode: 'monotone',
             },
         ],
     };

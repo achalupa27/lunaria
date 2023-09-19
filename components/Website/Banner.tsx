@@ -1,10 +1,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import PostBanner1 from './PostBanner1';
-import PostBanner2 from './PostBanner2';
-import PostBanner3 from './PostBanner3';
 
 function Banner() {
     const [mounted, setMounted] = useState(false);
@@ -19,9 +15,13 @@ function Banner() {
     }
 
     return (
-        <div className='banner flex min-h-screen flex-col items-center'>
-            <div className='mt-32 flex flex-col items-center space-y-3 text-4xl font-extrabold md:text-6xl'>
-                <span className=''>Blossoming Finances. </span>
+        <div className='flex min-h-screen flex-col items-center bg-gradient-to-b from-[#0a0817] to-[#060012]'>
+            <div className='mt-52 mb-12 font-semibold xl:text-4xl'>Looking to organize your money?</div>
+            <div className=''>
+                <span className='bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-4xl font-semibold tracking-tighter text-transparent md:text-6xl lg:text-8xl'>Welcome to your </span>
+            </div>
+            <div className=''>
+                <span className='bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-4xl font-semibold tracking-tighter text-transparent md:text-6xl lg:text-8xl'>Personal Money Database. </span>
             </div>
             <div className='stars-container absolute top-0 left-0 z-10'>
                 <div className='stars'></div>
@@ -29,44 +29,60 @@ function Banner() {
                 <div className='stars'></div>
                 <div className='stars'></div>
             </div>
-            <ul className='circles [&li>]rounded-full [&>li>]border z-0'>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <div className='relative pt-12'>
-                <div className='flower-gradient absolute  animate-pulse' />
-                <Image className='relative' src='/blooming-flower-5.png' alt='' width={500} height={500} />
+            <div className='mt-12 flex flex-col items-center'>
+                <span className='text-2xl text-gray-400'>Keep track of your finances.</span>
+                <span className='text-2xl text-gray-400'>Watch your money grow.</span>
             </div>
-            <div className='mt-12 flex flex-col items-center space-y-3 text-4xl font-extrabold md:text-6xl'>
-                <span className=''>Blooming Dreams. </span>
-            </div>
-            <PostBanner1 />
-            <PostBanner2 />
-            <PostBanner3 />
-            <div className='z-10 mb-24 mt-12 flex'>
+            <div className='z-10 mb-24 mt-24 flex'>
                 {session ? (
                     <Link href='/dashboard'>
                         <div className='flex items-center justify-center'>
-                            <button className='btn transition duration-200 hover:scale-105'>Open Dashboard</button>
-                            <button className='btn2'></button>
+                            <button className='btn font-regular text-zinc-900 hover:border'>
+                                Open Dashboard
+                                <i className='fi fi-bs-angle-right pl-2 text-base text-zinc-700' />
+                            </button>
+                            <button className='btn2 transition duration-200 group-hover:visible'></button>
                         </div>
                     </Link>
                 ) : (
                     <Link href='/register'>
-                        <div className='flex items-center justify-center'>
-                            <button className='btn transition duration-200 hover:scale-105'>Start Your Journey</button>
-                            <button className='btn2'></button>
+                        <div className='group flex items-center justify-center'>
+                            <button className='button-primary-alt text-zinc-900 hover:border'>
+                                Get Started
+                                <i className='fi fi-bs-angle-right pl-2 text-zinc-700' />
+                            </button>
+                            <button className='btn2 transition duration-200 group-hover:visible'></button>
                         </div>
                     </Link>
                 )}
+            </div>
+            <div className='text-3xl font-medium'>People who use lunaria...</div>
+            <div className='mb-36 mt-12 flex space-x-24'>
+                <div className='flex h-52 w-72 flex-col items-center justify-center rounded-xl border-4 border-[#99f5d1] bg-[#99f5d1]/5'>
+                    <div className='text-6xl font-semibold text-[#99f5d1]'>73%</div>
+                    <div className='flex flex-col items-center text-xl'>
+                        <span>add another</span>
+                        <span className='font-semibold text-[#99f5d1]'>income source</span>
+                    </div>
+                </div>
+                <div className='flex h-52 w-72 flex-col items-center justify-center rounded-xl border-4 border-[#93c5fd] bg-[#93c5fd]/5'>
+                    <div className='text-6xl font-semibold text-[#93c5fd]'>91%</div>
+                    <div className='flex flex-col items-center text-xl'>
+                        <span>see their</span>
+                        <span className='font-semibold text-[#93c5fd]'>savings grow</span>
+                    </div>
+                </div>
+                <div className='flex h-52 w-72 flex-col items-center justify-center rounded-xl border-4 border-[#f7ebc0] bg-[#f7ebc0]/5'>
+                    <div className='text-6xl font-semibold text-[#f7ebc0]'>58%</div>
+                    <div className='flex flex-col items-center text-xl'>
+                        <span>improve their</span>
+                        <span className='font-semibold text-[#f7ebc0]'>spending habits</span>
+                    </div>
+                </div>
+            </div>
+            <div className='mb-8 flex flex-col text-gray-600'>
+                <span className='text-xl font-semibold italic'>lunaria annua</span>
+                <span className='-mt-2'>the silver dollar plant</span>
             </div>
         </div>
     );

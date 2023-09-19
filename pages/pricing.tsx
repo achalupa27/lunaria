@@ -51,8 +51,8 @@ function Pricing() {
     };
 
     return (
-        <div className='flex min-h-screen flex-col items-center gap-12 pt-24 pb-8'>
-            <h1>Spend to Make.</h1>
+        <div className='flex min-h-screen flex-col items-center gap-12 pt-32 pb-12'>
+            <h1 className='bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-4xl font-semibold tracking-tighter text-transparent md:text-6xl'>Start Today.</h1>
             <div className=' flex h-10 w-80 rounded-xl bg-primary p-[2px] text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
                 <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-xl text-sm font-semibold transition duration-200 ${term == 'Monthly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} onClick={() => handleTerm('Monthly')}>
                     Monthly
@@ -88,7 +88,7 @@ function Pricing() {
                     )}
                 </div>
 
-                <div className='flex h-[32rem] w-[18rem] flex-col rounded-xl bg-primary p-1 text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
+                <div className='flex h-[32rem] w-[18rem] flex-col rounded-xl bg-gradient-to-br from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] p-1 text-primary '>
                     <div className='px-4 py-2'>
                         <div className='text-2xl'>
                             <strong>Professional</strong>
@@ -103,12 +103,12 @@ function Pricing() {
                         ))}
                     </div>
                     {user ? (
-                        <button className='button-primary-alt hover:translate-y-[6px]' onClick={() => purchaseSubscription('Professional', selectedTerm)}>
+                        <button className='button-primary w-full' onClick={() => purchaseSubscription('Professional', selectedTerm)}>
                             Start Trial
                         </button>
                     ) : (
                         <Link href='/register'>
-                            <button className='button-primary-alt w-full hover:translate-y-[6px]'>Sign Up</button>
+                            <button className='button-primary w-full'>Sign Up</button>
                         </Link>
                     )}
                 </div>

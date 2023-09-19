@@ -19,23 +19,23 @@
 
 @layer components {
     .button-primary {
-        @apply flex items-center justify-center rounded-xl border border-primary bg-primary px-4 py-2 text-secondary transition duration-200 hover:scale-105 hover:shadow-md active:scale-90 dark:border-primary-dark dark:bg-primary-dark dark:text-secondary-dark;
+        @apply flex items-center justify-center rounded-xl border border-primary bg-primary px-4 py-2 text-secondary transition duration-200 hover:bg-primary/80 hover:shadow-md;
     }
 
     .button-primary-alt {
-        @apply flex items-center justify-center rounded-xl border border-secondary bg-secondary px-4 py-2 text-primary transition duration-200 hover:scale-105 hover:shadow-md active:scale-90 dark:border-secondary-dark dark:bg-secondary-dark dark:text-primary-dark;
+        @apply flex items-center justify-center rounded-full border border-secondary bg-secondary px-4 py-2 text-primary transition duration-200 hover:bg-gray-100 hover:shadow-md;
     }
 
     .button-secondary {
-        @apply flex items-center justify-center rounded-xl bg-white/20 px-6 py-2 text-primary transition duration-500 hover:bg-primary hover:text-secondary  dark:text-primary-dark dark:hover:bg-primary-dark dark:hover:text-secondary-dark;
+        @apply flex items-center justify-center rounded-xl border border-secondary bg-transparent px-6 py-2 text-secondary transition duration-500 hover:bg-secondary hover:text-primary;
     }
 
     .button-secondary-alt {
-        @apply border-ct-blue hover:bg-ct-blue dark:border-ct-bg-dark dark:text-ct-bg-dark dark:hover:bg-ct-bg-dark dark:hover:text-ct-yellow flex items-center justify-center rounded-xl border bg-transparent px-4 py-2  transition duration-500 hover:text-white;
+        @apply flex items-center justify-center rounded-xl border bg-transparent px-4 py-2 transition duration-500 hover:text-white;
     }
 
     .button-highlight {
-        @apply flex h-7 w-32 items-center justify-center rounded bg-gradient-to-r from-amber-500 to-yellow-500 text-[0.75rem] font-medium text-secondary dark:text-primary;
+        @apply flex h-7 w-32 items-center justify-center rounded bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] text-[0.75rem] font-medium text-primary;
     }
 
     .input-auth {
@@ -49,6 +49,7 @@
     .ct-card {
         @apply dark:bg-ct-bg-dark rounded border bg-white p-1;
     }
+
     .main-hover {
         @apply transition duration-200 hover:bg-primary/20 dark:hover:bg-primary-dark/20;
     }
@@ -66,7 +67,7 @@
     }
 
     .input-field {
-        @apply text-selected bg-transparent outline-none transition duration-200 placeholder:normal-case placeholder:text-gray-600 focus:text-primary dark:placeholder:text-[#a39e93] dark:focus:text-primary-dark;
+        @apply text-selected bg-transparent outline-none transition duration-200 placeholder:normal-case placeholder:text-gray-600 focus:text-primary dark:placeholder:text-gray-400 dark:focus:text-primary-dark;
     }
 
     .read-input {
@@ -75,5 +76,9 @@
 
     .ms-card {
         @apply rounded-xl bg-gray-100 dark:bg-gray-900;
+    }
+
+    .footer-link {
+        @apply w-fit rounded py-[2px] px-2 transition duration-200 hover:underline;
     }
 }
