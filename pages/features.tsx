@@ -14,9 +14,14 @@ const Features = () => {
             <h2 className='flex w-full justify-center'>Start improving today.</h2>
             <div className='flex w-full justify-center'>
                 {user ? null : (
-                    <Link href='/register' className='button-primary-alt w-52 space-x-2 font-semibold'>
-                        <span>Get Started</span>
-                        <i className='fi fi-rr-arrow-right'></i>
+                    <Link href='/pricing'>
+                        <div className='group flex items-center justify-center'>
+                            <button className='button-primary-alt px-8 py-3 font-medium text-zinc-900 hover:border'>
+                                Get Started
+                                <i className='fi fi-bs-angle-right pl-2 text-zinc-700' />
+                            </button>
+                            <button className='btn2 transition duration-200 group-hover:visible'></button>
+                        </div>
                     </Link>
                 )}
             </div>

@@ -13,9 +13,9 @@ module.exports = {
                 'primary-hover': '#189e51',
                 'primary-dark-hover': '#18f074',
 
-                'ms-blue': '#36A2EB',
-                'ms-blue-hover': '#1a8edc',
-                'ms-blue-dark-hover': '#63b6ee',
+                'l-green': '#99f5d1',
+                'l-blue': '#93c5fd',
+                'l-yellow': '#f7ebc0',
             },
         },
     },

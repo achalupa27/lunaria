@@ -9,7 +9,7 @@ function Header() {
     const [headerMenu, setHeaderMenu] = useState(false);
 
     return (
-        <header className='absolute top-0 left-0 z-20 flex w-full items-center border-b border-white/10 bg-[#060012] p-4 px-6'>
+        <header className='absolute top-0 left-0 z-20 flex w-full items-center border-b border-blue-900/20 bg-[#060012] p-4 px-6'>
             <div className='basis-1/3'>
                 <Link href='/' className='flex w-fit items-center space-x-2'>
                     <Image className='h-8 w-8' src='/logo.png' alt='logo' width={32} height={32} />
@@ -23,9 +23,9 @@ function Header() {
                 <Link className='rounded-xl px-6 py-2 transition duration-500 hover:bg-white/20' href='/pricing'>
                     Pricing
                 </Link>
-                <Link className='rounded-xl px-6 py-2 transition duration-500 hover:bg-white/20' href='/basics'>
+                {/* <Link className='rounded-xl px-6 py-2 transition duration-500 hover:bg-white/20' href='/basics'>
                     Basics
-                </Link>
+                </Link> */}
             </div>
             <div className='flex basis-1/3 lg:hidden'></div>
             <div className='flex basis-1/3 justify-end lg:hidden'>

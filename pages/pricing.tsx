@@ -53,22 +53,25 @@ function Pricing() {
     return (
         <div className='flex min-h-screen flex-col items-center gap-12 pt-32 pb-12'>
             <h1 className='bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-4xl font-semibold tracking-tighter text-transparent md:text-6xl'>Start Today.</h1>
-            <div className=' flex h-10 w-80 rounded-xl bg-primary p-[2px] text-secondary dark:bg-primary-dark dark:text-secondary-dark'>
-                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-xl text-sm font-semibold transition duration-200 ${term == 'Monthly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} onClick={() => handleTerm('Monthly')}>
-                    Monthly
-                </div>
-                <div className={`flex w-1/2 items-center justify-center space-x-2 rounded-xl text-sm font-semibold transition duration-200 ${term == 'Yearly' ? ' bg-secondary text-primary dark:bg-secondary-dark dark:text-primary-dark' : ''}`} id='optionYearly' onClick={() => handleTerm('Yearly')}>
-                    <p>Yearly</p>
-                    <div className='text-xs text-[#39c269] dark:text-[#39c269]'>
-                        <strong>SAVE 20%</strong>
+            <div className='relative flex h-10 w-80 items-center justify-center rounded-xl bg-gradient-to-br from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] p-[2px] text-secondary'>
+                <div className='absolute flex h-[38px] w-[318px] items-center justify-center rounded-xl bg-primary p-[2px] text-primary'>
+                    <div className={`flex h-[34px] w-1/2 items-center justify-center space-x-2 rounded-xl text-sm font-semibold transition duration-200 ${term == 'Monthly' ? ' bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] text-primary' : 'text-secondary'}`} onClick={() => handleTerm('Monthly')}>
+                        Monthly
+                    </div>
+                    <div className={`flex h-[34px] w-1/2 items-center justify-center space-x-2 rounded-xl text-sm font-semibold transition duration-200 ${term == 'Yearly' ? 'bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] text-primary' : 'text-secondary'}`} id='optionYearly' onClick={() => handleTerm('Yearly')}>
+                        <p>Yearly</p>
+                        <div className={`text-xs  ${term === 'Yearly' ? 'text-primary' : 'text-[#39c269]'}`}>
+                            <strong>SAVE 20%</strong>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className='flex flex-wrap justify-center gap-8'>
-                <div className='flex h-[32rem] w-[18rem] flex-col rounded-xl border border-primary p-1 dark:border-primary-dark'>
-                    <div className='px-4 py-2'>
-                        <div className='text-2xl'>Free</div>
-                        <div className='text-sm'>No Credit Card required.</div>
+            <div className='relative flex flex-wrap justify-center gap-8'>
+                {/* <div className='flex h-[32rem] w-[20rem] flex-col items-center justify-center rounded-xl bg-gradient-to-br from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] text-primary '> */}
+                <div className='flex h-[calc(32rem-2px)] w-[calc(20rem-2px)] flex-col rounded-xl border border-white bg-primary p-1 text-secondary'>
+                    <div className='items flex flex-col items-center px-4 py-2'>
+                        <div className='text-3xl'>Free</div>
+                        <div className='text-sm '>No Credit Card required.</div>
                     </div>
                     <div className='grow px-2'>
                         {freeFeatures.map((feature, i) => (
@@ -78,20 +81,20 @@ function Pricing() {
                         ))}
                     </div>
                     {user ? (
-                        <Link href='/app'>
-                            <button className={`button-secondary w-full`}>Go to Map</button>
+                        <Link href='/dashboard'>
+                            <button className={`button-secondary w-full`}>Dashboard</button>
                         </Link>
                     ) : (
-                        <Link href='/authenticate'>
+                        <Link href='/dashboard'>
                             <button className={`button-secondary w-full`}>Sign Up</button>
                         </Link>
                     )}
                 </div>
-
-                <div className='flex h-[32rem] w-[18rem] flex-col rounded-xl bg-gradient-to-br from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] p-1 text-primary '>
-                    <div className='px-4 py-2'>
-                        <div className='text-2xl'>
-                            <strong>Professional</strong>
+                {/* </div> */}
+                <div className='flex h-[32rem] w-[20rem] flex-col rounded-xl bg-gradient-to-br from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] p-1 text-primary '>
+                    <div className='items flex flex-col items-center px-4 py-2'>
+                        <div className='text-3xl'>
+                            <strong>Pro</strong>
                         </div>
                         <div className='text-sm'>{term === 'Monthly' ? '$9.95' : '$7.95'} USD per month</div>
                     </div>
@@ -107,15 +110,16 @@ function Pricing() {
                             Start Trial
                         </button>
                     ) : (
-                        <Link href='/register'>
+                        <Link href='/dashboard'>
                             <button className='button-primary w-full'>Sign Up</button>
                         </Link>
                     )}
                 </div>
             </div>
             <div className='flex flex-col items-center justify-center px-6'>
-                <p className='text-xl'>Could managing your money save you $8 a month?</p>
-                {/* <p className='mt-1 text-center text-xs'>If yo.</p> */}
+                <p className='text-xl'>
+                    Become <strong>your own</strong> financial advisor.
+                </p>
             </div>
         </div>
     );

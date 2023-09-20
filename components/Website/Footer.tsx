@@ -14,7 +14,7 @@ const Footer = () => {
     }
 
     return (
-        <footer className='mx-auto grid w-[95%]  border-t border-white/10 bg-[#060012] py-16 xl:grid-cols-7'>
+        <footer className='mx-auto grid w-[95%]  border-t border-blue-900/20 bg-[#060012] py-16 xl:grid-cols-7'>
             <div className='relative col-span-2 pl-8 pb-12'>
                 <div className='flex'>
                     <Image src='/logo.png' alt='logo' className='h-12 w-12' width={48} height={48} />
