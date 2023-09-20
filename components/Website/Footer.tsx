@@ -14,10 +14,10 @@ const Footer = () => {
     }
 
     return (
-        <footer className='mx-auto grid w-[95%] grid-cols-7 border-t border-white/10 bg-[#060012] py-16'>
-            <div className='relative col-span-2 pl-8'>
+        <footer className='mx-auto grid w-[95%]  border-t border-white/10 bg-[#060012] py-16 xl:grid-cols-7'>
+            <div className='relative col-span-2 pl-8 pb-12'>
                 <div className='flex'>
-                    <Image src='/logo.png' alt='logo' className='h-12 w-12' />
+                    <Image src='/logo.png' alt='logo' className='h-12 w-12' width={48} height={48} />
                     <div className='pt-1 pl-2'>
                         <div className='text-3xl font-medium leading-none tracking-wide'>lunaria</div>
                         <div className='text-xs'>Your personal money database.</div>
