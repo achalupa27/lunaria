@@ -10,10 +10,10 @@ const EditSpend = ({ isOpen, closeForm }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
         console.log('Raw transaction: ', transaction);
-        addSave(transaction);
+        addSpend(transaction);
     };
 
-    async function addSave(transaction: Spend) {
+    async function addSpend(transaction: Spend) {
         try {
             const response = await fetch('/api/add-spend', {
                 method: 'POST',
@@ -22,7 +22,7 @@ const EditSpend = ({ isOpen, closeForm }: Props) => {
                 },
                 body: JSON.stringify({
                     store: transaction.store,
-                    amount: transaction.amount,
+                    total: transaction.total,
                     date: transaction.date,
                 }),
             });
@@ -66,7 +66,7 @@ const EditSpend = ({ isOpen, closeForm }: Props) => {
                             </div>
                             <button type='submit' className='cta-button w-full'>
                                 <i className='fi fi-rr-check'></i>
-                                <label>Save</label>
+                                <label>Spend</label>
                             </button>
                         </form>
                     </div>

@@ -3,15 +3,13 @@ import NewSave from './NewSave';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import SaveReceipt from './SaveReceipt';
+import { useAppSelector } from '@/redux/hooks';
+import { selectSaving } from '@/redux/slices/saveSlice';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-type Props = {
-    saves: Save[];
-};
-
-const Save = ({ saves }: Props) => {
-    const [savesIn, setSaves] = useState(saves);
+const Save = () => {
+    const saves = useAppSelector(selectSaving);
     const [newSaveIsOpen, setNewSaveIsOpen] = useState(false);
 
     const options = {
@@ -38,13 +36,13 @@ const Save = ({ saves }: Props) => {
 
     return (
         <div className='flex h-screen w-screen gap-2 p-2'>
-            <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} saves={savesIn} setSaves={setSaves} />
+            <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} />
             <div className='ms-card flex flex-col items-center space-y-2 p-2'>
-                <button className='w-60 rounded-lg border border-blue-300 p-2 text-blue-300 transition duration-200 hover:bg-blue-300 hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
+                <button className='w-60 rounded-lg border border-l-blue p-2 text-l-blue transition duration-200 hover:bg-l-blue hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
                     + Saving
                 </button>
                 <div className='space-y-2'>
-                    {savesIn.map((save: any) => (
+                    {saves.map((save: any) => (
                         <SaveReceipt key={save.id} save={save} />
                     ))}
                 </div>

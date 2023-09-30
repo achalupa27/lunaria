@@ -5,11 +5,9 @@ import { useState } from 'react';
 type Props = {
     isOpen: boolean;
     closeForm: any;
-    saves: Save[];
-    setSaves: any;
 };
 
-const NewSave = ({ isOpen, closeForm, saves, setSaves }: Props) => {
+const NewSave = ({ isOpen, closeForm }: Props) => {
     const {
         register,
         control,
@@ -20,8 +18,8 @@ const NewSave = ({ isOpen, closeForm, saves, setSaves }: Props) => {
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
         addSave(transaction);
         closeForm();
-        let newSaves = [...saves, transaction];
-        setSaves(newSaves);
+        // let newSaves = [...saves, transaction];
+        // setSaves(newSaves);
     };
 
     async function addSave(transaction: Save) {

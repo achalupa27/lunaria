@@ -1,39 +1,39 @@
-type Receipt = {
-    store: string;
-    cost: number;
-    category: SpendingCategory;
-    items: Item[];
-};
-
 type Make = {
-    id?: string;
+    id: string;
+    user_id: string;
+    date: string;
     source: string;
     amount: number;
-    date: string;
 };
 
 type Save = {
-    id?: string;
-    type: string;
-    amount: number;
+    id: string;
+    user_id: string;
     date: string;
+    type: 'Withdrawal' | 'Deposit';
+    account: string;
+    amount: number;
 };
 
 type Spend = {
-    id?: string;
-    store: string;
-    amount: number;
+    id: string;
+    user_id: string;
     date: string;
+    store: string;
+    total: number;
+    items: SpendingItem[];
+};
+
+type SpendingItem = {
+    id: string;
+    item: string;
+    price: number;
+    category: SpendingCategory;
 };
 
 type SpendingCategory = 'Rent' | 'Student Loans' | 'Food' | 'Home' | 'Hygiene' | 'Fitness' | 'Transportation' | 'Subscriptions' | 'Clothing' | 'Electronics';
 
-type Item = {
-    name: string;
-    price: number;
-};
-
-type Feature = {
+type FeatureItem = {
     img: string;
     name: string;
     description: string;

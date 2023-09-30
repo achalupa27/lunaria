@@ -107,7 +107,7 @@ function Banner() {
                         <span className='text-4xl font-semibold italic'>Lunaria annua</span>
                         <span className='-mt-2'>• the money plant</span>
                         <span className='pt-14'>
-                            Lunaria annua is commonly called honesty. <br /> A needed trait for you to develop with your money.
+                            Lunaria annua is commonly called honesty. <br /> Honesty with money makes you rich.
                         </span>
                     </div>
                 </div>

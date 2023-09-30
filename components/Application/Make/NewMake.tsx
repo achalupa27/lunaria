@@ -3,18 +3,16 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 type Props = {
     isOpen: boolean;
     closeForm: any;
-    makes: Make[];
-    setMakes: any;
 };
 
-const NewMake = ({ isOpen, closeForm, makes, setMakes }: Props) => {
+const NewMake = ({ isOpen, closeForm }: Props) => {
     const { register, handleSubmit } = useForm();
 
     const onSubmit: SubmitHandler<any> = (transaction: Make) => {
         addSave(transaction);
         closeForm();
-        let newMakes = [...makes, transaction];
-        setMakes(newMakes);
+        // let newMakes = [...makes, transaction];
+        // setMakes(newMakes);
     };
 
     async function addSave(transaction: Make) {

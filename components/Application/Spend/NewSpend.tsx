@@ -4,11 +4,9 @@ import ItemForm from './ItemForm';
 type Props = {
     isOpen: boolean;
     closeForm: any;
-    spends: Spend[];
-    setSpends: any;
 };
 
-const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
+const NewSpend = ({ isOpen, closeForm }: Props) => {
     const {
         register,
         control,
@@ -19,8 +17,8 @@ const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
         addSpend(transaction);
         closeForm();
-        let newSpends = [...spends, transaction];
-        setSpends(newSpends);
+        // let newSpends = [...spends, transaction];
+        // setSpends(newSpends);
     };
 
     async function addSpend(transaction: Spend) {
@@ -32,7 +30,7 @@ const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
                 },
                 body: JSON.stringify({
                     store: transaction.store,
-                    amount: transaction.amount,
+                    total: transaction.total,
                     date: transaction.date,
                 }),
             });
@@ -59,14 +57,13 @@ const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
 
     if (isOpen) {
         return (
-            <div className='absolute top-0 left-0 z-40 flex h-screen w-screen items-center justify-center bg-gray-900/60 text-primary dark:text-primary-dark'>
-                <div className='z-50 rounded-lg border-gray-700 bg-secondary py-12 px-16 dark:bg-gray-800'>
+            <div className='absolute top-0 left-0 z-40 flex h-screen w-screen items-center justify-center bg-slate-900/40 text-primary dark:text-primary-dark'>
+                <div className='z-50 rounded-lg border border-l-yellow bg-secondary py-12 px-12 pb-10 shadow-lg shadow-l-green/10 dark:bg-slate-900'>
                     <div className='text-[14px] font-light'>
                         <div className='mb-4 flex items-center justify-between'>
-                            <div className='basis-1/3'></div>
-                            <h2 className='text-selected flex w-full justify-center text-base'>Track Spending</h2>
-                            <div className='flex basis-1/3 cursor-pointer justify-end text-gray-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
-                                <i className='fi fi-rr-cross text-sm'></i>
+                            <h2 className='flex w-full text-base text-l-yellow'>New Spending Transaction</h2>
+                            <div className='flex cursor-pointer justify-end text-slate-500 transition duration-200 hover:text-red-600' onClick={closeForm}>
+                                <i className='fi fi-rr-cross text-xs'></i>
                             </div>
                         </div>
                         <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
@@ -81,7 +78,7 @@ const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
                                     <ItemForm key={item.id} control={control} index={i} remove={removeItem} />
                                 ))}
                             </div>
-                            <div className='flex justify-between border-t border-gray-400/50 pt-4'>
+                            <div className='flex justify-between space-x-4 border-t border-slate-600/50 pt-4'>
                                 <div className='flex items-center space-x-2'>
                                     <i className='fi fi-rr-shop'></i>
                                     <span className='text-xs font-medium uppercase'>Store</span>
@@ -90,16 +87,16 @@ const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
                                     <input {...register('store')} placeholder='Store*' className='input-field text-right' required />
                                 </div>
                             </div>
-                            <div className='flex justify-between'>
+                            <div className='flex justify-between space-x-4'>
                                 <div className='flex items-center space-x-2'>
                                     <i className='fi fi-rr-dollar'></i>
                                     <span className='text-xs font-medium uppercase'>Total</span>
                                 </div>
-                                <div className='basic-button w-fit '>
-                                    <input {...register('amount')} placeholder='Total' type='number' className='input-field text-right' required />
+                                <div className='basic-button w-fit'>
+                                    <input {...register('total')} placeholder='Total' type='number' className='input-field text-right' required />
                                 </div>
                             </div>
-                            <div className='flex justify-between pb-6'>
+                            <div className='flex justify-between space-x-6 pb-6'>
                                 <div className='flex items-center space-x-2'>
                                     <i className='fi fi-rr-calendar'></i>
                                     <span className='text-xs font-medium uppercase'>Date</span>
@@ -109,7 +106,7 @@ const NewSpend = ({ isOpen, closeForm, spends, setSpends }: Props) => {
                                 </div>
                             </div>
 
-                            <button type='submit' className='cta-button w-full'>
+                            <button type='submit' className='flex w-full items-center justify-center space-x-1 rounded-lg bg-l-yellow py-2 dark:text-primary'>
                                 <i className='fi fi-rr-check'></i>
                                 <span>Save</span>
                             </button>

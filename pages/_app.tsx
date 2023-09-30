@@ -7,6 +7,8 @@ import ProgressBar from '@badrap/bar-of-progress';
 import { ThemeProvider } from 'next-themes';
 import { Analytics } from '@vercel/analytics/react';
 import { SessionProvider } from 'next-auth/react';
+import { Provider } from 'react-redux';
+import { store } from '@/redux/store';
 
 const progress = new ProgressBar({
     size: 4,
@@ -21,11 +23,13 @@ Router.events.on('routeChangeError', progress.finish);
 
 function App({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider enableSystem={false} attribute='class'>
+        <ThemeProvider defaultTheme='dark' enableSystem={false} attribute='class'>
             <SessionProvider session={pageProps.session}>
                 <Layout>
-                    <Component {...pageProps} />
-                    <Analytics />
+                    <Provider store={store}>
+                        <Component {...pageProps} />
+                        <Analytics />
+                    </Provider>
                 </Layout>
             </SessionProvider>
         </ThemeProvider>

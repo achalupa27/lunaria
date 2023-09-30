@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import Sidebar from '../components/Application/Sidebar';
 import client from '../mongoClient';
 import Activity from '../components/Application/Activity';
+import { useAppDispatch } from '@/redux/hooks';
+import { setMaking } from '@/redux/slices/makeSlice';
+import { setSaving } from '@/redux/slices/saveSlice';
+import { setSpending } from '@/redux/slices/spendSlice';
 
 const App = ({ makes, saves, spends }: any) => {
-    const [screen, setScreen] = useState('Dashboard');
+    const dispatch = useAppDispatch();
+    dispatch(setMaking(makes));
+    dispatch(setSaving(saves));
+    dispatch(setSpending(spends));
 
     return (
-        <div className='flex h-screen w-screen dark:bg-gray-800'>
-            <Sidebar screen={screen} setScreen={setScreen} />
-            <Activity screen={screen} makes={makes} saves={saves} spends={spends} />
+        <div className='flex h-screen w-screen bg-slate-50 dark:bg-slate-900'>
+            <Sidebar />
+            <Activity />
         </div>
     );
 };

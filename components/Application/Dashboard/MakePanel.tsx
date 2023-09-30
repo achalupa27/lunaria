@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MakeReceipt from '../Make/MakeReceipt';
 import { Doughnut } from 'react-chartjs-2';
 import NewMake from '../Make/NewMake';
+import { useAppSelector } from '@/redux/hooks';
+import { selectMaking } from '@/redux/slices/makeSlice';
+import Image from 'next/image';
+import { useTheme } from 'next-themes';
 
 const options = {
     responsive: true,
@@ -18,37 +22,56 @@ export const makeDoughnut = {
         {
             label: '# of Votes',
             data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+            backgroundColor: ['#99f5d1', '#99f5d1', '#99f5d1', '#99f5d1', '#99f5d1', '#99f5d1'],
             borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
-            borderWidth: 1,
+            borderWidth: 5,
         },
     ],
 };
 
-const MakePanel = ({ makes }: { makes: Make[] }) => {
-    const [makesIn, setMakes] = useState(makes);
+const MakePanel = () => {
+    const makes = useAppSelector(selectMaking);
     const [newMakeIsOpen, setNewMakeIsOpen] = useState(false);
 
+    const [mounted, setMounted] = useState(false);
+    const { systemTheme, theme, setTheme } = useTheme();
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null;
+    }
+
+    const currentTheme = theme === 'system' ? systemTheme : theme;
+
     return (
-        <div className='ms-card py-4 px-8'>
-            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makesIn} setMakes={setMakes} />
+        <div className='ms-card py-4 px-4'>
+            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} />
 
             <div className='flex justify-between pb-4'>
-                <h3 className='text-4xl text-green-300'>Making</h3>
-                <button className='w-60 rounded-lg border border-green-300 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
+                <div className='flex items-center'>
+                    <Image src={theme === 'light' ? '/make-dark.svg' : '/make.svg'} alt='' height={48} width={48} />
+                    <h3 className='text-4xl text-ld-green dark:text-l-green'>Making</h3>
+                </div>
+                <button className='h-10 w-48 rounded-lg border border-ld-green text-ld-green transition duration-200 hover:bg-ld-green hover:text-primary dark:border-l-green dark:text-l-green dark:hover:bg-l-green' onClick={() => setNewMakeIsOpen(true)}>
                     + Making
                 </button>
             </div>
-            <div className='flex justify-between'>
-                <div className='h-fit'>
-                    <Doughnut options={options} data={makeDoughnut} />
+            {makes.length === 0 ? (
+                <div>Record an income event to get started.</div>
+            ) : (
+                <div className='flex justify-between'>
+                    <div className='h-fit'>
+                        <Doughnut options={options} data={makeDoughnut} />
+                    </div>
+                    <div className='h-[200px] space-y-2 overflow-y-auto'>
+                        {makes.map((make: Make) => (
+                            <MakeReceipt key={make.id} make={make} />
+                        ))}
+                    </div>
                 </div>
-                <div className='h-[200px] space-y-2 overflow-y-auto'>
-                    {makesIn.map((make: Make) => (
-                        <MakeReceipt key={make.id} make={make} />
-                    ))}
-                </div>
-            </div>
+            )}
         </div>
     );
 };

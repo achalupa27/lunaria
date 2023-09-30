@@ -7,8 +7,8 @@ const Features = () => {
 
     return (
         <div className='mx-auto min-h-screen max-w-5xl space-y-20 px-20 pt-32 pb-8'>
-            <h1 className='flex w-full justify-center bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-4xl font-semibold tracking-tighter text-transparent md:text-6xl'>Get all the stats.</h1>
-            {features.map((feature: Feature) => (
+            <h1 className='flex w-full justify-center bg-gradient-to-r from-l-yellow via-l-green to-l-blue bg-clip-text text-4xl font-semibold tracking-tighter text-transparent md:text-6xl'>Get all the stats.</h1>
+            {features.map((feature: FeatureItem) => (
                 <Feature key={feature.name} img={feature.img} name={feature.name} description={feature.description} comingSoon={feature.comingSoon} />
             ))}
             <h2 className='flex w-full justify-center'>Start improving today.</h2>

@@ -55,15 +55,11 @@
     }
 
     .sidebar-button {
-        @apply main-hover flex h-10 w-10 cursor-pointer items-center justify-center space-x-1.5 rounded-lg px-2 text-xl font-light transition duration-200 ease-out;
+        @apply main-hover flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg transition duration-200 ease-out;
     }
 
     .basic-button {
         @apply main-hover flex h-8 w-auto items-center justify-start space-x-1.5 rounded-lg px-2 text-sm font-light transition duration-200 ease-out;
-    }
-
-    .cta-button {
-        @apply flex h-10 cursor-pointer items-center justify-center space-x-2 rounded-xl border-none bg-primary px-2 text-sm text-white transition duration-200 ease-out hover:bg-primary-hover dark:bg-primary-dark dark:text-secondary-dark dark:hover:bg-primary-dark-hover;
     }
 
     .input-field {
@@ -75,7 +71,7 @@
     }
 
     .ms-card {
-        @apply rounded-xl bg-gray-100 dark:bg-gray-900;
+        @apply rounded-lg border bg-white shadow-sm dark:border-blue-900/20 dark:bg-primary;
     }
 
     .footer-link {

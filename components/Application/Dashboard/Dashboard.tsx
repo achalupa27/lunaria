@@ -3,16 +3,18 @@ import { Line } from 'react-chartjs-2';
 import MakePanel from './MakePanel';
 import SavePanel from './SavePanel';
 import SpendPanel from './SpendPanel';
+import { useAppSelector } from '@/redux/hooks';
+import { selectMaking } from '@/redux/slices/makeSlice';
+import { selectSpending } from '@/redux/slices/spendSlice';
+import Logo from '@/components/Icons/Logo';
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-type Props = {
-    makes: Make[];
-    saves: Save[];
-    spends: Spend[];
-};
+const Dashboard = () => {
+    const makes = useAppSelector(selectMaking);
+    const saves = useAppSelector(selectMaking);
+    const spends = useAppSelector(selectSpending);
 
-const Dashboard = ({ makes, saves, spends }: Props) => {
     const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     const options = {
@@ -43,7 +45,7 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
             },
             {
                 label: 'Spend',
-                data: spends.map((spend) => spend.amount),
+                data: spends.map((spend) => spend.total),
                 borderColor: 'rgb(253, 224, 71)',
                 backgroundColor: 'rgb(253, 224, 71)',
                 cubicInterpolationMode: 'monotone',
@@ -52,13 +54,11 @@ const Dashboard = ({ makes, saves, spends }: Props) => {
     };
 
     return (
-        <div className='grid max-h-screen w-[calc(100vw-56px)] grid-cols-2 gap-2 p-2'>
-            <div className='ms-card flex items-center justify-center p-4'>
-                <Line options={options} data={data} className='ms-card' />
-            </div>
-            <MakePanel makes={makes} />
-            <SavePanel saves={saves} />
-            <SpendPanel spends={spends} />
+        <div className='grid max-h-screen w-screen grid-cols-2 gap-2 p-2'>
+            <div className='ms-card row-span-3 flex items-center justify-center p-4'> {makes.length === 0 && saves.length === 0 && spends.length === 0 ? <div>Record some transactions to get insights.</div> : <Line options={options} data={data} className='ms-card' />}</div>
+            <MakePanel />
+            <SavePanel />
+            <SpendPanel />
         </div>
     );
 };

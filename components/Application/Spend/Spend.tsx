@@ -4,15 +4,13 @@ import NewSpend from './NewSpend';
 import SpendReceipt from './SpendReceipt';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { useAppSelector } from '@/redux/hooks';
+import { selectSpending } from '@/redux/slices/spendSlice';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-type Props = {
-    spends: Spend[];
-};
-
-const Spend = ({ spends }: Props) => {
-    const [spendsIn, setSpends] = useState(spends);
+const Spend = () => {
+    const spends = useAppSelector(selectSpending);
     const [newSpendIsOpen, setNewSpendIsOpen] = useState(false);
 
     const options = {
@@ -29,7 +27,7 @@ const Spend = ({ spends }: Props) => {
         datasets: [
             {
                 label: 'Spending',
-                data: spends.map((spend) => spend.amount),
+                data: spends.map((spend) => spend.total),
                 borderColor: 'rgb(253, 224, 71)',
                 backgroundColor: 'rgba(253, 224, 71, 0.5)',
                 cubicInterpolationMode: 'monotone',
@@ -39,13 +37,13 @@ const Spend = ({ spends }: Props) => {
 
     return (
         <div className='flex h-screen w-screen gap-2 p-2'>
-            <NewSpend isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} spends={spendsIn} setSpends={setSpends} />
+            <NewSpend isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} />
             <div className='ms-card flex flex-col items-center space-y-2 p-2'>
-                <button className='w-60 rounded-md border border-yellow-200 p-2 text-yellow-200 transition duration-200 hover:bg-yellow-200 hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
+                <button className='w-60 rounded-md border border-l-yellow p-2 text-l-yellow transition duration-200 hover:bg-l-yellow hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
                     + Spending
                 </button>
                 <div className='space-y-2'>
-                    {spendsIn.map((spend: Spend) => (
+                    {spends.map((spend: Spend) => (
                         <SpendReceipt key={spend.id} spend={spend} />
                     ))}
                 </div>

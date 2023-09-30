@@ -4,18 +4,16 @@ import { signOut } from 'next-auth/react';
 
 const Settings = () => {
     return (
-        <div className='flex h-screen w-screen items-center justify-center pl-14'>
-            <span className='text-red-600'>
-                <button
-                    className='button-secondary'
-                    onClick={() => {
-                        signOut();
-                    }}
-                >
-                    <span>Sign out</span>
-                </button>
-                <DarkModeButton />
-            </span>
+        <div className='flex h-screen w-screen items-center justify-center'>
+            <DarkModeButton />
+            <button
+                className='flex items-center justify-center space-x-2 rounded-lg border border-black p-2 transition duration-200 hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black'
+                onClick={() => {
+                    signOut();
+                }}
+            >
+                <span>Sign out</span>
+            </button>
         </div>
     );
 };

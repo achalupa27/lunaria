@@ -3,15 +3,13 @@ import NewMake from './NewMake';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import MakeReceipt from './MakeReceipt';
+import { useAppSelector } from '@/redux/hooks';
+import { selectMaking } from '@/redux/slices/makeSlice';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-type Props = {
-    makes: Make[];
-};
-
-const Make = ({ makes }: Props) => {
-    const [makesIn, setMakes] = useState(makes);
+const Make = () => {
+    const makes = useAppSelector(selectMaking);
     const options = {
         responsive: true,
         plugins: {
@@ -38,13 +36,13 @@ const Make = ({ makes }: Props) => {
 
     return (
         <div className='flex h-screen w-screen gap-2 p-2'>
-            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} makes={makesIn} setMakes={setMakes} />
+            <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} />
             <div className='ms-card flex flex-col items-center space-y-2 p-2'>
-                <button className='w-60 rounded-md border border-green-300 p-2 text-green-300 transition duration-200 hover:bg-green-300 hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
+                <button className='w-60 rounded-md border border-l-green p-2 text-l-green transition duration-200 hover:bg-l-green hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
                     + Making
                 </button>
                 <div className='space-y-2'>
-                    {makesIn.map((make: Make) => (
+                    {makes.map((make: Make) => (
                         <MakeReceipt key={make.id} make={make} />
                     ))}
                 </div>
