@@ -51,7 +51,7 @@ const SavePanel = () => {
                     <Image src={theme === 'light' ? '/save-dark.svg' : '/save.svg'} alt='' height={48} width={48} />
                     <h3 className='text-4xl text-ld-blue dark:text-l-blue'>Saving</h3>
                 </div>
-                <button className='h-10 w-48 rounded-md border border-ld-blue text-ld-blue transition duration-200 hover:bg-ld-blue hover:text-primary dark:border-l-blue dark:text-l-blue dark:hover:bg-l-blue' onClick={() => setNewSaveIsOpen(true)}>
+                <button className='h-10 w-48 rounded-md border border-ld-blue text-ld-blue transition duration-200 hover:bg-ld-blue hover:text-primary dark:border-l-blue dark:text-l-blue dark:hover:bg-l-blue dark:hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
                     + Saving
                 </button>
             </div>

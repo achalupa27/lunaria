@@ -54,7 +54,7 @@ const MakePanel = () => {
                     <Image src={theme === 'light' ? '/make-dark.svg' : '/make.svg'} alt='' height={48} width={48} />
                     <h3 className='text-4xl text-ld-green dark:text-l-green'>Making</h3>
                 </div>
-                <button className='h-10 w-48 rounded-lg border border-ld-green text-ld-green transition duration-200 hover:bg-ld-green hover:text-primary dark:border-l-green dark:text-l-green dark:hover:bg-l-green' onClick={() => setNewMakeIsOpen(true)}>
+                <button className='h-10 w-48 rounded-lg border border-ld-green text-ld-green transition duration-200 hover:bg-ld-green hover:text-primary dark:border-l-green dark:text-l-green dark:hover:bg-l-green dark:hover:text-primary' onClick={() => setNewMakeIsOpen(true)}>
                     + Making
                 </button>
             </div>

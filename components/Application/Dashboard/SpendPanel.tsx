@@ -54,7 +54,7 @@ const SpendPanel = () => {
                     <Image src={theme === 'light' ? '/spend-dark.svg' : '/spend.svg'} alt='' height={48} width={48} />
                     <h3 className='text-4xl text-ld-yellow dark:text-l-yellow'>Spending</h3>
                 </div>
-                <button className='h-10 w-48 rounded-lg border border-ld-yellow text-ld-yellow transition duration-200 hover:bg-ld-yellow hover:text-primary dark:border-l-yellow dark:text-l-yellow dark:hover:bg-l-yellow' onClick={() => setNewSpendIsOpen(true)}>
+                <button className='h-10 w-48 rounded-lg border border-ld-yellow text-ld-yellow transition duration-200 hover:bg-ld-yellow hover:text-primary dark:border-l-yellow dark:text-l-yellow dark:hover:bg-l-yellow dark:hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
                     + Spending
                 </button>
             </div>
