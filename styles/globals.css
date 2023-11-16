@@ -46,10 +46,6 @@
         @apply text-primary dark:text-primary-dark;
     }
 
-    .ct-card {
-        @apply dark:bg-ct-bg-dark rounded border bg-white p-1;
-    }
-
     .main-hover {
         @apply transition duration-200 hover:bg-primary/20 dark:hover:bg-primary-dark/20;
     }
@@ -75,6 +71,10 @@
     }
 
     .footer-link {
-        @apply w-fit rounded py-[2px] px-2 transition duration-200 hover:underline;
+        @apply w-fit rounded px-2 py-[2px] transition duration-200 hover:underline;
+    }
+
+    .gradient-bg {
+        @apply from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd];
     }
 }

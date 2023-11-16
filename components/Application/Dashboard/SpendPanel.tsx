@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import NewSpend from '../Spend/NewSpend';
+import { useState } from 'react';
+import SpendForm from '../Spend/SpendForm';
 import { Doughnut } from 'react-chartjs-2';
 import SpendReceipt from '../Spend/SpendReceipt';
 import { useAppSelector } from '@/redux/hooks';
@@ -33,21 +33,11 @@ const SpendPanel = () => {
     const [newSpendIsOpen, setNewSpendIsOpen] = useState(false);
     const spends = useAppSelector(selectSpending);
 
-    const [mounted, setMounted] = useState(false);
     const { systemTheme, theme, setTheme } = useTheme();
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        return null;
-    }
-
-    const currentTheme = theme === 'system' ? systemTheme : theme;
 
     return (
-        <div className='ms-card py-4 px-4'>
-            <NewSpend isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} />
+        <div className='ms-card px-4 py-4'>
+            <SpendForm isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} />
 
             <div className='flex justify-between pb-4'>
                 <div className='flex items-center'>
@@ -62,12 +52,12 @@ const SpendPanel = () => {
                 <div>Record a spending event to get started.</div>
             ) : (
                 <div className='flex justify-between'>
-                    <div className='h-fit'>
+                    {/* <div className='h-fit'>
                         <Doughnut options={options} data={spendDoughnut} />
-                    </div>
+                    </div> */}
                     <div className='h-[200px] space-y-2 overflow-y-auto'>
                         {spends.map((spend: Spend) => (
-                            <SpendReceipt key={spend.id} spend={spend} />
+                            <SpendReceipt key={spend._id} spend={spend} />
                         ))}
                     </div>
                 </div>

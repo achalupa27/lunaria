@@ -45,7 +45,7 @@ const Dashboard = () => {
             },
             {
                 label: 'Spend',
-                data: spends.map((spend) => spend.total),
+                data: spends.map((spend) => spend.cost),
                 borderColor: 'rgb(253, 224, 71)',
                 backgroundColor: 'rgb(253, 224, 71)',
                 cubicInterpolationMode: 'monotone',

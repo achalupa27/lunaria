@@ -1,34 +1,27 @@
 type Make = {
-    id: string;
+    _id: string;
     user_id: string;
     date: string;
-    source: string;
     amount: number;
+    source: string;
 };
 
 type Save = {
-    id: string;
+    _id: string;
     user_id: string;
     date: string;
     type: 'Withdrawal' | 'Deposit';
-    account: string;
     amount: number;
+    account: string;
 };
 
 type Spend = {
-    id: string;
+    _id: string;
     user_id: string;
     date: string;
-    store: string;
-    total: number;
-    items: SpendingItem[];
-};
-
-type SpendingItem = {
-    id: string;
     item: string;
-    price: number;
-    category: SpendingCategory;
+    cost: number;
+    category: string;
 };
 
 type SpendingCategory = 'Rent' | 'Student Loans' | 'Food' | 'Home' | 'Hygiene' | 'Fitness' | 'Transportation' | 'Subscriptions' | 'Clothing' | 'Electronics';

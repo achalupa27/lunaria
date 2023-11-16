@@ -23,7 +23,7 @@ const App = ({ makes, saves, spends }: any) => {
 
 export async function getServerSideProps(context: any) {
     await client.connect();
-    const db = client.db('moneyshield');
+    const db = client.db('lunaria');
 
     const makeCollection = db.collection('make');
     const makeData = await makeCollection.find({}).toArray();

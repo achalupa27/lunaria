@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NewMake from './NewMake';
+import NewMake from './MakeForm';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import MakeReceipt from './MakeReceipt';
@@ -25,8 +25,8 @@ const Make = () => {
             {
                 label: 'Making',
                 data: makes.map((make) => make.amount),
-                borderColor: 'rgb(39, 220, 116)',
-                backgroundColor: 'rgba(39, 220, 116, 0.5)',
+                borderColor: 'rgb(153, 245, 209)',
+                backgroundColor: 'rgba(153, 245, 209, 0.5)',
                 cubicInterpolationMode: 'monotone',
             },
         ],
@@ -43,13 +43,17 @@ const Make = () => {
                 </button>
                 <div className='space-y-2'>
                     {makes.map((make: Make) => (
-                        <MakeReceipt key={make.id} make={make} />
+                        <MakeReceipt key={make._id} make={make} />
                     ))}
                 </div>
             </div>
             <div className='ms-card flex h-[400px] w-fit flex-1 p-4 py-6'>
                 <Line options={options} data={data} />
             </div>
+            {/* <div className='ms-card h-96 w-60 p-2'>
+                <div>Your Income Sources</div>
+                <button className='w-full rounded-md border border-l-green p-1 text-l-green transition duration-200 hover:bg-l-green hover:text-primary'>Add Income Source</button>
+            </div> */}
         </div>
     );
 };

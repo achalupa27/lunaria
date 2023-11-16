@@ -1,7 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
 import SaveReceipt from '../Save/SaveReceipt';
 import { useEffect, useState } from 'react';
-import NewSave from '../Save/NewSave';
+import NewSave from '../Save/SaveForm';
 import { useAppSelector } from '@/redux/hooks';
 import { selectSaving } from '@/redux/slices/saveSlice';
 import { useTheme } from 'next-themes';
@@ -43,7 +43,7 @@ const SavePanel = () => {
     }
 
     return (
-        <div className='ms-card py-4 px-4'>
+        <div className='ms-card px-4 py-4'>
             <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} />
 
             <div className='flex justify-between pb-4'>
@@ -59,12 +59,12 @@ const SavePanel = () => {
                 <div>Record a saving event to get started.</div>
             ) : (
                 <div className='flex justify-between'>
-                    <div>
+                    {/* <div>
                         <Doughnut options={options} data={saveDoughnut} />
-                    </div>
+                    </div> */}
                     <div className='h-[200px] space-y-2 overflow-y-auto'>
                         {saves.map((save: Save) => (
-                            <SaveReceipt key={save.id} save={save} />
+                            <SaveReceipt key={save._id} save={save} />
                         ))}
                     </div>
                 </div>

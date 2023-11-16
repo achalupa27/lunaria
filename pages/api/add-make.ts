@@ -6,13 +6,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         await client.connect();
 
-        const collection = client.db('moneyshield').collection('make');
+        const collection = client.db('lunaria').collection('make');
 
         const document: Make = req.body;
         const result: InsertOneResult<Make> = await collection.insertOne(document);
 
         console.log(`Make inserted with _id: ${result.insertedId}`);
-        res.status(200).json({ message: 'Make inserted' });
+        res.status(200).json({ message: 'Make inserted', insertedId: result.insertedId });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: 'An error occurred' });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import MakeReceipt from '../Make/MakeReceipt';
 import { Doughnut } from 'react-chartjs-2';
-import NewMake from '../Make/NewMake';
+import NewMake from '../Make/MakeForm';
 import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
 import Image from 'next/image';
@@ -46,7 +46,7 @@ const MakePanel = () => {
     const currentTheme = theme === 'system' ? systemTheme : theme;
 
     return (
-        <div className='ms-card py-4 px-4'>
+        <div className='ms-card px-4 py-4'>
             <NewMake isOpen={newMakeIsOpen} closeForm={() => setNewMakeIsOpen(false)} />
 
             <div className='flex justify-between pb-4'>
@@ -62,12 +62,12 @@ const MakePanel = () => {
                 <div>Record an income event to get started.</div>
             ) : (
                 <div className='flex justify-between'>
-                    <div className='h-fit'>
+                    {/* <div className='h-fit'>
                         <Doughnut options={options} data={makeDoughnut} />
-                    </div>
+                    </div> */}
                     <div className='h-[200px] space-y-2 overflow-y-auto'>
                         {makes.map((make: Make) => (
-                            <MakeReceipt key={make.id} make={make} />
+                            <MakeReceipt key={make._id} make={make} />
                         ))}
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NewSave from './NewSave';
+import NewSave from './SaveForm';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import SaveReceipt from './SaveReceipt';
