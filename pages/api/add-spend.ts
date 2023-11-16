@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const collection = client.db('lunaria').collection('spend');
 
         const document: Spend = req.body;
-        const result: InsertOneResult<Spend> = await collection.insertOne(document);
+        const result: InsertOneResult<Spend> = await collection.insertOne(document as any);
 
         console.log(`Spend inserted with _id: ${result.insertedId}`);
         res.status(200).json({ message: 'Spend inserted', insertedId: result.insertedId });

@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const collection = client.db('lunaria').collection('save');
 
         const document: Save = req.body;
-        const result: InsertOneResult<Save> = await collection.insertOne(document);
+        const result: InsertOneResult<Save> = await collection.insertOne(document as any);
 
         console.log(`Save inserted with _id: ${result.insertedId}`);
         res.status(200).json({ message: 'Save inserted', insertedId: result.insertedId });
