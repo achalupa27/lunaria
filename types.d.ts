@@ -1,14 +1,14 @@
 type Make = {
-    _id: string;
-    user_id: string;
+    id: string;
+    user_email: string;
     date: string;
     amount: number;
     source: string;
 };
 
 type Save = {
-    _id: string;
-    user_id: string;
+    id: string;
+    user_email: string;
     date: string;
     type: 'Withdrawal' | 'Deposit';
     amount: number;
@@ -16,12 +16,14 @@ type Save = {
 };
 
 type Spend = {
-    _id: string;
-    user_id: string;
+    id: string;
+    user_email: string;
     date: string;
     item: string;
     cost: number;
+    store: string;
     category: string;
+    necessity: string;
 };
 
 type SpendingCategory = 'Rent' | 'Student Loans' | 'Food' | 'Home' | 'Hygiene' | 'Fitness' | 'Transportation' | 'Subscriptions' | 'Clothing' | 'Electronics';

@@ -81,7 +81,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className='flex h-screen w-14 flex-col items-center justify-center space-y-4  border-r bg-white py-2 shadow-sm dark:border-0 dark:bg-primary '>
+        <div className='flex h-screen w-14 flex-col items-center justify-center space-y-4 bg-white py-2 shadow-sm dark:bg-primary'>
             <div className='flex flex-1 flex-grow flex-col space-y-3'>
                 <button className={`sidebar-button p-2 ${tab === 'Dashboard' ? 'bg-white/20' : null}`} onClick={() => dispatch(setTab('Dashboard'))}>
                     <Image src={getDashboardLogo() as string} alt='' height={48} width={48} />
@@ -97,11 +97,11 @@ const Sidebar = () => {
                 </button>
             </div>
 
-            <div className='flex-col items-center space-y-3'>
+            {/* <div className='flex-col items-center space-y-3'>
                 <button className={`sidebar-button p-2 ${tab === 'Settings' ? 'text-primary dark:text-primary-dark' : null}`} onClick={() => dispatch(setTab('Settings'))}>
                     <Image src={theme === 'light' ? '/settings-dark.svg' : '/settings.svg'} alt='' height={48} width={48} />
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 };

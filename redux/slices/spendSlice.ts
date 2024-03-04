@@ -21,7 +21,7 @@ const spendSlice = createSlice({
         },
         updateSpendingState: (state, action: PayloadAction<Spend>) => {
             const updatedSpend = action.payload;
-            const index = state.spending.findIndex((spend) => spend._id === updatedSpend._id);
+            const index = state.spending.findIndex((spend) => spend.id === updatedSpend.id);
 
             if (index !== -1) {
                 state.spending[index] = updatedSpend;

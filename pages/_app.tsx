@@ -9,6 +9,9 @@ import { Analytics } from '@vercel/analytics/react';
 import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
+import { SessionContextProvider } from '@supabase/auth-helpers-react';
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useState } from 'react';
 
 const progress = new ProgressBar({
     size: 4,
@@ -22,16 +25,20 @@ Router.events.on('routeChangeComplete', progress.finish);
 Router.events.on('routeChangeError', progress.finish);
 
 function App({ Component, pageProps }: AppProps) {
+    const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
     return (
         <ThemeProvider defaultTheme='dark' enableSystem={false} attribute='class'>
-            <SessionProvider session={pageProps.session}>
-                <Layout>
-                    <Provider store={store}>
-                        <Component {...pageProps} />
-                        <Analytics />
-                    </Provider>
-                </Layout>
-            </SessionProvider>
+            <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+                <SessionProvider session={pageProps.session}>
+                    <Layout>
+                        <Provider store={store}>
+                            <Component {...pageProps} />
+                            <Analytics />
+                        </Provider>
+                    </Layout>
+                </SessionProvider>
+            </SessionContextProvider>
         </ThemeProvider>
     );
 }

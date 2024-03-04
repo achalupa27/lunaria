@@ -1,60 +1,47 @@
 import { useState } from 'react';
-import { spendingCategories } from '../../../data/constants';
-import SpendForm from './SpendForm';
-import SpendReceipt from './SpendReceipt';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { Line } from 'react-chartjs-2';
 import { useAppSelector } from '@/redux/hooks';
 import { selectSpending } from '@/redux/slices/spendSlice';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+import { useSpendColumns } from '@/hooks/useSpendColumns';
+import { initializeTable } from '@/utils/helper';
+import Table from '@/components/UI/Table';
+import SpendForm from './SpendForm';
 
 const Spend = () => {
     const spends = useAppSelector(selectSpending);
-    const [newSpendIsOpen, setNewSpendIsOpen] = useState(false);
+    const spendColumns = useSpendColumns();
+    const [spendFormOpen, setSpendFormOpen] = useState(false);
+    const [spendToEdit, setSpendToEdit] = useState<Spend | undefined>();
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'right' as const,
-            },
-        },
+    const table = initializeTable(spends, spendColumns);
+
+    const handleViewSpend = (row: any) => {
+        setSpendToEdit(row);
+        setSpendFormOpen(true);
     };
 
-    const data: any = {
-        labels: spends.map((spends: Spend) => spends.date),
-        datasets: [
-            {
-                label: 'Spending',
-                data: spends.map((spend) => spend.cost),
-                borderColor: 'rgb(247, 235, 192)',
-                backgroundColor: 'rgba(247, 235, 192, 0.5)',
-                cubicInterpolationMode: 'monotone',
-            },
-        ],
+    const handleFormOpen = () => {
+        setSpendToEdit(undefined);
+        setSpendFormOpen(true);
+    };
+
+    const handleFormClose = () => {
+        setSpendFormOpen(false);
     };
 
     return (
-        <div className='flex h-screen w-screen gap-2 p-2'>
-            <SpendForm isOpen={newSpendIsOpen} closeForm={() => setNewSpendIsOpen(false)} />
-            <div className='ms-card flex flex-col items-center space-y-2 p-2'>
-                <button className='w-60 rounded-md border border-l-yellow p-2 text-l-yellow transition duration-200 hover:bg-l-yellow hover:text-primary' onClick={() => setNewSpendIsOpen(true)}>
-                    + Spending
-                </button>
-                <div className='space-y-2'>
-                    {spends.map((spend: Spend) => (
-                        <SpendReceipt key={spend._id} spend={spend} />
-                    ))}
+        <div className='h-screen w-screen gap-2 px-10 py-6'>
+            <SpendForm isOpen={spendFormOpen} closeForm={handleFormClose} spendToEdit={spendToEdit} />
+
+            <div className='flex justify-between'>
+                <div className='text-[40px] font-medium text-l-yellow'>Spending</div>
+                <div className='flex flex-col items-center space-y-2 p-2'>
+                    <button className='w-48 rounded-lg bg-l-yellow p-2 font-medium text-primary hover:bg-l-dark-yellow' onClick={handleFormOpen}>
+                        + New Spending
+                    </button>
                 </div>
             </div>
-            <div className='ms-card flex h-[400px] flex-1 p-4 py-6'>
-                <Line options={options} data={data} />
-            </div>
-            {/* <div className='ms-card h-96 w-60 p-2'>
-                <div>Your Subscriptions</div>
-                <button className='w-full rounded-md border border-l-yellow p-1 text-l-yellow transition duration-200 hover:bg-l-yellow hover:text-primary'>Add Subscription</button>
-            </div> */}
+
+            <Table table={table} handleRowClick={handleViewSpend} />
         </div>
     );
 };

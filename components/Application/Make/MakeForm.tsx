@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { selectSaving, setSaving } from '@/redux/slices/saveSlice';
 import { selectMaking, setMaking } from '@/redux/slices/makeSlice';
 
 type Props = {
@@ -25,98 +24,19 @@ const SaveForm = ({ isOpen, closeForm, makeToEdit }: Props) => {
         };
     }
 
-    const {
-        register,
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm(formConfig);
+    const { register, handleSubmit } = useForm(formConfig);
 
     const onSubmit: SubmitHandler<any> = (transaction: any) => {
-        if (makeToEdit) editMake(makeToEdit._id, transaction);
+        if (makeToEdit) editMake(makeToEdit.id, transaction);
         else addMake(transaction);
         closeForm();
     };
 
-    async function addMake(transaction: Make) {
-        try {
-            const response = await fetch('/api/add-make', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    date: transaction.date,
-                    amount: transaction.amount,
-                    source: transaction.source,
-                }),
-            });
+    const addMake = async (make: Make) => {};
 
-            if (response.ok) {
-                const data = await response.json();
-                const newMakeId = data.insertedId;
-                const transactionWithId = { ...transaction, _id: newMakeId };
-                let newMakes = [...makes, transactionWithId];
-                dispatch(setMaking(newMakes));
-            } else {
-                console.error('An error occurred');
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    }
+    const deleteMake = async (makeToDelete: Make) => {};
 
-    const deleteMake = async (makeToDelete: Make) => {
-        try {
-            const response = await fetch('/api/delete-make', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: makeToDelete._id }),
-            });
-            console.log(makeToDelete._id);
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data.message);
-
-                let newMakes = makes.filter((make) => make._id !== makeToDelete._id);
-                dispatch(setMaking(newMakes));
-                closeForm();
-            } else {
-                console.error('An error occurred');
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    async function editMake(id: string, updatedTransaction: Make) {
-        try {
-            const response = await fetch('/api/edit-make', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: id,
-                    updatedTransaction: updatedTransaction,
-                }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data.message);
-
-                const updatedMakes = makes.map((make) => (make._id === id ? { ...make, ...updatedTransaction } : make));
-                dispatch(setMaking(updatedMakes));
-            } else {
-                console.error('An error occurred');
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    }
+    const editMake = async (id: string, updatedMake: Make) => {};
 
     if (isOpen) {
         return (
@@ -165,8 +85,7 @@ const SaveForm = ({ isOpen, closeForm, makeToEdit }: Props) => {
                                         onClick={() => {
                                             deleteMake(makeToEdit);
                                         }}
-                                        className='flex w-10 items-center justify-center rounded-lg bg-red-300 py-2 transition duration-100 hover:bg-red-400 dark:text-primary'
-                                    >
+                                        className='flex w-10 items-center justify-center rounded-lg bg-red-300 py-2 transition duration-100 hover:bg-red-400 dark:text-primary'>
                                         <i className='fi fi-rr-trash' />
                                     </button>
                                 ) : (

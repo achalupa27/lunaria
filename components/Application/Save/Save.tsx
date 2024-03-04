@@ -1,55 +1,40 @@
-import React, { useState } from 'react';
-import NewSave from './SaveForm';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import SaveReceipt from './SaveReceipt';
+import { useState } from 'react';
+import SaveForm from './SaveForm';
 import { useAppSelector } from '@/redux/hooks';
 import { selectSaving } from '@/redux/slices/saveSlice';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+import { useSaveColumns } from '@/hooks/useSaveColumns';
+import { initializeTable } from '@/utils/helper';
+import Table from '@/components/UI/Table';
 
 const Save = () => {
     const saves = useAppSelector(selectSaving);
+    const saveColumns = useSaveColumns();
     const [newSaveIsOpen, setNewSaveIsOpen] = useState(false);
 
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'right' as const,
-            },
-        },
-    };
+    const table = initializeTable(saves, saveColumns);
 
-    const data: any = {
-        labels: saves.map((save: Save) => save.date),
-        datasets: [
-            {
-                label: 'Saving',
-                data: saves.map((save) => save.amount),
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                cubicInterpolationMode: 'monotone',
-            },
-        ],
+    const handleViewSave = () => {};
+
+    const handleFormClose = () => {
+        setNewSaveIsOpen(false);
     };
 
     return (
-        <div className='flex h-screen w-screen gap-2 p-2'>
-            <NewSave isOpen={newSaveIsOpen} closeForm={() => setNewSaveIsOpen(false)} />
-            <div className='ms-card flex flex-col items-center space-y-2 p-2'>
-                <button className='w-60 rounded-lg border border-l-blue p-2 text-l-blue transition duration-200 hover:bg-l-blue hover:text-primary' onClick={() => setNewSaveIsOpen(true)}>
-                    + Saving
-                </button>
-                <div className='space-y-2'>
-                    {saves.map((save: any) => (
-                        <SaveReceipt key={save.id} save={save} />
-                    ))}
+        <div className='h-screen w-screen gap-2 px-10 py-6'>
+            <SaveForm isOpen={newSaveIsOpen} closeForm={handleFormClose} />
+
+            {/* <SpendForm isOpen={newSpendIsOpen} closeForm={handleFormClose} spendToEdit={spend} /> */}
+
+            <div className='flex justify-between'>
+                <div className='text-[40px] font-medium text-l-blue'>Saving</div>
+                <div className='flex flex-col items-center space-y-2 p-2'>
+                    <button className='hover:bg-l-dark-green w-48 rounded-lg bg-l-blue p-2 font-medium text-primary' onClick={() => setNewSaveIsOpen(true)}>
+                        + New Saving
+                    </button>
                 </div>
             </div>
-            <div className='ms-card flex h-[400px] w-fit flex-1 p-4 py-6'>
-                <Line options={options} data={data} />
-            </div>
+
+            <Table table={table} handleRowClick={handleViewSave} />
         </div>
     );
 };
