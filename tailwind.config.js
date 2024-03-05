@@ -17,17 +17,16 @@ module.exports = {
                 'l-dark-red': '#E00000',
 
                 'l-green': '#99f5d1',
-                'ld-green': '#08c279',
+                'l-dark-green': '#08c279',
 
                 'l-slate': '#E5F2FF',
                 'l-dark-slate': '#DBE0EE',
 
                 'l-blue': '#93c5fd',
-                'ld-blue': '#579ae6',
+                'l-dark-blue': '#579ae6',
 
                 'l-yellow': '#f7ebc0',
                 'l-dark-yellow': '#e8a700',
-                'ld-yellow': '#FFB800',
             },
         },
     },

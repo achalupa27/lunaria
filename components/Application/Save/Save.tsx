@@ -1,41 +1,42 @@
 import { useState } from 'react';
-import SaveForm from './SaveForm';
 import { useAppSelector } from '@/redux/hooks';
 import { selectSaving } from '@/redux/slices/saveSlice';
 import { useSaveColumns } from '@/hooks/useSaveColumns';
 import { initializeTable } from '@/utils/helper';
+import SaveForm from './SaveForm';
 import Table from '@/components/UI/Table';
+import Page from '@/components/UI/Page';
+import PageHeader from '@/components/UI/PageHeader';
 
 const Save = () => {
     const saves = useAppSelector(selectSaving);
     const saveColumns = useSaveColumns();
-    const [newSaveIsOpen, setNewSaveIsOpen] = useState(false);
+    const [saveFormOpen, setSaveFormOpen] = useState(false);
+    const [saveToEdit, setSaveToEdit] = useState<Save | undefined>();
 
     const table = initializeTable(saves, saveColumns);
 
-    const handleViewSave = () => {};
+    const handleViewSave = (row: any) => {
+        setSaveToEdit(row);
+        setSaveFormOpen(true);
+    };
+
+    const handleFormOpen = () => {
+        setSaveToEdit(undefined);
+        setSaveFormOpen(true);
+    };
 
     const handleFormClose = () => {
-        setNewSaveIsOpen(false);
+        setSaveFormOpen(false);
     };
 
     return (
-        <div className='h-screen w-screen gap-2 px-10 py-6'>
-            <SaveForm isOpen={newSaveIsOpen} closeForm={handleFormClose} />
-
-            {/* <SpendForm isOpen={newSpendIsOpen} closeForm={handleFormClose} spendToEdit={spend} /> */}
-
-            <div className='flex justify-between'>
-                <div className='text-[40px] font-medium text-l-blue'>Saving</div>
-                <div className='flex flex-col items-center space-y-2 p-2'>
-                    <button className='hover:bg-l-dark-green w-48 rounded-lg bg-l-blue p-2 font-medium text-primary' onClick={() => setNewSaveIsOpen(true)}>
-                        + New Saving
-                    </button>
-                </div>
-            </div>
-
+        <Page>
+            <PageHeader title={'Saving'} titleStyle={'text-l-blue'} buttonText={'+ New Saving'} buttonStyle={'bg-l-blue hover:bg-l-dark-blue'} onClick={handleFormOpen} />
             <Table table={table} handleRowClick={handleViewSave} />
-        </div>
+
+            <SaveForm isOpen={saveFormOpen} closeForm={handleFormClose} saveToEdit={saveToEdit} />
+        </Page>
     );
 };
 

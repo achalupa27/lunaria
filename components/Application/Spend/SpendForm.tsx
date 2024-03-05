@@ -13,6 +13,8 @@ import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { deleteSpend } from '@/api/spend/deleteSpend';
 import { updateSpend } from '@/api/spend/updateSpend';
+import DeleteButton from '@/components/UI/Buttons/DeleteButton';
+import SaveButton from '@/components/UI/Buttons/SaveButton';
 
 type Props = {
     isOpen: boolean;
@@ -78,11 +80,15 @@ const SpendForm = ({ isOpen, closeForm, spendToEdit }: Props) => {
         // Delete spend from database
         deleteSpend(idToDelete, supabaseClient);
 
-        // Delete from store
+        // Delete from state
         const newSpends = spends.filter((spend) => spend.id !== idToDelete);
         dispatch(setSpending(newSpends));
 
         closeForm();
+    };
+
+    const handleDelete = () => {
+        spendToEdit && removeSpend(spendToEdit.id);
     };
 
     if (!isOpen) return null;
@@ -97,24 +103,10 @@ const SpendForm = ({ isOpen, closeForm, spendToEdit }: Props) => {
                 <SelectInput register={register} label={'Category'} registerValue={'category'} categories={spendingCategories} isRequired={true} />
                 <SelectInput register={register} label={'Necessity'} registerValue={'necessity'} categories={necessityCategories} isRequired={true} />
                 <div className='flex justify-between pt-4'>
-                    {spendToEdit ? (
-                        <button
-                            type='button'
-                            onClick={() => {
-                                removeSpend(spendToEdit.id);
-                            }}
-                            className='flex w-10 items-center justify-center rounded-lg bg-red-300 py-2 transition duration-100 hover:bg-red-400 dark:text-primary'>
-                            <i className='fi fi-rr-trash' />
-                        </button>
-                    ) : (
-                        <div />
-                    )}
+                    {spendToEdit && <DeleteButton onClick={handleDelete} />}
                     <div className='flex space-x-3'>
                         <CancelButton onClick={closeForm} />
-                        <button type='submit' className='flex w-32 items-center justify-center space-x-2 rounded-lg bg-l-yellow py-2 transition duration-100 hover:bg-l-dark-yellow dark:text-primary'>
-                            <i className='fi fi-rr-check'></i>
-                            <span>Save</span>
-                        </button>
+                        <SaveButton styling={'bg-l-yellow hover:bg-ld-yellow'} />
                     </div>
                 </div>
             </form>

@@ -1,3 +1,4 @@
+import { format, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 
 export const useMakeColumns = () => {
@@ -6,6 +7,11 @@ export const useMakeColumns = () => {
             {
                 accessorKey: 'date',
                 header: 'Date',
+                cell: (props: any) => {
+                    const parsedDate = props.row.original.date ? parseISO(props.row.original.date) : null;
+                    const formattedDate = parsedDate ? format(parsedDate, "eee d MMM ''yy") : '';
+                    return formattedDate;
+                },
             },
             {
                 accessorKey: 'source',

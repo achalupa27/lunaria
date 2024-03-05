@@ -1,40 +1,42 @@
 import { useState } from 'react';
-import MakeForm from './MakeForm';
 import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
 import { useMakeColumns } from '@/hooks/useMakeColumns';
 import { initializeTable } from '@/utils/helper';
+import MakeForm from './MakeForm';
 import Table from '@/components/UI/Table';
+import Page from '@/components/UI/Page';
+import PageHeader from '@/components/UI/PageHeader';
 
 const Make = () => {
     const makes = useAppSelector(selectMaking);
     const makeColumns = useMakeColumns();
-    const [newMakeIsOpen, setNewMakeIsOpen] = useState(false);
+    const [makeFormOpen, setMakeFormOpen] = useState(false);
+    const [makeToEdit, setMakeToEdit] = useState<Make | undefined>();
 
     const table = initializeTable(makes, makeColumns);
 
-    const handleViewMake = () => {};
+    const handleViewMake = (row: any) => {
+        setMakeToEdit(row);
+        setMakeFormOpen(true);
+    };
+
+    const handleFormOpen = () => {
+        setMakeToEdit(undefined);
+        setMakeFormOpen(true);
+    };
 
     const handleFormClose = () => {
-        setNewMakeIsOpen(false);
+        setMakeFormOpen(false);
     };
 
     return (
-        <div className='h-screen w-screen gap-2 px-10 py-6'>
-            <MakeForm isOpen={newMakeIsOpen} closeForm={handleFormClose} />
-            {/* <SpendForm isOpen={newSpendIsOpen} closeForm={handleFormClose} spendToEdit={spend} /> */}
-
-            <div className='flex justify-between'>
-                <div className='text-[40px] font-medium text-l-green'>Making</div>
-                <div className='flex flex-col items-center space-y-2 p-2'>
-                    <button className='hover:bg-l-dark-green w-48 rounded-lg bg-l-green p-2 font-medium text-primary' onClick={() => setNewMakeIsOpen(true)}>
-                        + New Making
-                    </button>
-                </div>
-            </div>
-
+        <Page>
+            <PageHeader title={'Making'} titleStyle={'text-l-green'} buttonText={'+ New Making'} buttonStyle={'bg-l-green hover:bg-l-dark-green'} onClick={handleFormOpen} />
             <Table table={table} handleRowClick={handleViewMake} />
-        </div>
+
+            <MakeForm isOpen={makeFormOpen} closeForm={handleFormClose} makeToEdit={makeToEdit} />
+        </Page>
     );
 };
 
