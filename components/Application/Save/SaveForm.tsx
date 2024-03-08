@@ -5,7 +5,6 @@ import Modal from '@/components/UI/Modals/Modal';
 import DateInput from '@/components/UI/Inputs/DateInput';
 import SelectInput from '@/components/UI/Inputs/SelectInput';
 import { saveTypes, savingAccounts } from '@/data/constants';
-import TextInput from '@/components/UI/Inputs/TextInput';
 import DeleteButton from '@/components/UI/Buttons/DeleteButton';
 import CancelButton from '@/components/UI/Buttons/CancelButton';
 import SaveButton from '@/components/UI/Buttons/SaveButton';
@@ -14,6 +13,7 @@ import { selectUser } from '@/redux/slices/userSlice';
 import { createSave } from '@/api/save/createSave';
 import { deleteSave } from '@/api/save/deleteSave';
 import NumberInput from '@/components/UI/Inputs/NumberInput';
+import { useEffect } from 'react';
 
 type Props = {
     isOpen: boolean;
@@ -27,25 +27,16 @@ const SaveForm = ({ isOpen, closeForm, saveToEdit }: Props) => {
     const saves = useAppSelector(selectSaving);
     const dispatch = useAppDispatch();
 
-    let formConfig = {};
+    const { register, handleSubmit, setValue } = useForm();
 
-    if (saveToEdit) {
-        formConfig = {
-            defaultValues: {
-                date: saveToEdit.date,
-                type: saveToEdit.type,
-                amount: saveToEdit.amount,
-                account: saveToEdit.account,
-            },
-        };
-    }
-
-    const {
-        register,
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm(formConfig);
+    useEffect(() => {
+        if (saveToEdit) {
+            setValue('date', saveToEdit.date);
+            setValue('type', saveToEdit.type);
+            setValue('amount', saveToEdit.amount);
+            setValue('account', saveToEdit.account);
+        }
+    }, [saveToEdit, setValue]);
 
     const onSubmit: SubmitHandler<any> = (save: any) => {
         if (saveToEdit) editSave(save);
@@ -76,7 +67,7 @@ const SaveForm = ({ isOpen, closeForm, saveToEdit }: Props) => {
 
         // Delete from store
         const newSaves = saves.filter((save) => save.id !== idToDelete);
-        dispatch(setSaves(newSaves));
+        dispatch(setSaving(newSaves));
 
         closeForm();
     };
@@ -110,6 +101,3 @@ const SaveForm = ({ isOpen, closeForm, saveToEdit }: Props) => {
 };
 
 export default SaveForm;
-function setSaves(newSpends: any): any {
-    throw new Error('Function not implemented.');
-}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { selectSpending } from '@/redux/slices/spendSlice';
 import { useSpendColumns } from '@/hooks/useSpendColumns';
@@ -11,22 +11,25 @@ import PageHeader from '@/components/UI/PageHeader';
 const Spend = () => {
     const spends = useAppSelector(selectSpending);
     const spendColumns = useSpendColumns();
-    const [spendFormOpen, setSpendFormOpen] = useState(false);
-    const [spendToEdit, setSpendToEdit] = useState<Spend | undefined>();
+    const [spendFormOpen, setSpendFormOpen] = useState<boolean>(false);
+    const [selectedSpend, setSelectedSpend] = useState<Spend | undefined>();
 
     const table = initializeTable(spends, spendColumns);
 
+    useEffect(() => {}, [spends]);
+
     const handleViewSpend = (row: any) => {
-        setSpendToEdit(row);
+        setSelectedSpend(row);
         setSpendFormOpen(true);
     };
 
     const handleFormOpen = () => {
-        setSpendToEdit(undefined);
+        setSelectedSpend(undefined);
         setSpendFormOpen(true);
     };
 
     const handleFormClose = () => {
+        setSelectedSpend(undefined);
         setSpendFormOpen(false);
     };
 
@@ -35,7 +38,7 @@ const Spend = () => {
             <PageHeader title={'Spending'} titleStyle={'text-l-yellow'} buttonText={'+ New Spending'} buttonStyle={'bg-l-yellow hover:bg-l-dark-yellow'} onClick={handleFormOpen} />
             <Table table={table} handleRowClick={handleViewSpend} />
 
-            <SpendForm isOpen={spendFormOpen} closeForm={handleFormClose} spendToEdit={spendToEdit} />
+            <SpendForm isOpen={spendFormOpen} closeForm={handleFormClose} selectedSpend={selectedSpend} />
         </Page>
     );
 };

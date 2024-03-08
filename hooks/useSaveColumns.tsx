@@ -1,3 +1,5 @@
+import BluePill from '@/components/UI/Pills/BluePill';
+import RedPill from '@/components/UI/Pills/RedPill';
 import { format, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 
@@ -14,13 +16,14 @@ export const useSaveColumns = () => {
                 },
             },
             {
-                accessorKey: 'type',
-                header: 'Type',
-            },
-            {
                 accessorKey: 'amount',
                 header: 'Amount',
-                cell: (props: any) => <span className={`${props.row.original.type === 'Deposit' ? 'text-l-blue' : 'text-l-red'}`}>${props.row.original.amount}</span>,
+                cell: (props: any) => (
+                    <div className='flex items-center justify-center'>
+                        {props.row.original.type === 'Deposit' && <BluePill text={`+$${props.row.original.amount}`} />}
+                        {props.row.original.type === 'Withdrawal' && <RedPill text={`-$${props.row.original.amount}`} />}
+                    </div>
+                ),
             },
             {
                 accessorKey: 'account',

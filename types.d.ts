@@ -3,6 +3,7 @@ type Make = {
     user_email: string;
     date: string;
     amount: number;
+    currency: string;
     source: string;
 };
 
@@ -12,6 +13,7 @@ type Save = {
     date: string;
     type: 'Withdrawal' | 'Deposit';
     amount: number;
+    currency: string;
     account: string;
 };
 
@@ -21,6 +23,7 @@ type Spend = {
     date: string;
     item: string;
     cost: number;
+    currency: string;
     store: string;
     category: string;
     necessity: string;

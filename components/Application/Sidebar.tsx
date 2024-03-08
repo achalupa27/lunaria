@@ -97,11 +97,11 @@ const Sidebar = () => {
                 </button>
             </div>
 
-            {/* <div className='flex-col items-center space-y-3'>
+            <div className='flex-col items-center space-y-3'>
                 <button className={`sidebar-button p-2 ${tab === 'Settings' ? 'text-primary dark:text-primary-dark' : null}`} onClick={() => dispatch(setTab('Settings'))}>
                     <Image src={theme === 'light' ? '/settings-dark.svg' : '/settings.svg'} alt='' height={48} width={48} />
                 </button>
-            </div> */}
+            </div>
         </div>
     );
 };

@@ -1,6 +1,6 @@
-import NeedPill from '@/components/UI/Pills/NeedPill';
-import WantPill from '@/components/UI/Pills/WantPill';
-import WastePill from '@/components/UI/Pills/WastePill';
+import GreenPill from '@/components/UI/Pills/GreenPill';
+import RedPill from '@/components/UI/Pills/RedPill';
+import YellowPill from '@/components/UI/Pills/YellowPill';
 import { format, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 
@@ -21,16 +21,24 @@ export const useSpendColumns = () => {
                 header: 'Item',
                 cell: (props: any) => (
                     <div className='flex items-center justify-center'>
-                        {props.row.original.necessity === 'Need' && <NeedPill text={props.row.original.item} />}
-                        {props.row.original.necessity === 'Want' && <WantPill text={props.row.original.item} />}
-                        {props.row.original.necessity === 'Waste' && <WastePill text={props.row.original.item} />}
+                        {props.row.original.necessity === 'Need' && <span className='text-l-green'>{props.row.original.item}</span>}
+                        {props.row.original.necessity === 'Want' && <span className='text-l-yellow'>{props.row.original.item}</span>}
+                        {props.row.original.necessity === 'Waste' && <span className='text-red-300'>{props.row.original.item}</span>}
                     </div>
                 ),
             },
             {
                 accessorKey: 'cost',
                 header: 'Cost',
-                cell: (props: any) => <span className='text-l-yellow'>${props.row.original.cost}</span>,
+                cell: (props: any) => {
+                    let cost = props.row.original.cost;
+                    if (props.row.original.currency === 'MXN') cost /= 11.35;
+                    return (
+                        <div className='flex items-center justify-center'>
+                            <YellowPill text={`$${cost.toFixed(2)}`} />
+                        </div>
+                    );
+                },
             },
             {
                 accessorKey: 'category',

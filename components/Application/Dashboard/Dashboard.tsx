@@ -1,4 +1,5 @@
 import Page from '@/components/UI/Page';
+import PageHeader from '@/components/UI/PageHeader';
 import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
 import { selectSpending } from '@/redux/slices/spendSlice';
@@ -8,7 +9,13 @@ const Dashboard = () => {
     const saves = useAppSelector(selectMaking);
     const spends = useAppSelector(selectSpending);
 
-    return <Page>Chart</Page>;
+    return (
+        <Page>
+            <div className='flex justify-between'>
+                <div className='bg-gradient-to-br from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-[40px] font-semibold text-transparent'>Home</div>
+            </div>
+        </Page>
+    );
 };
 
 export default Dashboard;

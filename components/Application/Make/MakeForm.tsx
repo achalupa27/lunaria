@@ -11,6 +11,7 @@ import { incomeSources } from '@/data/constants';
 import DeleteButton from '@/components/UI/Buttons/DeleteButton';
 import CancelButton from '@/components/UI/Buttons/CancelButton';
 import SaveButton from '@/components/UI/Buttons/SaveButton';
+import { useEffect } from 'react';
 
 type Props = {
     isOpen: boolean;
@@ -18,25 +19,21 @@ type Props = {
     makeToEdit?: Make;
 };
 
-const SaveForm = ({ isOpen, closeForm, makeToEdit }: Props) => {
+const MakeForm = ({ isOpen, closeForm, makeToEdit }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
     const makes = useAppSelector(selectMaking);
     const dispatch = useAppDispatch();
 
-    let formConfig = {};
+    const { register, handleSubmit, setValue } = useForm();
 
-    if (makeToEdit) {
-        formConfig = {
-            defaultValues: {
-                date: makeToEdit.date,
-                amount: makeToEdit.amount,
-                source: makeToEdit.source,
-            },
-        };
-    }
-
-    const { register, handleSubmit } = useForm(formConfig);
+    useEffect(() => {
+        if (makeToEdit) {
+            setValue('date', makeToEdit.date);
+            setValue('amount', makeToEdit.amount);
+            setValue('source', makeToEdit.source);
+        }
+    }, [makeToEdit, setValue]);
 
     const onSubmit: SubmitHandler<any> = (make: any) => {
         if (makeToEdit) editMake(make);
@@ -74,4 +71,4 @@ const SaveForm = ({ isOpen, closeForm, makeToEdit }: Props) => {
     );
 };
 
-export default SaveForm;
+export default MakeForm;

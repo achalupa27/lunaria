@@ -20,7 +20,7 @@ export const useMakeColumns = () => {
             {
                 accessorKey: 'amount',
                 header: 'Amount',
-                cell: (props: any) => <span className='text-l-green'>${props.row.original.amount}</span>,
+                cell: (props: any) => <span className='text-l-green'>+${props.row.original.amount}</span>,
             },
         ],
         []

@@ -3,9 +3,9 @@ import React from 'react';
 type Props = {
     title: string;
     titleStyle: string;
-    buttonText: string;
-    buttonStyle: string;
-    onClick: any;
+    buttonText?: string;
+    buttonStyle?: string;
+    onClick?: any;
 };
 
 const PageHeader = ({ title, titleStyle, buttonText, buttonStyle, onClick }: Props) => {

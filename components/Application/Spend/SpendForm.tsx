@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { necessityCategories, spendingCategories } from '../../../data/constants';
+import { currencyCategories, necessityCategories, spendingCategories } from '../../../data/constants';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addSpending, selectSpending, setSpending, updateSpendingState } from '@/redux/slices/spendSlice';
 import Modal from '@/components/UI/Modals/Modal';
@@ -15,69 +15,88 @@ import { deleteSpend } from '@/api/spend/deleteSpend';
 import { updateSpend } from '@/api/spend/updateSpend';
 import DeleteButton from '@/components/UI/Buttons/DeleteButton';
 import SaveButton from '@/components/UI/Buttons/SaveButton';
+import { useEffect } from 'react';
 
 type Props = {
     isOpen: boolean;
     closeForm: any;
-    spendToEdit?: Spend;
+    selectedSpend?: Spend;
 };
 
-const SpendForm = ({ isOpen, closeForm, spendToEdit }: Props) => {
+const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
     const spends = useAppSelector(selectSpending);
     const dispatch = useAppDispatch();
 
-    let formConfig = {};
-
-    if (spendToEdit) {
-        formConfig = {
-            defaultValues: {
-                date: spendToEdit.date,
-                item: spendToEdit.item,
-                cost: spendToEdit.cost,
-                category: spendToEdit.category,
-                store: spendToEdit.store,
-                necessity: spendToEdit.necessity,
-            },
-        };
-    }
-
-    const { register, handleSubmit } = useForm(formConfig);
+    const { register, handleSubmit, setValue } = useForm();
 
     const onSubmit: SubmitHandler<any> = (spend: Spend) => {
-        if (spendToEdit) editSpend(spend);
-        else addSpend(spend);
-        closeForm();
-    };
-
-    const addSpend = async (spend: Spend) => {
         if (user) {
-            let spendToAdd = {
-                ...spend,
-                user_email: user?.email,
-            };
+            if (selectedSpend) {
+                let spendToEdit: Spend = {
+                    ...spend,
+                    user_email: user!.email,
+                    id: selectedSpend.id,
+                };
 
-            // Add to database
-            let createdSpend = await createSpend(spendToAdd, supabaseClient);
+                editSpend(spendToEdit);
+            } else {
+                let spendToAdd: Spend = {
+                    ...spend,
+                    user_email: user!.email,
+                };
 
-            // Update state
-            dispatch(addSpending(createdSpend));
+                addSpend(spendToAdd);
+            }
         } else {
             console.error('[ERROR] Could not add spend. [REASON] No user.');
         }
     };
 
-    const editSpend = (updatedSpend: Spend) => {
+    // Initialize form values if spendToEdit is provided
+    useEffect(() => {
+        if (selectedSpend) {
+            setValue('date', selectedSpend.date);
+            setValue('item', selectedSpend.item);
+            setValue('cost', selectedSpend.cost);
+            setValue('store', selectedSpend.store);
+            setValue('category', selectedSpend.category);
+            setValue('necessity', selectedSpend.necessity);
+            setValue('currency', selectedSpend.currency);
+        } else {
+            setValue('date', undefined);
+            setValue('item', undefined);
+            setValue('cost', undefined);
+            setValue('store', undefined);
+            setValue('category', undefined);
+            setValue('necessity', undefined);
+            setValue('currency', undefined);
+        }
+    }, [selectedSpend, setValue]);
+
+    const addSpend = async (spend: Spend) => {
+        // Add to database
+        let createdSpend = await createSpend(spend, supabaseClient);
+
+        // Add to state
+        dispatch(addSpending(createdSpend));
+
+        closeForm();
+    };
+
+    const editSpend = async (updatedSpend: Spend) => {
         // Update database
         updateSpend(updatedSpend, supabaseClient);
 
         // Update state
         updateSpendingState(updatedSpend);
+
+        closeForm();
     };
 
     const removeSpend = async (idToDelete: string) => {
-        // Delete spend from database
+        // Delete from database
         deleteSpend(idToDelete, supabaseClient);
 
         // Delete from state
@@ -88,22 +107,23 @@ const SpendForm = ({ isOpen, closeForm, spendToEdit }: Props) => {
     };
 
     const handleDelete = () => {
-        spendToEdit && removeSpend(spendToEdit.id);
+        selectedSpend && removeSpend(selectedSpend.id);
     };
 
     if (!isOpen) return null;
 
     return (
-        <Modal title={spendToEdit ? 'Edit Spending' : 'New Spending'} closeModal={closeForm} headerStyle={'text-l-yellow'}>
+        <Modal title={selectedSpend ? 'Edit Spending' : 'New Spending'} closeModal={closeForm} headerStyle={'text-l-yellow'}>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                 <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
                 <TextInput register={register} label={'Item'} registerValue={'item'} isRequired={true} />
                 <NumberInput register={register} label={'Cost'} registerValue={'cost'} isRequired={true} />
+                <SelectInput register={register} label={'Category'} registerValue={'currency'} categories={currencyCategories} isRequired={true} />
                 <TextInput register={register} label={'Store'} registerValue={'store'} isRequired={true} />
                 <SelectInput register={register} label={'Category'} registerValue={'category'} categories={spendingCategories} isRequired={true} />
                 <SelectInput register={register} label={'Necessity'} registerValue={'necessity'} categories={necessityCategories} isRequired={true} />
                 <div className='flex justify-between pt-4'>
-                    {spendToEdit && <DeleteButton onClick={handleDelete} />}
+                    {selectedSpend ? <DeleteButton onClick={handleDelete} /> : <div />}
                     <div className='flex space-x-3'>
                         <CancelButton onClick={closeForm} />
                         <SaveButton styling={'bg-l-yellow hover:bg-ld-yellow'} />
