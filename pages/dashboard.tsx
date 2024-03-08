@@ -7,9 +7,9 @@ import { setSpending } from '@/redux/slices/spendSlice';
 import { useEffect } from 'react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useSession } from 'next-auth/react';
-import { readSpending } from '@/api/spend/readSpends';
-import { readSaving } from '@/api/save/readSaves';
-import { readMaking } from '@/api/make/readMakes';
+import { readSpending } from '@/supabase/spend/readSpends';
+import { readSaving } from '@/supabase/save/readSaves';
+import { readMaking } from '@/supabase/make/readMakes';
 import Loader from '@/components/UI/Loader';
 import { selectUser, setUser } from '@/redux/slices/userSlice';
 

@@ -10,8 +10,8 @@ import CancelButton from '@/components/UI/Buttons/CancelButton';
 import SaveButton from '@/components/UI/Buttons/SaveButton';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { selectUser } from '@/redux/slices/userSlice';
-import { createSave } from '@/api/save/createSave';
-import { deleteSave } from '@/api/save/deleteSave';
+import { createSave } from '@/supabase/save/createSave';
+import { deleteSave } from '@/supabase/save/deleteSave';
 import NumberInput from '@/components/UI/Inputs/NumberInput';
 import { useEffect } from 'react';
 
