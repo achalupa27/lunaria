@@ -34,7 +34,7 @@ const App = () => {
             };
             dispatch(setUser(sessionUser));
         }
-    }, [session]);
+    }, [session, dispatch, supabaseClient]);
 
     if (!session || !user) return <Loader />;
 

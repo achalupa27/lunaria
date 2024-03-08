@@ -21,7 +21,7 @@ const makeSlice = createSlice({
         },
         updateMakingState: (state, action: PayloadAction<Make>) => {
             const updatedMake = action.payload;
-            const index = state.making?.findIndex((make) => make._id === updatedMake._id);
+            const index = state.making?.findIndex((make) => make.id === updatedMake.id);
 
             if (index && index !== -1) {
                 state.making![index] = updatedMake;

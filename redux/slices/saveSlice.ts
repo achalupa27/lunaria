@@ -21,7 +21,7 @@ const saveSlice = createSlice({
         },
         updateSavingState: (state, action: PayloadAction<Save>) => {
             const updatedSave = action.payload;
-            const index = state.saving?.findIndex((save) => save._id === updatedSave._id);
+            const index = state.saving?.findIndex((save) => save.id === updatedSave.id);
 
             if (index && index !== -1) {
                 state.saving![index] = updatedSave;
