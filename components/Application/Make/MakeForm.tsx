@@ -1,25 +1,28 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { selectMaking } from '@/redux/slices/makeSlice';
+import { addMaking, selectMaking, setMaking, updateMakingState } from '@/redux/slices/makeSlice';
 import Modal from '@/components/UI/Modals/Modal';
 import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import DateInput from '@/components/UI/Inputs/DateInput';
 import NumberInput from '@/components/UI/Inputs/NumberInput';
 import SelectInput from '@/components/UI/Inputs/SelectInput';
-import { incomeSources } from '@/data/constants';
+import { currencyCategories, incomeSources } from '@/data/constants';
 import DeleteButton from '@/components/UI/Buttons/DeleteButton';
 import CancelButton from '@/components/UI/Buttons/CancelButton';
 import SaveButton from '@/components/UI/Buttons/SaveButton';
 import { useEffect } from 'react';
+import { createMake } from '@/supabase/make/createMake';
+import { updateMake } from '@/supabase/make/updateMake';
+import { deleteMake } from '@/supabase/make/deleteMake';
 
 type Props = {
     isOpen: boolean;
     closeForm: any;
-    makeToEdit?: Make;
+    selectedMake?: Make;
 };
 
-const MakeForm = ({ isOpen, closeForm, makeToEdit }: Props) => {
+const MakeForm = ({ isOpen, closeForm, selectedMake }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
     const makes = useAppSelector(selectMaking);
@@ -28,39 +31,87 @@ const MakeForm = ({ isOpen, closeForm, makeToEdit }: Props) => {
     const { register, handleSubmit, setValue } = useForm();
 
     useEffect(() => {
-        if (makeToEdit) {
-            setValue('date', makeToEdit.date);
-            setValue('amount', makeToEdit.amount);
-            setValue('source', makeToEdit.source);
+        if (selectedMake) {
+            setValue('date', selectedMake.date);
+            setValue('amount', selectedMake.amount);
+            setValue('source', selectedMake.source);
+        } else {
+            setValue('date', undefined);
+            setValue('amount', undefined);
+            setValue('source', undefined);
         }
-    }, [makeToEdit, setValue]);
+    }, [selectedMake, setValue]);
 
     const onSubmit: SubmitHandler<any> = (make: any) => {
-        if (makeToEdit) editMake(make);
-        else addMake(make);
+        if (user) {
+            if (selectedMake) {
+                let makeToEdit: Make = {
+                    ...make,
+                    user_email: user!.email,
+                    id: selectedMake.id,
+                };
+
+                editMake(makeToEdit);
+            } else {
+                let makeToAdd: Make = {
+                    ...make,
+                    user_email: user!.email,
+                };
+
+                addMake(makeToAdd);
+            }
+        } else {
+            console.error('[ERROR] Could not add make. [REASON] No user.');
+        }
         closeForm();
     };
 
-    const addMake = async (make: Make) => {};
+    const addMake = async (make: Make) => {
+        // Add to database
+        let createdMake = await createMake(make, supabaseClient);
 
-    const removeMake = async (makeToDelete: Make) => {};
+        // Add to state
+        dispatch(addMaking(createdMake));
 
-    const editMake = async (updatedMake: Make) => {};
+        closeForm();
+    };
+
+    const editMake = async (updatedMake: Make) => {
+        // Update database
+        updateMake(updatedMake, supabaseClient);
+
+        // Update state
+        updateMakingState(updatedMake);
+
+        closeForm();
+    };
+
+    const removeMake = async (idToDelete: string) => {
+        // Delete from database
+        deleteMake(idToDelete, supabaseClient);
+
+        // Delete from state
+        const newMakes = makes.filter((make) => make.id !== idToDelete);
+        dispatch(setMaking(newMakes));
+
+        closeForm();
+    };
 
     const handleDelete = () => {
-        makeToEdit && removeMake(makeToEdit);
+        selectedMake && removeMake(selectedMake.id);
     };
 
     if (!isOpen) return null;
 
     return (
-        <Modal title={makeToEdit ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-l-green'}>
+        <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-l-green'}>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
                 <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
                 <NumberInput register={register} label={'Amount'} registerValue={'amount'} isRequired={true} />
+                <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} />
                 <SelectInput register={register} label={'Source'} registerValue={'source'} categories={incomeSources} isRequired={true} />
                 <div className='flex justify-between pt-4'>
-                    {makeToEdit && <DeleteButton onClick={handleDelete} />}
+                    {selectedMake && <DeleteButton onClick={handleDelete} />}
                     <div className='flex space-x-3'>
                         <CancelButton onClick={closeForm} />
                         <SaveButton styling={'bg-l-green hover:bg-ld-green'} />

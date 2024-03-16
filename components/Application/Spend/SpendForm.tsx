@@ -31,6 +31,27 @@ const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
 
     const { register, handleSubmit, setValue } = useForm();
 
+    // Initialize form values if spendToEdit is provided
+    useEffect(() => {
+        if (selectedSpend) {
+            setValue('date', selectedSpend.date);
+            setValue('item', selectedSpend.item);
+            setValue('cost', selectedSpend.cost);
+            setValue('store', selectedSpend.store);
+            setValue('category', selectedSpend.category);
+            setValue('necessity', selectedSpend.necessity);
+            setValue('currency', selectedSpend.currency);
+        } else {
+            setValue('date', undefined);
+            setValue('item', undefined);
+            setValue('cost', undefined);
+            setValue('store', undefined);
+            setValue('category', undefined);
+            setValue('necessity', undefined);
+            setValue('currency', undefined);
+        }
+    }, [selectedSpend, setValue]);
+
     const onSubmit: SubmitHandler<any> = (spend: Spend) => {
         if (user) {
             if (selectedSpend) {
@@ -53,27 +74,6 @@ const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
             console.error('[ERROR] Could not add spend. [REASON] No user.');
         }
     };
-
-    // Initialize form values if spendToEdit is provided
-    useEffect(() => {
-        if (selectedSpend) {
-            setValue('date', selectedSpend.date);
-            setValue('item', selectedSpend.item);
-            setValue('cost', selectedSpend.cost);
-            setValue('store', selectedSpend.store);
-            setValue('category', selectedSpend.category);
-            setValue('necessity', selectedSpend.necessity);
-            setValue('currency', selectedSpend.currency);
-        } else {
-            setValue('date', undefined);
-            setValue('item', undefined);
-            setValue('cost', undefined);
-            setValue('store', undefined);
-            setValue('category', undefined);
-            setValue('necessity', undefined);
-            setValue('currency', undefined);
-        }
-    }, [selectedSpend, setValue]);
 
     const addSpend = async (spend: Spend) => {
         // Add to database
@@ -118,7 +118,7 @@ const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
                 <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
                 <TextInput register={register} label={'Item'} registerValue={'item'} isRequired={true} />
                 <NumberInput register={register} label={'Cost'} registerValue={'cost'} isRequired={true} />
-                <SelectInput register={register} label={'Category'} registerValue={'currency'} categories={currencyCategories} isRequired={true} />
+                <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} />
                 <TextInput register={register} label={'Store'} registerValue={'store'} isRequired={true} />
                 <SelectInput register={register} label={'Category'} registerValue={'category'} categories={spendingCategories} isRequired={true} />
                 <SelectInput register={register} label={'Necessity'} registerValue={'necessity'} categories={necessityCategories} isRequired={true} />

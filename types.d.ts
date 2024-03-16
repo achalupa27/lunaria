@@ -26,8 +26,12 @@ type Spend = {
     currency: string;
     store: string;
     category: string;
-    necessity: string;
+    necessity: Necessity;
 };
+
+type SpendDataPoint = { date: string; spent: number }[];
+
+type Necessity = 'Need' | 'Want' | 'Waste';
 
 type SpendingCategory = 'Rent' | 'Student Loans' | 'Food' | 'Home' | 'Hygiene' | 'Fitness' | 'Transportation' | 'Subscriptions' | 'Clothing' | 'Electronics';
 

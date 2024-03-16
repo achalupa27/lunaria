@@ -8,9 +8,9 @@ type Props = {
 
 const Table = ({ table, handleRowClick }: Props) => {
     return (
-        <div className='scrollbar-none overflow-y-auto'>
+        <div className='w-fit overflow-y-auto scrollbar-none'>
             <table className='w-full border-separate border-spacing-0 text-center'>
-                <thead className='sticky inset-0 h-[49px]'>
+                <thead className='sticky inset-0 h-[49px] bg-primary'>
                     {table.getHeaderGroups().map((headerGroup: any) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header: any) => (

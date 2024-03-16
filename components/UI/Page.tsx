@@ -3,7 +3,7 @@ type Props = {
 };
 
 const Page = ({ children }: Props) => {
-    return <div className='h-screen w-screen gap-2 px-10 py-6'>{children}</div>;
+    return <div className='max-w-screen flex h-screen max-h-screen w-screen flex-col gap-2 overflow-auto px-10 py-6'>{children}</div>;
 };
 
 export default Page;

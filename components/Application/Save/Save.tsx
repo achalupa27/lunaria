@@ -12,21 +12,22 @@ const Save = () => {
     const saves = useAppSelector(selectSaving);
     const saveColumns = useSaveColumns();
     const [saveFormOpen, setSaveFormOpen] = useState(false);
-    const [saveToEdit, setSaveToEdit] = useState<Save | undefined>();
+    const [selectedSave, setSelectedSave] = useState<Save | undefined>();
 
     const table = initializeTable(saves, saveColumns);
 
     const handleViewSave = (row: any) => {
-        setSaveToEdit(row);
+        setSelectedSave(row);
         setSaveFormOpen(true);
     };
 
     const handleFormOpen = () => {
-        setSaveToEdit(undefined);
+        setSelectedSave(undefined);
         setSaveFormOpen(true);
     };
 
     const handleFormClose = () => {
+        setSelectedSave(undefined);
         setSaveFormOpen(false);
     };
 
@@ -35,7 +36,7 @@ const Save = () => {
             <PageHeader title={'Saving'} titleStyle={'text-l-blue'} buttonText={'+ New Saving'} buttonStyle={'bg-l-blue hover:bg-l-dark-blue'} onClick={handleFormOpen} />
             <Table table={table} handleRowClick={handleViewSave} />
 
-            <SaveForm isOpen={saveFormOpen} closeForm={handleFormClose} saveToEdit={saveToEdit} />
+            <SaveForm isOpen={saveFormOpen} closeForm={handleFormClose} selectedSave={selectedSave} />
         </Page>
     );
 };

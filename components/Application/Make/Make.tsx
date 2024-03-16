@@ -12,21 +12,22 @@ const Make = () => {
     const makes = useAppSelector(selectMaking);
     const makeColumns = useMakeColumns();
     const [makeFormOpen, setMakeFormOpen] = useState(false);
-    const [makeToEdit, setMakeToEdit] = useState<Make | undefined>();
+    const [selectedMake, setSelectedMake] = useState<Make | undefined>();
 
     const table = initializeTable(makes, makeColumns);
 
     const handleViewMake = (row: any) => {
-        setMakeToEdit(row);
+        setSelectedMake(row);
         setMakeFormOpen(true);
     };
 
     const handleFormOpen = () => {
-        setMakeToEdit(undefined);
+        setSelectedMake(undefined);
         setMakeFormOpen(true);
     };
 
     const handleFormClose = () => {
+        setSelectedMake(undefined);
         setMakeFormOpen(false);
     };
 
@@ -35,7 +36,7 @@ const Make = () => {
             <PageHeader title={'Making'} titleStyle={'text-l-green'} buttonText={'+ New Making'} buttonStyle={'bg-l-green hover:bg-l-dark-green'} onClick={handleFormOpen} />
             <Table table={table} handleRowClick={handleViewMake} />
 
-            <MakeForm isOpen={makeFormOpen} closeForm={handleFormClose} makeToEdit={makeToEdit} />
+            <MakeForm isOpen={makeFormOpen} closeForm={handleFormClose} selectedMake={selectedMake} />
         </Page>
     );
 };
