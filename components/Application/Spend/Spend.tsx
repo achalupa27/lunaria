@@ -102,9 +102,6 @@ const Spend = () => {
         setSpendFormOpen(false);
     };
 
-    const total = 3400;
-    const monthlyDeltaPercent = 12;
-
     return (
         <Page>
             <PageHeader title={'Spending'} titleStyle={'text-l-yellow'} buttonText={'+ New Spending'} buttonStyle={'bg-l-yellow hover:bg-l-dark-yellow'} onClick={handleFormOpen} />
