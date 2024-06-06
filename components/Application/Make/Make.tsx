@@ -7,6 +7,8 @@ import MakeForm from './MakeForm';
 import Table from '@/components/UI/Table';
 import Page from '@/components/UI/Page';
 import PageHeader from '@/components/UI/PageHeader';
+import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
+import HeaderCard from '@/components/UI/Cards/HeaderCard';
 
 const Make = () => {
     const makes = useAppSelector(selectMaking);
@@ -31,11 +33,55 @@ const Make = () => {
         setMakeFormOpen(false);
     };
 
+    const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
+
+    const [savings, setSavings] = useState<number>(50);
+
     return (
         <Page>
             <PageHeader title={'Making'} titleStyle={'text-l-green'} buttonText={'+ New Making'} buttonStyle={'bg-l-green hover:bg-l-dark-green'} onClick={handleFormOpen} />
-            <Table table={table} handleRowClick={handleViewMake} />
+            <div className='my-2 flex space-x-6'>
+                <HeaderCard title={'All Income'} value={savings} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='green' />
+            </div>
 
+            <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
+                <div className='flex h-full flex-col space-y-2'>
+                    <div className='rounded-md border border-l-green'>
+                        <div className='flex items-center justify-between rounded-md rounded-b-none bg-l-green'>
+                            <div className='flex items-center space-x-2 rounded-md px-2 text-primary'>
+                                <i className='fi fi-rr-coins' />
+                                <span>Income Sources</span>
+                            </div>
+                            <div>
+                                <button className='w-6 rounded-md bg-l-green px-1 text-primary hover:bg-l-dark-green'>+</button>
+                            </div>
+                        </div>
+                        <div className='px-3 py-2'>
+                            <div className='flex justify-between'>
+                                <div>Software</div>
+                                <div className='text-l-green'>$100</div>
+                            </div>
+                            <div className='flex justify-between'>
+                                <div>Trading</div>
+                                <div className='text-l-green'>$50</div>
+                            </div>
+                            <div className='flex justify-between'>
+                                <div>Dividends</div>
+                                <div className='text-l-green'>$50</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Table table={table} tableColor='green' handleRowClick={handleViewMake} />
+                </div>
+                <ResponsiveContainer>
+                    <LineChart data={makes}>
+                        <XAxis dataKey='date' tickLine={false} />
+                        <YAxis tickLine={false} />
+                        <Line type='monotone' dataKey='spent' stroke={'#f7ebc0'} />
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
             <MakeForm isOpen={makeFormOpen} closeForm={handleFormClose} selectedMake={selectedMake} />
         </Page>
     );

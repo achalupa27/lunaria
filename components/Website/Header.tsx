@@ -9,10 +9,10 @@ function Header() {
     const [headerMenu, setHeaderMenu] = useState(false);
 
     return (
-        <header className='absolute top-0 left-0 z-20 flex w-full items-center border-b border-blue-900/20 bg-[#060012] p-4 px-6'>
+        <header className='absolute left-0 top-0 z-20 flex w-full items-center border-b border-blue-900/20 bg-[#060012] p-4 px-6'>
             <div className='basis-1/3'>
                 <Link href='/' className='flex w-fit items-center space-x-2'>
-                    <Image className='h-8 w-8' src='/logo.png' alt='logo' width={32} height={32} />
+                    <Image className='h-8 w-8' src='/logo.svg' alt='logo' width={32} height={32} />
                     <span className='text-3xl font-semibold'>lunaria</span>
                 </Link>
             </div>
@@ -35,7 +35,7 @@ function Header() {
 
                 {headerMenu && <HeaderMenu />}
             </div>
-            {headerMenu && <div className='absolute top-0 left-0 z-40 h-screen w-screen bg-transparent' onClick={() => setHeaderMenu(false)}></div>}
+            {headerMenu && <div className='absolute left-0 top-0 z-40 h-screen w-screen bg-transparent' onClick={() => setHeaderMenu(false)}></div>}
             <div className='hidden basis-1/3 items-center justify-end space-x-2 lg:flex'>
                 {session ? (
                     <Link href='/dashboard'>

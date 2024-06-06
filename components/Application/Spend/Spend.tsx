@@ -8,6 +8,7 @@ import Table from '@/components/UI/Table';
 import Page from '@/components/UI/Page';
 import PageHeader from '@/components/UI/PageHeader';
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import HeaderCard from '@/components/UI/Cards/HeaderCard';
 
 const Spend = () => {
     const spends = useAppSelector(selectSpending);
@@ -20,6 +21,7 @@ const Spend = () => {
     const [totalWasteSpent, setTotalWasteSpent] = useState<number>(0);
     const [totalSpent, setTotalSpent] = useState<number>(0);
 
+    const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
     const [chartData, setChartData] = useState<SpendDataPoint>();
 
     const table = initializeTable(spends, spendColumns);
@@ -105,49 +107,32 @@ const Spend = () => {
     return (
         <Page>
             <PageHeader title={'Spending'} titleStyle={'text-l-yellow'} buttonText={'+ New Spending'} buttonStyle={'bg-l-yellow hover:bg-l-dark-yellow'} onClick={handleFormOpen} />
-            <div className='my-2 mb-8 flex space-x-6'>
-                <div className='flex h-fit w-fit flex-col items-end justify-center rounded-lg bg-l-yellow px-4 py-2 pt-3'>
-                    <span className='leading-none text-primary'>This Month</span>
-                    <div className='space-x-2'>
-                        <span className='text-primary'>CAD</span>
-                        <span className='text-3xl font-semibold text-primary'>${totalSpent}</span>
-                    </div>
-                    {/* <span className='text-sm leading-none text-primary'>+{monthlyDeltaPercent}%</span> */}
-                </div>
-                <div className='flex h-fit w-fit flex-col items-end justify-center rounded-lg border border-l-green px-4 py-2 pt-3'>
-                    <span className='leading-none text-l-green'>Need</span>
-                    <div className='space-x-2'>
-                        <span className='text-l-green'>CAD</span>
-                        <span className='text-3xl font-semibold text-l-green'>${totalNeedSpent}</span>
-                    </div>
-                    {/* <span className='text-sm leading-none text-l-green'>+{monthlyDeltaPercent}%</span> */}
-                </div>
-                <div className='flex h-fit w-fit flex-col items-end justify-center rounded-lg border border-l-yellow px-4 py-2 pt-3'>
-                    <span className='leading-none text-l-yellow'>Want</span>
-                    <div className='space-x-2'>
-                        <span className='text-l-yellow'>CAD</span>
-                        <span className='text-3xl font-semibold text-l-yellow'>${totalWantSpent}</span>
-                    </div>
-                    {/* <span className='text-sm leading-none text-l-yellow'>+{monthlyDeltaPercent}%</span> */}
-                </div>
-                <div className='flex h-fit w-fit flex-col items-end justify-center rounded-lg border border-l-red px-4 py-2 pt-3'>
-                    <span className='leading-none text-l-red'>Waste</span>
-                    <div className='space-x-2'>
-                        <span className='text-l-red'>CAD</span>
-                        <span className='text-3xl font-semibold text-l-red'>${totalWasteSpent}</span>
-                    </div>
-                    {/* <span className='text-sm leading-none text-l-red'>+{monthlyDeltaPercent}%</span> */}
-                </div>
+            <div className='my-2 flex space-x-6'>
+                <HeaderCard title={'This Month'} value={totalSpent} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='yellow' />
+                <HeaderCard title={'Need'} value={`${totalNeedSpent.toFixed(2)}`} isSelected={selectedNecessity === 'Need'} onClick={() => setSelectedNecessity('Need')} color='green' />
+                <HeaderCard title={'Want'} value={`${totalWantSpent.toFixed(2)}`} isSelected={selectedNecessity === 'Want'} onClick={() => setSelectedNecessity('Want')} color='yellow' />
+                <HeaderCard title={'Waste'} value={`${totalWasteSpent.toFixed(2)}`} isSelected={selectedNecessity === 'Waste'} onClick={() => setSelectedNecessity('Waste')} color='red' />
             </div>
             <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
-                <Table table={table} handleRowClick={handleViewSpend} />
-                <ResponsiveContainer>
-                    <LineChart data={chartData}>
-                        <XAxis dataKey='date' tickLine={false} />
-                        <YAxis tickLine={false} />
-                        <Line type='monotone' dataKey='spent' stroke={'#f7ebc0'} />
-                    </LineChart>
-                </ResponsiveContainer>
+                <Table table={table} tableColor='yellow' handleRowClick={handleViewSpend} />
+                <div className='h-full w-full rounded-md border border-l-yellow'>
+                    <div className='flex justify-between rounded-md rounded-b-none bg-l-yellow px-2 py-1 text-primary'>
+                        <select name='choice' className='bg-transparent'>
+                            <option value='first' selected>
+                                Daily Spending
+                            </option>
+                            <option value='second'>Weekly Spending</option>
+                            <option value='third'>Monthly Spending</option>
+                        </select>
+                    </div>
+                    <ResponsiveContainer>
+                        <LineChart data={chartData}>
+                            <XAxis height={0} dataKey='date' tickLine={false} />
+                            <YAxis width={0} tickLine={false} />
+                            <Line type='monotone' dataKey='spent' stroke={'#f7ebc0'} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
             <SpendForm isOpen={spendFormOpen} closeForm={handleFormClose} selectedSpend={selectedSpend} />
         </Page>
