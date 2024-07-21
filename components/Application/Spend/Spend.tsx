@@ -9,6 +9,7 @@ import Page from '@/components/UI/Page';
 import PageHeader from '@/components/UI/PageHeader';
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import HeaderCard from '@/components/UI/Cards/HeaderCard';
+import { spendingCategories } from '@/data/constants';
 
 const Spend = () => {
     const spends = useAppSelector(selectSpending);
@@ -114,8 +115,24 @@ const Spend = () => {
                 <HeaderCard title={'Waste'} value={`${totalWasteSpent.toFixed(2)}`} isSelected={selectedNecessity === 'Waste'} onClick={() => setSelectedNecessity('Waste')} color='red' />
             </div>
             <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
-                <Table table={table} tableColor='yellow' handleRowClick={handleViewSpend} />
-                <div className='h-full w-full rounded-md border border-l-yellow'>
+                <div className='flex h-full flex-col space-y-4  '>
+                    <div className='flex h-1/2 flex-col rounded-md border border-l-yellow'>
+                        <div className='flex justify-between rounded-md rounded-b-none bg-l-yellow px-2 text-primary'>
+                            <div>Categories</div>
+                            <button className='w-6 rounded-md bg-l-yellow text-primary hover:bg-l-dark-yellow'>+</button>
+                        </div>
+                        <div className='flex-1 overflow-y-auto px-3 py-2'>
+                            {spendingCategories.map((category) => (
+                                <div key={category} className='flex justify-between'>
+                                    <div>{category}</div>
+                                    <div className='text-l-yellow'>$0</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <Table table={table} tableColor='yellow' handleRowClick={handleViewSpend} />
+                </div>
+                <div className='flex h-full w-full flex-col rounded-md border border-l-yellow'>
                     <div className='flex justify-between rounded-md rounded-b-none bg-l-yellow px-2 py-1 text-primary'>
                         <select name='choice' className='bg-transparent'>
                             <option value='first' selected>
@@ -125,13 +142,15 @@ const Spend = () => {
                             <option value='third'>Monthly Spending</option>
                         </select>
                     </div>
-                    <ResponsiveContainer>
-                        <LineChart data={chartData}>
-                            <XAxis height={0} dataKey='date' tickLine={false} />
-                            <YAxis width={0} tickLine={false} />
-                            <Line type='monotone' dataKey='spent' stroke={'#f7ebc0'} />
-                        </LineChart>
-                    </ResponsiveContainer>
+                    <div className='flex-1'>
+                        <ResponsiveContainer>
+                            <LineChart data={chartData}>
+                                <XAxis tick={{ fill: 'white' }} dataKey='date' tickLine={false} stroke={'#f7ebc0'} />
+                                <YAxis width={30} tick={{ fill: 'white' }} tickLine={false} stroke={'#f7ebc0'} />
+                                <Line type='monotone' dataKey='spent' dot={false} stroke={'#f7ebc0'} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
             </div>
             <SpendForm isOpen={spendFormOpen} closeForm={handleFormClose} selectedSpend={selectedSpend} />

@@ -49,8 +49,8 @@ const Save = () => {
                 <HeaderCard title={'Debt'} value={debt} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='red' />
             </div>
 
-            <div className='flex flex-1 space-x-4 overflow-auto'>
-                <div className='max-h-full space-y-2'>
+            <div className='flex space-x-4'>
+                <div className='h-full space-y-2'>
                     <div className='rounded-md border border-l-blue'>
                         <div className='flex justify-between rounded-md rounded-b-none bg-l-blue'>
                             <div className='flex items-center space-x-2 rounded-md px-2 text-primary'>
@@ -62,6 +62,10 @@ const Save = () => {
                             </div>
                         </div>
                         <div className='px-3 py-2'>
+                            <div className='flex justify-between'>
+                                <div>Cash</div>
+                                <div className='text-l-blue'>$150</div>
+                            </div>
                             <div className='flex justify-between'>
                                 <div>TFSA</div>
                                 <div className='text-l-blue'>$100</div>
@@ -80,7 +84,7 @@ const Save = () => {
                         <div className='flex items-center justify-between rounded-md rounded-b-none bg-l-red'>
                             <div className='flex items-center space-x-2 rounded-md px-2 text-primary'>
                                 <i className='fi fi-rr-debt' />
-                                <span>Debts</span>
+                                <span>Debt Accounts</span>
                             </div>
                             <div>
                                 <button className='w-6 rounded-md bg-l-red text-primary hover:bg-l-dark-red'>+</button>
