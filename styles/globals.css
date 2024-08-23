@@ -47,7 +47,7 @@
     }
 
     .main-hover {
-        @apply transition duration-200 hover:bg-primary/20 dark:hover:bg-primary-dark/20;
+        @apply hover:bg-primary/20 dark:hover:bg-primary-dark/20;
     }
 
     .sidebar-button {

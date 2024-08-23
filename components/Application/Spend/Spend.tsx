@@ -115,9 +115,9 @@ const Spend = () => {
                 <HeaderCard title={'Waste'} value={`${totalWasteSpent.toFixed(2)}`} isSelected={selectedNecessity === 'Waste'} onClick={() => setSelectedNecessity('Waste')} color='red' />
             </div>
             <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
-                <div className='flex h-full flex-col space-y-4  '>
+                <div className='flex h-full flex-col space-y-4'>
                     <div className='flex h-1/2 flex-col rounded-md border border-l-yellow'>
-                        <div className='flex justify-between rounded-md rounded-b-none bg-l-yellow px-2 text-primary'>
+                        <div className='flex h-[30px] items-center justify-between rounded-md rounded-b-none bg-l-yellow px-2 text-primary'>
                             <div>Categories</div>
                             <button className='w-6 rounded-md bg-l-yellow text-primary hover:bg-l-dark-yellow'>+</button>
                         </div>
@@ -146,7 +146,7 @@ const Spend = () => {
                         <ResponsiveContainer>
                             <LineChart data={chartData}>
                                 <XAxis tick={{ fill: 'white' }} dataKey='date' tickLine={false} stroke={'#f7ebc0'} />
-                                <YAxis width={30} tick={{ fill: 'white' }} tickLine={false} stroke={'#f7ebc0'} />
+                                <YAxis width={40} tick={{ fill: 'white' }} tickLine={false} stroke={'#f7ebc0'} />
                                 <Line type='monotone' dataKey='spent' dot={false} stroke={'#f7ebc0'} />
                             </LineChart>
                         </ResponsiveContainer>

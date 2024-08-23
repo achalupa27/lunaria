@@ -49,12 +49,12 @@ const Save = () => {
                 <HeaderCard title={'Debt'} value={debt} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='red' />
             </div>
 
-            <div className='flex space-x-4'>
-                <div className='h-full space-y-2'>
+            <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
+                <div className='flex h-full flex-col space-y-4'>
                     <div className='rounded-md border border-l-blue'>
                         <div className='flex justify-between rounded-md rounded-b-none bg-l-blue'>
                             <div className='flex items-center space-x-2 rounded-md px-2 text-primary'>
-                                <i className='fi fi-rr-piggy-bank' />
+                                <i className='fi fi-sr-piggy-bank' />
                                 <span>Savings Accounts</span>
                             </div>
                             <div>
@@ -103,13 +103,26 @@ const Save = () => {
                     </div>
                     <Table table={table} tableColor='blue' handleRowClick={handleViewSave} />
                 </div>
-                <ResponsiveContainer>
-                    <LineChart data={saves}>
-                        <XAxis dataKey='date' tickLine={false} />
-                        <YAxis tickLine={false} />
-                        <Line type='monotone' dataKey='spent' stroke={'#f7ebc0'} />
-                    </LineChart>
-                </ResponsiveContainer>
+                <div className='flex h-full w-full flex-col rounded-md border border-l-blue'>
+                    <div className='flex justify-between rounded-md rounded-b-none bg-l-blue px-2 py-1 text-primary'>
+                        <select name='choice' className='bg-transparent'>
+                            <option value='first' selected>
+                                Savings Accounts
+                            </option>
+                            <option value='second'>Weekly Saving</option>
+                            <option value='third'>Monthly Saving</option>
+                        </select>
+                    </div>
+                    <div className='flex-1'>
+                        <ResponsiveContainer>
+                            <LineChart data={saves}>
+                                <XAxis tick={{ fill: 'white' }} dataKey='date' tickLine={false} stroke={'#93c5fd'} />
+                                <YAxis width={30} tick={{ fill: 'white' }} tickLine={false} stroke={'#93c5fd'} />
+                                <Line type='monotone' dataKey='spent' dot={false} stroke={'#93c5fd'} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
             </div>
             <SaveForm isOpen={saveFormOpen} closeForm={handleFormClose} selectedSave={selectedSave} />
         </Page>

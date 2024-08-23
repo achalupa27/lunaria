@@ -63,24 +63,41 @@ const Make = () => {
                             </div>
                             <div className='flex justify-between'>
                                 <div>Trading</div>
-                                <div className='text-l-green'>$50</div>
+                                <div className='text-l-green'>$0</div>
                             </div>
                             <div className='flex justify-between'>
                                 <div>Dividends</div>
-                                <div className='text-l-green'>$50</div>
+                                <div className='text-l-green'>$0</div>
+                            </div>
+                            <div className='flex justify-between'>
+                                <div>Social Media</div>
+                                <div className='text-l-green'>$0</div>
                             </div>
                         </div>
                     </div>
 
                     <Table table={table} tableColor='green' handleRowClick={handleViewMake} />
                 </div>
-                <ResponsiveContainer>
-                    <LineChart data={makes}>
-                        <XAxis dataKey='date' tickLine={false} />
-                        <YAxis tickLine={false} />
-                        <Line type='monotone' dataKey='spent' stroke={'#f7ebc0'} />
-                    </LineChart>
-                </ResponsiveContainer>
+                <div className='flex h-full w-full flex-col rounded-md border border-l-green'>
+                    <div className='flex justify-between rounded-md rounded-b-none bg-l-green px-2 py-1 text-primary'>
+                        <select name='choice' className='bg-transparent'>
+                            <option value='first' selected>
+                                Daily Making
+                            </option>
+                            <option value='second'>Weekly Making</option>
+                            <option value='third'>Monthly Making</option>
+                        </select>
+                    </div>
+                    <div className='flex-1'>
+                        <ResponsiveContainer>
+                            <LineChart data={makes}>
+                                <XAxis tick={{ fill: 'white' }} dataKey='date' tickLine={false} stroke={'#99f5d1'} />
+                                <YAxis width={30} tick={{ fill: 'white' }} tickLine={false} stroke={'#99f5d1'} />
+                                <Line type='monotone' dataKey='spent' dot={false} stroke={'#99f5d1'} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
             </div>
             <MakeForm isOpen={makeFormOpen} closeForm={handleFormClose} selectedMake={selectedMake} />
         </Page>
