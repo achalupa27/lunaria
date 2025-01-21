@@ -51,7 +51,7 @@ const HeroSection = () => {
                     {session ? (
                         <Link href='/dashboard'>
                             <div className='flex items-center justify-center'>
-                                <button className='button-primary-alt px-8 py-3 font-medium text-zinc-900 hover:border'>
+                                <button className='rounded-full bg-white px-8 py-3 font-medium text-zinc-900 hover:border'>
                                     Dashboard
                                     <i className='fi fi-bs-angle-right pl-2 text-base text-zinc-700' />
                                 </button>
@@ -61,7 +61,7 @@ const HeroSection = () => {
                     ) : (
                         <Link href='/pricing'>
                             <div className='group flex items-center justify-center'>
-                                <button className='button-primary-alt px-8 py-3 font-medium text-zinc-900 hover:border'>
+                                <button className='rounded-full bg-white px-8 py-3 font-medium text-zinc-900 hover:border'>
                                     Get Started
                                     <i className='fi fi-bs-angle-right pl-2 text-zinc-700' />
                                 </button>
