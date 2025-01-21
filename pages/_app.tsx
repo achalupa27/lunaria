@@ -1,7 +1,6 @@
 import '../styles/globals.css';
 import '../styles/index.css';
 import type { AppProps } from 'next/app';
-import Layout from '../components/Layout';
 import Router from 'next/router';
 import ProgressBar from '@badrap/bar-of-progress';
 import { ThemeProvider } from 'next-themes';
@@ -12,6 +11,7 @@ import { store } from '@/redux/store';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useState } from 'react';
+import Layout from '@/components/Layout';
 
 const progress = new ProgressBar({
     size: 4,
@@ -28,7 +28,7 @@ function App({ Component, pageProps }: AppProps) {
     const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
     return (
-        <ThemeProvider defaultTheme='dark' enableSystem={false} attribute='class'>
+        <ThemeProvider>
             <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
                 <SessionProvider session={pageProps.session}>
                     <Layout>

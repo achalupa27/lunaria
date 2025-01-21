@@ -15,6 +15,10 @@
     i {
         @apply leading-none;
     }
+  :root {
+
+        --radius: 0.5rem
+    }
 }
 
 @layer components {

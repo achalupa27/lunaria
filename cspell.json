@@ -1,0 +1,13 @@
+{
+    "version": "0.2",
+    "words": ["nocompatible", "tiktok", "amet"],
+    "ignorePaths": ["package.json", "package-lock.json"],
+    "useGitignore": true,
+    "validateDirectives": true,
+    "cache": {
+        "useCache": true,
+        "cacheLocation": "./node_modules/.cache/cspell/.cspell"
+    },
+    "language": "en",
+    "dictionaries": ["default", "html", "node", "typescript", "css", "en-gb", "en_US", "fonts", "npm"]
+}

@@ -1,5 +1,5 @@
-import BluePill from '@/components/UI/Pills/BluePill';
-import RedPill from '@/components/UI/Pills/RedPill';
+import BluePill from '@/components/ui/Pills/BluePill';
+import RedPill from '@/components/ui/Pills/RedPill';
 import { format, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 

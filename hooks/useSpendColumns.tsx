@@ -1,6 +1,6 @@
-import GreenPill from '@/components/UI/Pills/GreenPill';
-import RedPill from '@/components/UI/Pills/RedPill';
-import YellowPill from '@/components/UI/Pills/YellowPill';
+import GreenPill from '@/components/ui/Pills/GreenPill';
+import RedPill from '@/components/ui/Pills/RedPill';
+import YellowPill from '@/components/ui/Pills/YellowPill';
 import { format, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 

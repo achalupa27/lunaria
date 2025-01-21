@@ -1,7 +1,7 @@
-import Dashboard from './Dashboard/Dashboard';
-import Make from './Make/Make';
-import Save from './Save/Save';
-import Spend from './Spend/Spend';
+import Dashboard from '../../features/Home';
+import Make from '../../features/Make';
+import Save from '../../features/Save';
+import Spend from '../../features/Spend';
 import Settings from './Settings';
 import { useAppSelector } from '@/redux/hooks';
 import { selectTab } from '@/redux/slices/tabSlice';

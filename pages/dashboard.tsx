@@ -1,5 +1,5 @@
-import Sidebar from '../components/Application/Sidebar';
-import Activity from '../components/Application/Activity';
+import Sidebar from '../components/application/Sidebar';
+import Activity from '../components/application/Activity';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setMaking } from '@/redux/slices/makeSlice';
 import { setSaving } from '@/redux/slices/saveSlice';
@@ -7,10 +7,10 @@ import { setSpending } from '@/redux/slices/spendSlice';
 import { useEffect } from 'react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useSession } from 'next-auth/react';
-import { readSpending } from '@/supabase/spend/readSpends';
-import { readSaving } from '@/supabase/save/readSaves';
-import { readMaking } from '@/supabase/make/readMakes';
-import Loader from '@/components/UI/Loader';
+import { readSpending } from '@/features/Spend/services/readSpends';
+import { readSaving } from '@/features/Save/services/readSaves';
+import { readMaking } from '@/features/Make/services/readMakes';
+import Loader from '@/components/ui/Loader';
 import { selectUser, setUser } from '@/redux/slices/userSlice';
 
 const App = () => {
@@ -39,7 +39,7 @@ const App = () => {
     if (!session || !user) return <Loader />;
 
     return (
-        <div className='flex h-screen w-screen bg-primary-dark dark:bg-primary'>
+        <div className='flex h-screen w-screen dark:bg-primary-dark'>
             <Sidebar />
             <Activity />
         </div>
