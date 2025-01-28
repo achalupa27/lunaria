@@ -1,11 +1,24 @@
+import { Sun, Moon } from 'lucide-react';
 import { signOut } from 'next-auth/react';
+import { Button } from '../ui/button';
+import { useTheme } from 'next-themes';
 
 const Settings = () => {
+    const { systemTheme, theme, setTheme } = useTheme();
+    const currentTheme = theme === 'system' ? systemTheme : theme;
     return (
         <div className='flex h-screen w-screen items-center justify-center'>
-            <button className='flex items-center justify-center space-x-2 rounded-lg border border-black p-2 transition duration-200 hover:bg-black hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black' onClick={() => signOut()}>
-                <span>Sign out</span>
-            </button>
+            <Button onClick={() => signOut()}>Sign out</Button>
+
+            {currentTheme === 'dark' ? (
+                <Button size='icon-lg' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
+                    <Sun />
+                </Button>
+            ) : (
+                <Button size='icon-lg' className='flex cursor-pointer items-center' onClick={() => setTheme('dark')}>
+                    <Moon />
+                </Button>
+            )}
         </div>
     );
 };

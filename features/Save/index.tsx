@@ -3,7 +3,7 @@ import { useAppSelector } from '@/redux/hooks';
 import { selectSaving } from '@/redux/slices/saveSlice';
 import { useSaveColumns } from '@/hooks/useSaveColumns';
 import { initializeTable } from '@/utils/helper';
-import SaveForm from './components/SaveForm';
+import SaveForm from './components/save-form';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import PageHeader from '@/components/ui/page-header';
@@ -49,6 +49,8 @@ const Save = () => {
                 <HeaderCard title={'Debt'} value={debt} isSelected={true} color='red' />
             </div>
 
+            <div>Interest rate on debt</div>
+
             <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
                 <div className='flex h-full flex-col space-y-4'>
                     <div className='rounded-md border border-l-green'>
@@ -80,6 +82,10 @@ const Save = () => {
                             </div>
                             <div className='flex justify-between'>
                                 <div>RRSP</div>
+                                <div className='text-l-green'>$0</div>
+                            </div>
+                            <div className='flex justify-between'>
+                                <div>Emergency</div>
                                 <div className='text-l-green'>$0</div>
                             </div>
                         </div>

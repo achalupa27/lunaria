@@ -4,17 +4,17 @@ import { addSaving, selectSaving, setSaving, updateSavingState } from '@/redux/s
 import Modal from '@/components/ui/modal';
 import DateInput from '@/components/ui/Inputs/DateInput';
 import SelectInput from '@/components/ui/Inputs/SelectInput';
-import { currencyCategories, saveTypes, savingAccounts } from '@/data/constants';
+import { currencyCategories, saveTypes, savingAccounts } from '@/constants';
 import DeleteButton from '@/components/ui/buttons/DeleteButton';
 import CancelButton from '@/components/ui/buttons/CancelButton';
 import SaveButton from '@/components/ui/buttons/SaveButton';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { selectUser } from '@/redux/slices/userSlice';
-import { createSave } from '@/features/Save/services/createSave';
-import { deleteSave } from '@/features/Save/services/deleteSave';
+import { createSave } from '@/features/save/services/createSave';
+import { deleteSave } from '@/features/save/services/deleteSave';
 import NumberInput from '@/components/ui/Inputs/NumberInput';
 import { useEffect } from 'react';
-import { updateSave } from '@/features/Save/services/updateSave';
+import { updateSave } from '@/features/save/services/updateSave';
 
 type Props = {
     isOpen: boolean;

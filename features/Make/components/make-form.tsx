@@ -7,14 +7,14 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import DateInput from '@/components/ui/Inputs/DateInput';
 import NumberInput from '@/components/ui/Inputs/NumberInput';
 import SelectInput from '@/components/ui/Inputs/SelectInput';
-import { currencyCategories, incomeSources } from '@/data/constants';
+import { currencyCategories, incomeSources } from '@/constants';
 import DeleteButton from '@/components/ui/buttons/DeleteButton';
 import CancelButton from '@/components/ui/buttons/CancelButton';
 import SaveButton from '@/components/ui/buttons/SaveButton';
 import { useEffect } from 'react';
-import { createMake } from '@/features/Make/services/createMake';
-import { updateMake } from '@/features/Make/services/updateMake';
-import { deleteMake } from '@/features/Make/services/deleteMake';
+import { createMake } from '@/features/make/services/create-make-service';
+import { updateMake } from '@/features/make/services/update-make-service';
+import { deleteMake } from '@/features/make/services/delete-make-service';
 
 type Props = {
     isOpen: boolean;

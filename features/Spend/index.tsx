@@ -3,13 +3,13 @@ import { useAppSelector } from '@/redux/hooks';
 import { selectSpending } from '@/redux/slices/spendSlice';
 import { useSpendColumns } from '@/hooks/useSpendColumns';
 import { initializeTable } from '@/utils/helper';
-import SpendForm from './components/SpendForm';
+import SpendForm from './components/spend-form';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import PageHeader from '@/components/ui/page-header';
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import HeaderCard from '@/components/ui/buttons/header-card';
-import { spendingCategories } from '@/data/constants';
+import { spendingCategories } from '@/constants';
 
 const Spend = () => {
     const spends = useAppSelector(selectSpending);
@@ -114,6 +114,7 @@ const Spend = () => {
                 <HeaderCard title={'Want'} value={`${totalWantSpent.toFixed(2)}`} isSelected={selectedNecessity === 'Want'} onClick={() => setSelectedNecessity('Want')} color='yellow' />
                 <HeaderCard title={'Waste'} value={`${totalWasteSpent.toFixed(2)}`} isSelected={selectedNecessity === 'Waste'} onClick={() => setSelectedNecessity('Waste')} color='red' />
             </div>
+            <div>Budgeting</div>
             <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
                 <div className='flex h-full flex-col space-y-4'>
                     <div className='flex h-1/2 flex-col rounded-md border border-l-yellow'>

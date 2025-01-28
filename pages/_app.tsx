@@ -11,7 +11,7 @@ import { store } from '@/redux/store';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useState } from 'react';
-import Layout from '@/components/Layout';
+import Layout from '@/components/layout';
 
 const progress = new ProgressBar({
     size: 4,
@@ -28,7 +28,7 @@ function App({ Component, pageProps }: AppProps) {
     const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
     return (
-        <ThemeProvider>
+        <ThemeProvider enableSystem={false} attribute='class'>
             <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
                 <SessionProvider session={pageProps.session}>
                     <Layout>

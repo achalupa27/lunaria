@@ -13,8 +13,8 @@ const Sidebar = () => {
     return (
         <div className='flex h-screen w-14 flex-col items-center justify-center space-y-4 py-2 shadow-sm'>
             <div className='flex flex-1 flex-grow flex-col space-y-3'>
-                <button className={`sidebar-button p-2 ${tab === 'Dashboard' ? 'bg-white/20' : null}`} onClick={() => dispatch(setTab('Dashboard'))}>
-                    <Logo filled={tab === 'Dashboard'} />
+                <button className={`sidebar-button p-2 ${tab === 'Home' ? 'bg-white/20' : null}`} onClick={() => dispatch(setTab('Home'))}>
+                    <Logo filled={tab === 'Home'} />
                 </button>
                 <button className={`sidebar-button ${tab === 'Make' && 'bg-white/20'}`} onClick={() => dispatch(setTab('Make'))}>
                     <MakeIcon filled={tab === 'Make'} />

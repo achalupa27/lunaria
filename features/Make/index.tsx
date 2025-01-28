@@ -3,12 +3,12 @@ import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
 import { useMakeColumns } from '@/hooks/useMakeColumns';
 import { initializeTable } from '@/utils/helper';
-import MakeForm from './components/MakeForm';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import PageHeader from '@/components/ui/page-header';
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
 import HeaderCard from '@/components/ui/buttons/header-card';
+import MakeForm from './components/make-form';
 
 const Make = () => {
     const makes = useAppSelector(selectMaking);
@@ -35,6 +35,9 @@ const Make = () => {
 
     const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
 
+    // need to group by year and by month
+    // projections
+
     const [savings, setSavings] = useState<number>(50);
 
     return (
@@ -43,8 +46,9 @@ const Make = () => {
             <div className='my-2 flex space-x-6'>
                 <HeaderCard title={'All Income'} value={savings} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='green' />
             </div>
-
-            <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none '>
+            <div>Recurring vs One-Time</div>
+            <div className='text-white'>this year vs last year by month</div>
+            <div className='flex flex-1 space-x-4 overflow-auto text-white scrollbar-none'>
                 <div className='flex h-full flex-col space-y-2'>
                     <div className='rounded-md border border-l-green'>
                         <div className='flex items-center justify-between rounded-md rounded-b-none bg-l-green'>
