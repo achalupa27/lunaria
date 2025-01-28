@@ -117,8 +117,10 @@ const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                 <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
                 <TextInput register={register} label={'Item'} registerValue={'item'} isRequired={true} />
-                <NumberInput register={register} label={'Cost'} registerValue={'cost'} isRequired={true} />
-                <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} />
+                <div className='flex space-x-2'>
+                    <NumberInput register={register} label={'Cost'} registerValue={'cost'} isRequired={true} />
+                    <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} width={'w-32'} />
+                </div>
                 <TextInput register={register} label={'Store'} registerValue={'store'} isRequired={true} />
                 <SelectInput register={register} label={'Category'} registerValue={'category'} categories={spendingCategories} isRequired={true} />
                 <SelectInput register={register} label={'Necessity'} registerValue={'necessity'} categories={necessityCategories} isRequired={true} />

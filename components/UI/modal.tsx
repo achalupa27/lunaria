@@ -1,3 +1,5 @@
+import { X } from 'lucide-react';
+import { Button } from './button';
 import CloseButton from './buttons/CloseButton';
 import DismissBackdrop from './dismiss-backdrop';
 
@@ -11,10 +13,12 @@ type Props = {
 const Modal = ({ children, title, closeModal, headerStyle }: Props) => {
     return (
         <DismissBackdrop closePopup={closeModal}>
-            <div className='z-50 w-[420px] rounded-lg bg-secondary p-8 dark:bg-primary'>
-                <div className='mb-4 flex items-center justify-between'>
-                    <h2 className={`flex w-full text-xl ${headerStyle}`}>{title}</h2>
-                    <CloseButton handleClose={closeModal} />
+            <div className='z-50 w-[500px] rounded-xl border-2 bg-secondary p-12 shadow dark:bg-primary'>
+                <div className='mb-6 flex items-center justify-between'>
+                    <h2 className={`flex w-full text-2xl ${headerStyle}`}>{title}</h2>
+                    <Button size='icon' variant='ghost' onClick={closeModal}>
+                        <X />
+                    </Button>
                 </div>
                 {children}
             </div>

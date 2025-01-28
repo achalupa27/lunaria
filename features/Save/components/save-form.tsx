@@ -105,7 +105,7 @@ const SaveForm = ({ isOpen, closeForm, selectedSave }: Props) => {
     if (isOpen) {
         return (
             <Modal title={selectedSave ? 'Edit Saving' : 'New Saving'} closeModal={closeForm} headerStyle={'text-l-blue'}>
-                <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
+                <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
                     <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
                     <SelectInput register={register} label={'Type'} registerValue={'type'} categories={saveTypes} isRequired={true} />
                     <NumberInput register={register} label={'Amount'} registerValue={'amount'} isRequired={true} />

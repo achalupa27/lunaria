@@ -39,7 +39,7 @@ const App = () => {
     if (!session || !user) return <Loader />;
 
     return (
-        <div className='flex h-screen w-screen dark:bg-primary-dark'>
+        <div className='flex h-screen w-screen'>
             <Sidebar />
             <Activity />
         </div>
