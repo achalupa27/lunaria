@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import MakeIcon from '@/components/icons/make-icon';
+import { SaveIcon } from 'lucide-react';
+import SpendIcon from '@/components/icons/spend-icon';
 
 const HeroSection = () => {
     const [mounted, setMounted] = useState(false);
@@ -105,7 +108,7 @@ const HeroSection = () => {
                 <div className='-mt-16 text-gray-600'>- Unknown</div>
                 <div className='mt-16 flex w-[60%] items-center justify-start'>
                     <div>
-                        <Image src='/make.svg' alt='make arrow' width={140} height={140} />
+                        <MakeIcon width={140} height={145} />
                     </div>
                     <div className='flex-1'>
                         <div className='text-2xl'>Income</div>
@@ -115,7 +118,7 @@ const HeroSection = () => {
                 </div>
                 <div className='flex w-[60%] items-center justify-start'>
                     <div>
-                        <Image src='/save.svg' alt='save arrow' width={140} height={140} />
+                        <SaveIcon width={140} height={145} />
                     </div>
                     <div className='flex-1'>
                         <div className='text-2xl'>Saving</div>
@@ -125,7 +128,7 @@ const HeroSection = () => {
                 </div>
                 <div className='flex w-[60%] items-center justify-start'>
                     <div>
-                        <Image src='/spend.svg' alt='spend arrow' width={140} height={140} />
+                        <SpendIcon width={140} height={145} />
                     </div>
                     <div className='flex-1'>
                         <div className='text-2xl'>Spending</div>

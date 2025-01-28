@@ -2,9 +2,9 @@ import Dashboard from '../../features/Home';
 import Make from '../../features/Make';
 import Save from '../../features/Save';
 import Spend from '../../features/Spend';
-import Settings from './Settings';
 import { useAppSelector } from '@/redux/hooks';
 import { selectTab } from '@/redux/slices/tabSlice';
+import Settings from './settings';
 
 const Activity = () => {
     const tab = useAppSelector(selectTab);

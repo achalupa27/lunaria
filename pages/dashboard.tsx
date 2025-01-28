@@ -1,5 +1,3 @@
-import Sidebar from '../components/application/Sidebar';
-import Activity from '../components/application/Activity';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setMaking } from '@/redux/slices/makeSlice';
 import { setSaving } from '@/redux/slices/saveSlice';
@@ -12,6 +10,8 @@ import { readSaving } from '@/features/Save/services/readSaves';
 import { readMaking } from '@/features/Make/services/readMakes';
 import Loader from '@/components/ui/Loader';
 import { selectUser, setUser } from '@/redux/slices/userSlice';
+import Sidebar from '@/components/application/sidebar';
+import Activity from '@/components/application/activity';
 
 const App = () => {
     const supabaseClient = useSupabaseClient();
