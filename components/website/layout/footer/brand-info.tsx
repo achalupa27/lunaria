@@ -1,14 +1,14 @@
 import CompanyLogo from '@/components/company-logo';
 import { X_LINK, INSTAGRAM_LINK, YOUTUBE_LINK, TIKTOK_LINK, FACEBOOK_LINK, REDDIT_LINK, LINKEDIN_LINK, DISCORD_LINK, COMPANY_NAME } from '@/constants';
 import Link from 'next/link';
-import Instagram from '@/components/icons/instagram';
-import X from '@/components/icons/x';
-import Youtube from '@/components/icons/youtube';
-import TikTok from '@/components/icons/tiktok';
-import Facebook from '@/components/icons/facebook';
-import Reddit from '@/components/icons/reddit';
-import LinkedIn from '@/components/icons/linkedin';
-import Discord from '@/components/icons/discord';
+import Instagram from '@/components/icons/socials/instagram';
+import X from '@/components/icons/socials/x';
+import Youtube from '@/components/icons/socials/youtube';
+import TikTok from '@/components/icons/socials/tiktok';
+import Facebook from '@/components/icons/socials/facebook';
+import Reddit from '@/components/icons/socials/reddit';
+import LinkedIn from '@/components/icons/socials/linkedin';
+import Discord from '@/components/icons/socials/discord';
 
 const BrandInfo = () => {
     return (

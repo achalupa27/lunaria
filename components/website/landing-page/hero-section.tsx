@@ -19,7 +19,7 @@ const HeroSection = () => {
     return (
         <div>
             <div className='flex min-h-screen flex-col items-center border-t border-t-blue-900/10 bg-gradient-to-b from-[#0a0817] to-[#060012]'>
-                <div className='mb-12 mt-52 font-semibold md:text-2xl xl:text-4xl'>Looking to Organize your Money?</div>
+                <div className='mb-12 mt-52 font-semibold md:text-2xl xl:text-4xl'>Looking to Clean Up your Money?</div>
                 <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.25 }}>
                     <span className='bg-gradient-to-r from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-3xl font-semibold tracking-tighter text-transparent md:text-6xl xl:text-8xl'>Welcome to your </span>
                 </motion.div>
