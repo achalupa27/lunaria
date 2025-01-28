@@ -1,6 +1,6 @@
 'use client';
 
-import CompanyLogo from '@/components/company-logo';
+import CompanyLogo from '@/components/website/company-logo';
 
 const LeftSection = () => {
     return (

@@ -2,8 +2,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { currencyCategories, necessityCategories, spendingCategories } from '../../../data/constants';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addSpending, selectSpending, setSpending, updateSpendingState } from '@/redux/slices/spendSlice';
-import Modal from '@/components/ui/Modals/Modal';
-import CancelButton from '@/components/ui/Buttons/CancelButton';
+import Modal from '@/components/ui/modal';
+import CancelButton from '@/components/ui/buttons/CancelButton';
 import DateInput from '@/components/ui/Inputs/DateInput';
 import TextInput from '@/components/ui/Inputs/TextInput';
 import NumberInput from '@/components/ui/Inputs/NumberInput';
@@ -13,8 +13,8 @@ import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { deleteSpend } from '@/features/Spend/services/deleteSpend';
 import { updateSpend } from '@/features/Spend/services/updateSpend';
-import DeleteButton from '@/components/ui/Buttons/DeleteButton';
-import SaveButton from '@/components/ui/Buttons/SaveButton';
+import DeleteButton from '@/components/ui/buttons/DeleteButton';
+import SaveButton from '@/components/ui/buttons/SaveButton';
 import { useEffect } from 'react';
 
 type Props = {

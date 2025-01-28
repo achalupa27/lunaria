@@ -4,11 +4,11 @@ import { selectMaking } from '@/redux/slices/makeSlice';
 import { useMakeColumns } from '@/hooks/useMakeColumns';
 import { initializeTable } from '@/utils/helper';
 import MakeForm from './components/MakeForm';
-import Table from '@/components/ui/Table';
-import Page from '@/components/ui/Page';
-import PageHeader from '@/components/ui/PageHeader';
+import Table from '@/components/ui/table';
+import Page from '@/components/ui/page';
+import PageHeader from '@/components/ui/page-header';
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
-import HeaderCard from '@/components/ui/Cards/HeaderCard';
+import HeaderCard from '@/components/ui/buttons/header-card';
 
 const Make = () => {
     const makes = useAppSelector(selectMaking);
@@ -44,7 +44,7 @@ const Make = () => {
                 <HeaderCard title={'All Income'} value={savings} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='green' />
             </div>
 
-            <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
+            <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none '>
                 <div className='flex h-full flex-col space-y-2'>
                     <div className='rounded-md border border-l-green'>
                         <div className='flex items-center justify-between rounded-md rounded-b-none bg-l-green'>

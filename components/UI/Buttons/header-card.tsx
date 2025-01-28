@@ -7,7 +7,7 @@ type Props = {
     change?: string;
     color?: string;
     isSelected?: boolean;
-    onClick: any;
+    onClick?: any;
 };
 
 const HeaderCard = ({ title, value, currency = 'CAD', change, color, isSelected, onClick }: Props) => {

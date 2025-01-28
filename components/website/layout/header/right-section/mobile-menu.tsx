@@ -9,7 +9,7 @@ import MobileDropdownItem from './mobile-dropdown-item';
 import { products } from '../data';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
-import CompanyLogo from '@/components/company-logo';
+import CompanyLogo from '@/components/website/company-logo';
 
 const MobileMenu = () => {
     const [isOpen, setIsOpen] = useState(false);

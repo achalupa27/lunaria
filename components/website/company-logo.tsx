@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { COMPANY_NAME } from '@/constants';
-import Logo from './icons/Logo';
+import Logo from '../icons/Logo';
 
 type CompanyLogoProps = {
     showName?: boolean;

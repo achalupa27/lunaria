@@ -1,5 +1,5 @@
-import Page from '@/components/ui/Page';
-import PageHeader from '@/components/ui/PageHeader';
+import Page from '@/components/ui/page';
+import PageHeader from '@/components/ui/page-header';
 import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
 import { selectSpending } from '@/redux/slices/spendSlice';

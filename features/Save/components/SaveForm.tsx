@@ -1,13 +1,13 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addSaving, selectSaving, setSaving, updateSavingState } from '@/redux/slices/saveSlice';
-import Modal from '@/components/ui/Modals/Modal';
+import Modal from '@/components/ui/modal';
 import DateInput from '@/components/ui/Inputs/DateInput';
 import SelectInput from '@/components/ui/Inputs/SelectInput';
 import { currencyCategories, saveTypes, savingAccounts } from '@/data/constants';
-import DeleteButton from '@/components/ui/Buttons/DeleteButton';
-import CancelButton from '@/components/ui/Buttons/CancelButton';
-import SaveButton from '@/components/ui/Buttons/SaveButton';
+import DeleteButton from '@/components/ui/buttons/DeleteButton';
+import CancelButton from '@/components/ui/buttons/CancelButton';
+import SaveButton from '@/components/ui/buttons/SaveButton';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { selectUser } from '@/redux/slices/userSlice';
 import { createSave } from '@/features/Save/services/createSave';

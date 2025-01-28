@@ -1,4 +1,4 @@
-import CompanyLogo from '@/components/company-logo';
+import CompanyLogo from '@/components/website/company-logo';
 import { X_LINK, INSTAGRAM_LINK, YOUTUBE_LINK, TIKTOK_LINK, FACEBOOK_LINK, REDDIT_LINK, LINKEDIN_LINK, DISCORD_LINK, COMPANY_NAME } from '@/constants';
 import Link from 'next/link';
 import Instagram from '@/components/icons/socials/instagram';

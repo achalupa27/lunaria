@@ -4,11 +4,11 @@ import { selectSaving } from '@/redux/slices/saveSlice';
 import { useSaveColumns } from '@/hooks/useSaveColumns';
 import { initializeTable } from '@/utils/helper';
 import SaveForm from './components/SaveForm';
-import Table from '@/components/ui/Table';
-import Page from '@/components/ui/Page';
-import PageHeader from '@/components/ui/PageHeader';
+import Table from '@/components/ui/table';
+import Page from '@/components/ui/page';
+import PageHeader from '@/components/ui/page-header';
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
-import HeaderCard from '@/components/ui/Cards/HeaderCard';
+import HeaderCard from '@/components/ui/buttons/header-card';
 
 const Save = () => {
     const saves = useAppSelector(selectSaving);
@@ -35,8 +35,8 @@ const Save = () => {
 
     const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
 
-    const [cash, setCash] = useState<number>(10);
-    const [debt, setDebt] = useState<number>(100);
+    const [cash, setCash] = useState<number>(1670);
+    const [debt, setDebt] = useState<number>(13901);
     const [savings, setSavings] = useState<number>(cash - debt);
 
     return (
@@ -44,9 +44,9 @@ const Save = () => {
             <PageHeader title={'Saving'} titleStyle={'text-l-blue'} buttonText={'+ New Saving'} buttonStyle={'bg-l-blue hover:bg-l-dark-blue'} onClick={handleFormOpen} />
 
             <div className='my-2 flex space-x-6'>
-                <HeaderCard title={'Savings'} value={savings} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='blue' />
-                <HeaderCard title={'Cash'} value={cash} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='green' />
-                <HeaderCard title={'Debt'} value={'18,896.02'} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='red' />
+                <HeaderCard title={'Savings'} value={savings} isSelected={true} color='blue' />
+                <HeaderCard title={'Cash'} value={cash} isSelected={true} color='green' />
+                <HeaderCard title={'Debt'} value={debt} isSelected={true} color='red' />
             </div>
 
             <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
@@ -97,7 +97,7 @@ const Save = () => {
                         <div className='px-3 py-2'>
                             <div className='flex justify-between'>
                                 <div>NSLSC</div>
-                                <div className='text-l-red'>-$15,795.02</div>
+                                <div className='text-l-red'>-$12,000</div>
                             </div>
                             <div className='flex justify-between'>
                                 <div>CRA</div>
@@ -106,10 +106,6 @@ const Save = () => {
                             <div className='flex justify-between'>
                                 <div>Seb</div>
                                 <div className='text-l-red'>-$901.00</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Mama</div>
-                                <div className='text-l-red'>-$1,200.00</div>
                             </div>
                         </div>
                     </div>

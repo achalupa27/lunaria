@@ -4,11 +4,11 @@ import { selectSpending } from '@/redux/slices/spendSlice';
 import { useSpendColumns } from '@/hooks/useSpendColumns';
 import { initializeTable } from '@/utils/helper';
 import SpendForm from './components/SpendForm';
-import Table from '@/components/ui/Table';
-import Page from '@/components/ui/Page';
-import PageHeader from '@/components/ui/PageHeader';
+import Table from '@/components/ui/table';
+import Page from '@/components/ui/page';
+import PageHeader from '@/components/ui/page-header';
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import HeaderCard from '@/components/ui/Cards/HeaderCard';
+import HeaderCard from '@/components/ui/buttons/header-card';
 import { spendingCategories } from '@/data/constants';
 
 const Spend = () => {

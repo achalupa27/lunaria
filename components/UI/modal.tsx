@@ -1,5 +1,5 @@
-import CloseButton from '../Buttons/CloseButton';
-import DismissBackdrop from '../DismissBackdrop';
+import CloseButton from './buttons/CloseButton';
+import DismissBackdrop from './dismiss-backdrop';
 
 type Props = {
     children: React.ReactNode;

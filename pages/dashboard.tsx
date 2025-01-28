@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react';
 import { readSpending } from '@/features/Spend/services/readSpends';
 import { readSaving } from '@/features/Save/services/readSaves';
 import { readMaking } from '@/features/Make/services/readMakes';
-import Loader from '@/components/ui/Loader';
+import Loader from '@/components/ui/loader';
 import { selectUser, setUser } from '@/redux/slices/userSlice';
 import Sidebar from '@/components/application/sidebar';
 import Activity from '@/components/application/activity';
