@@ -14,7 +14,7 @@ const ProductDropdown = ({ category }: Props) => {
     if (!items) return null;
 
     return (
-        <div className='dark:bg-stone-950 z-50 flex h-fit flex-col items-center gap-3 rounded border border-stone-200 bg-stone-50 p-3 shadow dark:border-stone-700 xl:h-52 xl:flex-row'>
+        <div className='z-50 flex h-fit flex-col items-center gap-3 rounded-xl border border-zinc-200 bg-zinc-50 p-3 shadow dark:border-zinc-700 dark:bg-zinc-950 xl:h-44 xl:flex-row'>
             {items.map((item, index) => (
                 <>
                     <DropdownItem label={item.label} summary={item.summary} />

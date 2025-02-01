@@ -68,7 +68,7 @@ input[type='number'] {
 .btn,
 .btn2 {
     width: 140px;
-    height: 52px;
+    height: 42px;
     font-size: 20px;
     font-weight: 600;
     text-align: center;
@@ -80,7 +80,7 @@ input[type='number'] {
     background: linear-gradient(-45deg, #f7ebc0, #99f5d1, #93c5fd);
     background-size: 600%;
     animation: anime 12s linear infinite;
-    width: 200px;
+    width: 160px;
     position: absolute;
     z-index: -1;
     filter: blur(15px);

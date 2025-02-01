@@ -44,7 +44,7 @@ const Pricing = () => {
         <div className='mx-auto flex min-h-screen w-[90%] flex-col items-center gap-12 py-8'>
             <h1 className='mb-8 text-center'>Take the next step.</h1>
             <TermChanger term={term} setTerm={setTerm} />
-            <div className='mt-8 flex flex-wrap justify-center gap-8'>
+            <div className='mt-8 flex flex-wrap justify-center gap-20'>
                 <FreeTable />
                 <ProTable term={term} purchaseSubscription={purchaseSubscription} />
             </div>

@@ -3,14 +3,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const faqItems = [
     { question: 'What is Lunaria?', answer: 'Lunaria is a personal finance tool that helps you track and grow your wealth.' },
     { question: 'How does it work?', answer: 'Lunaria provides insights into your income, spending, and savings to help you make better financial decisions.' },
-    { question: 'Is my data secure?', answer: 'Yes, we use state-of-the-art encryption to protect your financial data.' },
+    { question: 'Is my data secure?', answer: 'Yes, we use state-of-the-art encryption, and we do not share your financial data with anyone.' },
     { question: 'Can I use it for free?', answer: 'Lunaria offers a free plan with essential features, and premium plans for advanced tools.' },
 ];
 
 const FAQSection = () => {
     return (
         <section className='py-24'>
-            <div className='space-12 container mx-auto flex px-4'>
+            <div className='space-12 container mx-auto flex-col px-4 md:flex'>
                 <div className='w-fit'>
                     <div>FAQ</div>
                     <h2 className='mb-12'>Frequently Asked Questions</h2>

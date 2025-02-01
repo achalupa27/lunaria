@@ -32,7 +32,4 @@ export const professionalFeatures = [
     {
         feature: 'Feature',
     },
-    {
-        feature: 'Feature',
-    },
 ];

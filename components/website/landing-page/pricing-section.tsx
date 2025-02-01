@@ -1,6 +1,40 @@
 import { motion } from 'framer-motion';
+import FreeTable from '../pricing-page/free-table';
+import ProTable from '../pricing-page/pro-table';
+import TermChanger from '../pricing-page/term-changer';
+import { MONTHLY_BASIC, YEARLY_BASIC, MONTHLY_PROFESSIONAL, YEARLY_PROFESSIONAL, STRIPE_KEY } from '@/constants';
+import { loadStripe } from '@stripe/stripe-js';
+import { useState } from 'react';
 
 const PricingSection = () => {
+    const [term, setTerm] = useState<'Monthly' | 'Yearly'>('Yearly');
+
+    const priceMapping: any = {
+        Basic: {
+            Monthly: MONTHLY_BASIC,
+            Yearly: YEARLY_BASIC,
+        },
+        Professional: {
+            Monthly: MONTHLY_PROFESSIONAL,
+            Yearly: YEARLY_PROFESSIONAL,
+        },
+    };
+
+    const purchaseSubscription = async (level: string) => {
+        const price = priceMapping[level]?.[term];
+        if (!price) return;
+
+        const stripe = await loadStripe(STRIPE_KEY);
+        const { error }: any = await stripe?.redirectToCheckout({
+            lineItems: [{ price, quantity: 1 }],
+            mode: 'subscription',
+            successUrl: 'https://www.placeholder.io/app',
+            cancelUrl: 'https://www.placeholder.io/pricing',
+        });
+
+        if (error) console.error(error);
+    };
+
     return (
         <section className='flex flex-col items-center justify-center py-24 text-center'>
             <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-6 text-4xl font-semibold'>
@@ -9,17 +43,12 @@ const PricingSection = () => {
             <motion.p initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3 }} className='max-w-2xl text-lg text-zinc-500'>
                 Flexible pricing plans designed to fit your needs and help you achieve financial success.
             </motion.p>
-            <div className='mt-12 flex flex-col items-center space-y-8 md:flex-row md:space-x-12 md:space-y-0'>
-                <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: 0.6 }} viewport={{ once: true }} className='relative flex h-64 w-80 flex-col items-center justify-center rounded-xl border border-zinc-300 p-6 shadow-md dark:border-zinc-700'>
-                    <div className='mb-2 text-2xl font-medium'>Basic</div>
-                    <p className='mb-4 text-zinc-500'>Free</p>
-                    <p className='text-zinc-500'>Essential tools for managing your personal finances.</p>
-                </motion.div>
-                <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: 0.8 }} viewport={{ once: true }} className='relative flex h-64 w-80 flex-col items-center justify-center rounded-xl border border-zinc-300 p-6 shadow-md dark:border-zinc-700'>
-                    <div className='mb-2 text-2xl font-medium'>Premium</div>
-                    <p className='mb-4 text-zinc-500'>$5/month</p>
-                    <p className='text-zinc-500'>Advanced insights and automation tools to optimize your finances.</p>
-                </motion.div>
+            <div className='mt-12'>
+                <TermChanger term={term} setTerm={setTerm} />
+            </div>
+            <div className='mt-16 flex gap-20'>
+                <FreeTable />
+                <ProTable term={term} purchaseSubscription={purchaseSubscription} />
             </div>
         </section>
     );

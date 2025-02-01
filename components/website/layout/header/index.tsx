@@ -6,7 +6,7 @@ import RightSection from './right-section';
 
 const Header = () => {
     return (
-        <header className='relative z-50 mx-auto flex  h-24 max-w-screen-2xl items-center justify-between px-8 py-6'>
+        <header className='relative z-50 mx-auto flex h-24 max-w-screen-2xl items-center justify-between px-8 py-6'>
             <LeftSection />
             <MiddleSection />
             <RightSection />

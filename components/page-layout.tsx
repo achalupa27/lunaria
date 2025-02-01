@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Header from './website/layout/header/header';
+import Header from './website/layout/header';
 import Footer from './website/layout/footer/footer';
 
 function Layout({ children }: any) {
