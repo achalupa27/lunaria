@@ -1,6 +1,5 @@
 import { X } from 'lucide-react';
 import { Button } from './button';
-import CloseButton from './buttons/CloseButton';
 import DismissBackdrop from './dismiss-backdrop';
 
 type Props = {

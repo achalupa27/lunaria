@@ -18,6 +18,9 @@
     :root {
         --radius: 0.5rem;
     }
+    section {
+        @apply mx-auto w-[90%] max-w-7xl;
+    }
 }
 
 @layer components {

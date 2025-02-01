@@ -1,5 +1,3 @@
-import ActivityIcon from '@/components/ui/activity-icon';
-import React from 'react';
 import FeatureRow from './feature-row';
 import { Separator } from '@/components/ui/separator';
 
@@ -12,16 +10,15 @@ const FeatureTable = ({ category, features }: any) => {
                     <div key={sectionKey} className='w-full'>
                         <div className='flex items-center py-2'>
                             <div className='flex flex-1 items-center space-x-2 font-semibold'>
-                                <ActivityIcon activity={sectionKey} />
                                 <span>{sectionKey}</span>
                             </div>
                             <div className='flex-1 text-center'>Basic</div>
                             <div className='flex-1 text-center font-semibold'>Pro</div>
                         </div>
                         <div className=''>
-                            {(features as Record<string, any>)[sectionKey].map((feature: FeatureRow) => (
+                            {/* {(features as Record<string, any>)[sectionKey].map((feature: FeatureRow) => (
                                 <FeatureRow key={feature.description} description={feature.description} includedFree={feature.includedFree} includedProfessional={feature.includedProfessional} />
-                            ))}
+                            ))} */}
                             <div className='pt-3'>
                                 <Separator className='border-stone-400' orientation='horizontal' />
                             </div>

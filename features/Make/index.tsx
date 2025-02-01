@@ -7,7 +7,7 @@ import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import PageHeader from '@/components/ui/page-header';
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
-import HeaderCard from '@/components/ui/buttons/header-card';
+import HeaderCard from '@/components/ui/header-card';
 import MakeForm from './components/make-form';
 
 const Make = () => {

@@ -1,4 +1,4 @@
-export const COMPANY_NAME = 'lunaria';
+export const COMPANY_NAME = 'Lunaria';
 
 export const STRIPE_KEY = 'pk_test_51MV97ZFcFQVvj4RK5IxZX1DkxYgiJXx5uoB18RP50uRxWXd9At9xpIxcFbjsGeEDnqpLsJGRGmoMkKBExTjCNhG2009xsqUoI2';
 
@@ -12,14 +12,21 @@ export const YEARLY_BASIC_PRICE = '14.95';
 export const MONTHLY_PROFESSIONAL_PRICE = '29.95';
 export const YEARLY_PROFESSIONAL_PRICE = '23.95';
 
-export const X_LINK = 'a';
-export const INSTAGRAM_LINK = 'a';
-export const YOUTUBE_LINK = 'a';
-export const TIKTOK_LINK = 'a';
-export const FACEBOOK_LINK = 'a';
-export const REDDIT_LINK = 'a';
-export const LINKEDIN_LINK = 'a';
-export const DISCORD_LINK = 's';
+export const X_LINK = '';
+export const INSTAGRAM_LINK = '';
+export const YOUTUBE_LINK = '';
+export const TIKTOK_LINK = '';
+export const FACEBOOK_LINK = '';
+export const REDDIT_LINK = '';
+export const LINKEDIN_LINK = '';
+export const DISCORD_LINK = '';
+
+export const productPages = [
+    { page: 'Dashboard', link: '/products' },
+    { page: 'Make', link: '/products' },
+    { page: 'Save', link: '/products' },
+    { page: 'Spend', link: '/products' },
+];
 
 export const companyPages = [
     { page: 'About', link: '/about' },

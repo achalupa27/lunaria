@@ -11,7 +11,7 @@ const DismissBackdrop = ({ children, closePopup }: Props) => {
     };
 
     return (
-        <div className='bg-ct-bg/60 dark:bg-ct-bg-dark/60 absolute left-0 top-0 z-40 flex h-screen w-screen items-center justify-center' onClick={handleBackdropClick}>
+        <div className='absolute left-0 top-0 z-40 flex h-screen w-screen items-center justify-center bg-primary/60' onClick={handleBackdropClick}>
             {children}
         </div>
     );

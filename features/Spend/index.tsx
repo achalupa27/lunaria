@@ -8,7 +8,7 @@ import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import PageHeader from '@/components/ui/page-header';
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import HeaderCard from '@/components/ui/buttons/header-card';
+import HeaderCard from '@/components/ui/header-card';
 import { spendingCategories } from '@/constants';
 
 const Spend = () => {

@@ -1,4 +1,4 @@
-import HeaderCard from '@/components/ui/buttons/header-card';
+import HeaderCard from '@/components/ui/header-card';
 import Page from '@/components/ui/page';
 import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
