@@ -7,7 +7,7 @@ const FreeTable = () => {
     const user = false;
 
     return (
-        <div className='flex h-[32rem] w-[18rem] flex-col rounded-2xl bg-white p-1 shadow dark:bg-black'>
+        <div className='flex h-[32rem] w-[18rem] flex-col rounded-2xl border border-orange-50 bg-white p-1 shadow dark:bg-black'>
             <div className='mx-auto mt-4 text-center'>
                 <div className='text-2xl'>Free</div>
                 <div className='text-sm'>No Credit Card required.</div>

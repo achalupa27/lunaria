@@ -19,7 +19,7 @@
         --radius: 0.5rem;
     }
     section {
-        @apply mx-auto w-[90%] max-w-7xl;
+        @apply mx-auto w-[80%] max-w-7xl;
     }
 }
 

@@ -35,7 +35,7 @@ const FeaturesSection = () => {
             <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-8 text-4xl font-semibold'>
                 Features
             </motion.h2>
-            <div className='grid gap-8 px-6 md:grid-cols-2 md:px-12 lg:grid-cols-3'>
+            <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
                 {features.map((feature, index) => (
                     <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }}>
                         <Card className='py-12'>

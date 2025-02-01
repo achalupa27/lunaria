@@ -37,7 +37,7 @@ const MobileMenu = () => {
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-                <Button variant='ghost' size='icon-lg' className='lg:hidden' onClick={() => setIsOpen(true)}>
+                <Button variant='ghost' size='icon' className='lg:hidden' onClick={() => setIsOpen(true)}>
                     <MenuIcon />
                     <span className='sr-only'>Toggle menu</span>
                 </Button>

@@ -46,7 +46,7 @@ const PricingSection = () => {
             <div className='mt-12'>
                 <TermChanger term={term} setTerm={setTerm} />
             </div>
-            <div className='mt-16 flex gap-20'>
+            <div className='mt-16 flex flex-wrap justify-center gap-20'>
                 <FreeTable />
                 <ProTable term={term} purchaseSubscription={purchaseSubscription} />
             </div>
