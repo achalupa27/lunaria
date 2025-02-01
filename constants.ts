@@ -9,8 +9,8 @@ export const YEARLY_PROFESSIONAL = 'price_1MZMacFcFQVvj4RKO4ehFLva';
 
 export const MONTHLY_BASIC_PRICE = '19.95';
 export const YEARLY_BASIC_PRICE = '14.95';
-export const MONTHLY_PROFESSIONAL_PRICE = '29.95';
-export const YEARLY_PROFESSIONAL_PRICE = '23.95';
+export const MONTHLY_PROFESSIONAL_PRICE = '5';
+export const YEARLY_PROFESSIONAL_PRICE = '4';
 
 export const X_LINK = '';
 export const INSTAGRAM_LINK = '';

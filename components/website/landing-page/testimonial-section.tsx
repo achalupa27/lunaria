@@ -26,10 +26,10 @@ const TestimonialSection = () => {
             </motion.h2>
             <div className='mt-12 flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0'>
                 {testimonials.map((testimonial, index) => (
-                    <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: index * 0.3 }} viewport={{ once: true }} className='relative flex h-48 w-80 flex-col items-center justify-center rounded-xl border border-gray-300 p-6 shadow-md dark:border-gray-700'>
+                    <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: index * 0.3 }} viewport={{ once: true }} className='relative flex h-48 w-80 flex-col items-center justify-center rounded-xl border border-zinc-300 p-6 shadow-md dark:border-zinc-700'>
                         <div className='mb-2 text-2xl font-medium'>{testimonial.name}</div>
-                        <p className='italic text-gray-500'>"{testimonial.feedback}"</p>
-                        <div className='mt-2 text-sm text-gray-400'>{testimonial.role}</div>
+                        <p className='italic text-zinc-500'>"{testimonial.feedback}"</p>
+                        <div className='mt-2 text-sm text-zinc-400'>{testimonial.role}</div>
                     </motion.div>
                 ))}
             </div>

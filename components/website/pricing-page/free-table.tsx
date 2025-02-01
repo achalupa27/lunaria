@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { freeFeatures } from '@/components/website/pricing-page/data/features-free';
 import Link from 'next/link';
 
@@ -5,8 +6,8 @@ const FreeTable = () => {
     const user = false;
 
     return (
-        <div className='flex h-[32rem] w-[18rem] flex-col rounded border p-1'>
-            <div className='px-2 py-1'>
+        <div className='flex h-[32rem] w-[18rem] flex-col rounded-2xl  bg-white p-1 shadow'>
+            <div className='mx-auto mt-2 text-center'>
                 <div className='text-2xl'>Free</div>
                 <div className='text-sm'>No Credit Card required.</div>
             </div>
@@ -18,13 +19,13 @@ const FreeTable = () => {
                 ))}
             </div>
             {user ? (
-                <Link className='button-secondary' href='/app'>
-                    Go to Dashboard
-                </Link>
+                <Button asChild className='rounded-b-xl'>
+                    <Link href='/app'>Go to Dashboard</Link>
+                </Button>
             ) : (
-                <Link className='button-secondary w-full' href='/authenticate'>
-                    Sign Up
-                </Link>
+                <Button asChild className='rounded-b-xl'>
+                    <Link href='/authenticate'>Sign Up</Link>
+                </Button>
             )}
         </div>
     );

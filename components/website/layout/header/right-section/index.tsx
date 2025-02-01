@@ -16,17 +16,17 @@ const RightSection = () => {
     return (
         <div className='mr-4 flex flex-1 justify-end lg:space-x-2'>
             {currentTheme === 'dark' ? (
-                <Button size='icon-lg' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
+                <Button size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
                     <Sun />
                 </Button>
             ) : (
-                <Button size='icon-lg' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('dark')}>
+                <Button size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('dark')}>
                     <Moon />
                 </Button>
             )}
             {session ? (
                 <Link href='/profile'>
-                    <Button variant='secondary' size='icon-lg' className='hidden lg:flex'>
+                    <Button variant='secondary' size='icon' className='hidden lg:flex'>
                         <User />
                     </Button>
                 </Link>

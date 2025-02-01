@@ -25,7 +25,7 @@ const SelectInput = ({ register, label, registerValue, isRequired, categories, d
     return (
         <div className='relative w-full'>
             {/* Floating Label */}
-            <label className={`pointer-events-none absolute left-3 bg-white px-1 ${isFocused ? 'font-medium text-black' : 'text-gray-500'} transition-all duration-200 dark:bg-black ${isFocused || hasValue ? '-top-2 text-xs' : 'top-2 text-base'}`}>
+            <label className={`pointer-events-none absolute left-3 bg-white px-1 ${isFocused ? 'font-medium text-black' : 'text-zinc-500'} transition-all duration-200 dark:bg-black ${isFocused || hasValue ? '-top-2 text-xs' : 'top-2 text-base'}`}>
                 {label} {isRequired && <span className='text-red-500'>*</span>}
             </label>
 
@@ -39,7 +39,7 @@ const SelectInput = ({ register, label, registerValue, isRequired, categories, d
                     },
                 })}
                 defaultValue={defaultOption}
-                className={`h-10 rounded border border-gray-400 px-3 py-2 pt-3 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50 ${width || 'w-full'}`}
+                className={`h-10 rounded border border-zinc-400 px-3 py-2 pt-3 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50 ${width || 'w-full'}`}
                 onFocus={() => setIsFocused(true)}
                 required={isRequired}>
                 <option value=''></option>

@@ -26,7 +26,7 @@ const NumberInput = ({ register, label, registerValue, errors, isRequired, maxLe
     return (
         <div className='relative w-full'>
             {/* Floating Label */}
-            <label className={`pointer-events-none absolute left-3 bg-white px-1 ${isFocused ? 'font-medium text-black' : 'text-gray-500'}  transition-all duration-200 dark:bg-black ${isFocused || hasValue ? '-top-2 text-xs' : 'top-2 text-base'}`}>
+            <label className={`pointer-events-none absolute left-3 bg-white px-1 ${isFocused ? 'font-medium text-black' : 'text-zinc-500'}  transition-all duration-200 dark:bg-black ${isFocused || hasValue ? '-top-2 text-xs' : 'top-2 text-base'}`}>
                 {label} {isRequired && <span className='text-red-500'>*</span>}
             </label>
 
@@ -39,7 +39,7 @@ const NumberInput = ({ register, label, registerValue, errors, isRequired, maxLe
                         setHasValue(!!e.target.value); // Update hasValue on blur
                     },
                 })}
-                className={`h-10 w-full rounded border border-gray-400 px-3 pb-3 pt-4 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50`}
+                className={`h-10 w-full rounded border border-zinc-400 px-3 pb-3 pt-4 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50`}
                 required={isRequired}
                 maxLength={maxLength}
                 disabled={disabled}
@@ -56,7 +56,7 @@ const NumberInput = ({ register, label, registerValue, errors, isRequired, maxLe
             )}
 
             {/* Helper Text */}
-            {helper && <small className='text-gray-500'>{helper}</small>}
+            {helper && <small className='text-zinc-500'>{helper}</small>}
         </div>
     );
 };

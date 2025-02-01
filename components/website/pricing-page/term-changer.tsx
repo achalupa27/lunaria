@@ -7,19 +7,19 @@ type Props = {
 
 const TermChanger = ({ term, setTerm }: Props) => {
     return (
-        <div className='relative flex w-80 overflow-hidden rounded border border-stone-50 bg-stone-100 p-[4px] shadow'>
+        <div className='relative flex w-96 overflow-hidden rounded-xl border border-stone-50 bg-white p-[4px] shadow'>
             {/* Sliding Background */}
-            <div className={`absolute top-0 left-0 h-full w-1/2 rounded bg-white transition-transform duration-200 ${term === 'Yearly' ? 'translate-x-full' : 'translate-x-0'}`}></div>
+            <div className={`absolute left-0 top-0 h-full w-1/2 rounded bg-zinc-950 transition-transform  duration-200 dark:bg-white ${term === 'Yearly' ? 'translate-x-full' : 'translate-x-0'}`}></div>
 
             {/* Monthly Option */}
-            <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-semibold transition duration-200 ${term === 'Monthly' ? 'text-black' : 'text-gray-500'}`} onClick={() => setTerm('Monthly')}>
+            <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-semibold transition duration-200 ${term === 'Monthly' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Monthly')}>
                 Monthly
             </div>
 
             {/* Yearly Option */}
-            <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-semibold transition duration-200 ${term === 'Yearly' ? 'text-black' : 'text-gray-500'}`} onClick={() => setTerm('Yearly')}>
+            <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-semibold transition duration-200 ${term === 'Yearly' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Yearly')}>
                 <p>Yearly</p>
-                <div className='text-xs text-[#39c269]'>
+                <div className='text-sm text-green-500'>
                     <strong>SAVE 20%</strong>
                 </div>
             </div>

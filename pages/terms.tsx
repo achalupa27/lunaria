@@ -272,7 +272,7 @@ function TersmOfUse() {
                     <strong>Copyright/Trademark Information.</strong> Copyright ©. All rights reserved.  All trademarks, logos and service marks displayed on the Site are our property or the property of other third-parties. You are not permitted to use these Marks without our prior written consent or the consent of such third party which may own the Marks.
                 </p>
                 <br></br>
-                <h2 className='flex w-full justify-center pt-6 pb-2'>Contact Us</h2>
+                <h2 className='flex w-full justify-center pb-2 pt-6'>Contact Us</h2>
                 <p className='text-center'>If you have any questions about this Terms of Use, You can contact us:</p>
                 <div className='flex w-full justify-center'>
                     <Link href='/contact' className='button-secondary mb-12 mt-4 w-fit space-x-2'>

@@ -32,12 +32,12 @@ const FeaturesSection = () => {
             </motion.h2>
             <div className='grid gap-8 px-6 md:grid-cols-2 md:px-12 lg:grid-cols-3'>
                 {features.map((feature, index) => (
-                    <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }} className='rounded-xl border border-gray-300 p-6 shadow-md dark:border-gray-700'>
-                        <div className='flex items-center space-x-3'>
-                            <CheckCircleIcon className='h-6 w-6 text-green-500' />
+                    <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }} className='rounded-xl border border-zinc-200 p-6 shadow dark:border-zinc-700'>
+                        <div className='flex items-center justify-center space-x-3'>
+                            <CheckCircleIcon className='text-green-500' />
                             <h3 className='text-xl font-medium'>{feature.title}</h3>
                         </div>
-                        <p className='mt-2 text-gray-500'>{feature.description}</p>
+                        <p className='mt-2 text-zinc-500'>{feature.description}</p>
                     </motion.div>
                 ))}
             </div>

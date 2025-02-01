@@ -41,3 +41,9 @@ type FeatureItem = {
     description: string;
     comingSoon: boolean;
 };
+
+type FeatureRow = {
+    description: string;
+    includedFree: string | boolean;
+    includedProfessional: boolean;
+};

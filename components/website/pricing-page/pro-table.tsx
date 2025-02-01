@@ -25,11 +25,11 @@ const ProTable = ({ term, purchaseSubscription }: Props) => {
                 ))}
             </div>
             {user ? (
-                <Button className='rounded-xl' onClick={() => purchaseSubscription('Professional')}>
+                <Button className='rounded-b-xl' onClick={() => purchaseSubscription('Professional')}>
                     Start Trial
                 </Button>
             ) : (
-                <Button className='rounded-xl' asChild>
+                <Button asChild className='rounded-b-xl'>
                     <Link href='/register'>Sign Up</Link>
                 </Button>
             )}

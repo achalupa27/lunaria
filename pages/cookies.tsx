@@ -11,7 +11,7 @@ function CookiesPolicy() {
                 <h1 className='flex w-full justify-center py-8'>Cookies Policy</h1>
                 <p>Last updated: November 19, 2022</p>
                 <p>
-                    This Cookies Policy explains what Cookies are and how We use them. You should read this policy so You can understand what type of cookies We use, or the information We collect using Cookies and how that information is used. This Cookies Policy has been created with the help of the{' '}
+                    This Cookies Policy explains what Cookies are and how We use them. You should read this policy so You can understand what type of cookies We use, or the information We collect using Cookies and how that information is used. This Cookies Policy has been created with the help of the
                     <a href='https://www.termsfeed.com/cookies-policy-generator/' target='_blank'>
                         TermsFeed Cookies Policy Generator
                     </a>
@@ -115,7 +115,7 @@ function CookiesPolicy() {
                     .
                 </p>
                 <br></br>
-                <h2 className='flex w-full justify-center pt-6 pb-2'>Contact Us</h2>
+                <h2 className='flex w-full justify-center pb-2 pt-6'>Contact Us</h2>
                 <p className='text-center'>If you have any questions about this Cookies Policy, You can contact us:</p>
                 <div className='flex w-full justify-center'>
                     <Link href='/contact' className='button-secondary mb-12 mt-4 w-fit space-x-2'>
