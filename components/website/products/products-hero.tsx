@@ -17,7 +17,7 @@ const ProductsHero = () => {
                 </Button>
             </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5, delay: 0.9 }} className='mt-12'>
-                <Image src='/product-hero.png' alt='Product Image' width={600} height={400} className='rounded-lg shadow-lg' />
+                <Image src='/product-hero.png' alt='Product Image' width={600} height={400} className='rounded-xl border border-orange-100 shadow-lg' />
             </motion.div>
         </section>
     );

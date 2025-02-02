@@ -1,14 +1,12 @@
-import React from 'react';
-
 const Telegram = () => {
     return (
-        <svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 240.1 240.1' enable-background='new 0 0 240.1 240.1' xml:space='preserve'>
+        <svg version='1.1' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 240.1 240.1' enable-background='new 0 0 240.1 240.1'>
             <g>
-                <circle id='Oval' fill-rule='evenodd' clip-rule='evenodd' fill='black' cx='120.1' cy='120.1' r='120.1' />
+                <circle id='Oval' fillRule='evenodd' clipRule='evenodd' fill='black' cx='120.1' cy='120.1' r='120.1' />
                 <path
                     id='Path-3'
-                    fill-rule='evenodd'
-                    clip-rule='evenodd'
+                    fillRule='evenodd'
+                    clipRule='evenodd'
                     fill='#0084ff'
                     d='M54.3,118.8c35-15.2,58.3-25.3,70-30.2
                 c33.3-13.9,40.3-16.3,44.8-16.4c1,0,3.2,0.2,4.7,1.4c1.2,1,1.5,2.3,1.7,3.3s0.4,3.1,0.2,4.7c-1.8,19-9.6,65.1-13.6,86.3

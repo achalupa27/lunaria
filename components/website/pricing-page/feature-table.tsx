@@ -1,9 +1,10 @@
+import Card from '@/components/ui/card';
 import FeatureRow from './feature-row';
 import { Separator } from '@/components/ui/separator';
 
 const FeatureTable = ({ category, features }: any) => {
     return (
-        <div className='flex w-full max-w-7xl flex-col items-center justify-center space-y-2 rounded-2xl border-zinc-50 bg-zinc-100 py-16 pb-24 shadow'>
+        <Card className='w-full max-w-7xl'>
             <div className='pb-4 text-4xl font-bold'>{category}</div>
             <div className='flex w-[80%] flex-col justify-center space-y-6'>
                 {Object.keys(features).map((sectionKey: string) => (
@@ -26,7 +27,7 @@ const FeatureTable = ({ category, features }: any) => {
                     </div>
                 ))}
             </div>
-        </div>
+        </Card>
     );
 };
 

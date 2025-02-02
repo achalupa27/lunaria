@@ -1,27 +1,29 @@
+import Card from '@/components/ui/card';
+
 const MakeSection = () => {
     return (
         <section className='py-16 text-center'>
-            <h2 className='mb-8 text-4xl font-semibold'>Make Smarter Financial Decisions</h2>
-            <p className='mx-auto max-w-2xl text-lg text-gray-600'>Lunaria helps you take control of your finances by providing clear insights into your income, savings, and spending habits. Make informed choices to grow your wealth and achieve financial freedom.</p>
+            <h2 className='mb-8 text-4xl font-semibold'>Make More Money</h2>
+            <p className='text-lg text-gray-600'>Increase your income by identifying new opportunities and optimizing your earnings.</p>
             <div className='mt-12 flex justify-center'>
-                <div className='grid w-full max-w-4xl grid-cols-1 gap-6 md:grid-cols-2'>
-                    <div className='rounded-lg border border-gray-200 bg-white p-6 shadow-md'>
-                        <h3 className='mb-3 text-2xl font-semibold'>Set Goals</h3>
-                        <p className='text-gray-500'>Define your financial goals and track your progress with ease.</p>
+                <Card className='px-12 py-10'>
+                    <h3 className='mb-4 text-2xl font-semibold'>Grow Your Income</h3>
+                    <p className='text-lg text-gray-600'>Track all your income sources and discover ways to boost your earnings.</p>
+                    <div className='mt-6 grid grid-cols-1 gap-6 md:grid-cols-3'>
+                        <Card className='px-12 py-10'>
+                            <h4 className='text-xl font-medium'>Active Income</h4>
+                            <p className='text-gray-500'>Monitor your salary, freelancing, and side gigs.</p>
+                        </Card>
+                        <Card className='px-12 py-10'>
+                            <h4 className='text-xl font-medium'>Passive Income</h4>
+                            <p className='text-gray-500'>Track dividends, investments, and rental income.</p>
+                        </Card>
+                        <Card className='px-12 py-10'>
+                            <h4 className='text-xl font-medium'>New Opportunities</h4>
+                            <p className='text-gray-500'>Find ways to increase your earnings and achieve financial freedom.</p>
+                        </Card>
                     </div>
-                    <div className='rounded-lg border border-gray-200 bg-white p-6 shadow-md'>
-                        <h3 className='mb-3 text-2xl font-semibold'>Optimize Spending</h3>
-                        <p className='text-gray-500'>Identify unnecessary expenses and maximize your savings.</p>
-                    </div>
-                    <div className='rounded-lg border border-gray-200 bg-white p-6 shadow-md'>
-                        <h3 className='mb-3 text-2xl font-semibold'>Invest Wisely</h3>
-                        <p className='text-gray-500'>Get recommendations on how to grow your wealth efficiently.</p>
-                    </div>
-                    <div className='rounded-lg border border-gray-200 bg-white p-6 shadow-md'>
-                        <h3 className='mb-3 text-2xl font-semibold'>Stay on Track</h3>
-                        <p className='text-gray-500'>Use insights and reports to maintain financial discipline.</p>
-                    </div>
-                </div>
+                </Card>
             </div>
         </section>
     );

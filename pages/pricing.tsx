@@ -3,13 +3,10 @@ import { useState } from 'react';
 import ProTable from '@/components/website/pricing-page/pro-table';
 import TermChanger from '@/components/website/pricing-page/term-changer';
 import { MONTHLY_BASIC, MONTHLY_PROFESSIONAL, STRIPE_KEY, YEARLY_BASIC, YEARLY_PROFESSIONAL } from '@/constants';
-import { bodyFeatures } from '@/components/website/pricing-page/data/dashboard-features';
-import { lifeFeatures } from '@/components/website/pricing-page/data/make-features';
-import { mindFeatures } from '@/components/website/pricing-page/data/save-features';
-import { toolFeatures } from '@/components/website/pricing-page/data/spend-features';
 import FeatureTable from '@/components/website/pricing-page/feature-table';
 import FreeTable from '@/components/website/pricing-page/free-table';
 import { ArrowDown } from 'lucide-react';
+import { features } from '@/components/website/pricing-page/data/features';
 
 const Pricing = () => {
     const [term, setTerm] = useState<'Monthly' | 'Yearly'>('Yearly');
@@ -42,11 +39,16 @@ const Pricing = () => {
 
     return (
         <div className='mx-auto flex min-h-screen w-[90%] flex-col items-center gap-12 py-8'>
-            <h1 className='mb-8 text-center'>Take the next step.</h1>
+            <h1 className='mt-8 text-center'>Simple, transparent pricing.</h1>
+            <h2 className='mb-8'>No credit card required, cancel anytime.</h2>
             <TermChanger term={term} setTerm={setTerm} />
             <div className='mt-8 flex flex-wrap justify-center gap-20'>
                 <FreeTable />
                 <ProTable term={term} purchaseSubscription={purchaseSubscription} />
+            </div>
+
+            <div className='rounded-[inherit] bg-gradient-to-r from-[#f4e1b2] via-[#f9d97c] to-[#f5c55d] p-[1px]'>
+                <div className='h-full w-full rounded-[inherit] bg-white'>test content</div>
             </div>
 
             <div className='flex flex-col items-center'>
@@ -54,10 +56,7 @@ const Pricing = () => {
                 <ArrowDown />
             </div>
 
-            <FeatureTable category={'Life'} features={lifeFeatures} />
-            <FeatureTable category={'Body'} features={bodyFeatures} />
-            <FeatureTable category={'Mind'} features={mindFeatures} />
-            <FeatureTable category={'Tools'} features={toolFeatures} />
+            <FeatureTable category={'Features'} features={features} />
         </div>
     );
 };

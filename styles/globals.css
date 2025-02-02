@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+    *,
+    ::before,
+    ::after {
+        @apply dark:border-zinc-700;
+    }
+
     h1 {
         @apply text-5xl font-bold;
     }

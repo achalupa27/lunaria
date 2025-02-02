@@ -4,9 +4,6 @@ import Logo from '@/components/icons/Logo';
 import MakeIcon from '@/components/icons/make-icon';
 import SaveIcon from '@/components/icons/save-icon';
 import SpendIcon from '@/components/icons/spend-icon';
-import { Layout } from 'lucide-react';
-
-// import { getActivityIcon } from '@/utils/icons';
 
 type Props = {
     label: string;

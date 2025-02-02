@@ -35,7 +35,7 @@ const RightSection = () => {
                     Log in
                 </Button>
             )}
-            <Link href={`${session ? '/app' : '/register'}`}>
+            <Link href={`${session ? '/dashboard' : '/register'}`}>
                 <Button className='hidden lg:flex'>{session ? 'Dashboard' : 'Sign Up'}</Button>
             </Link>
             <MobileMenu />

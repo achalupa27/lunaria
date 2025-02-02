@@ -1,5 +1,5 @@
-export const toolFeatures = {
-    TimeKeeper: [
+export const features = {
+    Dashboard: [
         {
             description: 'Here is 1 the description',
             includedFree: false,
@@ -11,23 +11,35 @@ export const toolFeatures = {
             includedProfessional: true,
         },
     ],
-    Notes: [
-        {
-            description: 'Here is 1 the description',
-            includedFree: false,
-            includedProfessional: true,
-        },
+    'Income Tracker': [
         {
             description: 'Here is 2 the description',
             includedFree: false,
             includedProfessional: true,
         },
-    ],
-    Lists: [
         {
-            description: 'Total Habits',
-            includedFree: '3',
-            includedProfessional: '50',
+            description: 'Here is 3 the description',
+            includedFree: false,
+            includedProfessional: true,
+        },
+    ],
+    'Savings Tracker': [
+        {
+            description: 'Here is 2 the description',
+            includedFree: false,
+            includedProfessional: true,
+        },
+        {
+            description: 'Here is 3 the description',
+            includedFree: false,
+            includedProfessional: true,
+        },
+    ],
+    'Spending Tracker': [
+        {
+            description: 'Here is 2 the description',
+            includedFree: false,
+            includedProfessional: true,
         },
         {
             description: 'Here is 3 the description',
