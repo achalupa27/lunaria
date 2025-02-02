@@ -39,7 +39,7 @@ const SelectInput = ({ register, label, registerValue, isRequired, categories, d
                     },
                 })}
                 defaultValue={defaultOption}
-                className={`h-10 rounded border border-zinc-400 px-3 py-2 pt-3 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50 ${width || 'w-full'}`}
+                className={`h-10 rounded-lg border bg-transparent px-3 py-2 pt-3 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50 ${width || 'w-full'}`}
                 onFocus={() => setIsFocused(true)}
                 required={isRequired}>
                 <option value=''></option>

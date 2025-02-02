@@ -42,7 +42,7 @@ const DateInput = ({ register, label, registerValue, isRequired, today }: Props)
                 type='date'
                 placeholder='Select a date'
                 onFocus={() => setIsFocused(true)}
-                className={`picker h-10 w-full rounded border px-3 pb-2 pt-3 text-sm ${isFocused ? 'border-2 border-black outline-none' : 'border-zinc-400 '} disabled:opacity-50`}
+                className={`picker h-10 w-full rounded-lg border px-3 pb-2 pt-3 text-sm ${isFocused ? 'border-2 border-black outline-none' : ''} disabled:opacity-50`}
                 required={isRequired}
                 defaultValue={today ? todayDate : undefined}
             />

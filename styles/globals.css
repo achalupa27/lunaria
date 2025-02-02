@@ -53,4 +53,8 @@
     .gradient-bg {
         @apply from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd];
     }
+
+    .gold-gradient {
+        @apply bg-gradient-to-tr from-[#f4e1b2]/80 via-[#f2ca73]/80 to-[#f9d97c]/80;
+    }
 }

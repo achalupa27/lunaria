@@ -9,9 +9,9 @@ type Props = {
 
 const Table = ({ table, handleRowClick, tableColor }: Props) => {
     return (
-        <div className={`h-full w-full overflow-y-auto rounded-md border ${tableColor === 'blue' && 'border-l-blue'} ${tableColor === 'green' && 'border-l-green'} ${tableColor === 'yellow' && 'border-l-yellow'} scrollbar-none`}>
+        <div className={`h-full w-full overflow-y-auto rounded-xl border border-orange-100 bg-white shadow ${tableColor === 'blue' && 'border-l-blue'} ${tableColor === 'green' && 'border-l-green'} ${tableColor === 'yellow' && 'border-l-yellow'} scrollbar-none`}>
             <table className='w-full border-separate border-spacing-0 text-center'>
-                <thead className={`sticky inset-0 ${tableColor === 'blue' && 'bg-l-blue'} ${tableColor === 'green' && 'bg-l-green'} ${tableColor === 'yellow' && 'bg-l-yellow'} ${tableColor === undefined && 'bg-white'} h-[30px] text-primary`}>
+                <thead className={`gold-gradient sticky inset-0 ${tableColor === 'blue' && 'bg-l-blue'} ${tableColor === 'green' && 'bg-l-green'} ${tableColor === 'yellow' && 'bg-l-yellow'} ${tableColor === undefined && 'bg-white'} h-[30px] text-primary`}>
                     {table.getHeaderGroups().map((headerGroup: any) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header: any) => (
@@ -39,9 +39,9 @@ const Table = ({ table, handleRowClick, tableColor }: Props) => {
                 <tbody>
                     {table.getRowModel().rows.map((row: any) => (
                         <Fragment key={row.id}>
-                            <tr className='main-hover hover:cursor-pointer' key={row.id} onClick={() => handleRowClick(row.original)}>
+                            <tr className='main-hover transition duration-200 hover:cursor-pointer' key={row.id} onClick={() => handleRowClick(row.original)}>
                                 {row.getVisibleCells().map((cell: any) => (
-                                    <td key={cell.id} className='text-elipsis h-10 whitespace-nowrap px-4'>
+                                    <td key={cell.id} className='text-elipsis h-10 whitespace-nowrap border-b px-4'>
                                         <div>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
                                     </td>
                                 ))}

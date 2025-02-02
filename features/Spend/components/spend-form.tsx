@@ -16,41 +16,21 @@ import { updateSpend } from '@/features/spend/services/updateSpend';
 import DeleteButton from '@/components/ui/buttons/DeleteButton';
 import SaveButton from '@/components/ui/buttons/SaveButton';
 import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Trash } from 'lucide-react';
 
 type Props = {
-    isOpen: boolean;
     closeForm: any;
     selectedSpend?: Spend;
 };
 
-const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
+const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
     const spends = useAppSelector(selectSpending);
     const dispatch = useAppDispatch();
 
-    const { register, handleSubmit, setValue } = useForm();
-
-    // Initialize form values if spendToEdit is provided
-    useEffect(() => {
-        if (selectedSpend) {
-            setValue('date', selectedSpend.date);
-            setValue('item', selectedSpend.item);
-            setValue('cost', selectedSpend.cost);
-            setValue('store', selectedSpend.store);
-            setValue('category', selectedSpend.category);
-            setValue('necessity', selectedSpend.necessity);
-            setValue('currency', selectedSpend.currency);
-        } else {
-            setValue('date', undefined);
-            setValue('item', undefined);
-            setValue('cost', undefined);
-            setValue('store', undefined);
-            setValue('category', undefined);
-            setValue('necessity', undefined);
-            setValue('currency', undefined);
-        }
-    }, [selectedSpend, setValue]);
+    const { register, handleSubmit, setValue } = useForm({ defaultValues: selectedSpend });
 
     const onSubmit: SubmitHandler<any> = (spend: Spend) => {
         if (user) {
@@ -110,10 +90,8 @@ const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
         selectedSpend && removeSpend(selectedSpend.id);
     };
 
-    if (!isOpen) return null;
-
     return (
-        <Modal title={selectedSpend ? 'Edit Spending' : 'New Spending'} closeModal={closeForm} headerStyle={'text-l-yellow'}>
+        <Modal title={selectedSpend ? 'Edit Spending' : 'New Spending'} closeModal={closeForm} headerStyle={'text-black'}>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
                 <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
                 <TextInput register={register} label={'Item'} registerValue={'item'} isRequired={true} />
@@ -124,11 +102,17 @@ const SpendForm = ({ isOpen, closeForm, selectedSpend }: Props) => {
                 <TextInput register={register} label={'Store'} registerValue={'store'} isRequired={true} />
                 <SelectInput register={register} label={'Category'} registerValue={'category'} categories={spendingCategories} isRequired={true} />
                 <SelectInput register={register} label={'Necessity'} registerValue={'necessity'} categories={necessityCategories} isRequired={true} />
-                <div className='flex justify-between pt-4'>
-                    {selectedSpend ? <DeleteButton onClick={handleDelete} /> : <div />}
+                <div className={`flex pt-4 ${selectedSpend ? 'justify-between' : 'justify-end'}`}>
+                    {selectedSpend && (
+                        <Button onClick={handleDelete} variant='destructive' size='icon'>
+                            <Trash />
+                        </Button>
+                    )}
                     <div className='flex space-x-3'>
-                        <CancelButton onClick={closeForm} />
-                        <SaveButton styling={'bg-l-yellow hover:bg-ld-yellow'} />
+                        <Button variant='secondary' onClick={closeForm}>
+                            Cancel
+                        </Button>
+                        <Button onClick={closeForm}>Save</Button>
                     </div>
                 </div>
             </form>

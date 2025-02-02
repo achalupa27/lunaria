@@ -39,7 +39,7 @@ const NumberInput = ({ register, label, registerValue, errors, isRequired, maxLe
                         setHasValue(!!e.target.value); // Update hasValue on blur
                     },
                 })}
-                className={`h-10 w-full rounded border border-zinc-400 px-3 pb-3 pt-4 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50`}
+                className={`h-10 w-full rounded-lg border px-3 pb-3 pt-4 text-sm focus:border-2 focus:border-black focus:outline-none disabled:opacity-50`}
                 required={isRequired}
                 maxLength={maxLength}
                 disabled={disabled}

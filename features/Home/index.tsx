@@ -1,8 +1,9 @@
-import HeaderCard from '@/components/ui/header-card';
+import Card from '@/components/ui/card';
 import Page from '@/components/ui/page';
 import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
 import { selectSpending } from '@/redux/slices/spendSlice';
+import { ChevronDown } from 'lucide-react';
 
 const Home = () => {
     const makes = useAppSelector(selectMaking);
@@ -11,13 +12,34 @@ const Home = () => {
 
     return (
         <Page>
-            <div className='flex justify-between'>
-                <div className='bg-gradient-to-br from-[#f7ebc0] via-[#99f5d1] to-[#93c5fd] bg-clip-text text-[40px] font-semibold text-transparent'>Home</div>
+            <div className='flex items-center justify-between'>
+                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200`}>
+                    <span>Dashboard - All Time</span>
+                    <ChevronDown />
+                </div>
             </div>
             <div className='my-2 flex space-x-6'>
-                <HeaderCard title={'Net Income'} value={'30'} isSelected={true} color='green' />
-                <HeaderCard title={'Net Savings'} value={'-12331'} isSelected={true} color='blue' />
-                <HeaderCard title={'Net Spending'} value={'30'} isSelected={true} color='yellow' />
+                <Card className='dark:bg-l-green'>
+                    <span className='leading-none'>{'Net Income'}</span>
+                    <div className='space-x-2'>
+                        <span className=''>{'CAD'}</span>
+                        <span className='text-3xl font-semibold'>${'30'}</span>
+                    </div>
+                </Card>
+                <Card className='dark:bg-l-green'>
+                    <span className='leading-none'>{'Net Savings'}</span>
+                    <div className='space-x-2'>
+                        <span className=''>{'CAD'}</span>
+                        <span className='text-3xl font-semibold'>${'-12331'}</span>
+                    </div>
+                </Card>
+                <Card className='dark:bg-l-green'>
+                    <span className='leading-none'>{'Net Spending'}</span>
+                    <div className='space-x-2'>
+                        <span className=''>{'CAD'}</span>
+                        <span className='text-3xl font-semibold'>${'30'}</span>
+                    </div>
+                </Card>
             </div>
         </Page>
     );

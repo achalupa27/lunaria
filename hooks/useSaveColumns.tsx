@@ -16,6 +16,10 @@ export const useSaveColumns = () => {
                 },
             },
             {
+                accessorKey: 'account',
+                header: 'Account',
+            },
+            {
                 accessorKey: 'amount',
                 header: 'Amount',
                 cell: (props: any) => (
@@ -24,10 +28,6 @@ export const useSaveColumns = () => {
                         {props.row.original.type === 'Withdrawal' && <RedPill text={`-$${props.row.original.amount}`} />}
                     </div>
                 ),
-            },
-            {
-                accessorKey: 'account',
-                header: 'Account',
             },
         ],
         []

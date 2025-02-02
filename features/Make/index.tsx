@@ -2,18 +2,22 @@ import { useState } from 'react';
 import { useAppSelector } from '@/redux/hooks';
 import { selectMaking } from '@/redux/slices/makeSlice';
 import { useMakeColumns } from '@/hooks/useMakeColumns';
-import { initializeTable } from '@/utils/helper';
+import { formatCurrency, initializeTable } from '@/utils/helper';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
-import PageHeader from '@/components/ui/page-header';
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
 import HeaderCard from '@/components/ui/header-card';
 import MakeForm from './components/make-form';
+import Card from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ChevronDown, Settings } from 'lucide-react';
+import MakeSettings from './components/make-settings';
 
 const Make = () => {
     const makes = useAppSelector(selectMaking);
     const makeColumns = useMakeColumns();
     const [makeFormOpen, setMakeFormOpen] = useState(false);
+    const [makeSettingsOpen, setMakeSettingsOpen] = useState(false);
     const [selectedMake, setSelectedMake] = useState<Make | undefined>();
 
     const table = initializeTable(makes, makeColumns);
@@ -31,58 +35,57 @@ const Make = () => {
     const handleFormClose = () => {
         setSelectedMake(undefined);
         setMakeFormOpen(false);
+        setMakeSettingsOpen(false);
     };
-
-    const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
-
-    // need to group by year and by month
-    // projections
-
-    const [savings, setSavings] = useState<number>(50);
 
     return (
         <Page>
-            <PageHeader title={'Making'} titleStyle={'text-l-green'} buttonText={'+ New Making'} buttonStyle={'bg-l-green hover:bg-l-dark-green'} onClick={handleFormOpen} />
-            <div className='my-2 flex space-x-6'>
-                <HeaderCard title={'All Income'} value={savings} isSelected={selectedNecessity === 'All'} onClick={() => setSelectedNecessity('All')} color='green' />
-            </div>
-            <div>Recurring vs One-Time</div>
-            <div className='text-white'>this year vs last year by month</div>
-            <div className='flex flex-1 space-x-4 overflow-auto text-white scrollbar-none'>
-                <div className='flex h-full flex-col space-y-2'>
-                    <div className='rounded-md border border-l-green'>
-                        <div className='flex items-center justify-between rounded-md rounded-b-none bg-l-green'>
-                            <div className='flex items-center space-x-2 rounded-md px-2 text-primary'>
-                                <i className='fi fi-rr-coins' />
-                                <span>Income Sources</span>
-                            </div>
-                            <div>
-                                <button className='w-6 rounded-md bg-l-green px-1 text-primary hover:bg-l-dark-green'>+</button>
-                            </div>
-                        </div>
-                        <div className='px-3 py-2'>
-                            <div className='flex justify-between'>
-                                <div>Software</div>
-                                <div className='text-l-green'>$100</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Trading</div>
-                                <div className='text-l-green'>$0</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Dividends</div>
-                                <div className='text-l-green'>$0</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Social Media</div>
-                                <div className='text-l-green'>$0</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <Table table={table} tableColor='green' handleRowClick={handleViewMake} />
+            <div className='flex items-center justify-between'>
+                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200`}>
+                    <span>Making - All Time</span>
+                    <ChevronDown />
                 </div>
-                <div className='flex h-full w-full flex-col rounded-md border border-l-green'>
+                <div className='flex items-center space-x-2'>
+                    <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setMakeSettingsOpen(true)}>
+                        <Settings />
+                    </Button>
+                    <Button className='rounded-lg' onClick={handleFormOpen}>
+                        + New Making
+                    </Button>
+                </div>
+            </div>
+            <div className='flex space-x-6 overflow-x-auto py-2'>
+                <Card className='gold-gradient dark:bg-l-green'>
+                    <span className='leading-none'>{'All Sources'}</span>
+                    <div className='space-x-2'>
+                        <span className='text-3xl font-semibold'>{formatCurrency(0)}</span>
+                    </div>
+                </Card>
+                <Card>
+                    <span className='leading-none'>{'Software'}</span>
+                    <div className='space-x-2'>
+                        <span className='text-3xl font-semibold'>{formatCurrency(0)}</span>
+                    </div>
+                </Card>
+                <Card>
+                    <span className='leading-none'>{'Trading'}</span>
+                    <div className='space-x-2'>
+                        <span className='text-3xl font-semibold'>{formatCurrency(0)}</span>
+                    </div>
+                </Card>
+                <Card>
+                    <span className='leading-none'>{'Dividends'}</span>
+                    <div className='space-x-2'>
+                        <span className='text-3xl font-semibold'>{formatCurrency(0)}</span>
+                    </div>
+                </Card>
+            </div>
+            {/* <div>this year vs last year by month</div> */}
+            <div className='flex flex-1 space-x-4 overflow-auto p-1 scrollbar-none'>
+                <div className='flex h-full flex-col space-y-2'>
+                    <Table table={table} handleRowClick={handleViewMake} />
+                </div>
+                {/* <div className='flex h-full w-full flex-col rounded-md border border-l-green'>
                     <div className='flex justify-between rounded-md rounded-b-none bg-l-green px-2 py-1 text-primary'>
                         <select name='choice' className='bg-transparent'>
                             <option value='first' selected>
@@ -101,9 +104,10 @@ const Make = () => {
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
-                </div>
+                </div> */}
             </div>
-            <MakeForm isOpen={makeFormOpen} closeForm={handleFormClose} selectedMake={selectedMake} />
+            {makeFormOpen && <MakeForm closeForm={handleFormClose} selectedMake={selectedMake} />}
+            {makeSettingsOpen && <MakeSettings closeForm={handleFormClose} selectedMake={selectedMake} />}
         </Page>
     );
 };

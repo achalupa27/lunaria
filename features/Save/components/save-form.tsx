@@ -13,36 +13,25 @@ import { selectUser } from '@/redux/slices/userSlice';
 import { createSave } from '@/features/save/services/createSave';
 import { deleteSave } from '@/features/save/services/deleteSave';
 import NumberInput from '@/components/ui/Inputs/NumberInput';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { updateSave } from '@/features/save/services/updateSave';
+import { Button } from '@/components/ui/button';
+import { Trash } from 'lucide-react';
+import AmountInput from '@/components/ui/Inputs/AmountInput';
+import DateInputNew from '@/components/ui/Inputs/DateInputNew';
 
 type Props = {
-    isOpen: boolean;
     closeForm: any;
     selectedSave?: Save;
 };
 
-const SaveForm = ({ isOpen, closeForm, selectedSave }: Props) => {
+const SaveForm = ({ closeForm, selectedSave }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
     const saves = useAppSelector(selectSaving);
     const dispatch = useAppDispatch();
 
-    const { register, handleSubmit, setValue } = useForm();
-
-    useEffect(() => {
-        if (selectedSave) {
-            setValue('date', selectedSave.date);
-            setValue('type', selectedSave.type);
-            setValue('amount', selectedSave.amount);
-            setValue('account', selectedSave.account);
-        } else {
-            setValue('date', undefined);
-            setValue('type', undefined);
-            setValue('amount', undefined);
-            setValue('account', undefined);
-        }
-    }, [selectedSave, setValue]);
+    const { register, handleSubmit, setValue } = useForm({ defaultValues: selectedSave });
 
     const onSubmit: SubmitHandler<any> = (save: any) => {
         if (user) {
@@ -101,28 +90,48 @@ const SaveForm = ({ isOpen, closeForm, selectedSave }: Props) => {
     const handleDelete = () => {
         selectedSave && removeSave(selectedSave.id);
     };
+    const [term, setTerm] = useState<'Deposit' | 'Withdrawal'>('Deposit');
 
-    if (isOpen) {
-        return (
-            <Modal title={selectedSave ? 'Edit Saving' : 'New Saving'} closeModal={closeForm} headerStyle={'text-l-blue'}>
-                <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
-                    <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
-                    <SelectInput register={register} label={'Type'} registerValue={'type'} categories={saveTypes} isRequired={true} />
+    return (
+        <Modal title={selectedSave ? 'Edit Saving' : 'New Saving'} closeModal={closeForm} headerStyle={'text-black'}>
+            <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+                <div className='border-orange-0 relative flex w-full overflow-hidden rounded-full border bg-white dark:bg-black'>
+                    <div className={`absolute left-0 top-0 h-full w-1/2 rounded-full transition-transform  duration-200 dark:bg-white ${term === 'Withdrawal' ? 'translate-x-full bg-red-600 ' : 'translate-x-0 bg-green-500 '}`}></div>
+
+                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${term === 'Deposit' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Deposit')}>
+                        Deposit
+                    </div>
+
+                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${term === 'Withdrawal' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Withdrawal')}>
+                        Withdrawal
+                    </div>
+                </div>
+                <SelectInput register={register} label={'Account'} registerValue={'account'} categories={savingAccounts} isRequired={true} />
+
+                {/* <DateInputNew /> */}
+                <AmountInput />
+                {/* <div className='flex space-x-2'>
                     <NumberInput register={register} label={'Amount'} registerValue={'amount'} isRequired={true} />
                     <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} />
-                    <SelectInput register={register} label={'Account'} registerValue={'account'} categories={savingAccounts} isRequired={true} />
-                    <div className='flex justify-between pt-4'>
-                        {selectedSave && <DeleteButton onClick={handleDelete} />}
-                        <div className='flex space-x-3'>
-                            <CancelButton onClick={closeForm} />
-                            <SaveButton styling={'bg-l-blue hover:bg-ld-blue'} />
-                        </div>
+                </div> */}
+                <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
+
+                <div className={`flex pt-4 ${selectedSave ? 'justify-between' : 'justify-end'}`}>
+                    {selectedSave && (
+                        <Button onClick={handleDelete} variant='destructive' size='icon'>
+                            <Trash />
+                        </Button>
+                    )}
+                    <div className='flex space-x-3'>
+                        <Button variant='secondary' onClick={closeForm}>
+                            Cancel
+                        </Button>
+                        <Button onClick={closeForm}>Save</Button>
                     </div>
-                </form>
-            </Modal>
-        );
-    }
-    return null;
+                </div>
+            </form>
+        </Modal>
+    );
 };
 
 export default SaveForm;

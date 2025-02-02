@@ -8,21 +8,20 @@ import DateInput from '@/components/ui/Inputs/DateInput';
 import NumberInput from '@/components/ui/Inputs/NumberInput';
 import SelectInput from '@/components/ui/Inputs/SelectInput';
 import { currencyCategories, incomeSources } from '@/constants';
-import DeleteButton from '@/components/ui/buttons/DeleteButton';
-import CancelButton from '@/components/ui/buttons/CancelButton';
-import SaveButton from '@/components/ui/buttons/SaveButton';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createMake } from '@/features/make/services/create-make-service';
 import { updateMake } from '@/features/make/services/update-make-service';
 import { deleteMake } from '@/features/make/services/delete-make-service';
+import { Button } from '@/components/ui/button';
+import { Trash } from 'lucide-react';
+import AmountInput from '@/components/ui/Inputs/AmountInput';
 
 type Props = {
-    isOpen: boolean;
     closeForm: any;
     selectedMake?: Make;
 };
 
-const MakeForm = ({ isOpen, closeForm, selectedMake }: Props) => {
+const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
     const makes = useAppSelector(selectMaking);
@@ -101,20 +100,39 @@ const MakeForm = ({ isOpen, closeForm, selectedMake }: Props) => {
         selectedMake && removeMake(selectedMake.id);
     };
 
-    if (!isOpen) return null;
+    const [term, setTerm] = useState<'Deposit' | 'Withdrawal'>('Deposit');
 
     return (
-        <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-l-green'}>
+        <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-black'}>
             <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
+                <div className='border-orange-0 relative flex w-full overflow-hidden rounded-full border bg-white dark:bg-black'>
+                    <div className={`absolute left-0 top-0 h-full w-1/2 rounded-full transition-transform  duration-200 dark:bg-white ${term === 'Withdrawal' ? 'translate-x-full bg-green-500' : 'translate-x-0 bg-green-500 '}`}></div>
+
+                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${term === 'Deposit' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Deposit')}>
+                        One-Time
+                    </div>
+
+                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${term === 'Withdrawal' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Withdrawal')}>
+                        Recurring
+                    </div>
+                </div>
                 <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
-                <NumberInput register={register} label={'Amount'} registerValue={'amount'} isRequired={true} />
-                <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} />
+                <AmountInput />
+                {/* <NumberInput register={register} label={'Amount'} registerValue={'amount'} isRequired={true} /> */}
+                {/* <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} /> */}
                 <SelectInput register={register} label={'Source'} registerValue={'source'} categories={incomeSources} isRequired={true} />
-                <div className='flex justify-between pt-4'>
-                    {selectedMake && <DeleteButton onClick={handleDelete} />}
+
+                <div className={`flex pt-4 ${selectedMake ? 'justify-between' : 'justify-end'}`}>
+                    {selectedMake && (
+                        <Button onClick={handleDelete} variant='destructive' size='icon'>
+                            <Trash />
+                        </Button>
+                    )}
                     <div className='flex space-x-3'>
-                        <CancelButton onClick={closeForm} />
-                        <SaveButton styling={'bg-l-green hover:bg-ld-green'} />
+                        <Button variant='secondary' onClick={closeForm}>
+                            Cancel
+                        </Button>
+                        <Button onClick={closeForm}>Save</Button>
                     </div>
                 </div>
             </form>

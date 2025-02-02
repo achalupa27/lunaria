@@ -17,6 +17,10 @@ export const useSpendColumns = () => {
                 },
             },
             {
+                accessorKey: 'category',
+                header: 'Category',
+            },
+            {
                 accessorKey: 'item',
                 header: 'Item',
                 cell: (props: any) => (
@@ -39,10 +43,6 @@ export const useSpendColumns = () => {
                         </div>
                     );
                 },
-            },
-            {
-                accessorKey: 'category',
-                header: 'Category',
             },
         ],
         []
