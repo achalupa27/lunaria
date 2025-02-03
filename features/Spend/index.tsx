@@ -29,31 +29,27 @@ const Spend = () => {
 
     const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
 
-    const { table } = useTable({ data: spends, columns: spendColumns });
+    const { table } = useTable({ data: spends || [], columns: spendColumns });
 
     useEffect(() => {
-        if (spends.length > 0) {
-            const necessityTotals = spends.reduce(
+        if (spends && spends?.length > 0) {
+            const necessityTotals = spends?.reduce(
                 (acc, spend) => {
-                    // Convert cost to USD if currency is 'MXN'
-                    const convertedCost = spend.currency === 'MXN' ? spend.cost / 11.5 : spend.cost;
-
-                    // Filter spends based on necessity category and sum the costs
                     switch (spend.necessity) {
                         case 'Need':
-                            acc.totalNeedSpent += convertedCost;
+                            acc.totalNeedSpent += spend.cost;
                             break;
                         case 'Want':
-                            acc.totalWantSpent += convertedCost;
+                            acc.totalWantSpent += spend.cost;
                             break;
                         case 'Waste':
-                            acc.totalWasteSpent += convertedCost;
+                            acc.totalWasteSpent += spend.cost;
                             break;
                         default:
                             break;
                     }
 
-                    acc.totalSpent += convertedCost;
+                    acc.totalSpent += spend.cost;
 
                     return acc;
                 },

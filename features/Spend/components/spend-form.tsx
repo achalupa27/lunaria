@@ -47,11 +47,6 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     const user = useAppSelector(selectUser);
     const { createSpendMutation, updateSpendMutation, deleteSpendMutation } = useSpendMutations();
 
-    const handleDelete = () => {
-        selectedSpend && deleteSpendMutation.mutate(selectedSpend.id);
-        closeForm();
-    };
-
     const form = useForm({
         defaultValues: selectedSpend,
         resolver: zodResolver(FormSchema),
@@ -78,6 +73,11 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
         } else {
             console.error('[ERROR] Could not add spend. [REASON] No user.');
         }
+        closeForm();
+    };
+
+    const handleDelete = () => {
+        selectedSpend && deleteSpendMutation.mutate(selectedSpend.id);
         closeForm();
     };
 

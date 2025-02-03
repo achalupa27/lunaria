@@ -1,6 +1,6 @@
 'use client';
 
-import Logo from '@/components/icons/Logo';
+import Logo from '@/components/icons/logo';
 import MakeIcon from '@/components/icons/make-icon';
 import SaveIcon from '@/components/icons/save-icon';
 import SpendIcon from '@/components/icons/spend-icon';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMakeColumns } from '@/hooks/useMakeColumns';
-import { formatCurrency, initializeTable } from '@/utils/helper';
+import { formatCurrency } from '@/utils/helper';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import MakeForm from './components/make-form';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown, Settings } from 'lucide-react';
 import SettingsForm from './components/settings-form';
 import useFetchMakes from './hooks/use-fetch-makes';
+import { useTable } from '@/hooks/use-table';
 
 const Make = () => {
     const { data: makes } = useFetchMakes();
@@ -17,7 +18,7 @@ const Make = () => {
     const [makeSettingsOpen, setMakeSettingsOpen] = useState(false);
     const [selectedMake, setSelectedMake] = useState<Make | undefined>();
 
-    const table = initializeTable(makes, makeColumns);
+    const { table } = useTable({ data: makes || [], columns: makeColumns });
 
     const handleViewMake = (row: any) => {
         setSelectedMake(row);

@@ -25,9 +25,9 @@ export const useSpendColumns = () => {
                 header: 'Item',
                 cell: (props: any) => (
                     <div className='flex items-center justify-center'>
-                        {props.row.original.necessity === 'Need' && <span className='text-l-green'>{props.row.original.item}</span>}
-                        {props.row.original.necessity === 'Want' && <span className='text-l-yellow'>{props.row.original.item}</span>}
-                        {props.row.original.necessity === 'Waste' && <span className='text-red-300'>{props.row.original.item}</span>}
+                        {props.row.original.necessity === 'Need' && <span className='text-green-600 dark:text-l-green'>{props.row.original.item}</span>}
+                        {props.row.original.necessity === 'Want' && <span className='text-yellow-500 dark:text-l-yellow'>{props.row.original.item}</span>}
+                        {props.row.original.necessity === 'Waste' && <span className='text-red-500 dark:text-red-300'>{props.row.original.item}</span>}
                     </div>
                 ),
             },

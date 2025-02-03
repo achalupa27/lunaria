@@ -3,6 +3,8 @@ import { createSaveService } from '../services/create-save-service';
 import { deleteSaveService } from '../services/delete-save-service';
 import { updateSaveService } from '../services/update-save-service';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { toast } from '@/hooks/use-toast';
+import { CheckCircle, CircleX } from 'lucide-react';
 
 export const useSaveMutations = () => {
     const queryClient = useQueryClient();
@@ -12,9 +14,22 @@ export const useSaveMutations = () => {
         mutationFn: (newSave: Omit<Save, 'id'>) => createSaveService(newSave, supabaseClient),
         onSuccess: (newSave: Save) => {
             queryClient.setQueryData(['saves'], (oldSaves: Save[] = []) => [...oldSaves, newSave]);
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CheckCircle className='text-green-500' /> <span className='text-lg'>Transaction saved!</span>
+                    </div>
+                ),
+            });
         },
         onError: (error) => {
-            console.error('Failed to create save:', error);
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CircleX className='text-red-500' /> <span className='text-lg'>Failed to save transaction.</span>
+                    </div>
+                ),
+            });
         },
     });
 
@@ -24,9 +39,22 @@ export const useSaveMutations = () => {
         },
         onSuccess: (updatedSave: Save) => {
             queryClient.setQueryData(['saves'], (oldSaves: Save[] = []) => oldSaves.map((save) => (save.id === updatedSave.id ? updatedSave : save)));
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CheckCircle className='text-green-500' /> <span className='text-lg'>Transaction updated!</span>
+                    </div>
+                ),
+            });
         },
         onError: (error: any) => {
-            console.error('Failed to update save:', error);
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CircleX className='text-red-500' /> <span className='text-lg'>Failed to update transaction.</span>
+                    </div>
+                ),
+            });
         },
     });
 
@@ -34,9 +62,22 @@ export const useSaveMutations = () => {
         mutationFn: (saveId: string) => deleteSaveService(saveId, supabaseClient),
         onSuccess: (_, deletedSaveId: string) => {
             queryClient.setQueryData(['saves'], (oldSaves: Save[] = []) => oldSaves.filter((save) => save.id !== deletedSaveId));
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CheckCircle className='text-green-500' /> <span className='text-lg'>Transaction deleted.</span>
+                    </div>
+                ),
+            });
         },
         onError: (error) => {
-            console.error('Failed to delete save:', error);
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CircleX className='text-red-500' /> <span className='text-lg'>Failed to delete transaction.</span>
+                    </div>
+                ),
+            });
         },
     });
 

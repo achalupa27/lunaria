@@ -19,7 +19,6 @@ type Props = {
 
 const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const user = useAppSelector(selectUser);
-    const supabaseClient = useSupabaseClient();
     const { register, handleSubmit } = useForm({ defaultValues: selectedMake });
 
     const { createMakeMutation, updateMakeMutation, deleteMakeMutation } = useMakeMutations();
@@ -49,7 +48,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
     };
 
     const handleDeleteMake = () => {
-        selectedMake && deleteMakeMutation.mutate(selectedMake.id, supabaseClient);
+        selectedMake && deleteMakeMutation.mutate(selectedMake.id);
         closeForm();
     };
 

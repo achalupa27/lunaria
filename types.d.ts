@@ -1,19 +1,19 @@
 type Make = {
     id: string;
     user_email: string;
-    date: string;
+    date: Date;
     amount: number;
-    currency: string;
+    currency?: string;
     source: string;
 };
 
 type Save = {
     id: string;
     user_email: string;
-    date: string;
-    type: 'Withdrawal' | 'Deposit';
+    date: Date;
+    type: 'Withdrawal' | 'Deposit' | string;
     amount: number;
-    currency: string;
+    currency?: string;
     account: string;
 };
 
@@ -26,7 +26,7 @@ type Spend = {
     currency?: string;
     store: string;
     category: string;
-    necessity: Necessity;
+    necessity: Necessity | string;
 };
 
 type SpendDataPoint = { date: string; spent: number }[];

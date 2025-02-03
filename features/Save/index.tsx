@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSaveColumns } from '@/hooks/useSaveColumns';
-import { formatCurrency, initializeTable } from '@/utils/helper';
+import { formatCurrency } from '@/utils/helper';
 import SaveForm from './components/save-form';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
@@ -8,6 +8,7 @@ import Card from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Settings } from 'lucide-react';
 import useFetchSaves from './hooks/use-fetch-saves';
+import { useTable } from '@/hooks/use-table';
 
 const Save = () => {
     const { data: saves } = useFetchSaves();
@@ -15,7 +16,7 @@ const Save = () => {
     const [saveFormOpen, setSaveFormOpen] = useState(false);
     const [selectedSave, setSelectedSave] = useState<Save | undefined>();
 
-    const table = initializeTable(saves, saveColumns);
+    const { table } = useTable({ data: saves || [], columns: saveColumns });
 
     const handleViewSave = (row: any) => {
         setSelectedSave(row);

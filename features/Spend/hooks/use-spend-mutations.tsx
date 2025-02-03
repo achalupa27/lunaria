@@ -48,7 +48,13 @@ export const useSpendMutations = () => {
             });
         },
         onError: (error: any) => {
-            console.error('Failed to update spend:', error);
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CircleX className='text-red-500' /> <span className='text-lg'>Failed to update transaction.</span>
+                    </div>
+                ),
+            });
         },
     });
 
@@ -65,7 +71,13 @@ export const useSpendMutations = () => {
             });
         },
         onError: (error) => {
-            console.error('Failed to delete spend:', error);
+            toast({
+                description: (
+                    <div className='flex items-center space-x-3'>
+                        <CircleX className='text-red-500' /> <span className='text-lg'>Failed to delete transaction.</span>
+                    </div>
+                ),
+            });
         },
     });
 
