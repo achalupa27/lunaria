@@ -1,32 +1,54 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@/components/ui/modal';
 import { selectUser } from '@/redux/slices/userSlice';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import DateInput from '@/components/ui/Inputs/DateInput';
-import SelectInput from '@/components/ui/Inputs/SelectInput';
 import { currencyCategories, incomeSources } from '@/constants';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
-import AmountInput from '@/components/ui/Inputs/AmountInput';
 import { useMakeMutations } from '../hooks/use-make-mutations';
 import { useAppSelector } from '@/redux/hooks';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { z } from 'zod';
+
+import { cn } from '@/lib/utils';
+import { Calendar } from '@/components/ui/calendar';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 
 type Props = {
     closeForm: any;
     selectedMake?: Make;
 };
 
+const FormSchema = z.object({
+    source: z.string({
+        required_error: 'An income source is required.',
+    }),
+    amount: z.coerce.number(),
+    date: z.date({
+        required_error: 'A date is required.',
+    }),
+});
+
 const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const user = useAppSelector(selectUser);
-    const { register, handleSubmit } = useForm({ defaultValues: selectedMake });
+    const form = useForm({
+        defaultValues: {
+            ...selectedMake,
+        },
+        resolver: zodResolver(FormSchema),
+    });
 
     const { createMakeMutation, updateMakeMutation, deleteMakeMutation } = useMakeMutations();
 
-    const onSubmit: SubmitHandler<any> = (make: any) => {
+    const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
         if (user) {
             if (selectedMake) {
-                let updatedMake: Make = {
+                const updatedMake: Make = {
                     ...make,
                     user_email: user!.email,
                     id: selectedMake.id,
@@ -34,7 +56,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
 
                 updateMakeMutation.mutate(updatedMake);
             } else {
-                let newMake: Make = {
+                const newMake: Omit<Make, 'id'> = {
                     ...make,
                     user_email: user!.email,
                 };
@@ -47,47 +69,86 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
         closeForm();
     };
 
-    const handleDeleteMake = () => {
+    const handleDelete = () => {
         selectedMake && deleteMakeMutation.mutate(selectedMake.id);
         closeForm();
     };
 
-    const [term, setTerm] = useState<'Deposit' | 'Withdrawal'>('Deposit');
-
     return (
         <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-black'}>
-            <form onSubmit={handleSubmit(onSubmit)} className='space-y-2'>
-                <div className='border-orange-0 relative flex w-full overflow-hidden rounded-full border bg-white dark:bg-black'>
-                    <div className={`absolute left-0 top-0 h-full w-1/2 rounded-full transition-transform  duration-200 dark:bg-white ${term === 'Withdrawal' ? 'translate-x-full bg-green-500' : 'translate-x-0 bg-green-500 '}`}></div>
-
-                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${term === 'Deposit' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Deposit')}>
-                        One-Time
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+                    <FormField
+                        control={form.control}
+                        name='amount'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Amount</FormLabel>
+                                <Input className='transition-colors hover:bg-zinc-100' type='number' {...field} placeholder='Amount' />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='source'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Source</FormLabel>
+                                <Select value={field.value} onValueChange={field.onChange}>
+                                    <SelectTrigger className='transition-colors hover:bg-zinc-100'>
+                                        <SelectValue placeholder='Source' />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {incomeSources.map((source) => (
+                                            <SelectItem key={source} value={source}>
+                                                {source}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='date'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Date</FormLabel>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button variant={'outline'} className={cn('pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}>
+                                                {field.value ? format(field.value, 'PPP') : <span>Date</span>}
+                                                <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className='w-auto p-0' align='start'>
+                                        <Calendar mode='single' selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date('1900-01-01')} initialFocus />
+                                    </PopoverContent>
+                                </Popover>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <div className={`flex pt-4 ${selectedMake ? 'justify-between' : 'justify-end'}`}>
+                        {selectedMake && (
+                            <Button type='button' onClick={handleDelete} variant='destructive' size='icon'>
+                                <Trash />
+                            </Button>
+                        )}
+                        <div className='flex space-x-3'>
+                            <Button variant='secondary' onClick={closeForm}>
+                                Cancel
+                            </Button>
+                            <Button type='submit'>Save</Button>
+                        </div>
                     </div>
-
-                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${term === 'Withdrawal' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setTerm('Withdrawal')}>
-                        Recurring
-                    </div>
-                </div>
-                <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
-                <AmountInput />
-                {/* <NumberInput register={register} label={'Amount'} registerValue={'amount'} isRequired={true} /> */}
-                {/* <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} /> */}
-                <SelectInput register={register} label={'Source'} registerValue={'source'} categories={incomeSources} isRequired={true} />
-
-                <div className={`flex pt-4 ${selectedMake ? 'justify-between' : 'justify-end'}`}>
-                    {selectedMake && (
-                        <Button onClick={handleDeleteMake} variant='destructive' size='icon'>
-                            <Trash />
-                        </Button>
-                    )}
-                    <div className='flex space-x-3'>
-                        <Button variant='secondary' onClick={closeForm}>
-                            Cancel
-                        </Button>
-                        <Button onClick={closeForm}>Save</Button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </Form>
         </Modal>
     );
 };

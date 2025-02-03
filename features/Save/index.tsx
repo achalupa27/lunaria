@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSaveColumns } from '@/hooks/useSaveColumns';
+import { useSaveColumns } from '@/hooks/use-save-columns';
 import { formatCurrency } from '@/utils/helper';
 import SaveForm from './components/save-form';
 import Table from '@/components/ui/table';
@@ -9,11 +9,13 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown, Settings } from 'lucide-react';
 import useFetchSaves from './hooks/use-fetch-saves';
 import { useTable } from '@/hooks/use-table';
+import SettingsForm from './components/settings-form';
 
 const Save = () => {
     const { data: saves } = useFetchSaves();
     const saveColumns = useSaveColumns();
     const [saveFormOpen, setSaveFormOpen] = useState(false);
+    const [settingsFormOpen, setSettingsFormOpen] = useState(false);
     const [selectedSave, setSelectedSave] = useState<Save | undefined>();
 
     const { table } = useTable({ data: saves || [], columns: saveColumns });
@@ -31,9 +33,8 @@ const Save = () => {
     const handleFormClose = () => {
         setSelectedSave(undefined);
         setSaveFormOpen(false);
+        setSettingsFormOpen(false);
     };
-
-    const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
 
     const [cash, setCash] = useState<number>(1670);
     const [debt, setDebt] = useState<number>(13901);
@@ -47,7 +48,7 @@ const Save = () => {
                     <ChevronDown />
                 </div>
                 <div className='flex items-center space-x-2'>
-                    <Button variant='secondary' className='rounded-lg' size='icon' onClick={handleFormOpen}>
+                    <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setSettingsFormOpen(true)}>
                         <Settings />
                     </Button>
                     <Button className='rounded-lg' onClick={handleFormOpen}>
@@ -131,28 +132,9 @@ const Save = () => {
                     </div>
                     <Table table={table} handleRowClick={handleViewSave} />
                 </div>
-                {/* <div className='flex h-full w-full flex-col rounded-md border border-l-blue'>
-                    <div className='flex justify-between rounded-md rounded-b-none bg-l-blue px-2 py-1 text-primary'>
-                        <select name='choice' className='bg-transparent'>
-                            <option value='first' selected>
-                                Savings Accounts
-                            </option>
-                            <option value='second'>Weekly Saving</option>
-                            <option value='third'>Monthly Saving</option>
-                        </select>
-                    </div>
-                    <div className='flex-1'>
-                        <ResponsiveContainer>
-                            <LineChart data={saves}>
-                                <XAxis tick={{ fill: 'white' }} dataKey='date' tickLine={false} stroke={'#93c5fd'} />
-                                <YAxis width={30} tick={{ fill: 'white' }} tickLine={false} stroke={'#93c5fd'} />
-                                <Line type='monotone' dataKey='spent' dot={false} stroke={'#93c5fd'} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div> */}
             </div>
             {saveFormOpen && <SaveForm closeForm={handleFormClose} selectedSave={selectedSave} />}
+            {settingsFormOpen && <SettingsForm closeForm={handleFormClose} />}
         </Page>
     );
 };

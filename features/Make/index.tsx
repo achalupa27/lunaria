@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMakeColumns } from '@/hooks/useMakeColumns';
+import { useMakeColumns } from '@/hooks/use-make-columns';
 import { formatCurrency } from '@/utils/helper';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
