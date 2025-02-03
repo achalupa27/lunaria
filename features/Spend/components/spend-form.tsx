@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { currencyCategories, necessityCategories, spendingCategories } from '@/constants';
+import { necessityCategories, spendingCategories } from '@/constants';
 import { useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
 import { selectUser } from '@/redux/slices/userSlice';
@@ -15,7 +15,6 @@ import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { toast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { useSpendMutations } from '../hooks/use-spend-mutations';
@@ -50,6 +49,7 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
 
     const handleDelete = () => {
         selectedSpend && deleteSpendMutation.mutate(selectedSpend.id);
+        closeForm();
     };
 
     const form = useForm({
@@ -58,7 +58,6 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     });
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
-        console.log('data: ', data);
         if (user) {
             if (selectedSpend) {
                 const updatedSpend: Spend = {
@@ -80,31 +79,12 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
             console.error('[ERROR] Could not add spend. [REASON] No user.');
         }
         closeForm();
-        toast({
-            title: 'You submitted the following values:',
-            description: (
-                <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-                    <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        });
     };
 
     return (
         <Modal title={selectedSpend ? 'Edit Spending' : 'New Spending'} closeModal={closeForm} headerStyle={'text-black'}>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-                    <FormField
-                        control={form.control}
-                        name='store'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Store</FormLabel>
-                                <Input {...field} placeholder='Store' />
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
                     <FormField
                         control={form.control}
                         name='item'
@@ -173,15 +153,26 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                     />
                     <FormField
                         control={form.control}
+                        name='store'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Store</FormLabel>
+                                <Input {...field} placeholder='Store' />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
                         name='date'
                         render={({ field }) => (
                             <FormItem className='flex flex-col'>
-                                <FormLabel>Date</FormLabel>
+                                <FormLabel>Purchase Date</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
                                         <FormControl>
                                             <Button variant={'outline'} className={cn('pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}>
-                                                {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                                                {field.value ? format(field.value, 'PPP') : <span>Purchase date</span>}
                                                 <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
                                             </Button>
                                         </FormControl>
@@ -196,7 +187,7 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                     />
                     <div className={`flex pt-4 ${selectedSpend ? 'justify-between' : 'justify-end'}`}>
                         {selectedSpend && (
-                            <Button onClick={handleDelete} variant='destructive' size='icon'>
+                            <Button type='button' onClick={handleDelete} variant='destructive' size='icon'>
                                 <Trash />
                             </Button>
                         )}

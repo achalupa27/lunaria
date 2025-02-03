@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { flexRender } from '@tanstack/react-table';
+import { MoveDown, MoveUp } from 'lucide-react';
 
 type Props = {
     table: any;
@@ -11,7 +12,7 @@ const Table = ({ table, handleRowClick, tableColor }: Props) => {
     return (
         <div className={`h-full w-full overflow-y-auto rounded-xl border border-orange-100 bg-white shadow ${tableColor === 'blue' && 'border-l-blue'} ${tableColor === 'green' && 'border-l-green'} ${tableColor === 'yellow' && 'border-l-yellow'} scrollbar-none`}>
             <table className='w-full border-separate border-spacing-0 text-center'>
-                <thead className={`gold-gradient sticky inset-0 ${tableColor === 'blue' && 'bg-l-blue'} ${tableColor === 'green' && 'bg-l-green'} ${tableColor === 'yellow' && 'bg-l-yellow'} ${tableColor === undefined && 'bg-white'} h-[30px] text-primary`}>
+                <thead className={`gold-gradient sticky inset-0 ${tableColor === 'blue' && 'bg-l-blue'} ${tableColor === 'green' && 'bg-l-green'} ${tableColor === 'yellow' && 'bg-l-yellow'} ${tableColor === undefined && 'bg-white'} h-[40px] text-primary`}>
                     {table.getHeaderGroups().map((headerGroup: any) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header: any) => (
@@ -23,10 +24,10 @@ const Table = ({ table, handleRowClick, tableColor }: Props) => {
                                         className: header.column.getIsSorted() ? 'text-selected font-normal px-4' : 'px-4 font-normal',
                                     }}>
                                     {header.isPlaceholder ? null : (
-                                        <div className='main-hover rounded px-2 py-[1px]'>
+                                        <div className='main-hover flex items-center justify-center rounded'>
                                             {{
-                                                asc: <i className='fi fi-rr-arrow-up text-selected text-xxs mr-1' />,
-                                                desc: <i className='fi fi-rr-arrow-down text-selected text-xxs mr-1' />,
+                                                asc: <MoveUp size={16} strokeWidth={1} />,
+                                                desc: <MoveDown size={16} strokeWidth={1} />,
                                             }[header.column.getIsSorted() as string] ?? null}
                                             {flexRender(header.column.columnDef.header, header.getContext())}
                                         </div>

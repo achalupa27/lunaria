@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSpendColumns } from '@/hooks/useSpendColumns';
-import { formatCurrency, initializeTable } from '@/utils/helper';
+import { formatCurrency } from '@/utils/helper';
 import SpendForm from './components/spend-form';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
@@ -11,6 +10,8 @@ import { ChevronDown, Settings } from 'lucide-react';
 import BudgetForm from './components/budget-form';
 import SettingsForm from './components/settings-form';
 import useFetchSpends from './hooks/use-fetch-spends';
+import { useSpendColumns } from './hooks/use-spend-columns';
+import { useTable } from '@/hooks/use-table';
 
 const Spend = () => {
     const { data: spends } = useFetchSpends();
@@ -28,7 +29,7 @@ const Spend = () => {
 
     const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
 
-    const table = initializeTable(spends, spendColumns);
+    const { table } = useTable({ data: spends, columns: spendColumns });
 
     useEffect(() => {
         if (spends.length > 0) {
@@ -70,21 +71,6 @@ const Spend = () => {
             setTotalWasteSpent(Number(necessityTotals.totalWasteSpent.toFixed(2)));
             setTotalSpent(Number(necessityTotals.totalSpent.toFixed(2)));
         }
-    }, [spends]);
-
-    useEffect(() => {
-        // Group spends by date and sum the costs for each day
-        const groupedSpendsByDay: { [key: string]: number } = spends.reduce((acc, spend) => {
-            const date = spend.date;
-            const convertedCost = spend.currency === 'MXN' ? spend.cost / 11.5 : spend.cost;
-
-            if (!acc[date]) {
-                acc[date] = 0;
-            }
-            acc[date] += convertedCost;
-
-            return acc;
-        }, {} as { [key: string]: number });
     }, [spends]);
 
     const handleViewSpend = (row: any) => {
@@ -150,9 +136,9 @@ const Spend = () => {
                 </Card>
             </div>
             <div className='flex flex-1 space-x-4 overflow-auto p-1 scrollbar-none'>
-                <div className='flex h-full flex-col space-y-4 bg-white'>
-                    <div className='rounded-lg border border-orange-100 shadow'>
-                        <div className='gold-gradient flex h-[30px] items-center rounded-lg rounded-b-none'>
+                <div className='flex h-full flex-col space-y-4'>
+                    <div className='rounded-lg border border-orange-100 bg-white shadow'>
+                        <div className='gold-gradient flex h-[40px] items-center rounded-lg rounded-b-none'>
                             <div className='flex items-center space-x-2 rounded-md px-2'>
                                 <span>Categories</span>
                             </div>
@@ -166,7 +152,6 @@ const Spend = () => {
                             ))}
                         </div>
                     </div>
-                    {/* <div>Recent Transactions</div> */}
                     <Table table={table} handleRowClick={handleViewSpend} />
                 </div>
             </div>
