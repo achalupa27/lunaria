@@ -20,10 +20,10 @@ type Save = {
 type Spend = {
     id: string;
     user_email: string;
-    date: string;
+    date: Date;
     item: string;
     cost: number;
-    currency: string;
+    currency?: string;
     store: string;
     category: string;
     necessity: Necessity;

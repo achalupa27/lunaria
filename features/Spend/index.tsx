@@ -6,18 +6,17 @@ import { formatCurrency, initializeTable } from '@/utils/helper';
 import SpendForm from './components/spend-form';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
-import PageHeader from '@/components/ui/page-header';
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import HeaderCard from '@/components/ui/header-card';
 import { spendingCategories } from '@/constants';
 import Card from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Settings } from 'lucide-react';
 import BudgetForm from './components/budget-form';
 import SettingsForm from './components/settings-form';
+import useFetchSpends from './hooks/use-fetch-spends';
 
 const Spend = () => {
-    const spends = useAppSelector(selectSpending);
+    const { data: spends } = useFetchSpends();
+
     const spendColumns = useSpendColumns();
     const [spendFormOpen, setSpendFormOpen] = useState<boolean>(false);
     const [budgetFormOpen, setBudgetFormOpen] = useState<boolean>(false);
@@ -179,26 +178,6 @@ const Spend = () => {
                     {/* <div>Recent Transactions</div> */}
                     <Table table={table} tableColor='yellow' handleRowClick={handleViewSpend} />
                 </div>
-                {/* <div className='flex h-full w-full flex-col rounded-md border border-l-yellow'>
-                    <div className='flex justify-between rounded-md rounded-b-none bg-l-yellow px-2 py-1 text-primary'>
-                        <select name='choice' className='bg-transparent'>
-                            <option value='first' selected>
-                                Daily Spending
-                            </option>
-                            <option value='second'>Weekly Spending</option>
-                            <option value='third'>Monthly Spending</option>
-                        </select>
-                    </div>
-                    <div className='flex-1'>
-                        <ResponsiveContainer>
-                            <LineChart data={chartData}>
-                                <XAxis tick={{ fill: 'white' }} dataKey='date' tickLine={false} stroke={'#f7ebc0'} />
-                                <YAxis width={40} tick={{ fill: 'white' }} tickLine={false} stroke={'#f7ebc0'} />
-                                <Line type='monotone' dataKey='spent' dot={false} stroke={'#f7ebc0'} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div> */}
             </div>
             {spendFormOpen && <SpendForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
             {budgetFormOpen && <BudgetForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}

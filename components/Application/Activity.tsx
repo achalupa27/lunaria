@@ -5,15 +5,42 @@ import Spend from '../../features/spend';
 import { useAppSelector } from '@/redux/hooks';
 import { selectTab } from '@/redux/slices/tabSlice';
 import Settings from './settings';
+import { Suspense } from 'react';
+import Loader from '../ui/loader';
 
 const Activity = () => {
     const tab = useAppSelector(selectTab);
 
-    if (tab === 'Home') return <Home />;
-    else if (tab === 'Make') return <Make />;
-    else if (tab === 'Save') return <Save />;
-    else if (tab === 'Spend') return <Spend />;
-    else if (tab === 'Settings') return <Settings />;
+    if (tab === 'Home')
+        return (
+            <Suspense fallback={<Loader />}>
+                <Home />
+            </Suspense>
+        );
+    else if (tab === 'Make')
+        return (
+            <Suspense fallback={<Loader />}>
+                <Make />
+            </Suspense>
+        );
+    else if (tab === 'Save')
+        return (
+            <Suspense fallback={<Loader />}>
+                <Save />
+            </Suspense>
+        );
+    else if (tab === 'Spend')
+        return (
+            <Suspense fallback={<Loader />}>
+                <Spend />
+            </Suspense>
+        );
+    else if (tab === 'Settings')
+        return (
+            <Suspense fallback={<Loader />}>
+                <Settings />
+            </Suspense>
+        );
 
     return <div>Error</div>;
 };

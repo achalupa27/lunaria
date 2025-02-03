@@ -1,20 +1,16 @@
 import { useState } from 'react';
-import { useAppSelector } from '@/redux/hooks';
-import { selectSaving } from '@/redux/slices/saveSlice';
 import { useSaveColumns } from '@/hooks/useSaveColumns';
 import { formatCurrency, initializeTable } from '@/utils/helper';
 import SaveForm from './components/save-form';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
-import PageHeader from '@/components/ui/page-header';
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
-import HeaderCard from '@/components/ui/header-card';
 import Card from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Settings } from 'lucide-react';
+import useFetchSaves from './hooks/use-fetch-saves';
 
 const Save = () => {
-    const saves = useAppSelector(selectSaving);
+    const { data: saves } = useFetchSaves();
     const saveColumns = useSaveColumns();
     const [saveFormOpen, setSaveFormOpen] = useState(false);
     const [selectedSave, setSelectedSave] = useState<Save | undefined>();

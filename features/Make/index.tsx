@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import { useAppSelector } from '@/redux/hooks';
-import { selectMaking } from '@/redux/slices/makeSlice';
 import { useMakeColumns } from '@/hooks/useMakeColumns';
 import { formatCurrency, initializeTable } from '@/utils/helper';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from 'recharts';
-import HeaderCard from '@/components/ui/header-card';
 import MakeForm from './components/make-form';
 import Card from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Settings } from 'lucide-react';
-import MakeSettings from './components/make-settings';
+import SettingsForm from './components/settings-form';
+import useFetchMakes from './hooks/use-fetch-makes';
 
 const Make = () => {
-    const makes = useAppSelector(selectMaking);
+    const { data: makes } = useFetchMakes();
     const makeColumns = useMakeColumns();
     const [makeFormOpen, setMakeFormOpen] = useState(false);
     const [makeSettingsOpen, setMakeSettingsOpen] = useState(false);
@@ -85,29 +82,9 @@ const Make = () => {
                 <div className='flex h-full flex-col space-y-2'>
                     <Table table={table} handleRowClick={handleViewMake} />
                 </div>
-                {/* <div className='flex h-full w-full flex-col rounded-md border border-l-green'>
-                    <div className='flex justify-between rounded-md rounded-b-none bg-l-green px-2 py-1 text-primary'>
-                        <select name='choice' className='bg-transparent'>
-                            <option value='first' selected>
-                                Daily Making
-                            </option>
-                            <option value='second'>Weekly Making</option>
-                            <option value='third'>Monthly Making</option>
-                        </select>
-                    </div>
-                    <div className='flex-1'>
-                        <ResponsiveContainer>
-                            <LineChart data={makes}>
-                                <XAxis tick={{ fill: 'white' }} dataKey='date' tickLine={false} stroke={'#99f5d1'} />
-                                <YAxis width={30} tick={{ fill: 'white' }} tickLine={false} stroke={'#99f5d1'} />
-                                <Line type='monotone' dataKey='spent' dot={false} stroke={'#99f5d1'} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div> */}
             </div>
             {makeFormOpen && <MakeForm closeForm={handleFormClose} selectedMake={selectedMake} />}
-            {makeSettingsOpen && <MakeSettings closeForm={handleFormClose} selectedMake={selectedMake} />}
+            {makeSettingsOpen && <SettingsForm closeForm={handleFormClose} />}
         </Page>
     );
 };

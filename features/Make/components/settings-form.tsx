@@ -6,10 +6,9 @@ import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 type Props = {
     closeForm: any;
-    selectedMake?: Make;
 };
 
-const MakeSettings = ({ closeForm, selectedMake }: Props) => {
+const SettingsForm = ({ closeForm }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
     const makes = useAppSelector(selectMaking);
@@ -32,4 +31,4 @@ const MakeSettings = ({ closeForm, selectedMake }: Props) => {
     );
 };
 
-export default MakeSettings;
+export default SettingsForm;

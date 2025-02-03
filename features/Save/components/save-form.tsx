@@ -4,21 +4,16 @@ import { addSaving, selectSaving, setSaving, updateSavingState } from '@/redux/s
 import Modal from '@/components/ui/modal';
 import DateInput from '@/components/ui/Inputs/DateInput';
 import SelectInput from '@/components/ui/Inputs/SelectInput';
-import { currencyCategories, saveTypes, savingAccounts } from '@/constants';
-import DeleteButton from '@/components/ui/buttons/DeleteButton';
-import CancelButton from '@/components/ui/buttons/CancelButton';
-import SaveButton from '@/components/ui/buttons/SaveButton';
+import { savingAccounts } from '@/constants';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { selectUser } from '@/redux/slices/userSlice';
-import { createSave } from '@/features/save/services/createSave';
-import { deleteSave } from '@/features/save/services/deleteSave';
-import NumberInput from '@/components/ui/Inputs/NumberInput';
-import { useEffect, useState } from 'react';
-import { updateSave } from '@/features/save/services/updateSave';
+import { createSave } from '@/features/save/services/create-save-service';
+import { deleteSave } from '@/features/save/services/delete-save-service';
+import { useState } from 'react';
+import { updateSave } from '@/features/save/services/update-save-service';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import AmountInput from '@/components/ui/Inputs/AmountInput';
-import DateInputNew from '@/components/ui/Inputs/DateInputNew';
 
 type Props = {
     closeForm: any;

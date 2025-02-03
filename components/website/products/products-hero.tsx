@@ -12,8 +12,8 @@ const ProductsHero = () => {
                 Our innovative product helps you track, manage, and grow your wealth effortlessly. Take control of your financial future today.
             </motion.p>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.2, delay: 0.6 }}>
-                <Button size='lg' className='px-6 py-3 text-lg font-medium'>
-                    Shop Now
+                <Button size='lg' className='text-md rounded-full'>
+                    Discover Now
                 </Button>
             </motion.div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5, delay: 0.9 }} className='mt-12'>

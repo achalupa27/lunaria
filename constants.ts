@@ -22,10 +22,10 @@ export const LINKEDIN_LINK = '';
 export const DISCORD_LINK = '';
 
 export const productPages = [
-    { page: 'Dashboard', link: '/products' },
-    { page: 'Make', link: '/products' },
-    { page: 'Save', link: '/products' },
-    { page: 'Spend', link: '/products' },
+    { page: 'Dashboard', link: '/products#dashboard' },
+    { page: 'Make', link: '/products#make' },
+    { page: 'Save', link: '/products#save' },
+    { page: 'Spend', link: '/products#spend' },
 ];
 
 export const companyPages = [

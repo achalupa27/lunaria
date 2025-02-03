@@ -1,13 +1,12 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setMaking } from '@/redux/slices/makeSlice';
 import { setSaving } from '@/redux/slices/saveSlice';
-import { setSpending } from '@/redux/slices/spendSlice';
 import { useEffect } from 'react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useSession } from 'next-auth/react';
-import { readSpending } from '@/features/spend/services/readSpends';
-import { readSaving } from '@/features/save/services/readSaves';
-import { readMaking } from '@/features/make/services/read-makes-service';
+import { readSpendsService } from '@/features/spend/services/read-spends-service';
+import { readSavesService } from '@/features/save/services/read-saves-service';
+import { readMakesService } from '@/features/make/services/read-makes-service';
 import Loader from '@/components/ui/loader';
 import { selectUser, setUser } from '@/redux/slices/userSlice';
 import Sidebar from '@/components/application/sidebar';
@@ -23,9 +22,9 @@ const App = () => {
         const email = session?.user?.email;
 
         if (email) {
-            readSpending(email, supabaseClient, dispatch, setSpending);
-            readSaving(email, supabaseClient, dispatch, setSaving);
-            readMaking(email, supabaseClient, dispatch, setMaking);
+            readSpendsService(email, supabaseClient);
+            readSavesService(email, supabaseClient);
+            readMakesService(email, supabaseClient);
         }
 
         if (session) {

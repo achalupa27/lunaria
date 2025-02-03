@@ -3,26 +3,52 @@ import { currencyCategories, necessityCategories, spendingCategories } from '@/c
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addSpending, selectSpending, setSpending, updateSpendingState } from '@/redux/slices/spendSlice';
 import Modal from '@/components/ui/modal';
-import CancelButton from '@/components/ui/buttons/CancelButton';
-import DateInput from '@/components/ui/Inputs/DateInput';
-import TextInput from '@/components/ui/Inputs/TextInput';
-import NumberInput from '@/components/ui/Inputs/NumberInput';
-import SelectInput from '@/components/ui/Inputs/SelectInput';
-import { createSpend } from '@/features/spend/services/createSpend';
+import { createSpend } from '@/features/spend/services/create-spend-service';
 import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { deleteSpend } from '@/features/spend/services/deleteSpend';
-import { updateSpend } from '@/features/spend/services/updateSpend';
-import DeleteButton from '@/components/ui/buttons/DeleteButton';
-import SaveButton from '@/components/ui/buttons/SaveButton';
-import { useEffect } from 'react';
+import { deleteSpend } from '@/features/spend/services/delete-spend-service';
+import { updateSpend } from '@/features/spend/services/update-spend-service';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { z } from 'zod';
+
+import { cn } from '@/lib/utils';
+import { Calendar } from '@/components/ui/calendar';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { toast } from '@/hooks/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 
 type Props = {
     closeForm: any;
     selectedSpend?: Spend;
 };
+
+const FormSchema = z.object({
+    store: z.string({
+        required_error: 'A store is required.',
+    }),
+    item: z.string({
+        required_error: 'An item is required.',
+    }),
+    cost: z.number({
+        required_error: 'A cost is required.',
+    }),
+    category: z.string({
+        required_error: 'A category is required.',
+    }),
+    necessity: z.string({
+        required_error: 'A necessity is required.',
+    }),
+    date: z.date({
+        required_error: 'A date is required.',
+    }),
+});
 
 const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     const user = useAppSelector(selectUser);
@@ -30,13 +56,40 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     const spends = useAppSelector(selectSpending);
     const dispatch = useAppDispatch();
 
-    const { register, handleSubmit, setValue } = useForm({ defaultValues: selectedSpend });
+    const addSpend = async (spend: Spend) => {
+        let createdSpend = await createSpend(spend, supabaseClient);
+        dispatch(addSpending(createdSpend));
+        closeForm();
+    };
 
-    const onSubmit: SubmitHandler<any> = (spend: Spend) => {
+    const editSpend = async (updatedSpend: Spend) => {
+        updateSpend(updatedSpend, supabaseClient);
+        updateSpendingState(updatedSpend);
+        closeForm();
+    };
+
+    const removeSpend = async (idToDelete: string) => {
+        deleteSpend(idToDelete, supabaseClient);
+        const newSpends = spends.filter((spend) => spend.id !== idToDelete);
+        dispatch(setSpending(newSpends));
+        closeForm();
+    };
+
+    const handleDelete = () => {
+        selectedSpend && removeSpend(selectedSpend.id);
+    };
+
+    const form = useForm({
+        defaultValues: selectedSpend,
+        resolver: zodResolver(FormSchema),
+    });
+
+    const onSubmit = (data: z.infer<typeof FormSchema>) => {
+        console.log('data: ', data);
         if (user) {
             if (selectedSpend) {
                 let spendToEdit: Spend = {
-                    ...spend,
+                    ...data,
                     user_email: user!.email,
                     id: selectedSpend.id,
                 };
@@ -44,7 +97,7 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                 editSpend(spendToEdit);
             } else {
                 let spendToAdd: Spend = {
-                    ...spend,
+                    ...data,
                     user_email: user!.email,
                 };
 
@@ -53,69 +106,131 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
         } else {
             console.error('[ERROR] Could not add spend. [REASON] No user.');
         }
+        toast({
+            title: 'You submitted the following values:',
+            description: (
+                <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+                    <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+                </pre>
+            ),
+        });
     };
-
-    const addSpend = async (spend: Spend) => {
-        // Add to database
-        let createdSpend = await createSpend(spend, supabaseClient);
-
-        // Add to state
-        dispatch(addSpending(createdSpend));
-
-        closeForm();
-    };
-
-    const editSpend = async (updatedSpend: Spend) => {
-        // Update database
-        updateSpend(updatedSpend, supabaseClient);
-
-        // Update state
-        updateSpendingState(updatedSpend);
-
-        closeForm();
-    };
-
-    const removeSpend = async (idToDelete: string) => {
-        // Delete from database
-        deleteSpend(idToDelete, supabaseClient);
-
-        // Delete from state
-        const newSpends = spends.filter((spend) => spend.id !== idToDelete);
-        dispatch(setSpending(newSpends));
-
-        closeForm();
-    };
-
-    const handleDelete = () => {
-        selectedSpend && removeSpend(selectedSpend.id);
-    };
-
     return (
         <Modal title={selectedSpend ? 'Edit Spending' : 'New Spending'} closeModal={closeForm} headerStyle={'text-black'}>
-            <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
-                <DateInput register={register} label={'Date'} registerValue={'date'} isRequired={true} today={true} />
-                <TextInput register={register} label={'Item'} registerValue={'item'} isRequired={true} />
-                <div className='flex space-x-2'>
-                    <NumberInput register={register} label={'Cost'} registerValue={'cost'} isRequired={true} />
-                    <SelectInput register={register} label={'Currency'} registerValue={'currency'} categories={currencyCategories} isRequired={true} width={'w-32'} />
-                </div>
-                <TextInput register={register} label={'Store'} registerValue={'store'} isRequired={true} />
-                <SelectInput register={register} label={'Category'} registerValue={'category'} categories={spendingCategories} isRequired={true} />
-                <SelectInput register={register} label={'Necessity'} registerValue={'necessity'} categories={necessityCategories} isRequired={true} />
-                <div className={`flex pt-4 ${selectedSpend ? 'justify-between' : 'justify-end'}`}>
-                    {selectedSpend && (
-                        <Button onClick={handleDelete} variant='destructive' size='icon'>
-                            <Trash />
-                        </Button>
-                    )}
-                    <div className='flex space-x-3'>
-                        <Button variant='secondary' onClick={closeForm}>
-                            Cancel
-                        </Button>
-                        <Button onClick={closeForm}>Save</Button>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+                    <FormField
+                        control={form.control}
+                        name='store'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Store</FormLabel>
+                                <Input placeholder='Store' />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='item'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Item</FormLabel>
+                                <Input placeholder='Item' />
+
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='cost'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Cost</FormLabel>
+                                <Input value={field.value} placeholder='Cost' />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='category'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Category</FormLabel>
+                                <Select value={field.value}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder='Category' />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {spendingCategories.map((category) => (
+                                            <SelectItem value={category}>{category}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='necessity'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Necessity</FormLabel>
+                                <Select value={field.value}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder='Necessity' />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {necessityCategories.map((necessity) => (
+                                            <SelectItem value={necessity}>{necessity}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name='date'
+                        render={({ field }) => (
+                            <FormItem className='flex flex-col'>
+                                <FormLabel>Date</FormLabel>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button variant={'outline'} className={cn('pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}>
+                                                {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                                                <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className='w-auto p-0' align='start'>
+                                        <Calendar mode='single' selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date('1900-01-01')} initialFocus />
+                                    </PopoverContent>
+                                </Popover>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <div className={`flex pt-4 ${selectedSpend ? 'justify-between' : 'justify-end'}`}>
+                        {selectedSpend && (
+                            <Button onClick={handleDelete} variant='destructive' size='icon'>
+                                <Trash />
+                            </Button>
+                        )}
+                        <div className='flex space-x-3'>
+                            <Button variant='secondary' onClick={closeForm}>
+                                Cancel
+                            </Button>
+                            <Button type='submit'>Save</Button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </Form>
         </Modal>
     );
 };
