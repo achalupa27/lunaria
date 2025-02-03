@@ -1,9 +1,8 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { currencyCategories, necessityCategories, spendingCategories } from '@/constants';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
 import { selectUser } from '@/redux/slices/userSlice';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 
@@ -14,13 +13,12 @@ import { z } from 'zod';
 
 import { cn } from '@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { useSpendMutations } from '../hooks/use-spend-mutations';
-import useFetchSpends from '../hooks/use-fetch-spends';
 
 type Props = {
     closeForm: any;
@@ -34,9 +32,7 @@ const FormSchema = z.object({
     item: z.string({
         required_error: 'An item is required.',
     }),
-    cost: z.number({
-        required_error: 'A cost is required.',
-    }),
+    cost: z.coerce.number().min(0.01, 'Cost must be greater than 0'),
     category: z.string({
         required_error: 'A category is required.',
     }),
@@ -50,28 +46,10 @@ const FormSchema = z.object({
 
 const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     const user = useAppSelector(selectUser);
-    const supabaseClient = useSupabaseClient();
-    const dispatch = useAppDispatch();
-
     const { createSpendMutation, updateSpendMutation, deleteSpendMutation } = useSpendMutations();
 
-    const addSpend = async (spend: Omit<Spend, 'id'>) => {
-        createSpendMutation.mutate(spend);
-        closeForm();
-    };
-
-    const editSpend = async (updatedSpend: Spend) => {
-        updateSpendMutation(updatedSpend);
-        closeForm();
-    };
-
-    const removeSpend = async (idToDelete: string) => {
-        deleteSpendMutation(idToDelete);
-        closeForm();
-    };
-
     const handleDelete = () => {
-        selectedSpend && removeSpend(selectedSpend.id);
+        selectedSpend && deleteSpendMutation.mutate(selectedSpend.id);
     };
 
     const form = useForm({
@@ -79,28 +57,29 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
         resolver: zodResolver(FormSchema),
     });
 
-    const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
         console.log('data: ', data);
         if (user) {
             if (selectedSpend) {
-                let spendToEdit: Spend = {
+                const updatedSpend: Spend = {
                     ...data,
                     user_email: user!.email,
                     id: selectedSpend.id,
                 };
 
-                editSpend(spendToEdit);
+                updateSpendMutation.mutate(updatedSpend);
             } else {
-                let spendToAdd: Spend = {
+                const newSpend: Omit<Spend, 'id'> = {
                     ...data,
                     user_email: user!.email,
                 };
 
-                addSpend(spendToAdd);
+                createSpendMutation.mutate(newSpend);
             }
         } else {
             console.error('[ERROR] Could not add spend. [REASON] No user.');
         }
+        closeForm();
         toast({
             title: 'You submitted the following values:',
             description: (
@@ -110,6 +89,7 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
             ),
         });
     };
+
     return (
         <Modal title={selectedSpend ? 'Edit Spending' : 'New Spending'} closeModal={closeForm} headerStyle={'text-black'}>
             <Form {...form}>
@@ -120,7 +100,7 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                         render={({ field }) => (
                             <FormItem className='flex flex-col'>
                                 <FormLabel>Store</FormLabel>
-                                <Input placeholder='Store' />
+                                <Input {...field} placeholder='Store' />
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -131,8 +111,7 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                         render={({ field }) => (
                             <FormItem className='flex flex-col'>
                                 <FormLabel>Item</FormLabel>
-                                <Input placeholder='Item' />
-
+                                <Input {...field} placeholder='Item' />
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -143,7 +122,7 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                         render={({ field }) => (
                             <FormItem className='flex flex-col'>
                                 <FormLabel>Cost</FormLabel>
-                                <Input value={field.value} placeholder='Cost' />
+                                <Input type='number' {...field} placeholder='Cost' onChange={(e) => field.onChange(e.target.valueAsNumber)} />
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -154,13 +133,15 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                         render={({ field }) => (
                             <FormItem className='flex flex-col'>
                                 <FormLabel>Category</FormLabel>
-                                <Select value={field.value}>
+                                <Select value={field.value} onValueChange={field.onChange}>
                                     <SelectTrigger>
                                         <SelectValue placeholder='Category' />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {spendingCategories.map((category) => (
-                                            <SelectItem value={category}>{category}</SelectItem>
+                                            <SelectItem key={category} value={category}>
+                                                {category}
+                                            </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
@@ -174,13 +155,15 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                         render={({ field }) => (
                             <FormItem className='flex flex-col'>
                                 <FormLabel>Necessity</FormLabel>
-                                <Select value={field.value}>
+                                <Select value={field.value} onValueChange={field.onChange}>
                                     <SelectTrigger>
                                         <SelectValue placeholder='Necessity' />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {necessityCategories.map((necessity) => (
-                                            <SelectItem value={necessity}>{necessity}</SelectItem>
+                                            <SelectItem key={necessity} value={necessity}>
+                                                {necessity}
+                                            </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>

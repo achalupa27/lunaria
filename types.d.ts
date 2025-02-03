@@ -8,7 +8,7 @@ type Make = {
 };
 
 type Save = {
-    id: number;
+    id: string;
     user_email: string;
     date: string;
     type: 'Withdrawal' | 'Deposit';

@@ -11,7 +11,7 @@ export const useSpendMutations = () => {
     const createSpendMutation = useMutation({
         mutationFn: (newSpend: Omit<Spend, 'id'>) => createSpendService(newSpend, supabaseClient),
         onSuccess: (newSpend: Spend) => {
-            queryClient.setQueryData(['saves'], (oldSpends: Spend[] = []) => [...oldSpends, newSpend]);
+            queryClient.setQueryData(['spends'], (oldSpends: Spend[] = []) => [...oldSpends, newSpend]);
         },
         onError: (error) => {
             console.error('Failed to create spend:', error);
@@ -23,7 +23,7 @@ export const useSpendMutations = () => {
             return updateSpendService(updatedSpend, supabaseClient);
         },
         onSuccess: (updatedSpend: Spend) => {
-            queryClient.setQueryData(['saves'], (oldSpends: Spend[] = []) => oldSpends.map((spend) => (spend.id === updatedSpend.id ? updatedSpend : spend)));
+            queryClient.setQueryData(['spends'], (oldSpends: Spend[] = []) => oldSpends.map((spend) => (spend.id === updatedSpend.id ? updatedSpend : spend)));
         },
         onError: (error: any) => {
             console.error('Failed to update spend:', error);
@@ -31,9 +31,9 @@ export const useSpendMutations = () => {
     });
 
     const deleteSpendMutation = useMutation({
-        mutationFn: (saveId: number) => deleteSpendService(saveId, supabaseClient),
-        onSuccess: (_, deletedSpendId: number) => {
-            queryClient.setQueryData(['saves'], (oldSpends: Spend[] = []) => oldSpends.filter((spend) => spend.id !== deletedSpendId));
+        mutationFn: (saveId: string) => deleteSpendService(saveId, supabaseClient),
+        onSuccess: (_, deletedSpendId: string) => {
+            queryClient.setQueryData(['spends'], (oldSpends: Spend[] = []) => oldSpends.filter((spend) => spend.id !== deletedSpendId));
         },
         onError: (error) => {
             console.error('Failed to delete spend:', error);

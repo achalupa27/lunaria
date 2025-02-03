@@ -11,7 +11,7 @@ export const useMakeMutations = () => {
     const createMakeMutation = useMutation({
         mutationFn: (newMake: Omit<Make, 'id'>) => createMakeService(newMake, supabaseClient),
         onSuccess: (newMake: Make) => {
-            queryClient.setQueryData(['saves'], (oldMakes: Make[] = []) => [...oldMakes, newMake]);
+            queryClient.setQueryData(['makes'], (oldMakes: Make[] = []) => [...oldMakes, newMake]);
         },
         onError: (error) => {
             console.error('Failed to create make:', error);
@@ -23,7 +23,7 @@ export const useMakeMutations = () => {
             return updateMakeService(updatedMake, supabaseClient);
         },
         onSuccess: (updatedMake: Make) => {
-            queryClient.setQueryData(['saves'], (oldMakes: Make[] = []) => oldMakes.map((make) => (make.id === updatedMake.id ? updatedMake : make)));
+            queryClient.setQueryData(['makes'], (oldMakes: Make[] = []) => oldMakes.map((make) => (make.id === updatedMake.id ? updatedMake : make)));
         },
         onError: (error: any) => {
             console.error('Failed to update make:', error);
@@ -31,9 +31,9 @@ export const useMakeMutations = () => {
     });
 
     const deleteMakeMutation = useMutation({
-        mutationFn: (saveId: number) => deleteMakeService(saveId, supabaseClient),
-        onSuccess: (_, deletedMakeId: number) => {
-            queryClient.setQueryData(['saves'], (oldMakes: Make[] = []) => oldMakes.filter((make) => make.id !== deletedMakeId));
+        mutationFn: (saveId: string) => deleteMakeService(saveId, supabaseClient),
+        onSuccess: (_, deletedMakeId: string) => {
+            queryClient.setQueryData(['makes'], (oldMakes: Make[] = []) => oldMakes.filter((make) => make.id !== deletedMakeId));
         },
         onError: (error) => {
             console.error('Failed to delete make:', error);

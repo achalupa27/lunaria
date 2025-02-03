@@ -31,8 +31,8 @@ export const useSaveMutations = () => {
     });
 
     const deleteSaveMutation = useMutation({
-        mutationFn: (saveId: number) => deleteSaveService(saveId, supabaseClient),
-        onSuccess: (_, deletedSaveId: number) => {
+        mutationFn: (saveId: string) => deleteSaveService(saveId, supabaseClient),
+        onSuccess: (_, deletedSaveId: string) => {
             queryClient.setQueryData(['saves'], (oldSaves: Save[] = []) => oldSaves.filter((save) => save.id !== deletedSaveId));
         },
         onError: (error) => {

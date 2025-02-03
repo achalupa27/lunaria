@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '@/redux/hooks';
-import { selectSpending } from '@/redux/slices/spendSlice';
 import { useSpendColumns } from '@/hooks/useSpendColumns';
 import { formatCurrency, initializeTable } from '@/utils/helper';
 import SpendForm from './components/spend-form';
@@ -29,7 +27,6 @@ const Spend = () => {
     const [totalSpent, setTotalSpent] = useState<number>(0);
 
     const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
-    const [chartData, setChartData] = useState<SpendDataPoint>();
 
     const table = initializeTable(spends, spendColumns);
 
@@ -88,12 +85,6 @@ const Spend = () => {
 
             return acc;
         }, {} as { [key: string]: number });
-
-        // Convert the grouped data into an array of objects for the LineChart component
-        const groupedChartData: SpendDataPoint = Object.entries(groupedSpendsByDay).map(([date, spent]) => ({ date, spent }));
-
-        // Update state variable to trigger re-render with new chart data
-        setChartData(groupedChartData);
     }, [spends]);
 
     const handleViewSpend = (row: any) => {
@@ -176,7 +167,7 @@ const Spend = () => {
                         </div>
                     </div>
                     {/* <div>Recent Transactions</div> */}
-                    <Table table={table} tableColor='yellow' handleRowClick={handleViewSpend} />
+                    <Table table={table} handleRowClick={handleViewSpend} />
                 </div>
             </div>
             {spendFormOpen && <SpendForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
