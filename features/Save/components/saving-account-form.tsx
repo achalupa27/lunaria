@@ -1,27 +1,18 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppSelector } from '@/redux/hooks';
-import Modal from '@/components/ui/modal';
-import { savingAccounts } from '@/constants';
-import { selectUser } from '@/redux/slices/userSlice';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
-import { useSaveMutations } from '../hooks/use-save-mutations';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
 import { z } from 'zod';
 
-import { cn } from '@/lib/utils';
-import { Calendar } from '@/components/ui/calendar';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useSavingsAccountMutations } from '../hooks/use-savings-account-mutations';
+import { useAppSelector } from '@/redux/hooks';
+import { selectUser } from '@/redux/slices/userSlice';
 
 type Props = {
     closeForm: any;
-    selectedSave?: Save;
+    selectedSavingsAccount?: Save;
 };
 
 const FormSchema = z.object({
@@ -31,7 +22,10 @@ const FormSchema = z.object({
     balance: z.coerce.number(),
 });
 
-const SavingAccountForm = ({ closeForm }: Props) => {
+const SavingAccountForm = ({ closeForm, selectedSavingsAccount }: Props) => {
+    const user = useAppSelector(selectUser);
+    const { createSavingsAccountMutation, updateSavingsAccountMutation, deleteSavingsAccountMutation } = useSavingsAccountMutations();
+
     const form = useForm({
         defaultValues: {},
         resolver: zodResolver(FormSchema),
@@ -39,11 +33,33 @@ const SavingAccountForm = ({ closeForm }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
         console.log('save: ', data);
+        if (user) {
+            if (selectedSavingsAccount) {
+                const updatedSavingsAccount: SavingsAccount = {
+                    ...data,
+                    user_email: user!.email,
+                    id: selectedSavingsAccount.id,
+                };
 
+                updateSavingsAccountMutation.mutate(updatedSavingsAccount);
+            } else {
+                const newSavingsAccount: Omit<SavingsAccount, 'id'> = {
+                    ...data,
+                    user_email: user!.email,
+                };
+
+                createSavingsAccountMutation.mutate(newSavingsAccount);
+            }
+        } else {
+            console.error('[ERROR] Could not add savings account. [REASON] No user.');
+        }
         closeForm();
     };
 
-    const [type, setType] = useState<'Deposit' | 'Withdrawal'>('Deposit');
+    const handleDelete = () => {
+        selectedSavingsAccount && deleteSavingsAccountMutation.mutate(selectedSavingsAccount.id);
+        closeForm();
+    };
 
     return (
         <Form {...form}>

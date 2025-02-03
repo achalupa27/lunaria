@@ -9,18 +9,6 @@ type Props = {
     selectedSave?: Save;
 };
 
-type DebtAccount = {
-    id: string;
-    name: string;
-    balance: number;
-};
-
-type SavingAccount = {
-    id: string;
-    name: string;
-    balance: number;
-};
-
 const debtAccounts: DebtAccount[] = [
     { id: '1', name: 'Credit Card 1', balance: -1200.5 },
     { id: '2', name: 'Credit Card 2', balance: -500.75 },
@@ -32,7 +20,7 @@ const debtAccounts: DebtAccount[] = [
     { id: '8', name: 'Business Loan', balance: -8000.0 },
 ];
 
-const savingsAccounts: SavingAccount[] = [
+const savingsAccounts: SavingsAccount[] = [
     { id: '1', name: 'Primary Savings', balance: 1500.75 },
     { id: '2', name: 'Emergency Fund', balance: 5000.0 },
     { id: '3', name: 'Vacation Fund', balance: 2500.5 },

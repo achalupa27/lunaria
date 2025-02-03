@@ -17,6 +17,20 @@ type Save = {
     account: string;
 };
 
+type DebtAccount = {
+    id: string;
+    user_email: string;
+    name: string;
+    balance: number;
+};
+
+type SavingsAccount = {
+    id: string;
+    user_email: string;
+    name: string;
+    balance: number;
+};
+
 type Spend = {
     id: string;
     user_email: string;
