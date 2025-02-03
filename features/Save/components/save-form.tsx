@@ -1,19 +1,15 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { addSaving, selectSaving, setSaving, updateSavingState } from '@/redux/slices/saveSlice';
+import { useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
 import DateInput from '@/components/ui/Inputs/DateInput';
 import SelectInput from '@/components/ui/Inputs/SelectInput';
 import { savingAccounts } from '@/constants';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { selectUser } from '@/redux/slices/userSlice';
-import { createSave } from '@/features/save/services/create-save-service';
-import { deleteSave } from '@/features/save/services/delete-save-service';
 import { useState } from 'react';
-import { updateSave } from '@/features/save/services/update-save-service';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import AmountInput from '@/components/ui/Inputs/AmountInput';
+import { useSaveMutations } from '../hooks/use-save-mutations';
 
 type Props = {
     closeForm: any;
@@ -22,11 +18,8 @@ type Props = {
 
 const SaveForm = ({ closeForm, selectedSave }: Props) => {
     const user = useAppSelector(selectUser);
-    const supabaseClient = useSupabaseClient();
-    const saves = useAppSelector(selectSaving);
-    const dispatch = useAppDispatch();
-
-    const { register, handleSubmit, setValue } = useForm({ defaultValues: selectedSave });
+    const { register, handleSubmit } = useForm({ defaultValues: selectedSave });
+    const { createSaveMutation, updateSaveMutation, deleteSaveMutation } = useSaveMutations();
 
     const onSubmit: SubmitHandler<any> = (save: any) => {
         if (user) {
@@ -51,40 +44,21 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
         }
     };
 
-    const addSave = async (save: Save) => {
-        // Add to database
-        let createdSave = await createSave(save, supabaseClient);
-
-        // Add to state
-        dispatch(addSaving(createdSave));
-
+    const addSave = async (save: Omit<Save, 'id'>) => {
+        createSaveMutation.mutate(save);
         closeForm();
     };
 
     const editSave = async (updatedSave: Save) => {
-        // Update database
-        updateSave(updatedSave, supabaseClient);
-
-        // Update state
-        updateSavingState(updatedSave);
-
-        closeForm();
-    };
-
-    const removeSave = async (idToDelete: string) => {
-        // Delete spend from database
-        deleteSave(idToDelete, supabaseClient);
-
-        // Delete from store
-        const newSaves = saves.filter((save) => save.id !== idToDelete);
-        dispatch(setSaving(newSaves));
-
+        updateSaveMutation.mutate(updatedSave);
         closeForm();
     };
 
     const handleDelete = () => {
-        selectedSave && removeSave(selectedSave.id);
+        selectedSave && deleteSaveMutation.mutate(selectedSave.id);
+        closeForm();
     };
+
     const [term, setTerm] = useState<'Deposit' | 'Withdrawal'>('Deposit');
 
     return (

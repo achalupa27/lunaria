@@ -1,13 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { currencyCategories, necessityCategories, spendingCategories } from '@/constants';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { addSpending, selectSpending, setSpending, updateSpendingState } from '@/redux/slices/spendSlice';
 import Modal from '@/components/ui/modal';
-import { createSpend } from '@/features/spend/services/create-spend-service';
 import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { deleteSpend } from '@/features/spend/services/delete-spend-service';
-import { updateSpend } from '@/features/spend/services/update-spend-service';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 
@@ -23,6 +19,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { toast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { useSpendMutations } from '../hooks/use-spend-mutations';
+import useFetchSpends from '../hooks/use-fetch-spends';
 
 type Props = {
     closeForm: any;
@@ -53,25 +51,22 @@ const FormSchema = z.object({
 const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
-    const spends = useAppSelector(selectSpending);
     const dispatch = useAppDispatch();
 
-    const addSpend = async (spend: Spend) => {
-        let createdSpend = await createSpend(spend, supabaseClient);
-        dispatch(addSpending(createdSpend));
+    const { createSpendMutation, updateSpendMutation, deleteSpendMutation } = useSpendMutations();
+
+    const addSpend = async (spend: Omit<Spend, 'id'>) => {
+        createSpendMutation.mutate(spend);
         closeForm();
     };
 
     const editSpend = async (updatedSpend: Spend) => {
-        updateSpend(updatedSpend, supabaseClient);
-        updateSpendingState(updatedSpend);
+        updateSpendMutation(updatedSpend);
         closeForm();
     };
 
     const removeSpend = async (idToDelete: string) => {
-        deleteSpend(idToDelete, supabaseClient);
-        const newSpends = spends.filter((spend) => spend.id !== idToDelete);
-        dispatch(setSpending(newSpends));
+        deleteSpendMutation(idToDelete);
         closeForm();
     };
 

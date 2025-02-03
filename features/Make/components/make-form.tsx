@@ -1,20 +1,16 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { addMaking, selectMaking, setMaking, updateMakingState } from '@/redux/slices/makeSlice';
 import Modal from '@/components/ui/modal';
 import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import DateInput from '@/components/ui/Inputs/DateInput';
-import NumberInput from '@/components/ui/Inputs/NumberInput';
 import SelectInput from '@/components/ui/Inputs/SelectInput';
 import { currencyCategories, incomeSources } from '@/constants';
 import { useEffect, useState } from 'react';
-import { createMake } from '@/features/make/services/create-make-service';
-import { updateMake } from '@/features/make/services/update-make-service';
-import { deleteMake } from '@/features/make/services/delete-make-service';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import AmountInput from '@/components/ui/Inputs/AmountInput';
+import { useMakeMutations } from '../hooks/use-make-mutations';
+import { useAppSelector } from '@/redux/hooks';
 
 type Props = {
     closeForm: any;
@@ -24,40 +20,27 @@ type Props = {
 const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
-    const makes = useAppSelector(selectMaking);
-    const dispatch = useAppDispatch();
+    const { register, handleSubmit } = useForm({ defaultValues: selectedMake });
 
-    const { register, handleSubmit, setValue } = useForm();
-
-    useEffect(() => {
-        if (selectedMake) {
-            setValue('date', selectedMake.date);
-            setValue('amount', selectedMake.amount);
-            setValue('source', selectedMake.source);
-        } else {
-            setValue('date', undefined);
-            setValue('amount', undefined);
-            setValue('source', undefined);
-        }
-    }, [selectedMake, setValue]);
+    const { createMakeMutation, updateMakeMutation, deleteMakeMutation } = useMakeMutations();
 
     const onSubmit: SubmitHandler<any> = (make: any) => {
         if (user) {
             if (selectedMake) {
-                let makeToEdit: Make = {
+                let updatedMake: Make = {
                     ...make,
                     user_email: user!.email,
                     id: selectedMake.id,
                 };
 
-                editMake(makeToEdit);
+                updateMakeMutation.mutate(updatedMake);
             } else {
-                let makeToAdd: Make = {
+                let newMake: Make = {
                     ...make,
                     user_email: user!.email,
                 };
 
-                addMake(makeToAdd);
+                createMakeMutation.mutate(newMake);
             }
         } else {
             console.error('[ERROR] Could not add make. [REASON] No user.');
@@ -65,39 +48,9 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
         closeForm();
     };
 
-    const addMake = async (make: Make) => {
-        // Add to database
-        let createdMake = await createMake(make, supabaseClient);
-
-        // Add to state
-        dispatch(addMaking(createdMake));
-
+    const handleDeleteMake = () => {
+        selectedMake && deleteMakeMutation.mutate(selectedMake.id, supabaseClient);
         closeForm();
-    };
-
-    const editMake = async (updatedMake: Make) => {
-        // Update database
-        updateMake(updatedMake, supabaseClient);
-
-        // Update state
-        updateMakingState(updatedMake);
-
-        closeForm();
-    };
-
-    const removeMake = async (idToDelete: string) => {
-        // Delete from database
-        deleteMake(idToDelete, supabaseClient);
-
-        // Delete from state
-        const newMakes = makes.filter((make) => make.id !== idToDelete);
-        dispatch(setMaking(newMakes));
-
-        closeForm();
-    };
-
-    const handleDelete = () => {
-        selectedMake && removeMake(selectedMake.id);
     };
 
     const [term, setTerm] = useState<'Deposit' | 'Withdrawal'>('Deposit');
@@ -124,7 +77,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
 
                 <div className={`flex pt-4 ${selectedMake ? 'justify-between' : 'justify-end'}`}>
                     {selectedMake && (
-                        <Button onClick={handleDelete} variant='destructive' size='icon'>
+                        <Button onClick={handleDeleteMake} variant='destructive' size='icon'>
                             <Trash />
                         </Button>
                     )}

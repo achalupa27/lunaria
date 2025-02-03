@@ -1,15 +1,8 @@
 import Card from '@/components/ui/card';
 import Page from '@/components/ui/page';
-import { useAppSelector } from '@/redux/hooks';
-import { selectMaking } from '@/redux/slices/makeSlice';
-import { selectSpending } from '@/redux/slices/spendSlice';
 import { ChevronDown } from 'lucide-react';
 
 const Home = () => {
-    const makes = useAppSelector(selectMaking);
-    const saves = useAppSelector(selectMaking);
-    const spends = useAppSelector(selectSpending);
-
     return (
         <Page>
             <div className='flex items-center justify-between'>

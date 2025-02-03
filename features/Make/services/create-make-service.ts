@@ -1,4 +1,4 @@
-export const createMake = async (make: Make, supabaseClient: any) => {
+export const createMakeService = async (make: Omit<Make, 'id'>, supabaseClient: any) => {
     const { data: insertedMake, error } = await supabaseClient
         .from('making')
         .insert({ ...make })

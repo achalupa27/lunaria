@@ -1,4 +1,4 @@
-export const createSpend = async (spend: Spend, supabaseClient: any) => {
+export const createSpendService = async (spend: Omit<Spend, 'id'>, supabaseClient: any) => {
     const { data: insertedSpend, error } = await supabaseClient
         .from('spending')
         .insert({ ...spend })

@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { addMaking, selectMaking, setMaking, updateMakingState } from '@/redux/slices/makeSlice';
 import Modal from '@/components/ui/modal';
 import { selectUser } from '@/redux/slices/userSlice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
@@ -11,7 +10,6 @@ type Props = {
 const SettingsForm = ({ closeForm }: Props) => {
     const user = useAppSelector(selectUser);
     const supabaseClient = useSupabaseClient();
-    const makes = useAppSelector(selectMaking);
     const dispatch = useAppDispatch();
 
     const { register, handleSubmit, setValue } = useForm();
