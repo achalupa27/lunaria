@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@/components/ui/modal';
-import { selectUser } from '@/redux/slices/userSlice';
+import { selectUser } from '@/redux/slices/user-slice';
 import { currencyCategories, incomeSources } from '@/constants';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';

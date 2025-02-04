@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useSession } from 'next-auth/react';
 import Loader from '@/components/ui/loader';
-import { selectUser, setUser } from '@/redux/slices/userSlice';
+import { selectUser, setUser } from '@/redux/slices/user-slice';
 import Sidebar from '@/components/application/sidebar';
 import Activity from '@/components/application/activity';
 

@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppSelector } from '@/redux/hooks';
-import { selectUser } from '@/redux/slices/userSlice';
+import { selectUser } from '@/redux/slices/user-slice';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';

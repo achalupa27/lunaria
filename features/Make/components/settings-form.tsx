@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
-import { selectUser } from '@/redux/slices/userSlice';
+import { selectUser } from '@/redux/slices/user-slice';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 type Props = {
     closeForm: any;

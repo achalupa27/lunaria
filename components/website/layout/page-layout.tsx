@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Header from './header';
-import Footer from './footer/footer';
+import Footer from './footer';
 import { Toaster } from '../../ui/toaster';
 
 function Layout({ children }: any) {

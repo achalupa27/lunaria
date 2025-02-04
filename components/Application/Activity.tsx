@@ -3,7 +3,7 @@ import Make from '../../features/make';
 import Save from '../../features/save';
 import Spend from '../../features/spend';
 import { useAppSelector } from '@/redux/hooks';
-import { selectTab } from '@/redux/slices/tabSlice';
+import { selectTab } from '@/redux/slices/tab-slice';
 import Settings from './settings';
 import { Suspense } from 'react';
 import Loader from '../ui/loader';

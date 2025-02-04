@@ -8,7 +8,7 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/
 import { Input } from '@/components/ui/input';
 import { useSavingsAccountMutations } from '../hooks/use-savings-account-mutations';
 import { useAppSelector } from '@/redux/hooks';
-import { selectUser } from '@/redux/slices/userSlice';
+import { selectUser } from '@/redux/slices/user-slice';
 
 type Props = {
     closeForm: any;

@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { selectTab, setTab } from '@/redux/slices/tabSlice';
+import { selectTab, setTab } from '@/redux/slices/tab-slice';
 import MakeIcon from '../icons/make-icon';
 import SaveIcon from '../icons/save-icon';
 import SpendIcon from '../icons/spend-icon';

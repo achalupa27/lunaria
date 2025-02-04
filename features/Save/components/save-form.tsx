@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
 import { savingAccounts } from '@/constants';
-import { selectUser } from '@/redux/slices/userSlice';
+import { selectUser } from '@/redux/slices/user-slice';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
