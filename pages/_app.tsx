@@ -11,7 +11,7 @@ import { store } from '@/redux/store';
 import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { useState } from 'react';
-import Layout from '@/components/page-layout';
+import Layout from '@/components/website/layout/page-layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const progress = new ProgressBar({

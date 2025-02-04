@@ -3,6 +3,6 @@ export const readSavingsAccountsService = async (email: any, supabaseClient: any
     if (error) {
         console.error('Error in readSavingsAccountsService: ', error);
     } else {
-        return saving as Save[];
+        return (saving as SavingsAccount[]) ?? [];
     }
 };

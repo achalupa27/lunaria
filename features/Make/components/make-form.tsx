@@ -49,7 +49,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
         if (user) {
             if (selectedMake) {
                 const updatedMake: Make = {
-                    ...make,
+                    ...data,
                     user_email: user!.email,
                     id: selectedMake.id,
                 };
@@ -57,7 +57,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
                 updateMakeMutation.mutate(updatedMake);
             } else {
                 const newMake: Omit<Make, 'id'> = {
-                    ...make,
+                    ...data,
                     user_email: user!.email,
                 };
 

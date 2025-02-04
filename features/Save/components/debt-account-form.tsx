@@ -1,45 +1,62 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppSelector } from '@/redux/hooks';
-import Modal from '@/components/ui/modal';
-import { savingAccounts } from '@/constants';
 import { selectUser } from '@/redux/slices/userSlice';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
-import { useSaveMutations } from '../hooks/use-save-mutations';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
 import { z } from 'zod';
-
-import { cn } from '@/lib/utils';
-import { Calendar } from '@/components/ui/calendar';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useDebtAccountMutations } from '../hooks/use-debt-account-mutations';
 
 type Props = {
     closeForm: any;
-    selectedSave?: Save;
+    selectedDebtAccount?: DebtAccount;
 };
 
 const FormSchema = z.object({
-    account: z.string({
-        required_error: 'An account is required.',
+    name: z.string({
+        required_error: 'An account name is required.',
     }),
     balance: z.coerce.number(),
 });
 
-const DebtAccountForm = ({ closeForm }: Props) => {
+const DebtAccountForm = ({ closeForm, selectedDebtAccount }: Props) => {
+    const user = useAppSelector(selectUser);
+    const { createDebtAccountMutation, updateDebtAccountMutation, deleteDebtAccountMutation } = useDebtAccountMutations();
+
     const form = useForm({
-        defaultValues: {},
+        defaultValues: selectedDebtAccount,
         resolver: zodResolver(FormSchema),
     });
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
-        console.log('save: ', data);
+        console.log('formData: ', data);
+        if (user) {
+            if (selectedDebtAccount) {
+                const updatedSavingsAccount: SavingsAccount = {
+                    ...data,
+                    user_email: user!.email,
+                    id: selectedDebtAccount.id,
+                };
 
+                updateDebtAccountMutation.mutate(updatedSavingsAccount);
+            } else {
+                const newSavingsAccount: Omit<DebtAccount, 'id'> = {
+                    ...data,
+                    user_email: user!.email,
+                };
+
+                createDebtAccountMutation.mutate(newSavingsAccount);
+            }
+        } else {
+            console.error('[ERROR] Could not add debt account. [REASON] No user.');
+        }
+        closeForm();
+    };
+
+    const handleDelete = () => {
+        selectedDebtAccount && deleteDebtAccountMutation.mutate(selectedDebtAccount.id);
         closeForm();
     };
 
@@ -48,7 +65,7 @@ const DebtAccountForm = ({ closeForm }: Props) => {
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
                 <FormField
                     control={form.control}
-                    name='account'
+                    name='name'
                     render={({ field }) => (
                         <FormItem className='flex flex-col'>
                             <FormLabel>Account Name</FormLabel>
@@ -68,9 +85,9 @@ const DebtAccountForm = ({ closeForm }: Props) => {
                         </FormItem>
                     )}
                 />
-                <div className={`flex pt-4 ${true ? 'justify-between' : 'justify-end'}`}>
-                    {true && (
-                        <Button type='button' onClick={() => {}} variant='destructive' size='icon'>
+                <div className={`flex pt-4 ${selectedDebtAccount ? 'justify-between' : 'justify-end'}`}>
+                    {selectedDebtAccount && (
+                        <Button type='button' onClick={handleDelete} variant='destructive' size='icon'>
                             <Trash />
                         </Button>
                     )}

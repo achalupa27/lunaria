@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSaveColumns } from '@/hooks/use-save-columns';
 import { formatCurrency } from '@/utils/helper';
 import SaveForm from './components/save-form';
@@ -10,9 +10,26 @@ import { ChevronDown, Settings } from 'lucide-react';
 import useFetchSaves from './hooks/use-fetch-saves';
 import { useTable } from '@/hooks/use-table';
 import SettingsForm from './components/settings-form';
+import useFetchSavingsAccounts from './hooks/use-fetch-savings-accounts';
+import useFetchDebtAccounts from './hooks/use-fetch-debt-accounts';
 
 const Save = () => {
     const { data: saves } = useFetchSaves();
+    const { data: savingsAccounts } = useFetchSavingsAccounts();
+    const { data: debtAccounts } = useFetchDebtAccounts();
+
+    const [totalSavings, setTotalSavings] = useState(0);
+    const [totalDebt, setTotalDebt] = useState(0);
+
+    useEffect(() => {
+        if (savingsAccounts) {
+            setTotalSavings(savingsAccounts.reduce((acc, account) => acc + account.balance, 0));
+        }
+        if (debtAccounts) {
+            setTotalDebt(debtAccounts.reduce((acc, account) => acc + account.balance, 0));
+        }
+    }, [savingsAccounts, debtAccounts]);
+
     const saveColumns = useSaveColumns();
     const [saveFormOpen, setSaveFormOpen] = useState(false);
     const [settingsFormOpen, setSettingsFormOpen] = useState(false);
@@ -36,10 +53,6 @@ const Save = () => {
         setSettingsFormOpen(false);
     };
 
-    const [cash, setCash] = useState<number>(1670);
-    const [debt, setDebt] = useState<number>(13901);
-    const [savings, setSavings] = useState<number>(cash - debt);
-
     return (
         <Page>
             <div className='flex items-center justify-between'>
@@ -61,19 +74,19 @@ const Save = () => {
                 <Card className='gold-gradient dark:bg-l-green'>
                     <span className='leading-none'>{'Net Savings'}</span>
                     <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(savings)}</span>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalSavings - totalDebt)}</span>
                     </div>
                 </Card>
                 <Card className='dark:bg-l-green'>
                     <span className='leading-none'>{'Savings Accounts'}</span>
                     <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(cash)}</span>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalSavings)}</span>
                     </div>
                 </Card>
                 <Card className='dark:bg-l-green'>
                     <span className='leading-none'>{'Debt Accounts'}</span>
                     <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(debt)}</span>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalDebt)}</span>
                     </div>
                 </Card>
             </div>
@@ -85,30 +98,23 @@ const Save = () => {
                     <div className='rounded-lg border border-orange-100 shadow'>
                         <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none px-2'>Savings Accounts</div>
                         <div className='px-3 py-2'>
-                            <div className='flex justify-between'>
-                                <div>Cash</div>
-                                <div className='text-green-600'>{formatCurrency(150)}</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>TFSA</div>
-                                <div className='text-green-600'>{formatCurrency(0)}</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Chequing</div>
-                                <div className='text-green-600'>{formatCurrency(50)}</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Investment</div>
-                                <div className='text-green-600'>{formatCurrency(25)}</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>RRSP</div>
-                                <div className='text-green-600'>{formatCurrency(100)}</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Emergency</div>
-                                <div className='text-green-600'>{formatCurrency(0)}</div>
-                            </div>
+                            {savingsAccounts?.length === 0 ? (
+                                <div className='flex flex-col items-center justify-center text-center text-gray-500'>
+                                    <div>No savings accounts created.</div>
+                                    <div>Click</div>
+                                    <Button variant='secondary' className='rounded-lg' size='icon' disabled>
+                                        <Settings />
+                                    </Button>
+                                    <div>in the top right to create one.</div>
+                                </div>
+                            ) : (
+                                savingsAccounts?.map((account) => (
+                                    <div key={account.id} className='flex justify-between'>
+                                        <div>{account.name}</div>
+                                        <div className='text-green-600'>{formatCurrency(account.balance)}</div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
                     <div className='rounded-xl border border-orange-100'>
@@ -116,18 +122,23 @@ const Save = () => {
                             <div className='flex items-center space-x-2 rounded-lg px-2 text-primary'>Debt Accounts</div>
                         </div>
                         <div className='px-3 py-2'>
-                            <div className='flex justify-between'>
-                                <div>NSLSC</div>
-                                <div className='text-red-600'>{formatCurrency(-12000)}</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>CRA</div>
-                                <div className='text-red-600'>{formatCurrency(-1000)}</div>
-                            </div>
-                            <div className='flex justify-between'>
-                                <div>Seb</div>
-                                <div className='text-red-600'>{formatCurrency(-901)}</div>
-                            </div>
+                            {debtAccounts?.length === 0 ? (
+                                <div className='flex flex-col items-center justify-center text-center text-gray-500'>
+                                    <div>No debt accounts created.</div>
+                                    <div>Click</div>
+                                    <Button variant='secondary' className='rounded-lg' size='icon' disabled>
+                                        <Settings />
+                                    </Button>
+                                    <div>in the top right to create one.</div>
+                                </div>
+                            ) : (
+                                debtAccounts?.map((account) => (
+                                    <div key={account.id} className='flex justify-between'>
+                                        <div>{account.name}</div>
+                                        <div className='text-red-600'>{formatCurrency(account.balance)}</div>
+                                    </div>
+                                ))
+                            )}
                         </div>
                     </div>
                     <Table table={table} handleRowClick={handleViewSave} />

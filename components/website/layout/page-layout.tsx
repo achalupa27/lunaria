@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Header from './website/layout/header';
-import Footer from './website/layout/footer/footer';
-import { Toaster } from './ui/toaster';
+import Header from './header';
+import Footer from './footer/footer';
+import { Toaster } from '../../ui/toaster';
 
 function Layout({ children }: any) {
     const router = useRouter();

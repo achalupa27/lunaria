@@ -12,12 +12,12 @@ import { selectUser } from '@/redux/slices/userSlice';
 
 type Props = {
     closeForm: any;
-    selectedSavingsAccount?: Save;
+    selectedSavingsAccount?: SavingsAccount;
 };
 
 const FormSchema = z.object({
-    account: z.string({
-        required_error: 'An account is required.',
+    name: z.string({
+        required_error: 'An account name is required.',
     }),
     balance: z.coerce.number(),
 });
@@ -27,12 +27,12 @@ const SavingAccountForm = ({ closeForm, selectedSavingsAccount }: Props) => {
     const { createSavingsAccountMutation, updateSavingsAccountMutation, deleteSavingsAccountMutation } = useSavingsAccountMutations();
 
     const form = useForm({
-        defaultValues: {},
+        defaultValues: selectedSavingsAccount,
         resolver: zodResolver(FormSchema),
     });
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
-        console.log('save: ', data);
+        console.log('savingsAccount: ', data);
         if (user) {
             if (selectedSavingsAccount) {
                 const updatedSavingsAccount: SavingsAccount = {
@@ -66,7 +66,7 @@ const SavingAccountForm = ({ closeForm, selectedSavingsAccount }: Props) => {
             <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
                 <FormField
                     control={form.control}
-                    name='account'
+                    name='name'
                     render={({ field }) => (
                         <FormItem className='flex flex-col'>
                             <FormLabel>Account Name</FormLabel>
@@ -86,9 +86,9 @@ const SavingAccountForm = ({ closeForm, selectedSavingsAccount }: Props) => {
                         </FormItem>
                     )}
                 />
-                <div className={`flex pt-4 ${true ? 'justify-between' : 'justify-end'}`}>
-                    {true && (
-                        <Button type='button' onClick={() => {}} variant='destructive' size='icon'>
+                <div className={`flex pt-4 ${selectedSavingsAccount ? 'justify-between' : 'justify-end'}`}>
+                    {selectedSavingsAccount && (
+                        <Button type='button' onClick={handleDelete} variant='destructive' size='icon'>
                             <Trash />
                         </Button>
                     )}
