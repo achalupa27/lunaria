@@ -8,7 +8,7 @@ type Props = {
     className?: string;
 } & React.HTMLProps<HTMLDivElement>;
 
-const cardVariants = cva('w-auto rounded-2xl bg-white border-orange-100 border px-6 py-4 shadow transition duration-200 dark:border-zinc-800 dark:bg-gray-950', {
+const cardVariants = cva('w-auto rounded-2xl flex flex-col bg-white border-orange-100 border px-6 py-4 shadow transition duration-200 dark:border-zinc-800 dark:bg-gray-950', {
     variants: {
         variant: {
             default: '',

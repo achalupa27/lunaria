@@ -40,7 +40,7 @@ const Pricing = () => {
     return (
         <div className='mx-auto flex min-h-screen w-[90%] flex-col items-center gap-12 py-8'>
             <h1 className='mt-8 text-center text-6xl'>Simple, transparent pricing.</h1>
-            <h2 className='-mt-8 mb-8'>No credit card required. Cancel anytime.</h2>
+            <h2 className='-mt-8 mb-8'>No hidden fees. Cancel anytime.</h2>
             <TermChanger term={term} setTerm={setTerm} />
             <div className='mt-8 flex flex-wrap justify-center gap-20'>
                 <FreeTable />
