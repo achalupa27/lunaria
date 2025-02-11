@@ -78,7 +78,12 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
 
             <form onSubmit={handleSubmit} className='space-y-4'>
                 <div>
-                    <label className='block text-sm font-medium'>Email</label>
+                    <div className='flex justify-between'>
+                        <label className='block text-sm font-medium'>Email</label>
+                        <button onClick={onForgotPasswordClick} className='text-sm text-blue-600 hover:underline'>
+                            Forgot Password?
+                        </button>
+                    </div>
                     <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} className='w-full rounded border px-3 py-2' required />
                 </div>
 
@@ -93,9 +98,6 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
             </form>
 
             <div className='space-y-2 text-center pt-8'>
-                <button onClick={onForgotPasswordClick} className='text-sm text-blue-600 hover:underline'>
-                    Forgot Password?
-                </button>
                 <div className='text-sm'>
                     Don&apos;t have an account?{' '}
                     <button onClick={onSignUpClick} className='text-blue-600 hover:underline'>

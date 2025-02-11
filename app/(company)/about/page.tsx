@@ -1,3 +1,5 @@
+'use client';
+
 const About = () => {
     return <div className='min-h-screen'>About</div>;
 };

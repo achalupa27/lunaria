@@ -1,18 +1,12 @@
 export const COMPANY_NAME = 'Lunaria';
 
-export const STRIPE_KEY = 'pk_test_51MV97ZFcFQVvj4RK5IxZX1DkxYgiJXx5uoB18RP50uRxWXd9At9xpIxcFbjsGeEDnqpLsJGRGmoMkKBExTjCNhG2009xsqUoI2';
+export const PREMIUM_MONTHLY = 'https://buy.stripe.com/test_bIY8yIgVTemx4Ra8wy';
+export const PREMIUM_YEARLY = 'https://buy.stripe.com/test_5kAeX6cFD0vH2J2dQT';
+export const PRO_MONTHLY = 'https://buy.stripe.com/test_00g7uEcFD5Q16Zi004';
+export const PRO_YEARLY = 'https://buy.stripe.com/test_cN26qAeNLfqB83m9AF';
 
-export const MONTHLY_BASIC = 'price_1MV9BxFcFQVvj4RKvh3caJfZ';
-export const YEARLY_BASIC = 'price_1MZMbnFcFQVvj4RKgTSS8bQU';
-export const MONTHLY_PROFESSIONAL = 'price_1MV9BxFcFQVvj4RKAmWkAPE3';
-export const YEARLY_PROFESSIONAL = 'price_1MZMacFcFQVvj4RKO4ehFLva';
-export const MONTHLY_PREMIUM = 'price_1MV9BxFcFQVvj4RKAmWkAPE3';
-export const YEARLY_PREMIUM = 'price_1MZMacFcFQVvj4RKO4ehFLva';
-
-export const MONTHLY_BASIC_PRICE = '19.95';
-export const YEARLY_BASIC_PRICE = '14.95';
-export const MONTHLY_PROFESSIONAL_PRICE = '5';
-export const YEARLY_PROFESSIONAL_PRICE = '4';
+export const MONTHLY_PRO_PRICE = '5';
+export const YEARLY_PRO_PRICE = '4';
 export const MONTHLY_PREMIUM_PRICE = '10';
 export const YEARLY_PREMIUM_PRICE = '8';
 

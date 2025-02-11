@@ -4,19 +4,20 @@ import { Button } from '@/components/ui/button';
 import { Moon, Sun, User } from 'lucide-react';
 import MobileMenu from './mobile-menu';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Auth from '@/components/website/auth';
 import Login from '@/components/website/auth/log-in';
 import SignUp from '@/components/website/auth/sign-up';
 import ForgotPassword from '@/components/website/auth/forgot-password';
-import Reset from '@/components/website/auth/reset';
+import Reset from '@/components/website/auth/reset-password';
 import ConfirmEmail from '@/components/website/auth/confirm-email';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
+import Link from 'next/link';
 
 const RightSection = () => {
     const [isAuthOpen, setIsAuthOpen] = useState(false);
-    const [authView, setAuthView] = useState<'login' | 'signup' | 'forgot-password' | 'reset' | 'confirm-email'>('login');
+    const [authView, setAuthView] = useState<'login' | 'signup' | 'forgot-password' | 'reset-password' | 'confirm-email'>('login');
     const [email, setEmail] = useState<string>('');
 
     const supabase = createClient();
@@ -24,14 +25,53 @@ const RightSection = () => {
     const { systemTheme, theme, setTheme } = useTheme();
     const currentTheme = theme === 'system' ? systemTheme : theme;
 
+    const [session, setSession] = useState<any | null>(null);
+
+    useEffect(() => {
+        const getSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            setSession(data?.session?.user);
+        };
+
+        // Initial session check
+        getSession();
+
+        // Subscribe to auth changes
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session?.user ?? null);
+        });
+
+        // Cleanup subscription
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [supabase.auth]);
+
     const handleAuthSuccess = () => {
         setIsAuthOpen(false);
         router.refresh();
     };
 
-    const handleSignOut = async () => {
-        await supabase.auth.signOut();
-        router.refresh();
+    const handleLogin = () => {
+        setAuthView('login');
+        setIsAuthOpen(true);
+    };
+
+    const handleSignUp = () => {
+        setAuthView('signup');
+        setIsAuthOpen(true);
+    };
+
+    const handleSignUpSuccess = () => {
+        setEmail(email);
+        setAuthView('confirm-email');
+    };
+
+    const handleResetSuccess = () => {
+        setAuthView('login');
+        setIsAuthOpen(false);
     };
 
     return (
@@ -47,48 +87,37 @@ const RightSection = () => {
                     </Button>
                 )}
 
-                <Button
-                    variant='secondary'
-                    onClick={() => {
-                        setAuthView('login');
-                        setIsAuthOpen(true);
-                    }}
-                    className='hidden lg:flex'>
-                    Log in
-                </Button>
+                {session ? (
+                    <>
+                        <Button asChild variant='secondary' size='icon' className='hidden lg:flex'>
+                            <Link href='/profile'>
+                                <User />
+                            </Link>
+                        </Button>
+                        <Button asChild className='hidden lg:flex'>
+                            <Link href='/dashboard'>Dashboard</Link>
+                        </Button>
+                    </>
+                ) : (
+                    <>
+                        <Button variant='secondary' onClick={handleLogin} className='hidden lg:flex'>
+                            Log in
+                        </Button>
 
-                <Button
-                    className='hidden lg:flex'
-                    onClick={() => {
-                        setAuthView('signup');
-                        setIsAuthOpen(true);
-                    }}>
-                    Sign Up
-                </Button>
+                        <Button className='hidden lg:flex' onClick={handleSignUp}>
+                            Sign Up
+                        </Button>
+                    </>
+                )}
 
                 <MobileMenu />
             </div>
 
             <Auth isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)}>
                 {authView === 'login' && <Login onSuccess={handleAuthSuccess} onSignUpClick={() => setAuthView('signup')} onForgotPasswordClick={() => setAuthView('forgot-password')} />}
-                {authView === 'signup' && (
-                    <SignUp
-                        onSuccess={() => {
-                            setEmail(email);
-                            setAuthView('confirm-email');
-                        }}
-                        onLoginClick={() => setAuthView('login')}
-                    />
-                )}
-                {authView === 'forgot-password' && <ForgotPassword onSuccess={() => setAuthView('login')} onBackToLogin={() => setAuthView('login')} />}
-                {authView === 'reset' && (
-                    <Reset
-                        onSuccess={() => {
-                            setAuthView('login');
-                            setIsAuthOpen(false);
-                        }}
-                    />
-                )}
+                {authView === 'signup' && <SignUp onSuccess={handleSignUpSuccess} onLoginClick={() => setAuthView('login')} />}
+                {authView === 'forgot-password' && <ForgotPassword onBackToLogin={() => setAuthView('login')} />}
+                {authView === 'reset-password' && <Reset onSuccess={handleResetSuccess} />}
                 {authView === 'confirm-email' && <ConfirmEmail email={email} onBackToLogin={() => setAuthView('login')} />}
             </Auth>
         </>

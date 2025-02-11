@@ -1,16 +1,40 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
-import { MONTHLY_PROFESSIONAL_PRICE, YEARLY_PROFESSIONAL_PRICE } from '@/constants';
+import { MONTHLY_PRO_PRICE, PRO_MONTHLY, PRO_YEARLY, YEARLY_PRO_PRICE } from '@/constants';
 import { professionalFeatures } from '@/components/website/pricing-page/data/features-professional';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
 
 type Props = {
     term: string;
-    purchaseSubscription: any;
+    onSignUpClick: () => void;
 };
 
-const ProTable = ({ term, purchaseSubscription }: Props) => {
-    const user = false;
+const ProTable = ({ term, onSignUpClick }: Props) => {
+    const [session, setSession] = useState<any | null>(null);
+    const supabase = createClient();
+
+    useEffect(() => {
+        const getSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            setSession(data?.session?.user);
+        };
+
+        getSession();
+
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session?.user ?? null);
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [supabase.auth]);
 
     return (
         <div className='relative flex h-[36rem] w-[22rem] flex-col rounded-2xl border border-orange-100/60 bg-white p-1 dark:bg-black'>
@@ -18,7 +42,7 @@ const ProTable = ({ term, purchaseSubscription }: Props) => {
 
             <div className='mx-auto mt-4 text-center'>
                 <div className='text-4xl font-semibold'>Pro</div>
-                <div className='text-lg'>{`$${term === 'Monthly' ? MONTHLY_PROFESSIONAL_PRICE : YEARLY_PROFESSIONAL_PRICE} per month`}</div>
+                <div className='text-lg'>{`$${term === 'Monthly' ? MONTHLY_PRO_PRICE : YEARLY_PRO_PRICE} per month`}</div>
                 {/* {term === 'Yearly' && <div className='-mt-1 text-sm text-zinc-700'>Billed annually.</div>} */}
             </div>
             <div className='grow px-6 pt-4'>
@@ -28,13 +52,13 @@ const ProTable = ({ term, purchaseSubscription }: Props) => {
                     </div>
                 ))}
             </div>
-            {user ? (
-                <Button className='rounded-b-xl py-5' onClick={() => purchaseSubscription('Professional')}>
-                    Start Trial
+            {session ? (
+                <Button className='rounded-b-xl' size='lg' asChild>
+                    <Link href={term === 'Monthly' ? PRO_MONTHLY : PRO_YEARLY}>Start Trial</Link>
                 </Button>
             ) : (
-                <Button asChild className='rounded-b-xl py-5'>
-                    <Link href='/register'>Sign Up</Link>
+                <Button onClick={onSignUpClick} className='rounded-b-xl' size='lg'>
+                    Sign Up
                 </Button>
             )}
         </div>

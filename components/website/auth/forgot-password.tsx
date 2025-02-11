@@ -1,4 +1,7 @@
+import Logo from '@/components/icons/logo';
+import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/client';
+import { CheckCircle2 } from 'lucide-react';
 import { FC, useState } from 'react';
 
 interface ForgotPasswordProps {
@@ -20,7 +23,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({ onSuccess, onBackToLogin }) =
         setError(null);
 
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${window.location.origin}/auth/reset-password`,
+            redirectTo: `${window.location.origin}/reset-password`,
         });
 
         if (error) {
@@ -35,12 +38,16 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({ onSuccess, onBackToLogin }) =
 
     return (
         <div className='space-y-4'>
-            <h2 className='text-center text-2xl font-bold'>Reset Password</h2>
+            <div className='flex w-full items-center justify-center'>
+                <Logo filled={true} />
+            </div>
+            <h2 className='text-center text-2xl font-medium pb-8'>{submitted ? 'Email Sent' : 'Reset Password'}</h2>
 
             {submitted ? (
                 <div className='space-y-4 text-center'>
-                    <p className='text-green-600'>Check your email for the password reset link.</p>
-                    <button onClick={onBackToLogin} className='text-blue-600 hover:underline'>
+                    <CheckCircle2 absoluteStrokeWidth strokeWidth={1} className='mx-auto h-12 w-12 text-green-600' />
+                    <p className='pb-12'>Check your email for the password reset link.</p>
+                    <button onClick={onBackToLogin} className='text-blue-600 hover:underline text-sm'>
                         Back to Login
                     </button>
                 </div>
@@ -54,12 +61,12 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({ onSuccess, onBackToLogin }) =
                             <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} className='w-full rounded border px-3 py-2' required />
                         </div>
 
-                        <button type='submit' disabled={loading} className='w-full rounded bg-blue-600 py-2 text-white hover:bg-blue-700 disabled:opacity-50'>
+                        <Button type='submit' disabled={loading} size='lg' className='w-full '>
                             {loading ? 'Loading...' : 'Send Reset Link'}
-                        </button>
+                        </Button>
                     </form>
 
-                    <div className='text-center'>
+                    <div className='text-center text-sm pt-8'>
                         <button onClick={onBackToLogin} className='text-blue-600 hover:underline'>
                             Back to Login
                         </button>

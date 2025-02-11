@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -5,7 +7,7 @@ import Image from 'next/image';
 const ProductsHero = () => {
     return (
         <section className='flex flex-col items-center justify-center py-24 text-center'>
-            <motion.h1 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1 }} className='mb-6 text-5xl font-bold'>
+            <motion.h1 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1 }} className='mb-6 text-5xl font-medium'>
                 Discover the Future of Finance
             </motion.h1>
             <motion.p initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: 0.3 }} className='mb-8 max-w-2xl text-lg text-gray-500'>

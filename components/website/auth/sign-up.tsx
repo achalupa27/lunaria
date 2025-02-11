@@ -26,7 +26,7 @@ const SignUp: FC<SignUpProps> = ({ onSuccess, onLoginClick }) => {
             email,
             password,
             options: {
-                emailRedirectTo: `${window.location.origin}/auth/callback`,
+                emailRedirectTo: `${window.location.origin}/pricing`,
             },
         });
 
@@ -91,7 +91,7 @@ const SignUp: FC<SignUpProps> = ({ onSuccess, onLoginClick }) => {
                 </Button>
             </form>
 
-            <div className='pt-10 text-center text-sm'>
+            <div className='pt-8 text-center text-sm'>
                 Already have an account?{' '}
                 <button onClick={onLoginClick} className='text-blue-600 hover:underline'>
                     Log In

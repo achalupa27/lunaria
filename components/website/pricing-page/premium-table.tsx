@@ -1,17 +1,41 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
-import { MONTHLY_PREMIUM_PRICE, YEARLY_PREMIUM_PRICE } from '@/constants';
+import { MONTHLY_PREMIUM_PRICE, PREMIUM_MONTHLY, PREMIUM_YEARLY, YEARLY_PREMIUM_PRICE } from '@/constants';
 import {} from '@/components/website/pricing-page/data/features-professional';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
 import { premiumFeatures } from './data/features-premium';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
 
 type Props = {
     term: string;
-    purchaseSubscription: any;
+    onSignUpClick: () => void;
 };
 
-const PremiumTable = ({ term, purchaseSubscription }: Props) => {
-    const user = false;
+const PremiumTable = ({ term, onSignUpClick }: Props) => {
+    const [session, setSession] = useState<any | null>(null);
+    const supabase = createClient();
+
+    useEffect(() => {
+        const getSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            setSession(data?.session?.user);
+        };
+
+        getSession();
+
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session?.user ?? null);
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [supabase.auth]);
 
     return (
         <div className='gold-gradient relative flex h-[36rem] w-[22rem] flex-col rounded-2xl border border-orange-200 p-1 dark:bg-black'>
@@ -29,13 +53,13 @@ const PremiumTable = ({ term, purchaseSubscription }: Props) => {
                     </div>
                 ))}
             </div>
-            {user ? (
-                <Button className='rounded-b-xl py-5' onClick={() => purchaseSubscription('Professional')}>
-                    Start Trial
+            {session ? (
+                <Button asChild className='rounded-b-xl' size='lg'>
+                    <Link href={term === 'Monthly' ? PREMIUM_MONTHLY : PREMIUM_YEARLY}>Start Trial</Link>
                 </Button>
             ) : (
-                <Button asChild className='rounded-b-xl py-5'>
-                    <Link href='/register'>Sign Up</Link>
+                <Button onClick={onSignUpClick} className='rounded-b-xl' size='lg'>
+                    Sign Up
                 </Button>
             )}
         </div>

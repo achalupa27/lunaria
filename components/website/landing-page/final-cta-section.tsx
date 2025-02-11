@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const FinalCTASection = () => {
     return (
@@ -11,8 +12,8 @@ const FinalCTASection = () => {
                 Join thousands of users who are already transforming their financial future with Lunaria.
             </motion.p>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.2, delay: 0.6 }}>
-                <Button size='lg' className='mt-4 rounded-full dark:bg-black dark:text-white dark:hover:bg-zinc-900'>
-                    Get Started Now
+                <Button asChild size='lg' className='mt-4 rounded-full dark:bg-black dark:text-white dark:hover:bg-zinc-900'>
+                    <Link href='/pricing'>Get Started Now</Link>
                 </Button>
             </motion.div>
         </motion.section>

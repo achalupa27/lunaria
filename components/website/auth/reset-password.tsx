@@ -1,3 +1,4 @@
+import Logo from '@/components/icons/logo';
 import { createClient } from '@/utils/supabase/client';
 import { FC, useState } from 'react';
 
@@ -32,8 +33,11 @@ const Reset: FC<ResetProps> = ({ onSuccess }) => {
 
     return (
         <div className='space-y-4'>
-            <h2 className='text-center text-2xl font-bold'>Set New Password</h2>
-            {error && <div className='rounded bg-red-100 p-3 text-sm text-red-500'>{error}</div>}
+            <div className='flex w-full items-center justify-center'>
+                <Logo filled={true} />
+            </div>
+            <h2 className='text-center pb-8 text-2xl font-medium'>Set New Password</h2>
+            {error && <div className='rounded-xl bg-red-100 p-3 text-sm text-red-500'>{error}</div>}
 
             <form onSubmit={handleSubmit} className='space-y-4'>
                 <div>

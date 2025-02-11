@@ -1,4 +1,4 @@
-import React from 'react';
+'use client';
 
 const ForgotPasswordPage = () => {
     return <div>ForgotPasswordPage</div>;

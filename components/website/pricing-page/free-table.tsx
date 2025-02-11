@@ -1,10 +1,38 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { freeFeatures } from '@/components/website/pricing-page/data/features-free';
 import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
 
-const FreeTable = () => {
-    const user = false;
+type Props = {
+    onSignUpClick: () => void;
+};
+
+const FreeTable = ({ onSignUpClick }: Props) => {
+    const [session, setSession] = useState<any | null>(null);
+    const supabase = createClient();
+
+    useEffect(() => {
+        const getSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            setSession(data?.session?.user);
+        };
+
+        getSession();
+
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session?.user ?? null);
+        });
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [supabase.auth]);
 
     return (
         <div className='flex h-[36rem] w-[22rem] flex-col rounded-2xl border border-orange-50 bg-white p-1 shadow dark:bg-black'>
@@ -19,13 +47,13 @@ const FreeTable = () => {
                     </div>
                 ))}
             </div>
-            {user ? (
+            {session ? (
                 <Button asChild className='rounded-b-xl py-5'>
-                    <Link href='/app'>Go to Dashboard</Link>
+                    <Link href='/dashboard'>Go to Dashboard</Link>
                 </Button>
             ) : (
-                <Button asChild className='rounded-b-xl py-5'>
-                    <Link href='/authenticate'>Sign Up</Link>
+                <Button onClick={onSignUpClick} className='rounded-b-xl py-5'>
+                    Sign Up
                 </Button>
             )}
         </div>

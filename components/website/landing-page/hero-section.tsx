@@ -1,19 +1,36 @@
+'use client';
+
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { createClient } from '@/utils/supabase/client';
 
 const HeroSection = () => {
-    const [mounted, setMounted] = useState(false);
-    const session = true;
+    const [session, setSession] = useState<any | null>(null);
+    const supabase = createClient();
 
     useEffect(() => {
-        setMounted(true);
-    }, []);
+        const getSession = async () => {
+            const { data, error } = await supabase.auth.getSession();
+            setSession(data?.session?.user);
+        };
 
-    if (!mounted) {
-        return null;
-    }
+        // Initial session check
+        getSession();
+
+        // Subscribe to auth changes
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session?.user ?? null);
+        });
+
+        // Cleanup subscription
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [supabase.auth]);
 
     return (
         <section className='flex min-h-screen flex-col items-center justify-center'>
