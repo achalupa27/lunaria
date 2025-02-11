@@ -21,7 +21,7 @@ function isKnownProduct(productId: string): productId is keyof typeof PRODUCT_TO
 
 export async function POST(req: Request) {
     const body = await req.text();
-    const signature = (await headers()).get('Stripe-Signature') as string;
+    const signature = req.headers.get('Stripe-Signature') as string;
 
     let event: Stripe.Event;
 
