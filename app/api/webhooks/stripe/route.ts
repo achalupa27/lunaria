@@ -21,7 +21,18 @@ function isKnownProduct(productId: string): productId is keyof typeof PRODUCT_TO
 
 export async function POST(req: Request) {
     const body = await req.text();
-    const signature = req.headers.get('stripe-signature') as string;
+    const headersList = await headers();
+    const signature = headersList.get('stripe-signature') as string;
+    console.log('signature', signature);
+    console.log('body', body);
+    console.log('Webhook Secret:', process.env.STRIPE_WEBHOOK_SECRET?.slice(0, 5) + '...'); // Log partial secret to verify it's loaded
+    console.log('Headers:', Object.fromEntries(headersList.entries()));
+    console.log('Signature:', signature);
+    console.log('Body Preview:', body.slice(0, 100) + '...'); // Log start of body
+
+    if (!signature) {
+        return new Response('No signature found', { status: 400 });
+    }
 
     let event: Stripe.Event;
 
@@ -73,8 +84,8 @@ export async function POST(req: Request) {
                 console.log(`Unhandled event type ${event.type}`);
         }
     } catch (error) {
-        console.log(error);
-        return new Response('Webhook handler failed', { status: 400 });
+        console.error('Webhook verification failed:', error);
+        return new Response(`Webhook Error: ${error}`, { status: 400 });
     }
 
     return new Response(JSON.stringify({ received: true }));
