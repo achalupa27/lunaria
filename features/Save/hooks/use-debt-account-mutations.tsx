@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircle, CircleX } from 'lucide-react';
 import { createDebtAccountService } from '../services/debt-accounts/create-debt-account-service';
@@ -8,10 +7,9 @@ import { updateDebtAccountService } from '../services/debt-accounts/update-debt-
 
 export const useDebtAccountMutations = () => {
     const queryClient = useQueryClient();
-    const supabaseClient = useSupabaseClient();
 
     const createDebtAccountMutation = useMutation({
-        mutationFn: (newDebtAccount: Omit<DebtAccount, 'id'>) => createDebtAccountService(newDebtAccount, supabaseClient),
+        mutationFn: (newDebtAccount: Omit<DebtAccount, 'id'>) => createDebtAccountService(newDebtAccount),
         onSuccess: (newDebtAccount: DebtAccount) => {
             queryClient.setQueryData(['debtAccounts'], (oldDebtAccounts: DebtAccount[] = []) => [...oldDebtAccounts, newDebtAccount]);
             toast({

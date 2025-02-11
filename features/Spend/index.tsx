@@ -31,6 +31,9 @@ const Spend = () => {
 
     const { table } = useTable({ data: spends || [], columns: spendColumns });
 
+    const [loading, setLoading] = useState(false);
+    const [analysis, setAnalysis] = useState<string | null>(null);
+
     useEffect(() => {
         if (spends && spends?.length > 0) {
             const necessityTotals = spends?.reduce(
@@ -86,6 +89,29 @@ const Spend = () => {
         setSettingsFormOpen(false);
     };
 
+    const handleAnalysis = async () => {
+        setLoading(true);
+
+        try {
+            const response = await fetch('/api/analyze-spending', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    spends,
+                }),
+            });
+
+            const data = await response.json();
+            setAnalysis(data.analysis);
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Page>
             <div className='flex justify-between'>
@@ -96,6 +122,9 @@ const Spend = () => {
                 <div className='flex items-center space-x-2'>
                     <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setSettingsFormOpen(true)}>
                         <Settings />
+                    </Button>
+                    <Button variant='secondary' className='rounded-lg' onClick={handleAnalysis}>
+                        Analyze Spending
                     </Button>
                     <Button variant='secondary' className='rounded-lg' onClick={() => setBudgetFormOpen(true)}>
                         + Create Budget
@@ -149,6 +178,14 @@ const Spend = () => {
                         </div>
                     </div>
                     <Table table={table} handleRowClick={handleViewSpend} />
+                    {loading ? (
+                        <div className='mt-4 text-center'>Analyzing your spending patterns...</div>
+                    ) : analysis ? (
+                        <Card className='mt-4 whitespace-pre-wrap p-4'>
+                            <h3 className='mb-2 text-lg font-semibold'>Spending Analysis</h3>
+                            {analysis}
+                        </Card>
+                    ) : null}
                 </div>
             </div>
             {spendFormOpen && <SpendForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}

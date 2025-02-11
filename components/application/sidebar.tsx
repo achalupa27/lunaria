@@ -1,3 +1,5 @@
+'use client';
+
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { selectTab, setTab } from '@/redux/slices/tab-slice';
 import MakeIcon from '../icons/make-icon';

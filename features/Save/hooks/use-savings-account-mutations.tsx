@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircle, CircleX } from 'lucide-react';
 import { createSavingsAccountService } from '../services/savings-accounts/create-savings-account-service';
@@ -8,10 +7,9 @@ import { deleteSavingsAccountService } from '../services/savings-accounts/delete
 
 export const useSavingsAccountMutations = () => {
     const queryClient = useQueryClient();
-    const supabaseClient = useSupabaseClient();
 
     const createSavingsAccountMutation = useMutation({
-        mutationFn: (newSavingsAccount: Omit<SavingsAccount, 'id'>) => createSavingsAccountService(newSavingsAccount, supabaseClient),
+        mutationFn: (newSavingsAccount: Omit<SavingsAccount, 'id'>) => createSavingsAccountService(newSavingsAccount),
         onSuccess: (newSavingsAccount: SavingsAccount) => {
             queryClient.setQueryData(['savingsAccounts'], (oldSavingsAccounts: SavingsAccount[] = []) => [...oldSavingsAccounts, newSavingsAccount]);
             toast({
@@ -35,7 +33,7 @@ export const useSavingsAccountMutations = () => {
 
     const updateSavingsAccountMutation = useMutation({
         mutationFn: async (updatedSavingsAccount: SavingsAccount) => {
-            return updateSavingsAccountService(updatedSavingsAccount, supabaseClient);
+            return updateSavingsAccountService(updatedSavingsAccount);
         },
         onSuccess: (updatedSavingsAccount: SavingsAccount) => {
             queryClient.setQueryData(['savingsAccounts'], (oldSavingsAccounts: SavingsAccount[] = []) => oldSavingsAccounts.map((savingsAccount) => (savingsAccount.id === updatedSavingsAccount.id ? updatedSavingsAccount : savingsAccount)));

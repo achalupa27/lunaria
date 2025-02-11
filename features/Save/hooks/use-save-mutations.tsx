@@ -2,16 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createSaveService } from '../services/saves/create-save-service';
 import { deleteSaveService } from '../services/saves/delete-save-service';
 import { updateSaveService } from '../services/saves/update-save-service';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircle, CircleX } from 'lucide-react';
 
 export const useSaveMutations = () => {
     const queryClient = useQueryClient();
-    const supabaseClient = useSupabaseClient();
 
     const createSaveMutation = useMutation({
-        mutationFn: (newSave: Omit<Save, 'id'>) => createSaveService(newSave, supabaseClient),
+        mutationFn: (newSave: Omit<Save, 'id'>) => createSaveService(newSave),
         onSuccess: (newSave: Save) => {
             queryClient.setQueryData(['saves'], (oldSaves: Save[] = []) => [...oldSaves, newSave]);
             toast({
@@ -35,7 +33,7 @@ export const useSaveMutations = () => {
 
     const updateSaveMutation = useMutation({
         mutationFn: async (updatedSave: Save) => {
-            return updateSaveService(updatedSave, supabaseClient);
+            return updateSaveService(updatedSave);
         },
         onSuccess: (updatedSave: Save) => {
             queryClient.setQueryData(['saves'], (oldSaves: Save[] = []) => oldSaves.map((save) => (save.id === updatedSave.id ? updatedSave : save)));
@@ -59,7 +57,7 @@ export const useSaveMutations = () => {
     });
 
     const deleteSaveMutation = useMutation({
-        mutationFn: (saveId: string) => deleteSaveService(saveId, supabaseClient),
+        mutationFn: (saveId: string) => deleteSaveService(saveId),
         onSuccess: (_, deletedSaveId: string) => {
             queryClient.setQueryData(['saves'], (oldSaves: Save[] = []) => oldSaves.filter((save) => save.id !== deletedSaveId));
             toast({

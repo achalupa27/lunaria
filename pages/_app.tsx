@@ -8,9 +8,6 @@ import { Analytics } from '@vercel/analytics/react';
 import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
-import { SessionContextProvider } from '@supabase/auth-helpers-react';
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { useState } from 'react';
 import Layout from '@/components/website/layout/page-layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -28,21 +25,15 @@ Router.events.on('routeChangeError', progress.finish);
 const queryClient = new QueryClient();
 
 function App({ Component, pageProps }: AppProps) {
-    const [supabaseClient] = useState(() => createBrowserSupabaseClient());
-
     return (
         <ThemeProvider enableSystem={false} attribute='class'>
             <QueryClientProvider client={queryClient}>
-                <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-                    <SessionProvider session={pageProps.session}>
-                        <Layout>
-                            <Provider store={store}>
-                                <Component {...pageProps} />
-                                <Analytics />
-                            </Provider>
-                        </Layout>
-                    </SessionProvider>
-                </SessionContextProvider>
+                <Layout>
+                    <Provider store={store}>
+                        <Component {...pageProps} />
+                        <Analytics />
+                    </Provider>
+                </Layout>
             </QueryClientProvider>
         </ThemeProvider>
     );

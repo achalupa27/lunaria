@@ -1,4 +1,12 @@
 export const features = {
+    General: [
+        {
+            description: 'AI Analysis',
+            free: false,
+            pro: false,
+            premium: true,
+        },
+    ],
     Dashboard: [
         {
             description: 'Here is 1 the description',

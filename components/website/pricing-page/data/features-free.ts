@@ -1,14 +1,20 @@
 export const freeFeatures = [
     {
-        feature: 'Feature',
+        feature: '10 Transactions / Day',
     },
     {
-        feature: 'Feature',
+        feature: '3 Spending Categories',
     },
     {
-        feature: 'Feature',
+        feature: '1 Spending Budget',
     },
     {
-        feature: 'Feature',
+        feature: '1 Savings Account',
+    },
+    {
+        feature: '1 Debt Account',
+    },
+    {
+        feature: '1 Income Source',
     },
 ];

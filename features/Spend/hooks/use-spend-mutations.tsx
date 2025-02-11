@@ -2,16 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createSpendService } from '../services/create-spend-service';
 import { deleteSpendService } from '../services/delete-spend-service';
 import { updateSpendService } from '../services/update-spend-service';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircle, CircleX } from 'lucide-react';
 
 export const useSpendMutations = () => {
     const queryClient = useQueryClient();
-    const supabaseClient = useSupabaseClient();
 
     const createSpendMutation = useMutation({
-        mutationFn: (newSpend: Omit<Spend, 'id'>) => createSpendService(newSpend, supabaseClient),
+        mutationFn: (newSpend: Omit<Spend, 'id'>) => createSpendService(newSpend),
         onSuccess: (newSpend: Spend) => {
             queryClient.setQueryData(['spends'], (oldSpends: Spend[] = []) => [...oldSpends, newSpend]);
             toast({
@@ -35,7 +33,7 @@ export const useSpendMutations = () => {
 
     const updateSpendMutation = useMutation({
         mutationFn: async (updatedSpend: Spend) => {
-            return updateSpendService(updatedSpend, supabaseClient);
+            return updateSpendService(updatedSpend);
         },
         onSuccess: (updatedSpend: Spend) => {
             queryClient.setQueryData(['spends'], (oldSpends: Spend[] = []) => oldSpends.map((spend) => (spend.id === updatedSpend.id ? updatedSpend : spend)));
@@ -59,7 +57,7 @@ export const useSpendMutations = () => {
     });
 
     const deleteSpendMutation = useMutation({
-        mutationFn: (saveId: string) => deleteSpendService(saveId, supabaseClient),
+        mutationFn: (saveId: string) => deleteSpendService(saveId),
         onSuccess: (_, deletedSpendId: string) => {
             queryClient.setQueryData(['spends'], (oldSpends: Spend[] = []) => oldSpends.filter((spend) => spend.id !== deletedSpendId));
             toast({

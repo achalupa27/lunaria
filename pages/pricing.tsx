@@ -7,6 +7,7 @@ import FeatureTable from '@/components/website/pricing-page/feature-table';
 import FreeTable from '@/components/website/pricing-page/free-table';
 import { ArrowDown } from 'lucide-react';
 import { features } from '@/components/website/pricing-page/data/features';
+import PremiumTable from '@/components/website/pricing-page/premium-table';
 
 const Pricing = () => {
     const [term, setTerm] = useState<'Monthly' | 'Yearly'>('Yearly');
@@ -42,17 +43,18 @@ const Pricing = () => {
             <h1 className='mt-8 text-center text-6xl'>Simple, transparent pricing.</h1>
             <h2 className='-mt-8 mb-8'>No hidden fees. Cancel anytime.</h2>
             <TermChanger term={term} setTerm={setTerm} />
-            <div className='mt-8 flex flex-wrap justify-center gap-20'>
+            <div className='mt-8 flex flex-wrap justify-center gap-12'>
                 <FreeTable />
                 <ProTable term={term} purchaseSubscription={purchaseSubscription} />
+                <PremiumTable term={term} purchaseSubscription={purchaseSubscription} />
             </div>
 
-            <div className='flex flex-col items-center'>
+            {/* <div className='flex flex-col items-center'>
                 <div className='text-lg'>Full Feature List</div>
                 <ArrowDown />
             </div>
 
-            <FeatureTable category={'Features'} features={features} />
+            <FeatureTable category={'Features'} features={features} /> */}
         </div>
     );
 };

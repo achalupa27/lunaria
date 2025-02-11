@@ -14,12 +14,12 @@ const ProTable = ({ term, purchaseSubscription }: Props) => {
 
     return (
         <div className='relative flex h-[36rem] w-[22rem] flex-col rounded-2xl border border-orange-100/60 bg-white p-1 dark:bg-black'>
-            <div className='dark:gradient-bg absolute left-0 top-0 -z-10 flex h-[32rem] w-[18rem] flex-col rounded-2xl bg-orange-100 blur dark:bg-gradient-to-tr' />
+            <div className='dark:gradient-bg absolute left-0 top-0 -z-10 flex h-[36rem] w-[22rem] flex-col rounded-2xl bg-orange-100 blur dark:bg-gradient-to-tr' />
 
             <div className='mx-auto mt-4 text-center'>
                 <div className='text-4xl font-semibold'>Pro</div>
                 <div className='text-lg'>{`$${term === 'Monthly' ? MONTHLY_PROFESSIONAL_PRICE : YEARLY_PROFESSIONAL_PRICE} per month`}</div>
-                {term === 'Yearly' && <div className='-mt-1 text-sm text-zinc-700'>Billed annually.</div>}
+                {/* {term === 'Yearly' && <div className='-mt-1 text-sm text-zinc-700'>Billed annually.</div>} */}
             </div>
             <div className='grow px-6 pt-4'>
                 {professionalFeatures.map((feature, i) => (

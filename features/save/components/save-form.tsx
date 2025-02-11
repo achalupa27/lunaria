@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
 import { savingAccounts } from '@/constants';
-import { selectUser } from '@/redux/slices/user-slice';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
@@ -38,7 +37,6 @@ const FormSchema = z.object({
 });
 
 const SaveForm = ({ closeForm, selectedSave }: Props) => {
-    const user = useAppSelector(selectUser);
     const { createSaveMutation, updateSaveMutation, deleteSaveMutation } = useSaveMutations();
 
     const form = useForm({
@@ -55,7 +53,6 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
             if (selectedSave) {
                 const updatedSave: Save = {
                     ...data,
-                    user_email: user!.email,
                     id: selectedSave.id,
                 };
 
@@ -63,7 +60,6 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
             } else {
                 const newSave: Omit<Save, 'id'> = {
                     ...data,
-                    user_email: user!.email,
                 };
 
                 createSaveMutation.mutate(newSave);

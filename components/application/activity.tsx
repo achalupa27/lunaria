@@ -1,3 +1,5 @@
+'use client';
+
 import Home from '../../features/home';
 import Make from '../../features/make';
 import Save from '../../features/save';
@@ -7,39 +9,50 @@ import { selectTab } from '@/redux/slices/tab-slice';
 import Settings from './settings';
 import { Suspense } from 'react';
 import Loader from '../ui/loader';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const Activity = () => {
     const tab = useAppSelector(selectTab);
 
     if (tab === 'Home')
         return (
-            <Suspense fallback={<Loader />}>
-                <Home />
-            </Suspense>
+            <ErrorBoundary fallbackRender={({ error }) => <div>Error: {error.message}</div>}>
+                <Suspense fallback={<Loader />}>
+                    <Home />
+                </Suspense>
+            </ErrorBoundary>
         );
     else if (tab === 'Make')
         return (
-            <Suspense fallback={<Loader />}>
-                <Make />
-            </Suspense>
+            <ErrorBoundary fallbackRender={({ error }) => <div>Error: {error.message}</div>}>
+                <Suspense fallback={<Loader />}>
+                    <Make />
+                </Suspense>
+            </ErrorBoundary>
         );
     else if (tab === 'Save')
         return (
-            <Suspense fallback={<Loader />}>
-                <Save />
-            </Suspense>
+            <ErrorBoundary fallbackRender={({ error }) => <div>Error: {error.message}</div>}>
+                <Suspense fallback={<Loader />}>
+                    <Save />
+                </Suspense>
+            </ErrorBoundary>
         );
     else if (tab === 'Spend')
         return (
-            <Suspense fallback={<Loader />}>
-                <Spend />
-            </Suspense>
+            <ErrorBoundary fallbackRender={({ error }) => <div>Error: {error.message}</div>}>
+                <Suspense fallback={<Loader />}>
+                    <Spend />
+                </Suspense>
+            </ErrorBoundary>
         );
     else if (tab === 'Settings')
         return (
-            <Suspense fallback={<Loader />}>
-                <Settings />
-            </Suspense>
+            <ErrorBoundary fallbackRender={({ error }) => <div>Error: {error.message}</div>}>
+                <Suspense fallback={<Loader />}>
+                    <Settings />
+                </Suspense>
+            </ErrorBoundary>
         );
 
     return <div>Error</div>;

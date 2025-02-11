@@ -12,7 +12,7 @@ export const products: Products = {
     products: [
         {
             label: 'Dashboard',
-            summary: 'Your personal finance at a glance.',
+            summary: 'Your personal finance all in one place.',
             pageLink: '/products#dashboard',
         },
         {

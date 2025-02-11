@@ -1,9 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
-
-import { selectUser } from '@/redux/slices/user-slice';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 type Props = {
     closeForm: any;
@@ -11,14 +8,10 @@ type Props = {
 };
 
 const SettingsForm = ({ closeForm, selectedSpend }: Props) => {
-    const user = useAppSelector(selectUser);
-    const supabaseClient = useSupabaseClient();
-    const dispatch = useAppDispatch();
-
     const { register, handleSubmit, setValue } = useForm();
 
     const onSubmit: SubmitHandler<any> = (spend: Spend) => {
-        if (user) {
+        if (true) {
         } else {
             console.error('[ERROR] Could not add spend. [REASON] No user.');
         }

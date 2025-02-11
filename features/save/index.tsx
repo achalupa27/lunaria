@@ -53,6 +53,38 @@ const Save = () => {
         setSettingsFormOpen(false);
     };
 
+    const [loading, setLoading] = useState(false);
+    const [analysis, setAnalysis] = useState<string>('');
+
+    const handleAnalysis = async () => {
+        setLoading(true);
+
+        try {
+            const response = await fetch('/api/analyze-savings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    saves,
+                    savingsAccounts,
+                    debtAccounts,
+                }),
+            });
+
+            const data = await response.json();
+            setAnalysis(data.analysis);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error:', error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        handleAnalysis();
+    }, []);
+
     return (
         <Page>
             <div className='flex items-center justify-between'>
@@ -95,11 +127,11 @@ const Save = () => {
 
             <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
                 <div className='flex h-full flex-col space-y-4 p-1'>
-                    <div className='rounded-lg border border-orange-100 shadow'>
+                    <div className='rounded-lg border border-orange-100 bg-white shadow'>
                         <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none px-2'>Savings Accounts</div>
-                        <div className='px-3 py-2'>
+                        <div className='rounded-[inherit]  px-3 py-2'>
                             {savingsAccounts?.length === 0 ? (
-                                <div className='flex flex-col items-center justify-center text-center text-gray-500'>
+                                <div className='flex flex-col items-center justify-center text-center text-gray-500 '>
                                     <div>No savings accounts created.</div>
                                     <div>Click</div>
                                     <Button variant='secondary' className='rounded-lg' size='icon' disabled>
@@ -117,7 +149,7 @@ const Save = () => {
                             )}
                         </div>
                     </div>
-                    <div className='rounded-xl border border-orange-100'>
+                    <div className='rounded-xl border border-orange-100 bg-white shadow'>
                         <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none'>
                             <div className='flex items-center space-x-2 rounded-lg px-2 text-primary'>Debt Accounts</div>
                         </div>
@@ -143,6 +175,14 @@ const Save = () => {
                     </div>
                     <Table table={table} handleRowClick={handleViewSave} />
                 </div>
+                {loading ? (
+                    <div className='text-center'>Analyzing your financial data...</div>
+                ) : analysis ? (
+                    <Card className='whitespace-pre-wrap p-4'>
+                        <h3 className='mb-2 text-lg font-semibold'>Financial Analysis</h3>
+                        {analysis}
+                    </Card>
+                ) : null}
             </div>
             {saveFormOpen && <SaveForm closeForm={handleFormClose} selectedSave={selectedSave} />}
             {settingsFormOpen && <SettingsForm closeForm={handleFormClose} />}

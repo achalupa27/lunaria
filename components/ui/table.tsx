@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment } from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { MoveDown, MoveUp } from 'lucide-react';

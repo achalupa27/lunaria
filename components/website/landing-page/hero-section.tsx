@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
     const [mounted, setMounted] = useState(false);
-    const { data: session } = useSession();
+    const session = true;
 
     useEffect(() => {
         setMounted(true);

@@ -1,3 +1,5 @@
+'use client';
+
 import { MoveLeft, X } from 'lucide-react';
 import { Button } from './button';
 import DismissBackdrop from './dismiss-backdrop';

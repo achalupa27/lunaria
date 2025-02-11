@@ -8,7 +8,6 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/
 import { Input } from '@/components/ui/input';
 import { useSavingsAccountMutations } from '../hooks/use-savings-account-mutations';
 import { useAppSelector } from '@/redux/hooks';
-import { selectUser } from '@/redux/slices/user-slice';
 
 type Props = {
     closeForm: any;
@@ -23,7 +22,6 @@ const FormSchema = z.object({
 });
 
 const SavingAccountForm = ({ closeForm, selectedSavingsAccount }: Props) => {
-    const user = useAppSelector(selectUser);
     const { createSavingsAccountMutation, updateSavingsAccountMutation, deleteSavingsAccountMutation } = useSavingsAccountMutations();
 
     const form = useForm({
@@ -33,11 +31,10 @@ const SavingAccountForm = ({ closeForm, selectedSavingsAccount }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
         console.log('savingsAccount: ', data);
-        if (user) {
+        if (true) {
             if (selectedSavingsAccount) {
                 const updatedSavingsAccount: SavingsAccount = {
                     ...data,
-                    user_email: user!.email,
                     id: selectedSavingsAccount.id,
                 };
 
@@ -45,7 +42,6 @@ const SavingAccountForm = ({ closeForm, selectedSavingsAccount }: Props) => {
             } else {
                 const newSavingsAccount: Omit<SavingsAccount, 'id'> = {
                     ...data,
-                    user_email: user!.email,
                 };
 
                 createSavingsAccountMutation.mutate(newSavingsAccount);

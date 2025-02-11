@@ -1,5 +1,6 @@
+'use client';
+
 import { Sun, Moon } from 'lucide-react';
-import { signOut } from 'next-auth/react';
 import { Button } from '../ui/button';
 import { useTheme } from 'next-themes';
 
@@ -8,7 +9,7 @@ const Settings = () => {
     const currentTheme = theme === 'system' ? systemTheme : theme;
     return (
         <div className='flex h-screen w-screen items-center justify-center'>
-            <Button onClick={() => signOut()}>Sign out</Button>
+            {/* <Button onClick={() => signOut()}>Sign out</Button> */}
 
             {currentTheme === 'dark' ? (
                 <Button size='icon-lg' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>

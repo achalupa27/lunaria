@@ -1,6 +1,6 @@
 type Make = {
     id: string;
-    user_email: string;
+    user_id: string;
     date: Date;
     amount: number;
     currency?: string;
@@ -9,7 +9,7 @@ type Make = {
 
 type Save = {
     id: string;
-    user_email: string;
+    user_id: string;
     date: Date;
     type: 'Withdrawal' | 'Deposit' | string;
     amount: number;
@@ -19,21 +19,21 @@ type Save = {
 
 type DebtAccount = {
     id: string;
-    user_email: string;
+    user_id: string;
     name: string;
     balance: number;
 };
 
 type SavingsAccount = {
     id: string;
-    user_email: string;
+    user_id: string;
     name: string;
     balance: number;
 };
 
 type Spend = {
     id: string;
-    user_email: string;
+    user_id: string;
     date: Date;
     item: string;
     cost: number;
@@ -57,7 +57,8 @@ type FeatureItem = {
 };
 
 type FeatureRow = {
-    description: string;
+    feature: string;
     includedFree: string | boolean;
-    includedProfessional: boolean;
+    includedProfessional: string | boolean;
+    includedPremium: string | boolean;
 };

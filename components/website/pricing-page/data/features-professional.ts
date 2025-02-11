@@ -1,35 +1,32 @@
 export const professionalFeatures = [
     {
-        feature: 'Feature',
+        feature: '100 Transactions / Day',
     },
     {
-        feature: 'Feature',
+        feature: '10 Spending Categories',
     },
     {
-        feature: 'Feature',
+        feature: '10 Spending Budgets',
     },
     {
-        feature: 'Feature',
+        feature: '3 Savings Accounts',
     },
     {
-        feature: 'Feature',
+        feature: '3 Debt Accounts',
     },
     {
-        feature: 'Feature',
+        feature: '3 Income Sources',
     },
     {
-        feature: 'Feature',
+        feature: 'Detailed Income Sources',
     },
     {
-        feature: 'Feature',
+        feature: 'Detailed Debt Accounts',
     },
     {
-        feature: 'Feature',
+        feature: 'Detailed Savings Accounts',
     },
     {
-        feature: 'Feature',
-    },
-    {
-        feature: 'Feature',
+        feature: 'Spending Details',
     },
 ];

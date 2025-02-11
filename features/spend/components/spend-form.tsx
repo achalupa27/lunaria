@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { necessityCategories, spendingCategories } from '@/constants';
 import { useAppSelector } from '@/redux/hooks';
 import Modal from '@/components/ui/modal';
-import { selectUser } from '@/redux/slices/user-slice';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 
@@ -44,7 +43,6 @@ const FormSchema = z.object({
 });
 
 const SpendForm = ({ closeForm, selectedSpend }: Props) => {
-    const user = useAppSelector(selectUser);
     const { createSpendMutation, updateSpendMutation, deleteSpendMutation } = useSpendMutations();
 
     const form = useForm({
@@ -53,19 +51,17 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
     });
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
-        if (user) {
+        if (true) {
             if (selectedSpend) {
                 const updatedSpend: Spend = {
                     ...data,
-                    user_email: user!.email,
                     id: selectedSpend.id,
                 };
 
                 updateSpendMutation.mutate(updatedSpend);
             } else {
-                const newSpend: Omit<Spend, 'id'> = {
+                const newSpend: Omit<Spend, 'id' | 'user_id'> = {
                     ...data,
-                    user_email: user!.email,
                 };
 
                 createSpendMutation.mutate(newSpend);

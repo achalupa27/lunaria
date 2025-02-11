@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppSelector } from '@/redux/hooks';
-import { selectUser } from '@/redux/slices/user-slice';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,7 +35,6 @@ const DebtAccountForm = ({ closeForm, selectedDebtAccount }: Props) => {
             if (selectedDebtAccount) {
                 const updatedSavingsAccount: SavingsAccount = {
                     ...data,
-                    user_email: user!.email,
                     id: selectedDebtAccount.id,
                 };
 
@@ -44,7 +42,6 @@ const DebtAccountForm = ({ closeForm, selectedDebtAccount }: Props) => {
             } else {
                 const newSavingsAccount: Omit<DebtAccount, 'id'> = {
                     ...data,
-                    user_email: user!.email,
                 };
 
                 createDebtAccountMutation.mutate(newSavingsAccount);

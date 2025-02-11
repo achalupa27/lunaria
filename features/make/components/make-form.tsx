@@ -1,12 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@/components/ui/modal';
-import { selectUser } from '@/redux/slices/user-slice';
 import { currencyCategories, incomeSources } from '@/constants';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
 import { useMakeMutations } from '../hooks/use-make-mutations';
-import { useAppSelector } from '@/redux/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
@@ -35,7 +32,6 @@ const FormSchema = z.object({
 });
 
 const MakeForm = ({ closeForm, selectedMake }: Props) => {
-    const user = useAppSelector(selectUser);
     const form = useForm({
         defaultValues: {
             ...selectedMake,
@@ -50,15 +46,13 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
             if (selectedMake) {
                 const updatedMake: Make = {
                     ...data,
-                    user_email: user!.email,
                     id: selectedMake.id,
                 };
 
                 updateMakeMutation.mutate(updatedMake);
             } else {
-                const newMake: Omit<Make, 'id'> = {
+                const newMake: Omit<Make, 'id' | 'user_id'> = {
                     ...data,
-                    user_email: user!.email,
                 };
 
                 createMakeMutation.mutate(newMake);

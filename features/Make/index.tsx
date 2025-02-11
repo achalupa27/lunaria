@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMakeColumns } from '@/hooks/use-make-columns';
 import { formatCurrency } from '@/utils/helper';
 import Table from '@/components/ui/table';
@@ -17,6 +17,8 @@ const Make = () => {
     const [makeFormOpen, setMakeFormOpen] = useState(false);
     const [makeSettingsOpen, setMakeSettingsOpen] = useState(false);
     const [selectedMake, setSelectedMake] = useState<Make | undefined>();
+    const [loading, setLoading] = useState(false);
+    const [analysis, setAnalysis] = useState<string | null>(null);
 
     const { table } = useTable({ data: makes || [], columns: makeColumns });
 
@@ -36,6 +38,33 @@ const Make = () => {
         setMakeSettingsOpen(false);
     };
 
+    const handleAnalysis = async () => {
+        setLoading(true);
+
+        try {
+            const response = await fetch('/api/analyze-income', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    makes,
+                }),
+            });
+
+            const data = await response.json();
+            setAnalysis(data.analysis);
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // useEffect(() => {
+    //     handleAnalysis();
+    // }, []);
+
     return (
         <Page>
             <div className='flex items-center justify-between'>
@@ -46,6 +75,9 @@ const Make = () => {
                 <div className='flex items-center space-x-2'>
                     <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setMakeSettingsOpen(true)}>
                         <Settings />
+                    </Button>
+                    <Button variant='secondary' className='rounded-lg' onClick={handleAnalysis}>
+                        Analyze Income
                     </Button>
                     <Button className='rounded-lg' onClick={handleFormOpen}>
                         + New Making
@@ -84,6 +116,14 @@ const Make = () => {
                     <Table table={table} handleRowClick={handleViewMake} />
                 </div>
             </div>
+            {loading ? (
+                <div className='mt-4 text-center'>Analyzing your income data...</div>
+            ) : analysis ? (
+                <Card className='mt-4 whitespace-pre-wrap p-4'>
+                    <h3 className='mb-2 text-lg font-semibold'>Income Analysis</h3>
+                    {analysis}
+                </Card>
+            ) : null}
             {makeFormOpen && <MakeForm closeForm={handleFormClose} selectedMake={selectedMake} />}
             {makeSettingsOpen && <SettingsForm closeForm={handleFormClose} />}
         </Page>

@@ -5,6 +5,7 @@ import TermChanger from '../pricing-page/term-changer';
 import { MONTHLY_BASIC, YEARLY_BASIC, MONTHLY_PROFESSIONAL, YEARLY_PROFESSIONAL, STRIPE_KEY } from '@/constants';
 import { loadStripe } from '@stripe/stripe-js';
 import { useState } from 'react';
+import PremiumTable from '../pricing-page/premium-table';
 
 const PricingSection = () => {
     const [term, setTerm] = useState<'Monthly' | 'Yearly'>('Yearly');
@@ -46,9 +47,10 @@ const PricingSection = () => {
             <div className='mt-12'>
                 <TermChanger term={term} setTerm={setTerm} />
             </div>
-            <div className='mt-16 flex flex-wrap justify-center gap-20'>
+            <div className='mt-16 flex flex-wrap justify-center gap-12'>
                 <FreeTable />
                 <ProTable term={term} purchaseSubscription={purchaseSubscription} />
+                <PremiumTable term={term} purchaseSubscription={purchaseSubscription} />
             </div>
         </section>
     );

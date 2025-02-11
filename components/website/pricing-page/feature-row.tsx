@@ -1,12 +1,8 @@
-import React from 'react';
-
-type FeatureRowProps = {
-    description: string;
-    includedFree: string | boolean;
-    includedProfessional: string | boolean;
+type Props = {
+    feature: FeatureRow;
 };
 
-const FeatureRow = ({ description, includedFree, includedProfessional }: FeatureRowProps) => {
+const FeatureRow = ({ feature }: Props) => {
     const renderIncludedValue = (value: string | boolean) => {
         if (typeof value === 'boolean') {
             return value ? <i className='fi fi-rr-check text-lg leading-[0px]' /> : null;
@@ -16,9 +12,10 @@ const FeatureRow = ({ description, includedFree, includedProfessional }: Feature
 
     return (
         <div className='flex items-center rounded p-2 px-3 transition duration-200 hover:bg-white'>
-            <div className='flex-1'>{description}</div>
-            <div className='flex-1 text-center'>{renderIncludedValue(includedFree)}</div>
-            <div className='flex-1 text-center'>{renderIncludedValue(includedProfessional)}</div>
+            <div className='flex-1'>{feature.feature}</div>
+            <div className='flex-1 text-center'>{renderIncludedValue(feature.includedFree)}</div>
+            <div className='flex-1 text-center'>{renderIncludedValue(feature.includedProfessional)}</div>
+            <div className='flex-1 text-center'>{renderIncludedValue(feature.includedPremium)}</div>
         </div>
     );
 };

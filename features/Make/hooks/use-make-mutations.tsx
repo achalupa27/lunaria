@@ -2,14 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createMakeService } from '../services/create-make-service';
 import { deleteMakeService } from '../services/delete-make-service';
 import { updateMakeService } from '../services/update-make-service';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
 
 export const useMakeMutations = () => {
     const queryClient = useQueryClient();
-    const supabaseClient = useSupabaseClient();
 
     const createMakeMutation = useMutation({
-        mutationFn: (newMake: Omit<Make, 'id'>) => createMakeService(newMake, supabaseClient),
+        mutationFn: (newMake: Omit<Make, 'id'>) => createMakeService(newMake),
         onSuccess: (newMake: Make) => {
             queryClient.setQueryData(['makes'], (oldMakes: Make[] = []) => [...oldMakes, newMake]);
         },
@@ -20,7 +18,7 @@ export const useMakeMutations = () => {
 
     const updateMakeMutation = useMutation({
         mutationFn: async (updatedMake: Make) => {
-            return updateMakeService(updatedMake, supabaseClient);
+            return updateMakeService(updatedMake);
         },
         onSuccess: (updatedMake: Make) => {
             queryClient.setQueryData(['makes'], (oldMakes: Make[] = []) => oldMakes.map((make) => (make.id === updatedMake.id ? updatedMake : make)));
@@ -31,7 +29,7 @@ export const useMakeMutations = () => {
     });
 
     const deleteMakeMutation = useMutation({
-        mutationFn: (saveId: string) => deleteMakeService(saveId, supabaseClient),
+        mutationFn: (saveId: string) => deleteMakeService(saveId),
         onSuccess: (_, deletedMakeId: string) => {
             queryClient.setQueryData(['makes'], (oldMakes: Make[] = []) => oldMakes.filter((make) => make.id !== deletedMakeId));
         },
