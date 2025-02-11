@@ -7,7 +7,7 @@ export const useMakeMutations = () => {
     const queryClient = useQueryClient();
 
     const createMakeMutation = useMutation({
-        mutationFn: (newMake: Omit<Make, 'id'>) => createMakeService(newMake),
+        mutationFn: (newMake: Omit<Make, 'id' | 'user_id'>) => createMakeService(newMake),
         onSuccess: (newMake: Make) => {
             queryClient.setQueryData(['makes'], (oldMakes: Make[] = []) => [...oldMakes, newMake]);
         },
@@ -17,7 +17,7 @@ export const useMakeMutations = () => {
     });
 
     const updateMakeMutation = useMutation({
-        mutationFn: async (updatedMake: Make) => {
+        mutationFn: async (updatedMake: Omit<Make, 'user_id'>) => {
             return updateMakeService(updatedMake);
         },
         onSuccess: (updatedMake: Make) => {

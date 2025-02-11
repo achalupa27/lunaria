@@ -1,5 +1,5 @@
 type Props = {
-    feature: FeatureRow;
+    feature: FeatureRowType;
 };
 
 const FeatureRow = ({ feature }: Props) => {

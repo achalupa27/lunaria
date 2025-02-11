@@ -32,6 +32,8 @@ const FormSchema = z.object({
 });
 
 const MakeForm = ({ closeForm, selectedMake }: Props) => {
+    const user = true;
+
     const form = useForm({
         defaultValues: {
             ...selectedMake,
@@ -44,7 +46,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
         if (user) {
             if (selectedMake) {
-                const updatedMake: Make = {
+                const updatedMake: Omit<Make, 'user_id'> = {
                     ...data,
                     id: selectedMake.id,
                 };

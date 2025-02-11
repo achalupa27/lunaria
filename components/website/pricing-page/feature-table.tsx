@@ -17,7 +17,7 @@ const FeatureTable = ({ category, features }: any) => {
                             <div className='flex-1 text-center font-semibold'>Pro</div>
                         </div>
                         <div className=''>
-                            {(features as Record<string, any>)[sectionKey].map((feature: FeatureRow) => (
+                            {(features as Record<string, any>)[sectionKey].map((feature: FeatureRowType) => (
                                 <FeatureRow key={feature.feature} feature={feature} />
                             ))}
                             <div className='pt-3'>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 type Props = {
     requiredRole: 'free' | 'pro' | 'premium';
-    userRole: string | null;
+    userRole: 'premium' | 'pro' | 'free' | undefined;
     children: React.ReactNode;
 };
 

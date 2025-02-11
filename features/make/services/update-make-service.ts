@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/client';
 
-export const updateMakeService = async (make: Make): Promise<Make> => {
+export const updateMakeService = async (make: Omit<Make, 'user_id'>): Promise<Make> => {
     const supabase = createClient();
 
     try {

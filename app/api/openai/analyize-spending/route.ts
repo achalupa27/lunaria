@@ -1,17 +1,14 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
-    }
-
+export async function POST(req: Request) {
     try {
-        const { spends } = req.body;
+        const body = await req.json();
+        const { spends } = body;
 
         const completion = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
@@ -30,9 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
 
         const response = completion.choices[0].message.content;
-        return res.status(200).json({ analysis: response });
+        return NextResponse.json({ analysis: response });
     } catch (error) {
         console.error('Error:', error);
-        return res.status(500).json({ message: 'Error analyzing spending' });
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import type { Subscription } from '@/types';
 
 export function useSubscription() {
     const [subscription, setSubscription] = useState<Subscription | null>(null);

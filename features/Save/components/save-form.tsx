@@ -49,7 +49,7 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
         console.log('save: ', data);
-        if (user) {
+        if (true) {
             if (selectedSave) {
                 const updatedSave: Save = {
                     ...data,

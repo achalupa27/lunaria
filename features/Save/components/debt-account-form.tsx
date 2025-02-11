@@ -21,7 +21,6 @@ const FormSchema = z.object({
 });
 
 const DebtAccountForm = ({ closeForm, selectedDebtAccount }: Props) => {
-    const user = useAppSelector(selectUser);
     const { createDebtAccountMutation, updateDebtAccountMutation, deleteDebtAccountMutation } = useDebtAccountMutations();
 
     const form = useForm({
@@ -31,7 +30,7 @@ const DebtAccountForm = ({ closeForm, selectedDebtAccount }: Props) => {
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
         console.log('formData: ', data);
-        if (user) {
+        if (true) {
             if (selectedDebtAccount) {
                 const updatedSavingsAccount: SavingsAccount = {
                     ...data,

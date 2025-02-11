@@ -1,4 +1,4 @@
-import { createServerClient } from '@supabase/ssr';
+import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
 
@@ -7,7 +7,7 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
     const body = await req.text();
-    const signature = headers().get('Stripe-Signature') as string;
+    const signature = (await headers()).get('Stripe-Signature') as string;
 
     let event: Stripe.Event;
 
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         return new Response(`Webhook Error: ${error.message}`, { status: 400 });
     }
 
-    const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+    const supabase = await createClient();
 
     try {
         switch (event.type) {

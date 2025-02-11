@@ -1,6 +1,6 @@
 type Make = {
     id: string;
-    user_id: string;
+    // user_id: string;
     date: Date;
     amount: number;
     currency?: string;
@@ -9,7 +9,7 @@ type Make = {
 
 type Save = {
     id: string;
-    user_id: string;
+    // user_id: string;
     date: Date;
     type: 'Withdrawal' | 'Deposit' | string;
     amount: number;
@@ -19,21 +19,21 @@ type Save = {
 
 type DebtAccount = {
     id: string;
-    user_id: string;
+    // user_id: string;
     name: string;
     balance: number;
 };
 
 type SavingsAccount = {
     id: string;
-    user_id: string;
+    // user_id: string;
     name: string;
     balance: number;
 };
 
 type Spend = {
     id: string;
-    user_id: string;
+    // user_id: string;
     date: Date;
     item: string;
     cost: number;
@@ -56,14 +56,14 @@ type FeatureItem = {
     comingSoon: boolean;
 };
 
-type FeatureRow = {
+type FeatureRowType = {
     feature: string;
     includedFree: string | boolean;
     includedProfessional: string | boolean;
     includedPremium: string | boolean;
 };
 
-export type Subscription = {
+type Subscription = {
     id: string;
     role: 'free' | 'pro' | 'premium';
     stripe_customer_id?: string;

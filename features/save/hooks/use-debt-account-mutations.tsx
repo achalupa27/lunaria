@@ -33,7 +33,7 @@ export const useDebtAccountMutations = () => {
 
     const updateDebtAccountMutation = useMutation({
         mutationFn: async (updatedDebtAccount: DebtAccount) => {
-            return updateDebtAccountService(updatedDebtAccount, supabaseClient);
+            return updateDebtAccountService(updatedDebtAccount);
         },
         onSuccess: (updatedDebtAccount: DebtAccount) => {
             queryClient.setQueryData(['debtAccounts'], (oldDebtAccounts: DebtAccount[] = []) => oldDebtAccounts.map((debtAccount) => (debtAccount.id === updatedDebtAccount.id ? updatedDebtAccount : debtAccount)));
@@ -57,7 +57,7 @@ export const useDebtAccountMutations = () => {
     });
 
     const deleteDebtAccountMutation = useMutation({
-        mutationFn: (debtAccountId: string) => deleteDebtAccountService(debtAccountId, supabaseClient),
+        mutationFn: (debtAccountId: string) => deleteDebtAccountService(debtAccountId),
         onSuccess: (_, deletedDebtAccountId: string) => {
             queryClient.setQueryData(['debtAccounts'], (oldDebtAccounts: Save[] = []) => oldDebtAccounts.filter((debtAccount) => debtAccount.id !== deletedDebtAccountId));
             toast({

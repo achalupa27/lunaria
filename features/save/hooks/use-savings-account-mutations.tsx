@@ -57,7 +57,7 @@ export const useSavingsAccountMutations = () => {
     });
 
     const deleteSavingsAccountMutation = useMutation({
-        mutationFn: (savingsAccountId: string) => deleteSavingsAccountService(savingsAccountId, supabaseClient),
+        mutationFn: (savingsAccountId: string) => deleteSavingsAccountService(savingsAccountId),
         onSuccess: (_, deletedSavingsAccountId: string) => {
             queryClient.setQueryData(['savingsAccounts'], (oldSavingsAccounts: SavingsAccount[] = []) => oldSavingsAccounts.filter((savingsAccount) => savingsAccount.id !== deletedSavingsAccountId));
             toast({
