@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { MONTHLY_PREMIUM_PRICE, PREMIUM_MONTHLY, PREMIUM_YEARLY, YEARLY_PREMIUM_PRICE } from '@/constants';
+import { MONTHLY_PREMIUM_PRICE, PREMIUM_MONTHLY_URL, PREMIUM_YEARLY_URL, YEARLY_PREMIUM_PRICE } from '@/constants';
 import {} from '@/components/website/pricing-page/data/features-professional';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
@@ -55,7 +55,7 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
             </div>
             {session ? (
                 <Button asChild className='rounded-b-xl' size='lg'>
-                    <Link href={term === 'Monthly' ? PREMIUM_MONTHLY : PREMIUM_YEARLY}>Start Trial</Link>
+                    <Link href={term === 'Monthly' ? PREMIUM_MONTHLY_URL : PREMIUM_YEARLY_URL}>Start Trial</Link>
                 </Button>
             ) : (
                 <Button onClick={onSignUpClick} className='rounded-b-xl' size='lg'>

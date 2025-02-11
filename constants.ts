@@ -1,9 +1,14 @@
 export const COMPANY_NAME = 'Lunaria';
 
-export const PREMIUM_MONTHLY = 'https://buy.stripe.com/test_bIY8yIgVTemx4Ra8wy';
-export const PREMIUM_YEARLY = 'https://buy.stripe.com/test_5kAeX6cFD0vH2J2dQT';
-export const PRO_MONTHLY = 'https://buy.stripe.com/test_00g7uEcFD5Q16Zi004';
-export const PRO_YEARLY = 'https://buy.stripe.com/test_cN26qAeNLfqB83m9AF';
+export const PREMIUM_MONTHLY_URL = 'https://buy.stripe.com/test_bIY8yIgVTemx4Ra8wy';
+export const PREMIUM_YEARLY_URL = 'https://buy.stripe.com/test_5kAeX6cFD0vH2J2dQT';
+export const PRO_MONTHLY_URL = 'https://buy.stripe.com/test_00g7uEcFD5Q16Zi004';
+export const PRO_YEARLY_URL = 'https://buy.stripe.com/test_cN26qAeNLfqB83m9AF';
+
+export const PREMIUM_MONTHLY_ID = 'prod_RktN2CkI5HgcgV';
+export const PREMIUM_YEARLY_ID = 'prod_RktO0R2LSHiWH0';
+export const PRO_MONTHLY_ID = 'prod_RktRVBpmvHQlIq';
+export const PRO_YEARLY_ID = 'prod_RktSyAejAxttKO';
 
 export const MONTHLY_PRO_PRICE = '5';
 export const YEARLY_PRO_PRICE = '4';

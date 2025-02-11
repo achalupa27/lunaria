@@ -1,9 +1,23 @@
 import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
+import { PREMIUM_MONTHLY_ID, PREMIUM_YEARLY_ID, PRO_MONTHLY_ID, PRO_YEARLY_ID } from '@/constants';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+
+// Create a mapping of product IDs to roles
+const PRODUCT_TO_ROLE = {
+    [PREMIUM_MONTHLY_ID]: 'premium',
+    [PREMIUM_YEARLY_ID]: 'premium',
+    [PRO_MONTHLY_ID]: 'pro',
+    [PRO_YEARLY_ID]: 'pro',
+} as const;
+
+// Add type guard
+function isKnownProduct(productId: string): productId is keyof typeof PRODUCT_TO_ROLE {
+    return productId in PRODUCT_TO_ROLE;
+}
 
 export async function POST(req: Request) {
     const body = await req.text();
@@ -24,10 +38,10 @@ export async function POST(req: Request) {
             case 'customer.subscription.created':
             case 'customer.subscription.updated':
                 const subscription = event.data.object as Stripe.Subscription;
-                const price = subscription.items.data[0].price;
+                const productId = subscription.items.data[0].price.product as string;
 
-                // Map price IDs to roles
-                const role = price.id === process.env.STRIPE_PREMIUM_PRICE_ID ? 'premium' : 'pro';
+                const role = isKnownProduct(productId) ? PRODUCT_TO_ROLE[productId] : 'free';
+                console.log('role', role);
 
                 await supabase
                     .from('subscriptions')
@@ -35,13 +49,14 @@ export async function POST(req: Request) {
                         role,
                         stripe_subscription_id: subscription.id,
                         status: subscription.status,
-                        price_id: price.id,
+                        price_id: subscription.items.data[0].price.id,
                     })
                     .eq('stripe_customer_id', subscription.customer);
                 break;
 
             case 'customer.subscription.deleted':
                 const deletedSubscription = event.data.object as Stripe.Subscription;
+                console.log('deletedSubscription', deletedSubscription);
 
                 await supabase
                     .from('subscriptions')
@@ -53,6 +68,9 @@ export async function POST(req: Request) {
                     })
                     .eq('stripe_customer_id', deletedSubscription.customer);
                 break;
+
+            default:
+                console.log(`Unhandled event type ${event.type}`);
         }
     } catch (error) {
         console.log(error);

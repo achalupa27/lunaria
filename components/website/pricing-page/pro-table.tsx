@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { MONTHLY_PRO_PRICE, PRO_MONTHLY, PRO_YEARLY, YEARLY_PRO_PRICE } from '@/constants';
+import { MONTHLY_PRO_PRICE, PRO_MONTHLY_URL, PRO_YEARLY_URL, YEARLY_PRO_PRICE } from '@/constants';
 import { professionalFeatures } from '@/components/website/pricing-page/data/features-professional';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
@@ -54,7 +54,7 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
             </div>
             {session ? (
                 <Button className='rounded-b-xl' size='lg' asChild>
-                    <Link href={term === 'Monthly' ? PRO_MONTHLY : PRO_YEARLY}>Start Trial</Link>
+                    <Link href={term === 'Monthly' ? PRO_MONTHLY_URL : PRO_YEARLY_URL}>Start Trial</Link>
                 </Button>
             ) : (
                 <Button onClick={onSignUpClick} className='rounded-b-xl' size='lg'>
