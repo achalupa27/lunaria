@@ -1,12 +1,14 @@
-import { useRouter } from 'next/router';
+'use client';
+
 import Head from 'next/head';
 import Header from './header';
 import Footer from './footer';
 import { Toaster } from '../../ui/toaster';
+import { usePathname } from 'next/navigation';
 
 function Layout({ children }: any) {
-    const router = useRouter();
-    if (router.pathname != '/dashboard') {
+    const pathname = usePathname();
+    if (pathname != '/dashboard') {
         return (
             <div>
                 <Head>

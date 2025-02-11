@@ -1,3 +1,6 @@
+'use client';
+
+import OneTapComponent from '@/components/website/auth/google-one-tap';
 import FAQSection from '@/components/website/landing-page/faq-section';
 import FeaturesSection from '@/components/website/landing-page/features-section';
 import FinalCTASection from '@/components/website/landing-page/final-cta-section';
@@ -12,6 +15,7 @@ import TestimonialSection from '@/components/website/landing-page/testimonial-se
 export default function Home() {
     return (
         <div>
+            <OneTapComponent />
             <HeroSection />
             <ProblemSection />
             <SolutionSection />

@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Moon, Sun, User } from 'lucide-react';
 import MobileMenu from './mobile-menu';
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import Auth from '@/components/website/auth';

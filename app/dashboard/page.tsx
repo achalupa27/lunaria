@@ -1,3 +1,5 @@
+'use client';
+
 import Sidebar from '@/components/application/sidebar';
 import Activity from '@/components/application/activity';
 

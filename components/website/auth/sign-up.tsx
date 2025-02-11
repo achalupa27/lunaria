@@ -58,7 +58,7 @@ const SignUp: FC<SignUpProps> = ({ onSuccess, onLoginClick }) => {
             <div className='flex w-full items-center justify-center'>
                 <Logo filled={true} />
             </div>
-            <h2 className='pb-8 text-center text-2xl font-bold'>Sign Up</h2>
+            <h2 className='pb-8 text-center text-2xl font-medium'>Sign Up</h2>
             {error && <div className='rounded bg-red-100 p-3 text-sm text-red-500'>{error}</div>}
 
             <Button onClick={handleGoogleSignUp} disabled={loading} variant='secondary' size='lg' className='w-full'>
@@ -91,7 +91,7 @@ const SignUp: FC<SignUpProps> = ({ onSuccess, onLoginClick }) => {
                 </Button>
             </form>
 
-            <div className='pt-6 text-center text-sm'>
+            <div className='pt-10 text-center text-sm'>
                 Already have an account?{' '}
                 <button onClick={onLoginClick} className='text-blue-600 hover:underline'>
                     Log In

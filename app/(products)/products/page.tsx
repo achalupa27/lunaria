@@ -8,7 +8,7 @@ const Features = () => {
     const user = false;
 
     return (
-        <div className='mx-auto min-h-screen max-w-5xl space-y-20 px-20 pb-8 pt-32'>
+        <div className='mx-auto min-h-screen max-w-7xl space-y-20 pb-8 pt-32'>
             <ProductsHero />
             <DashboardSection />
             <MakeSection />

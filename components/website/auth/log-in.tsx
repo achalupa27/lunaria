@@ -59,7 +59,7 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
             <div className='flex w-full items-center justify-center'>
                 <Logo filled={true} />
             </div>
-            <h2 className='pb-8 text-center text-2xl font-bold'>Log In</h2>
+            <h2 className='pb-8 text-center text-2xl font-medium'>Log In</h2>
             {error && <div className='rounded bg-red-100 p-3 text-sm text-red-500'>{error}</div>}
 
             <Button variant='secondary' size='lg' onClick={handleGoogleLogin} disabled={loading} className='w-full'>
@@ -92,7 +92,7 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
                 </Button>
             </form>
 
-            <div className='space-y-2 text-center'>
+            <div className='space-y-2 text-center pt-8'>
                 <button onClick={onForgotPasswordClick} className='text-sm text-blue-600 hover:underline'>
                     Forgot Password?
                 </button>

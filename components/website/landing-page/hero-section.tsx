@@ -19,7 +19,7 @@ const HeroSection = () => {
         <section className='flex min-h-screen flex-col items-center justify-center'>
             <div className='mb-12 text-center text-lg font-semibold md:text-3xl xl:text-4xl'>Looking to Clean Up your Money?</div>
             <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.25 }}>
-                <h1 className='gradient-bg bg-black bg-clip-text text-4xl font-semibold tracking-tighter text-transparent dark:bg-gradient-to-r md:text-6xl xl:text-8xl'>Welcome to your </h1>
+                <h1 className='dark:gradient-bg dark:bg-clip-text text-4xl font-semibold tracking-tighter dark:text-transparent dark:bg-gradient-to-r md:text-6xl xl:text-8xl'>Welcome to your </h1>
             </motion.div>
             <div className='dark:gradient-bg flex text-4xl font-semibold tracking-tighter dark:bg-gradient-to-r dark:bg-clip-text dark:text-transparent md:text-6xl xl:text-8xl'>
                 <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.75 }}>
