@@ -1,13 +1,13 @@
 'use client';
 
+import Logo from '@/components/icons/logo';
+import MakeIcon from '@/components/icons/make-icon';
+import SaveIcon from '@/components/icons/save-icon';
+import SpendIcon from '@/components/icons/spend-icon';
+import { Button } from '@/components/ui/button';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { selectTab, setTab } from '@/redux/slices/tab-slice';
-import MakeIcon from '../icons/make-icon';
-import SaveIcon from '../icons/save-icon';
-import SpendIcon from '../icons/spend-icon';
-import Logo from '../icons/logo';
 import { Sun, Moon, Settings } from 'lucide-react';
-import { Button } from '../ui/button';
 import { useTheme } from 'next-themes';
 
 const Sidebar = () => {
