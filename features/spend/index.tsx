@@ -95,7 +95,7 @@ const Spend = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('/api/analyze-spending', {
+            const response = await fetch('/api/openai/analyze-spending', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

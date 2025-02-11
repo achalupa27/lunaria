@@ -42,7 +42,7 @@ const Make = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('/api/analyze-income', {
+            const response = await fetch('/api/openai/analyze-income', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 'use client';
 
-import Sidebar from '@/components/application/sidebar';
 import Activity from '@/components/application/activity';
+import Sidebar from '@/features/side-bar';
 
 const App = () => {
     return (

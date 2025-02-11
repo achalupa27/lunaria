@@ -60,7 +60,7 @@ const Save = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('/api/analyze-savings', {
+            const response = await fetch('/api/openai/analyze-savings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
