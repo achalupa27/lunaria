@@ -62,3 +62,14 @@ type FeatureRow = {
     includedProfessional: string | boolean;
     includedPremium: string | boolean;
 };
+
+export type Subscription = {
+    id: string;
+    role: 'free' | 'pro' | 'premium';
+    stripe_customer_id?: string;
+    stripe_subscription_id?: string;
+    price_id?: string;
+    status?: string;
+    created_at: string;
+    updated_at: string;
+};

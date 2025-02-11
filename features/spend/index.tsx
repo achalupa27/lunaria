@@ -12,6 +12,8 @@ import SettingsForm from './components/settings-form';
 import useFetchSpends from './hooks/use-fetch-spends';
 import { useSpendColumns } from './hooks/use-spend-columns';
 import { useTable } from '@/hooks/use-table';
+import { useSubscription } from '@/hooks/use-subscription';
+import ProtectedFeature from '@/components/feature';
 
 const Spend = () => {
     const { data: spends } = useFetchSpends();
@@ -112,6 +114,12 @@ const Spend = () => {
         }
     };
 
+    const { subscription, loading: subscriptionLoading } = useSubscription();
+
+    if (subscriptionLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Page>
             <div className='flex justify-between'>
@@ -123,9 +131,11 @@ const Spend = () => {
                     <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setSettingsFormOpen(true)}>
                         <Settings />
                     </Button>
-                    <Button variant='secondary' className='rounded-lg' onClick={handleAnalysis}>
-                        Analyze Spending
-                    </Button>
+                    <ProtectedFeature requiredRole='premium' userRole={subscription?.role}>
+                        <Button variant='secondary' className='rounded-lg' onClick={handleAnalysis}>
+                            Analyze Spending
+                        </Button>
+                    </ProtectedFeature>
                     <Button variant='secondary' className='rounded-lg' onClick={() => setBudgetFormOpen(true)}>
                         + Create Budget
                     </Button>
