@@ -25,13 +25,13 @@ const TestimonialSection = () => {
             <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-6'>
                 What Our Users Say
             </motion.h2>
-            <div className='mt-12 flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0'>
+            <div className='grid items-stretch gap-8 md:grid-cols-3'>
                 {testimonials.map((testimonial, index) => (
-                    <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.2, delay: index * 0.3 }} viewport={{ once: true }} className='flex-1'>
-                        <Card className='px-10 py-12'>
-                            <div className='mb-2 text-2xl font-medium'>{testimonial.name}</div>
-                            <p className='flex h-32 items-center italic text-zinc-500'>&quot;{testimonial.feedback}&quot;</p>
-                            <div className='mt-2 text-sm text-zinc-400'>{testimonial.role}</div>
+                    <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }} className='flex h-full'>
+                        <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>
+                            <div className='text-2xl font-medium'>{testimonial.name}</div>
+                            <p className='flex md:min-h-32 min-h-20 items-center italic py-3'>&quot;{testimonial.feedback}&quot;</p>
+                            <div className='text-sm text-zinc-400'>{testimonial.role}</div>
                         </Card>
                     </motion.div>
                 ))}

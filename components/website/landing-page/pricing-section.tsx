@@ -7,7 +7,7 @@ const PricingSection = () => {
             <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-4 text-4xl font-semibold'>
                 Simple, Transparent Pricing
             </motion.h2>
-            <motion.p initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3 }} className='text-xl text-zinc-700 mb-24'>
+            <motion.p initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3 }} className='text-xl text-zinc-700 dark:text-zinc-400 mb-24'>
                 No hidden fees. Cancel anytime.
             </motion.p>
             <PricingTables />

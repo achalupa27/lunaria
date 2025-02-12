@@ -9,7 +9,7 @@ const faqItems = [
 
 const FAQSection = () => {
     return (
-        <section className='py-24'>
+        <section className='my-24'>
             <div className='space-12 container mx-auto flex flex-col px-4 md:flex-row'>
                 <div className='w-fit'>
                     <div>FAQ</div>

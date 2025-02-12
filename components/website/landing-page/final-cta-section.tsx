@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const FinalCTASection = () => {
     return (
-        <motion.section initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='dark:gradient-bg mb-16 flex flex-col items-center justify-center rounded-[2rem] bg-gradient-to-bl from-[#f4e1b2]/80 via-[#f2ca73]/80 to-[#f9d97c]/80 px-8 py-24 text-center'>
+        <motion.section initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.2 }} className='dark:gradient-bg my-24 flex flex-col items-center justify-center rounded-[2rem] bg-gradient-to-bl from-[#f4e1b2]/80 via-[#f2ca73]/80 to-[#f9d97c]/80 px-16 py-16 sm:py-24 text-center'>
             <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-4 text-4xl font-semibold text-black'>
                 Take Control of Your Finances Today
             </motion.h2>

@@ -35,14 +35,14 @@ const FreeTable = ({ onSignUpClick }: Props) => {
     }, [supabase.auth]);
 
     return (
-        <div className='flex h-[36rem] w-[22rem] flex-col rounded-2xl border border-orange-50 bg-white p-1 shadow dark:bg-black'>
+        <div className='flex h-[36rem] w-full sm:w-[22rem] flex-col rounded-2xl border border-orange-50 bg-white p-1 shadow dark:bg-black'>
             <div className='mx-auto mt-4 text-center'>
                 <div className='text-4xl'>Free</div>
-                <div className='text-lg'>No Credit Card required.</div>
+                <div className='text-base sm:text-lg '>No Credit Card required.</div>
             </div>
             <div className='grow px-6 pt-4'>
                 {freeFeatures.map((feature, i) => (
-                    <div key={i} className='flex items-center gap-2 leading-8'>
+                    <div key={i} className='flex items-center gap-2 leading-8 text-sm sm:text-base'>
                         <CheckCircle size={18} className='text-green-400' /> <div>{feature.feature}</div>
                     </div>
                 ))}

@@ -22,15 +22,17 @@ const PricingTables = () => {
 
     return (
         <>
-            <TermChanger term={term} setTerm={setTerm} />
+            <div className='flex flex-col w-full items-center justify-center'>
+                <TermChanger term={term} setTerm={setTerm} />
+            </div>
             <div className='mt-16 flex flex-wrap justify-center gap-12'>
                 <FreeTable onSignUpClick={handleSignUpClick} />
                 <ProTable term={term} onSignUpClick={handleSignUpClick} />
                 <PremiumTable term={term} onSignUpClick={handleSignUpClick} />
-
+                {/* 
                 <Auth isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)}>
                     {authView === 'signup' && <SignUp onSuccess={handleSignUpSuccess} onLoginClick={() => setAuthView('login')} />}
-                </Auth>
+                </Auth> */}
             </div>
         </>
     );

@@ -19,7 +19,7 @@ const About = () => {
                 <div className='max-w-3xl mx-auto px-4 sm:px-6 lg:px-8'>
                     <h2 className=' text-center mb-12'>Our Story</h2>
                     <p className='text-lg text-zinc-600 mb-8 leading-relaxed'>Founded in 2023, we started with a simple mission: to make personal finance management accessible and stress-free for everyone. We recognized that many people struggle with financial planning and wanted to create a solution that combines powerful technology with intuitive design.</p>
-                    <p className='text-lg text-zinc-600 leading-relaxed'>Today, we're proud to help thousands of users take control of their financial lives through smart budgeting, investing, and financial education.</p>
+                    <p className='text-lg text-zinc-600 leading-relaxed'>Today, we&apos;re proud to help thousands of users take control of their financial lives through smart budgeting, investing, and financial education.</p>
                 </div>
             </div>
 

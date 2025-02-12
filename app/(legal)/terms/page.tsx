@@ -6,12 +6,12 @@ const TermsOfUse = () => {
             <section className='border-b pb-6 pt-20'>
                 <h2 className='mb-2 text-center'>Terms of Use</h2>
                 <p className='text-sm text-zinc-700 dark:text-zinc-300 text-center'>Effective Date: February 12, 2025</p>
-                <p className='mt-4'>Welcome to Lunaria. Please read these Terms of Use ("Terms") carefully before using the Lunaria personal finance SaaS platform ("Service"). By accessing or using the Service, you agree to be bound by these Terms, our Privacy Policy, and any additional policies referenced herein. If you do not agree with these Terms, do not use the Service.</p>
+                <p className='mt-4'>Welcome to Lunaria. Please read these Terms of Use (&quot;Terms&quot;) carefully before using the Lunaria personal finance SaaS platform (&quot;Service&quot;). By accessing or using the Service, you agree to be bound by these Terms, our Privacy Policy, and any additional policies referenced herein. If you do not agree with these Terms, do not use the Service.</p>
             </section>
 
             <section>
                 <h3 className='mb-2'>Acceptance and User Eligibility</h3>
-                <p className='mb-2'>By accessing or using our Service, you ("User", "you", or "your") agree to these Terms and our Privacy Policy. If you are using the Service on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these Terms.</p>
+                <p className='mb-2'>By accessing or using our Service, you (&quot;User&quot;, &quot;you&quot;, or &quot;your&quot;) agree to these Terms and our Privacy Policy. If you are using the Service on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these Terms.</p>
                 <p>You must be at least 18 years of age (or the legal age of majority in your jurisdiction) to use this Service. If you do not meet this requirement, you must not access or use the Service.</p>
             </section>
 
@@ -23,7 +23,7 @@ const TermsOfUse = () => {
 
             <section>
                 <h3 className='mb-2'>Acceptable Use</h3>
-                <p className='mb-2'>To keep our community safe and friendly, we ask that you don't use the service for any unlawful purposes, including:</p>
+                <p className='mb-2'>To keep our community safe and friendly, we ask that you don&apos;t use the service for any unlawful purposes, including:</p>
                 <ul className='list-disc list-inside my-2'>
                     <li>Harassment or abuse of other users</li>
                     <li>Distribution of malware or malicious content</li>
@@ -44,13 +44,13 @@ const TermsOfUse = () => {
 
             <section>
                 <h3 className='mb-2'>Feedback to Lunaria</h3>
-                <p className='mb-2'>We welcome your feedback, suggestions, or ideas ("Feedback") regarding the Service. By submitting any Feedback, you grant Lunaria a perpetual, irrevocable, non-exclusive, worldwide, royalty-free license to use, modify, reproduce, distribute, and otherwise exploit the Feedback for any purpose, without any obligation to you.</p>
+                <p className='mb-2'>We welcome your feedback, suggestions, or ideas (&quot;Feedback&quot;) regarding the Service. By submitting any Feedback, you grant Lunaria a perpetual, irrevocable, non-exclusive, worldwide, royalty-free license to use, modify, reproduce, distribute, and otherwise exploit the Feedback for any purpose, without any obligation to you.</p>
                 <p>You acknowledge that any Feedback provided is non-confidential and may be used by Lunaria in its business operations.</p>
             </section>
 
             <section>
                 <h3 className='mb-2'>User Content</h3>
-                <p className='mb-2'>"User Content" means any text, images, videos, data, or other materials that you submit, post, upload, or otherwise provide through our Service.</p>
+                <p className='mb-2'>&quot;User Content&quot; means any text, images, videos, data, or other materials that you submit, post, upload, or otherwise provide through our Service.</p>
                 <p className='mb-2'>By submitting User Content, you grant Lunaria a worldwide, non-exclusive, royalty-free, irrevocable license to use, reproduce, modify, distribute, publicly display, and create derivative works of such content solely for the purposes of operating, promoting, and improving the Service.</p>
                 <p className='mb-2'>You represent and warrant that you own or have all necessary rights and permissions to submit the User Content and to grant the above license, and that your User Content does not infringe on the intellectual property rights or other rights of any third party.</p>
                 <p className='mb-2'>You are solely responsible for the User Content you provide. Lunaria is not responsible for any loss, damage, or liability arising from or relating to your User Content.</p>
@@ -121,7 +121,7 @@ const TermsOfUse = () => {
 
             <section>
                 <h3 className='mb-2'>Disclaimer of Warranties</h3>
-                <p className='mb-2'>The Service is provided on an "as is" and "as available" basis without any representations or warranties, express or implied. Lunaria disclaims all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+                <p className='mb-2'>The Service is provided on an &quot;as is&quot; and &quot;as available&quot; basis without any representations or warranties, express or implied. Lunaria disclaims all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
                 <p className='mb-2'>We do not warrant that the Service will be uninterrupted, secure, error-free, or free from viruses or other harmful components. Your use of the Service is entirely at your own risk.</p>
                 <p>In no event shall Lunaria be liable for any damages arising from your use or inability to use the Service.</p>
             </section>
@@ -156,7 +156,7 @@ const TermsOfUse = () => {
 
             <section>
                 <h3 className='mb-2'>Waiver</h3>
-                <p className='mb-2'>Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not effect a party's ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.</p>
+                <p className='mb-2'>Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not effect a party&apos;s ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.</p>
             </section>
 
             <section>
@@ -172,7 +172,7 @@ const TermsOfUse = () => {
 
             <section>
                 <h3 className='mb-2'>United States Legal Compliance</h3>
-                <p>You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.</p>
+                <p>You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a &quot;terrorist supporting&quot; country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.</p>
             </section>
 
             <section>
@@ -188,7 +188,7 @@ const TermsOfUse = () => {
 
             <section>
                 <h3 className='mb-2'>Modifications to the Service</h3>
-                <p className='mb-2'>We're constantly improving our service. This means we may modify or discontinue features at any time, though we'll always try to give you notice of significant changes.</p>
+                <p className='mb-2'>We&apos;re constantly improving our service. This means we may modify or discontinue features at any time, though we&apos;ll always try to give you notice of significant changes.</p>
             </section>
 
             <section>

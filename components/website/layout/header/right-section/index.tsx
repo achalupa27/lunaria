@@ -76,7 +76,7 @@ const RightSection = () => {
 
     return (
         <>
-            <div className='mr-4 flex flex-1 justify-end lg:space-x-2'>
+            <div className='flex flex-1 justify-end lg:space-x-2'>
                 {currentTheme === 'dark' ? (
                     <Button size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
                         <Sun />

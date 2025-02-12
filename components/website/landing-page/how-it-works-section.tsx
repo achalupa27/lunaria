@@ -6,7 +6,8 @@ import Card from '@/components/ui/card';
 const HowItWorksSection = () => {
     return (
         <section className='flex flex-col items-center justify-center'>
-            <h2 className='mb-10 mt-20 text-4xl font-semibold'>A Simple Way to Think About Money</h2>
+            <h2 className='mb-4 mt-20 text-4xl font-semibold text-center'>A Simple Way to Think About Money</h2>
+            <p className='max-w-2xl text-lg text-zinc-500 text-center mb-10'>Make - Save - Spend</p>
             <div className='flex flex-col gap-6 md:flex-row'>
                 <Card className='mt-0 flex flex-1 flex-col-reverse items-center p-8 text-center dark:border dark:border-orange-50/10 dark:shadow-lg dark:shadow-orange-50/20 md:mt-6 md:flex-row md:text-start'>
                     <div className='flex-1'>
