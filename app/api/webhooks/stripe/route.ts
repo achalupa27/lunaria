@@ -37,8 +37,6 @@ export async function POST(req: Request) {
     }
 
     const supabase = await createClient();
-    const { data } = await supabase.auth.getUser();
-    console.log('data', data);
 
     try {
         switch (event.type) {

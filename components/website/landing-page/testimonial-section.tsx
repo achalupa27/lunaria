@@ -22,7 +22,7 @@ const TestimonialSection = () => {
 
     return (
         <section className='flex flex-col items-center justify-center py-24 text-center'>
-            <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-6 text-4xl font-semibold'>
+            <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-6'>
                 What Our Users Say
             </motion.h2>
             <div className='mt-12 flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0'>

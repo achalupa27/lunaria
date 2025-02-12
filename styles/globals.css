@@ -16,7 +16,7 @@
         @apply font-semibold md:text-3xl xl:text-4xl;
     }
     h3 {
-        @apply text-xl font-bold;
+        @apply text-2xl font-medium;
     }
     i {
         @apply leading-none;
