@@ -32,12 +32,20 @@ const TermsOfUse = () => {
                 </ul>
             </section>
 
+            {/* User & Data */}
+
             <section>
                 <h3 className='mb-2'>Intellectual Property</h3>
                 <p className='mb-2'>All software, content, technology, and materials provided as part of the Service are the exclusive property of Lunaria or its licensors. No ownership rights are transferred to you under these Terms.</p>
                 <p>You may not modify, reproduce, distribute, or create derivative works of any part of the Service without our express written consent.</p>
                 <p>All intellectual property rights in the service and its content belong to us or our licensors. This includes but is not limited to software, designs, logos, and documentation.</p>
                 <p>Any feedback, comments, or suggestions you provide regarding the service may be used by us without any obligation to compensate you.</p>
+            </section>
+
+            <section>
+                <h3 className='mb-2'>Feedback to Lunaria</h3>
+                <p className='mb-2'>We welcome your feedback, suggestions, or ideas ("Feedback") regarding the Service. By submitting any Feedback, you grant Lunaria a perpetual, irrevocable, non-exclusive, worldwide, royalty-free license to use, modify, reproduce, distribute, and otherwise exploit the Feedback for any purpose, without any obligation to you.</p>
+                <p>You acknowledge that any Feedback provided is non-confidential and may be used by Lunaria in its business operations.</p>
             </section>
 
             <section>
@@ -70,6 +78,12 @@ const TermsOfUse = () => {
             </section>
 
             <section>
+                <h3 className='mb-2'>Emails</h3>
+                <p className='mb-2'>By providing your email address during registration or while using the Service, you consent to receive communications, updates, and promotional emails from Lunaria. You may opt-out of these emails at any time by following the unsubscribe instructions included in our emails or by contacting us directly.</p>
+                <p>While we strive to ensure our email communications are secure and error-free, Lunaria is not responsible for any delays, errors, or inaccuracies in the delivery of emails.</p>
+            </section>
+
+            <section>
                 <h3 className='mb-2'>Third Party Sites and Advertisers</h3>
                 <p className='mb-2'>
                     The Service may include links to third-party websites and display content or advertisements provided by third-party advertisers. These links and advertisements are provided solely for your convenience, and Lunaria does not endorse, control, or assume any responsibility for the content, privacy practices, or terms of use of any third-party sites or advertisers. Lunaria does not verify the accuracy
@@ -88,6 +102,8 @@ const TermsOfUse = () => {
                 <h3 className='mb-2'>Termination</h3>
                 <p className='mb-2'>While we hope it never comes to this, we reserve the right to suspend or terminate accounts that violate these terms or harm our community.</p>
             </section>
+
+            {/* Legal Stuff */}
 
             <section>
                 <h3 className='mb-2'>Financial Disclaimers and Regulatory Compliance</h3>
@@ -111,7 +127,7 @@ const TermsOfUse = () => {
             </section>
 
             <section className='mb-8'>
-                <h3 className='mb-2 text-xl font-bold'>Limitation of Liability</h3>
+                <h3 className='mb-2'>Limitation of Liability</h3>
                 <p className='mb-2'>To the fullest extent permitted by law, our total liability for any claims arising out of or related to these Terms or your use of the Service shall not exceed the total fees paid by you during the twelve (12) months preceding the incident giving rise to the claim.</p>
                 <p>In no event shall we be liable for any indirect, incidental, consequential, or punitive damages, including loss of profits or data.</p>
             </section>
@@ -134,11 +150,6 @@ const TermsOfUse = () => {
             </section>
 
             <section>
-                <h3 className='mb-2'>United States Legal Compliance</h3>
-                <p>You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.</p>
-            </section>
-
-            <section>
                 <h3 className='mb-2'>Severability</h3>
                 <p>If any provision of this Agreement is unlawful, void, or unenforceable for any reason, then that provision will be severed and the remaining provisions will remain in full force and effect.</p>
             </section>
@@ -146,12 +157,6 @@ const TermsOfUse = () => {
             <section>
                 <h3 className='mb-2'>Waiver</h3>
                 <p className='mb-2'>Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not effect a party's ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.</p>
-            </section>
-
-            <section>
-                <h3 className='mb-2'>Feedback to Lunaria</h3>
-                <p className='mb-2'>We welcome your feedback, suggestions, or ideas ("Feedback") regarding the Service. By submitting any Feedback, you grant Lunaria a perpetual, irrevocable, non-exclusive, worldwide, royalty-free license to use, modify, reproduce, distribute, and otherwise exploit the Feedback for any purpose, without any obligation to you.</p>
-                <p>You acknowledge that any Feedback provided is non-confidential and may be used by Lunaria in its business operations.</p>
             </section>
 
             <section>
@@ -166,9 +171,8 @@ const TermsOfUse = () => {
             </section>
 
             <section>
-                <h3 className='mb-2'>Emails</h3>
-                <p className='mb-2'>By providing your email address during registration or while using the Service, you consent to receive communications, updates, and promotional emails from Lunaria. You may opt-out of these emails at any time by following the unsubscribe instructions included in our emails or by contacting us directly.</p>
-                <p>While we strive to ensure our email communications are secure and error-free, Lunaria is not responsible for any delays, errors, or inaccuracies in the delivery of emails.</p>
+                <h3 className='mb-2'>United States Legal Compliance</h3>
+                <p>You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.</p>
             </section>
 
             <section>
@@ -183,7 +187,7 @@ const TermsOfUse = () => {
             </section>
 
             <section>
-                <h3 className='mb-2'>Service Modifications</h3>
+                <h3 className='mb-2'>Modifications to the Service</h3>
                 <p className='mb-2'>We're constantly improving our service. This means we may modify or discontinue features at any time, though we'll always try to give you notice of significant changes.</p>
             </section>
 
