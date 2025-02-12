@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import Link from 'next/link';
 
 const ProductsHero = () => {
     return (
@@ -14,13 +14,11 @@ const ProductsHero = () => {
                 Our innovative product helps you track, manage, and grow your wealth effortlessly. Take control of your financial future today.
             </motion.p>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.2, delay: 0.6 }}>
-                <Button size='lg' className='text-md rounded-full'>
-                    Discover Now
+                <Button asChild size='lg' className='text-md rounded-full'>
+                    <Link href='/pricing'>Discover Now</Link>
                 </Button>
             </motion.div>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5, delay: 0.9 }} className='mt-12'>
-                <Image src='/product-hero.png' alt='Product Image' width={600} height={400} className='rounded-xl border border-orange-100 shadow-lg' />
-            </motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5, delay: 0.9 }} className='rounded-xl border aspect-video border-orange-100 shadow-lg w-full h-full mt-10 bg-white'></motion.div>
         </section>
     );
 };

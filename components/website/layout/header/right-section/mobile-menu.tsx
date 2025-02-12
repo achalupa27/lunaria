@@ -60,7 +60,7 @@ const MobileMenu = () => {
                             </CollapsibleTrigger>
                             <CollapsibleContent>
                                 {items.map((product) => (
-                                    <MobileDropdownItem key={product.label} label={product.label} summary={product.summary} />
+                                    <MobileDropdownItem key={product.label} label={product.label} link={product.pageLink} summary={product.summary} />
                                 ))}
                                 <Separator className='mt-1 bg-zinc-300' orientation='horizontal' />
                             </CollapsibleContent>
