@@ -9,13 +9,15 @@ import Facebook from '@/components/icons/socials/facebook';
 import Reddit from '@/components/icons/socials/reddit';
 import LinkedIn from '@/components/icons/socials/linkedin';
 import Discord from '@/components/icons/socials/discord';
+import Logo from '@/components/icons/logo';
 
 const BrandInfo = () => {
     return (
-        <div className='flex flex-col'>
-            <div className='mr-16 flex lg:mr-24'>
-                <CompanyLogo />
-            </div>
+        <div className='flex flex-col w-full justify-center items-center'>
+            <Link href='/' className='flex w-fit items-center space-x-2 hover:cursor-pointer'>
+                <Logo filled={true} height={40} width={40} />
+                <span className={`text-3xl font-normal`}>{COMPANY_NAME}</span>
+            </Link>
             <div className='grid w-fit grid-cols-5 gap-x-4 gap-y-2 pl-3 pt-2'>
                 {X_LINK && (
                     <Link href={X_LINK} target='_blank'>
@@ -57,9 +59,6 @@ const BrandInfo = () => {
                         <Discord />
                     </Link>
                 )}
-            </div>
-            <div className='pl-3 pt-12 text-sm'>
-                &copy; {new Date().getFullYear()} {COMPANY_NAME}
             </div>
         </div>
     );

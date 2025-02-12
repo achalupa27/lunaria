@@ -1,6 +1,6 @@
 'use client';
 
-import { MenuIcon } from 'lucide-react';
+import { ChevronDown, MenuIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/sheet';
@@ -42,21 +42,21 @@ const MobileMenu = () => {
                     <span className='sr-only'>Toggle menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side='right' className='flex flex-col bg-zinc-50 p-0'>
+            <SheetContent side='right' className='flex flex-col  p-0'>
                 {/* Sticky Header */}
-                <div className='sticky top-0 h-24 border-b bg-zinc-200 px-8 py-6'>
+                <div className='sticky top-0 h-24 border-b px-8 py-6'>
                     <SheetTitle>
                         <CompanyLogo />
                     </SheetTitle>
                 </div>
 
                 {/* Scrollable Content */}
-                <div className='flex-1 space-y-1 overflow-y-auto bg-zinc-200 p-3'>
+                <div className='flex-1 space-y-1 overflow-y-auto p-3'>
                     {Object.entries(products).map(([category, items]) => (
                         <Collapsible key={category}>
-                            <CollapsibleTrigger className='flex w-full items-center justify-between space-x-1.5 rounded px-3 py-2 transition duration-200 hover:bg-zinc-300'>
+                            <CollapsibleTrigger className='flex w-full items-center justify-between space-x-1.5 rounded px-3 py-2 transition duration-200 hover:bg-zinc-200'>
                                 <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
-                                <i className='fi fi-rr-angle-small-down text-sm leading-[0px]' />
+                                <ChevronDown />
                             </CollapsibleTrigger>
                             <CollapsibleContent>
                                 {items.map((product) => (
@@ -67,22 +67,20 @@ const MobileMenu = () => {
                         </Collapsible>
                     ))}
                     <Link href='/pricing'>
-                        <div className='flex w-full items-start rounded px-3 py-2 transition duration-200 hover:bg-zinc-300'>
+                        <div className='flex w-full items-start rounded px-3 py-2 transition duration-200 hover:bg-zinc-200'>
                             <h4>Pricing</h4>
                         </div>
                     </Link>
                 </div>
 
                 {/* Sticky Footer */}
-                <div className='sticky bottom-0 border-t bg-zinc-200 p-6'>
-                    <div className='space-y-1'>
-                        <Button size='lg' variant='secondary' className='w-full justify-start'>
-                            Log in
-                        </Button>
-                        <Button size='lg' className='w-full justify-start'>
-                            Sign Up
-                        </Button>
-                    </div>
+                <div className='sticky bottom-0 border-t p-6 space-y-1'>
+                    <Button size='lg' variant='secondary' className='w-full justify-start'>
+                        Log in
+                    </Button>
+                    <Button size='lg' className='w-full justify-start'>
+                        Sign Up
+                    </Button>
                 </div>
             </SheetContent>
         </Sheet>

@@ -3,7 +3,7 @@ import Links from './links';
 
 const Footer = () => {
     return (
-        <footer className='mx-auto flex w-[90%] max-w-screen-2xl p-8 lg:p-24'>
+        <footer className='mx-auto flex-col max-w-screen-2xl flex w-full items-center justify-center p-4 lg:p-24 mt-12'>
             <BrandInfo />
             <Links />
         </footer>

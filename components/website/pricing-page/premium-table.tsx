@@ -48,7 +48,7 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
             </div>
             <div className='grow px-6 pt-4'>
                 {premiumFeatures.map((feature, i) => (
-                    <div key={i} className='flex items-center gap-2 leading-8 text-sm sm:text-base'>
+                    <div key={i} className='flex items-center gap-2 leading-8'>
                         <CheckCircle size={18} className='text-black' /> <div>{feature.feature}</div>
                     </div>
                 ))}

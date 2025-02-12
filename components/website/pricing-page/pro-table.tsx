@@ -47,7 +47,7 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
             </div>
             <div className='grow px-6 pt-4'>
                 {professionalFeatures.map((feature, i) => (
-                    <div key={i} className='flex items-center gap-2 leading-8 text-sm sm:text-base'>
+                    <div key={i} className='flex items-center gap-2 leading-8'>
                         <CheckCircle size={18} className='text-green-400' /> <div>{feature.feature}</div>
                     </div>
                 ))}
