@@ -23,12 +23,6 @@ export async function POST(req: Request) {
     const body = await req.text();
     const headersList = await headers();
     const signature = headersList.get('stripe-signature') as string;
-    console.log('signature', signature);
-    console.log('body', body);
-    console.log('Webhook Secret:', process.env.STRIPE_WEBHOOK_SECRET?.slice(0, 5) + '...'); // Log partial secret to verify it's loaded
-    console.log('Headers:', Object.fromEntries(headersList.entries()));
-    console.log('Signature:', signature);
-    console.log('Body Preview:', body.slice(0, 100) + '...'); // Log start of body
 
     if (!signature) {
         return new Response('No signature found', { status: 400 });
@@ -43,6 +37,8 @@ export async function POST(req: Request) {
     }
 
     const supabase = await createClient();
+    const { data } = await supabase.auth.getUser();
+    console.log('data', data);
 
     try {
         switch (event.type) {
@@ -54,6 +50,9 @@ export async function POST(req: Request) {
                 const role = isKnownProduct(productId) ? PRODUCT_TO_ROLE[productId] : 'free';
                 console.log('role', role);
 
+                // Get the Supabase UUID from Stripe metadata
+                const supabaseUUID = (subscription.customer as Stripe.Customer).metadata.supabaseUUID;
+
                 await supabase
                     .from('subscriptions')
                     .update({
@@ -62,7 +61,7 @@ export async function POST(req: Request) {
                         status: subscription.status,
                         price_id: subscription.items.data[0].price.id,
                     })
-                    .eq('stripe_customer_id', subscription.customer);
+                    .eq('id', supabaseUUID);
                 break;
 
             case 'customer.subscription.deleted':
