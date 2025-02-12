@@ -263,14 +263,11 @@ function PrivacyPolicy() {
                 <p>We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.</p>
                 <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
             </section>
+
             <section>
-                <h3 className='mb-2'>Contact Us</h3>
-                <p className='mb-2'>If you have any questions about this Privacy Policy, You can contact us:</p>
-                <Button asChild>
-                    <Link href='/contact'>
-                        <span>Contact Us</span>
-                    </Link>
-                </Button>
+                <h3 className='mb-2'>Contact Information</h3>
+                <p className='mb-2'>If you have any questions, concerns, or comments regarding this Privacy Policy, please contact us at:</p>
+                <p className='font-mono'>[Your Company Email Address]</p>
             </section>
         </article>
     );

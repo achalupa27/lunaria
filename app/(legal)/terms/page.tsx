@@ -23,8 +23,8 @@ const TermsOfUse = () => {
 
             <section>
                 <h3 className='mb-2'>Acceptable Use</h3>
-                <p className='mb-4'>To keep our community safe and friendly, we ask that you don't use the service for any unlawful purposes, including:</p>
-                <ul className='list-disc list-inside mb-2'>
+                <p className='mb-2'>To keep our community safe and friendly, we ask that you don't use the service for any unlawful purposes, including:</p>
+                <ul className='list-disc list-inside my-2'>
                     <li>Harassment or abuse of other users</li>
                     <li>Distribution of malware or malicious content</li>
                     <li>Unauthorized access to other accounts</li>
@@ -112,7 +112,7 @@ const TermsOfUse = () => {
                 <p>The Service complies with applicable laws and regulations—including anti-money laundering (AML), know-your-customer (KYC), and other financial regulatory requirements. You agree to use the Service in accordance with all applicable laws.</p>
                 <p className='font-semibold mt-4'>Risk Warning</p>
                 <p>Using financial management tools involves inherent risks. While we strive for accuracy, we cannot guarantee that our service will be error-free or meet your specific requirements. You should:</p>
-                <ul className='list-disc list-inside mb-2'>
+                <ul className='list-disc list-inside my-2'>
                     <li>Verify all financial information independently</li>
                     <li>Consult with qualified financial professionals for personalized advice</li>
                     <li>Make your own decisions regarding your financial matters</li>
@@ -142,7 +142,7 @@ const TermsOfUse = () => {
 
                 <p className='font-semibold mt-4'>Dispute Process</p>
                 <p>In the event of any dispute, you agree to:</p>
-                <ul className='list-disc list-inside mb-2'>
+                <ul className='list-disc list-inside my-2'>
                     <li>First attempt to resolve it informally</li>
                     <li>If informal resolution fails, proceed to mediation</li>
                     <li>Use arbitration as a last resort</li>

@@ -1,31 +1,25 @@
-import Head from 'next/head';
 import Link from 'next/link';
 
 function CookiesPolicy() {
     return (
-        <div className='flex min-h-screen justify-center '>
-            <Head>
-                <title>lunaria - Cookies Policy</title>
-            </Head>
-            <div className='max-w-2xl'>
-                <h1 className='flex w-full justify-center py-8'>Cookies Policy</h1>
-                <p>Last updated: November 19, 2022</p>
-                <p>
-                    This Cookies Policy explains what Cookies are and how We use them. You should read this policy so You can understand what type of cookies We use, or the information We collect using Cookies and how that information is used. This Cookies Policy has been created with the help of the
-                    <a href='https://www.termsfeed.com/cookies-policy-generator/' target='_blank'>
-                        TermsFeed Cookies Policy Generator
-                    </a>
-                    .
-                </p>
-                <p>Cookies do not typically contain any information that personally identifies a user, but personal information that we store about You may be linked to the information stored in and obtained from Cookies. For further information on how We use, store and keep your personal data secure, see our Privacy Policy.</p>
-                <p>We do not store sensitive personal information, such as mailing addresses, account passwords, etc. in the Cookies We use.</p>
-                <br></br>
-                <h2 className='flex w-full justify-center py-6'>Interpretation</h2>
+        <article className='max-w-5xl mx-auto leading-relaxed space-y-10'>
+            <section className='border-b pb-6 pt-20'>
+                <h2 className='mb-2 text-center'>Cookies Policy</h2>
+                <p className='text-sm text-zinc-700 dark:text-zinc-300 text-center'>Effective Date: February 12, 2025</p>
+                <p className='mt-4'>This Cookies Policy explains what Cookies are and how We use them. You should read this policy so You can understand what type of cookies We use, or the information We collect using Cookies and how that information is used.</p>
+                <p className='mt-2'>Cookies do not typically contain any information that personally identifies a user, but personal information that we store about You may be linked to the information stored in and obtained from Cookies. For further information on how We use, store and keep your personal data secure, see our Privacy Policy.</p>
+                <p className='mt-2'>We do not store sensitive personal information, such as mailing addresses, account passwords, etc. in the Cookies We use.</p>
+            </section>
+
+            <section>
+                <h3 className='mb-2'>Interpretation</h3>
                 <p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
-                <br></br>
-                <h2 className='flex w-full justify-center py-6'>Definitions</h2>
-                <p>For the purposes of this Cookies Policy:</p>
-                <ul>
+            </section>
+
+            <section>
+                <h3 className='mb-2'>Definitions</h3>
+                <p className='mb-2'>For the purposes of this Cookies Policy:</p>
+                <ul className='space-y-2'>
                     <li>
                         <strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Cookies Policy) refers to lunaria.
                     </li>
@@ -42,14 +36,14 @@ function CookiesPolicy() {
                         <strong>You</strong> means the individual accessing or using the Website, or a company, or any legal entity on behalf of which such individual is accessing or using the Website, as applicable.
                     </li>
                 </ul>
-                <br></br>
-                <h2 className='flex w-full justify-center py-6'>The use of the Cookies</h2>
-                <h2 className='flex w-full justify-center py-6'>Type of Cookies We Use</h2>
+            </section>
+            <section>
+                <h3 className='mb-2'>Type of Cookies We Use</h3>
                 <p>Cookies can be &quot;Persistent&quot; or &quot;Session&quot; Cookies. Persistent Cookies remain on your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close your web browser.</p>
                 <p>We use both session and persistent Cookies for the purposes set out below:</p>
                 <ul>
                     <li>
-                        <p>
+                        <p className='mt-2'>
                             <strong>Necessary / Essential Cookies</strong>
                         </p>
                         <p>Type: Session Cookies</p>
@@ -57,7 +51,7 @@ function CookiesPolicy() {
                         <p>Purpose: These Cookies are essential to provide You with services available through the Website and to enable You to use some of its features. They help to authenticate users and prevent fraudulent use of user accounts. Without these Cookies, the services that You have asked for cannot be provided, and We only use these Cookies to provide You with those services.</p>
                     </li>
                     <li>
-                        <p>
+                        <p className='mt-2'>
                             <strong>Functionality Cookies</strong>
                         </p>
                         <p>Type: Persistent Cookies</p>
@@ -65,12 +59,14 @@ function CookiesPolicy() {
                         <p>Purpose: These Cookies allow us to remember choices You make when You use the Website, such as remembering your login details or language preference. The purpose of these Cookies is to provide You with a more personal experience and to avoid You having to re-enter your preferences every time You use the Website.</p>
                     </li>
                 </ul>
-                <br></br>
-                <h2 className='flex w-full justify-center py-6'>Your Choices Regarding Cookies</h2>
-                <p>If You prefer to avoid the use of Cookies on the Website, first You must disable the use of Cookies in your browser and then delete the Cookies saved in your browser associated with this website. You may use this option for preventing the use of Cookies at any time.</p>
-                <p>If You do not accept Our Cookies, You may experience some inconvenience in your use of the Website and some features may not function properly.</p>
-                <p>If You&apos;d like to delete Cookies or instruct your web browser to delete or refuse Cookies, please visit the help pages of your web browser.</p>
-                <ul>
+            </section>
+
+            <section>
+                <h3 className='mb-2'>Your Choices Regarding Cookies</h3>
+                <p className='mb-2'>If You prefer to avoid the use of Cookies on the Website, first You must disable the use of Cookies in your browser and then delete the Cookies saved in your browser associated with this website. You may use this option for preventing the use of Cookies at any time.</p>
+                <p className='mb-2'>If You do not accept Our Cookies, You may experience some inconvenience in your use of the Website and some features may not function properly.</p>
+                <p className='mb-2'>If You&apos;d like to delete Cookies or instruct your web browser to delete or refuse Cookies, please visit the help pages of your web browser.</p>
+                <ul className='space-y-2 mt-2'>
                     <li>
                         <p>
                             For the Chrome web browser, please visit this page from Google:{' '}
@@ -104,9 +100,11 @@ function CookiesPolicy() {
                         </p>
                     </li>
                 </ul>
-                <p>For any other web browser, please visit your web browser&apos;s official web pages.</p>
-                <br></br>
-                <h2 className='flex w-full justify-center py-6'>More Information about Cookies</h2>
+                <p className='mt-2'>For any other web browser, please visit your web browser&apos;s official web pages.</p>
+            </section>
+
+            <section>
+                <h3 className='mb-2'>More Information about Cookies</h3>
                 <p>
                     You can learn more about cookies here:{' '}
                     <a href='https://www.termsfeed.com/blog/cookies/' target='_blank'>
@@ -114,17 +112,14 @@ function CookiesPolicy() {
                     </a>
                     .
                 </p>
-                <br></br>
-                <h2 className='flex w-full justify-center pb-2 pt-6'>Contact Us</h2>
-                <p className='text-center'>If you have any questions about this Cookies Policy, You can contact us:</p>
-                <div className='flex w-full justify-center'>
-                    <Link href='/contact' className='button-secondary mb-12 mt-4 w-fit space-x-2'>
-                        <i className='fi fi-rr-envelope'></i>
-                        <span>Contact Us</span>
-                    </Link>
-                </div>
-            </div>
-        </div>
+            </section>
+
+            <section>
+                <h3 className='mb-2'>Contact Information</h3>
+                <p className='mb-2'>If you have any questions, concerns, or comments regarding this Cookies Policy, please contact us at:</p>
+                <p className='font-mono'>[Your Company Email Address]</p>
+            </section>
+        </article>
     );
 }
 
