@@ -1,5 +1,3 @@
-'use client';
-
 import PricingTables from '@/components/website/pricing-page/pricing';
 import { Metadata } from 'next';
 
