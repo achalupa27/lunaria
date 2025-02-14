@@ -1,6 +1,7 @@
 'use client';
 
 import PricingTables from '@/components/website/pricing-page/pricing';
+import { Metadata } from 'next';
 
 const Pricing = () => {
     return (
@@ -10,6 +11,16 @@ const Pricing = () => {
             <PricingTables />
         </div>
     );
+};
+
+export const metadata: Metadata = {
+    title: 'Pricing', // Will render as "Pricing | Lunaria template"
+    description: 'Flexible pricing plans for every financial journey. Choose the perfect plan to achieve your money goals.',
+    openGraph: {
+        title: 'Pricing | Lunaria',
+        description: 'Flexible pricing plans for every financial journey. Choose the perfect plan to achieve your money goals.',
+        type: 'website',
+    },
 };
 
 export default Pricing;

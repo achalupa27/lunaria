@@ -6,19 +6,6 @@ import { CredentialResponse } from 'google-one-tap';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-declare global {
-    interface Window {
-        google: {
-            accounts: {
-                id: {
-                    initialize: (config: any) => void;
-                    prompt: () => void;
-                };
-            };
-        };
-    }
-}
-
 const OneTapComponent = () => {
     const supabase = createClient();
     const router = useRouter();
@@ -38,20 +25,28 @@ const OneTapComponent = () => {
     useEffect(() => {
         const initializeGoogleOneTap = async () => {
             console.log('Initializing Google One Tap');
+
+            await new Promise<void>((resolve) => {
+                if (window.google) return resolve();
+                const checkGoogle = setInterval(() => {
+                    if (window.google) {
+                        clearInterval(checkGoogle);
+                        resolve();
+                    }
+                }, 100);
+            });
+
             const [nonce, hashedNonce] = await generateNonce();
             console.log('Nonce: ', nonce, hashedNonce);
 
-            // check if there's already an existing session before initializing the one-tap UI
             const { data, error } = await supabase.auth.getSession();
-            if (error) {
-                console.error('Error getting session', error);
-            }
+            if (error) console.error('Error getting session', error);
             if (data.session) {
                 router.push('/');
                 return;
             }
 
-            window.google.accounts.id.initialize({
+            window.google?.accounts.id.initialize({
                 client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
                 callback: async (response: CredentialResponse) => {
                     try {
@@ -60,11 +55,8 @@ const OneTapComponent = () => {
                             token: response.credential,
                             nonce,
                         });
-
                         if (error) throw error;
                         console.log('Session data: ', data);
-                        console.log('Successfully logged in with Google One Tap');
-
                         router.push('/');
                     } catch (error) {
                         console.error('Error logging in with Google One Tap', error);
@@ -73,16 +65,16 @@ const OneTapComponent = () => {
                 nonce: hashedNonce,
                 use_fedcm_for_prompt: true,
             });
-            window.google.accounts.id.prompt(); // Display the One Tap UI
+            window.google?.accounts.id.prompt();
         };
 
         initializeGoogleOneTap();
-    }, [router, supabase.auth]);
+    }, []);
 
     return (
         <>
-            <Script src='https://accounts.google.com/gsi/client' strategy='afterInteractive' onLoad={() => console.log('Google Script loaded')} />
-            <div id='g_id_onload' className='fixed top-0 right-0 z-[100]' />
+            <Script src='https://accounts.google.com/gsi/client' />
+            <div id='oneTap' className='fixed top-0 right-0 z-[100]' />
         </>
     );
 };

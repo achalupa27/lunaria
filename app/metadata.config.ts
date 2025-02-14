@@ -10,9 +10,10 @@ const siteConfig = {
 };
 
 export const defaultMetadata: Metadata = {
+    metadataBase: new URL(siteConfig.siteUrl),
     title: {
         default: siteConfig.title,
-        template: `%s | ${siteConfig.title} template`,
+        template: `%s | ${siteConfig.title}`,
     },
     description: siteConfig.description,
     icons: {
@@ -54,5 +55,4 @@ export const defaultMetadata: Metadata = {
             'max-snippet': -1,
         },
     },
-    metadataBase: new URL(siteConfig.siteUrl),
 };

@@ -11,10 +11,14 @@ import SolutionSection from '@/components/website/landing-page/solution-section'
 import TestimonialSection from '@/components/website/landing-page/testimonial-section';
 import { Metadata } from 'next';
 
-// export const metadata: Metadata = {
-//     title: 'Home', // Will be rendered as "Home | Lunaria" due to the template
-//     description: 'Take control of your financial future with Lunaria. Smart budgeting, investing, and money management tools all in one place.',
-// };
+export const metadata: Metadata = {
+    title: 'Home', // Will render as "Home | Lunaria template"
+    description: 'Take control of your financial future with Lunaria. Smart budgeting, investing, and money management tools all in one place.',
+    openGraph: {
+        title: 'Home | Lunaria',
+        description: 'Take control of your financial future with Lunaria. Smart budgeting, investing, and money management tools all in one place.',
+    },
+};
 
 export default function Home() {
     return (
