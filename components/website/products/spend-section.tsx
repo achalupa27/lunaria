@@ -23,7 +23,7 @@ const SpendSection = () => {
             <p className='text-lg text-gray-600 mb-10'>Optimize your expenses and make informed financial decisions.</p>
             <div className='grid items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3'>
                 {spendFeatures.map((feature, index) => (
-                    <div className='h-full'>
+                    <div key={index} className='h-full'>
                         <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>
                             <div className='flex flex-col sm:flex-row items-center justify-center space-x-3'>
                                 <CheckCircleIcon className='text-green-500 mb-2 sm:mb-0' />

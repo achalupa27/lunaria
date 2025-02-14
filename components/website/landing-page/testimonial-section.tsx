@@ -21,13 +21,13 @@ const TestimonialSection = () => {
     ];
 
     return (
-        <section className='flex flex-col items-center justify-center py-24 text-center'>
-            <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-6'>
+        <section className='flex flex-col items-center justify-center py-24 text-center' aria-labelledby='testimonials-heading'>
+            <motion.h2 id='testimonials-heading' initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-6'>
                 What Our Users Say
             </motion.h2>
-            <div className='grid items-stretch gap-8 md:grid-cols-3'>
+            <div className='grid items-stretch gap-8 md:grid-cols-3' role='region' aria-label='Customer testimonials'>
                 {testimonials.map((testimonial, index) => (
-                    <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }} className='flex h-full'>
+                    <motion.div key={index} role='article' aria-label={`Testimonial from ${testimonial.name}`} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }} className='flex h-full'>
                         <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>
                             <div className='text-2xl font-medium'>{testimonial.name}</div>
                             <p className='flex md:min-h-32 min-h-20 items-center italic py-3'>&quot;{testimonial.feedback}&quot;</p>
