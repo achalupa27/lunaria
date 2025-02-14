@@ -1,3 +1,5 @@
+'use client';
+
 import MakeIcon from '@/components/icons/make-icon';
 import SaveIcon from '@/components/icons/save-icon';
 import SpendIcon from '@/components/icons/spend-icon';

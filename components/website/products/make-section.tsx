@@ -1,5 +1,4 @@
 import Card from '@/components/ui/card';
-import { motion } from 'framer-motion';
 import { CheckCircleIcon } from 'lucide-react';
 
 const makeFeatures = [

@@ -78,33 +78,33 @@ const RightSection = () => {
         <>
             <div className='flex flex-1 justify-end lg:space-x-2'>
                 {currentTheme === 'dark' ? (
-                    <Button size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
+                    <Button id='theme-toggle' size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
                         <Sun />
                     </Button>
                 ) : (
-                    <Button size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('dark')}>
+                    <Button id='theme-toggle' size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('dark')}>
                         <Moon />
                     </Button>
                 )}
 
                 {session ? (
                     <>
-                        <Button asChild variant='secondary' size='icon' className='hidden lg:flex'>
+                        <Button id='profile-button' asChild variant='secondary' size='icon' className='hidden lg:flex'>
                             <Link href='/profile'>
                                 <User />
                             </Link>
                         </Button>
-                        <Button asChild className='hidden lg:flex'>
+                        <Button id='dashboard-button' asChild className='hidden lg:flex'>
                             <Link href='/dashboard'>Dashboard</Link>
                         </Button>
                     </>
                 ) : (
                     <>
-                        <Button variant='secondary' onClick={handleLogin} className='hidden lg:flex'>
+                        <Button id='login-button' variant='secondary' onClick={handleLogin} className='hidden lg:flex'>
                             Log in
                         </Button>
 
-                        <Button className='hidden lg:flex' onClick={handleSignUp}>
+                        <Button id='signup-button' className='hidden lg:flex' onClick={handleSignUp}>
                             Sign Up
                         </Button>
                     </>

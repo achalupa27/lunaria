@@ -21,9 +21,7 @@
     h5 {
         @apply font-semibold;
     }
-    i {
-        @apply leading-none;
-    }
+
     :root {
         --radius: 0.5rem;
     }
@@ -43,14 +41,6 @@
 
     .sidebar-button {
         @apply main-hover flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg transition duration-200 ease-out;
-    }
-
-    .ms-card {
-        @apply rounded-lg border bg-white shadow-sm dark:border-blue-900/20 dark:bg-primary;
-    }
-
-    .footer-link {
-        @apply w-fit rounded px-2 py-[2px] transition duration-200 hover:underline;
     }
 
     .gradient-bg {

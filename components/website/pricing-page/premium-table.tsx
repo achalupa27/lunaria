@@ -38,8 +38,8 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
     }, [supabase.auth]);
 
     return (
-        <div className='gold-gradient relative flex h-auto sm:h-[36rem] w-full sm:w-[20rem] flex-col rounded-2xl border border-orange-200 p-1 dark:bg-black dark:text-black'>
-            <div className='absolute left-0 top-0 -z-10 flex h-auto sm:h-[36rem] w-full sm:w-[20rem] flex-col rounded-2xl bg-orange-100 blur' />
+        <div className='gold-gradient relative flex h-auto sm:h-[36rem] w-full sm:w-[20rem] lg:w-[22rem] flex-col rounded-2xl border border-orange-200 p-1 dark:bg-black dark:text-black'>
+            <div className='absolute left-0 top-0 -z-10 flex h-auto sm:h-[36rem] w-full sm:w-[20rem] lg:w-[22rem] flex-col rounded-2xl bg-orange-100 blur' />
 
             <div className='mx-auto mt-4 text-center'>
                 <div className='text-4xl font-semibold'>Premium</div>

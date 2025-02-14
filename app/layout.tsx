@@ -1,38 +1,19 @@
-'use client';
-
 import '../styles/globals.css';
 import '../styles/index.css';
-import { ThemeProvider } from 'next-themes';
-import { Analytics } from '@vercel/analytics/react';
-import { Provider } from 'react-redux';
-import { store } from '@/redux/store';
-import Layout from '@/components/website/layout/page-layout';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import PageLayout from '@/components/website/layout/page-layout';
+import { defaultMetadata } from './metadata.config';
+import ClientProviders from '@/components/providers/client-providers';
+import { inter } from './fonts';
 
-const queryClient = new QueryClient();
+export const metadata = defaultMetadata;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang='en'>
-            <head>
-                <meta charSet='utf-8' />
-                <meta name='viewport' content='width=device-width, initial-scale=1' />
-                <meta name='theme-color' content='#000000' />
-                <link rel='icon' href='/logo.svg' />
-                <link rel='preconnect' href='https://fonts.googleapis.com' />
-                <link rel='preconnect' href='https://fonts.gstatic.com' />
-            </head>
-            <body className='bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50'>
-                <ThemeProvider enableSystem={false} attribute='class'>
-                    <QueryClientProvider client={queryClient}>
-                        <Layout>
-                            <Provider store={store}>
-                                {children}
-                                <Analytics />
-                            </Provider>
-                        </Layout>
-                    </QueryClientProvider>
-                </ThemeProvider>
+            <body className={`bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 ${inter.variable}`}>
+                <ClientProviders>
+                    <PageLayout>{children}</PageLayout>
+                </ClientProviders>
             </body>
         </html>
     );
