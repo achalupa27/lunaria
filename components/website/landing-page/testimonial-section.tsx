@@ -31,7 +31,7 @@ const TestimonialSection = () => {
                         <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>
                             <div className='text-2xl font-medium'>{testimonial.name}</div>
                             <p className='flex md:min-h-32 min-h-20 items-center italic py-3'>&quot;{testimonial.feedback}&quot;</p>
-                            <div className='text-sm text-zinc-400'>{testimonial.role}</div>
+                            <div className='text-sm text-zinc-600 dark:text-zinc-400'>{testimonial.role}</div>
                         </Card>
                     </motion.div>
                 ))}

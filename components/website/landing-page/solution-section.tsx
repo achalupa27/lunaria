@@ -22,7 +22,7 @@ const SolutionSection = () => {
             <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-8 text-4xl font-semibold text-center'>
                 A Smarter Way to Manage Money
             </motion.h2>
-            <motion.p initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3 }} className='max-w-2xl text-lg text-zinc-500 dark:text-zinc-400 mb-12'>
+            <motion.p initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3 }} className='max-w-2xl text-lg text-zinc-600 dark:text-zinc-400 mb-12'>
                 Lunaria helps you go beyond simple expense tracking. Gain insights, simplify budgeting, and follow a clear path to financial growth.
             </motion.p>
 
@@ -33,7 +33,7 @@ const SolutionSection = () => {
                             <div className='flex flex-col sm:flex-row items-center justify-center space-x-3'>
                                 <h3 className='text-xl font-medium'>{solution.title}</h3>
                             </div>
-                            <p className='mt-2 text-zinc-500'>{solution.description}</p>
+                            <p className='mt-2 text-zinc-700 dark:text-zinc-300'>{solution.description}</p>
                         </Card>
                     </motion.div>
                 ))}

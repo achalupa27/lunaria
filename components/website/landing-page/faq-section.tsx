@@ -12,11 +12,15 @@ const FAQSection = () => {
         <section className='my-24'>
             <div className='space-12 container mx-auto flex flex-col px-4 md:flex-row'>
                 <div className='w-fit'>
-                    <div>FAQ</div>
-                    <h2 className='mb-12'>Frequently Asked Questions</h2>
+                    <div role='text' aria-label='Section indicator'>
+                        FAQ
+                    </div>
+                    <h2 className='mb-12' id='faq-heading'>
+                        Frequently Asked Questions
+                    </h2>
                 </div>
 
-                <Accordion type='single' collapsible className='w-full'>
+                <Accordion type='single' collapsible className='w-full' aria-labelledby='faq-heading'>
                     {faqItems.map((faq, index) => (
                         <AccordionItem key={index} value={`item-${index}`}>
                             <AccordionTrigger className='text-xl font-medium'>{faq.question}</AccordionTrigger>

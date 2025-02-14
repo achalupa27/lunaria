@@ -33,12 +33,14 @@ const HeroSection = () => {
     }, [supabase.auth]);
 
     return (
-        <section className='flex min-h-screen flex-col items-center justify-center'>
+        <section className='flex min-h-screen flex-col items-center justify-center' aria-labelledby='hero-heading'>
             <div className='mb-12 text-center text-lg font-semibold md:text-3xl xl:text-4xl'>Looking to Clean Up your Money?</div>
             <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.25 }}>
-                <h1 className='dark:gradient-bg dark:bg-clip-text text-3xl font-semibold tracking-tighter dark:text-transparent dark:bg-gradient-to-r md:text-6xl xl:text-8xl text-center'>Welcome to your </h1>
+                <h1 id='hero-heading' className='dark:gradient-bg dark:bg-clip-text text-3xl font-semibold tracking-tighter dark:text-transparent dark:bg-gradient-to-r md:text-6xl xl:text-8xl text-center'>
+                    Welcome to your{' '}
+                </h1>
             </motion.div>
-            <div className='dark:gradient-bg flex flex-col sm:flex-row text-center sm:text-start text-3xl font-semibold tracking-tighter dark:bg-gradient-to-r dark:bg-clip-text dark:text-transparent md:text-6xl xl:text-8xl'>
+            <h1 id='hero-heading' className='dark:gradient-bg flex flex-col sm:flex-row text-center sm:text-start text-3xl font-semibold tracking-tighter dark:bg-gradient-to-r dark:bg-clip-text dark:text-transparent md:text-6xl xl:text-8xl'>
                 <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.75 }}>
                     Personal&nbsp;
                 </motion.div>
@@ -51,7 +53,7 @@ const HeroSection = () => {
                         With Artificial Intelligence
                     </motion.div>
                 </motion.div>
-            </div>
+            </h1>
             <div className='stars-container absolute left-0 top-0 z-10 hidden dark:block'>
                 <div className='stars'></div>
                 <div className='stars'></div>

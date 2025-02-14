@@ -22,7 +22,7 @@ const ProblemSection = () => {
             <motion.h2 initial={{ y: 30, opacity: 0 }} viewport={{ once: true }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-6 text-4xl font-semibold'>
                 Managing Money is Hard
             </motion.h2>
-            <motion.p initial={{ y: 30, opacity: 0 }} viewport={{ once: true }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3 }} className='max-w-2xl text-lg text-zinc-500 mb-12'>
+            <motion.p initial={{ y: 30, opacity: 0 }} viewport={{ once: true }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3 }} className='max-w-2xl text-lg text-zinc-600 dark:text-zinc-400 mb-12'>
                 Most finance apps track spending but overlook wealth growth essentials like savings and income.
             </motion.p>
 
@@ -33,7 +33,7 @@ const ProblemSection = () => {
                             <div className='flex flex-col sm:flex-row items-center justify-center space-x-3'>
                                 <h3 className='text-xl font-medium'>{problem.title}</h3>
                             </div>
-                            <p className='mt-2 text-zinc-500'>{problem.description}</p>
+                            <p className='mt-2 text-zinc-700 dark:text-zinc-300'>{problem.description}</p>
                         </Card>
                     </motion.div>
                 ))}

@@ -25,7 +25,6 @@ const DropdownItem = ({ item }: Props) => {
             </div>
             <div className='flex items-center space-x-2 pt-4 text-sm transition duration-200 group-hover/item:text-blue-500 dark:group-hover/item:text-blue-400 xl:pt-0'>
                 <div>Learn more</div>
-                <i className='fi fi-tr-arrow-right' />
             </div>
         </a>
     );
