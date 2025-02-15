@@ -267,7 +267,7 @@ function PrivacyPolicy() {
             <section>
                 <h3 className='mb-2'>Contact Information</h3>
                 <p className='mb-2'>If you have any questions, concerns, or comments regarding this Privacy Policy, please contact us at:</p>
-                <p className='font-mono'>[Your Company Email Address]</p>
+                <p className='font-mono'>lunariaspacefinance@gmail.com</p>
             </section>
         </article>
     );

@@ -8,19 +8,19 @@ import Link from 'next/link';
 
 const coreValues = [
     {
+        title: 'Inclusive Finance',
+        description: "We're committed to making financial tools and knowledge accessible to everyone, regardless of their financial background or expertise.",
+        icon: Earth,
+    },
+    {
         title: 'Security First',
         description: 'Your trust is our foundation. We implement the highest security standards and treat your financial data with the utmost care and confidentiality.',
         icon: ShieldCheck,
     },
     {
-        title: 'User-Centered Design',
+        title: 'Designed for You',
         description: 'Our platform is built around your needs, with intuitive interfaces and personalized experiences that adapt to your financial journey.',
         icon: User,
-    },
-    {
-        title: 'Inclusive Finance',
-        description: "We're committed to making financial tools and knowledge accessible to everyone, regardless of their financial background or expertise.",
-        icon: Earth,
     },
 ];
 
@@ -50,7 +50,7 @@ const About = () => {
             {/* Core Values Section */}
             <motion.section initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24'>
                 <h2 className='text-center mb-16'>Our Core Values</h2>
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-12'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12'>
                     {coreValues.map((value, index) => (
                         <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }} className='h-full'>
                             <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>
@@ -72,8 +72,8 @@ const About = () => {
                             <motion.div key={index} initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: index * 0.2 }} viewport={{ once: true }} className='h-full'>
                                 <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>
                                     <item.icon className='w-8 h-8 mx-auto mb-4' />
-                                    <div className='text-3xl sm:text-4xl font-bold text-zinc-900 mb-2'>{item.stat}</div>
-                                    <div className='text-zinc-600'>{item.label}</div>
+                                    <div className='text-3xl sm:text-4xl font-bold mb-2'>{item.stat}</div>
+                                    <div className='text-zinc-700 dark:text-zinc-300'>{item.label}</div>
                                 </Card>
                             </motion.div>
                         ))}
