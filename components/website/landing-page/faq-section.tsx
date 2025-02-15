@@ -11,7 +11,7 @@ const faqItems = [
 
 const FAQSection = () => {
     return (
-        <section className='my-24'>
+        <section className='py-24'>
             <div className='space-12 container mx-auto flex flex-col px-4 md:flex-row'>
                 <div className='w-fit'>
                     <div role='text' aria-label='Section indicator'>

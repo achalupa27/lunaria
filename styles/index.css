@@ -85,13 +85,14 @@ input[type='number'] {
 }
 
 .btn2 {
-    background: linear-gradient(-45deg, #f7ebc0, #99f5d1, #93c5fd);
+    background: linear-gradient(-45deg, #f4e1b2, #f2ca73, #f9d97c);
     background-size: 600%;
     animation: anime 12s linear infinite;
-    width: 160px;
+    width: 150px;
+    height: 18px;
     position: absolute;
     z-index: -1;
-    filter: blur(15px);
+    filter: blur(30px);
     opacity: 1;
 }
 
@@ -126,7 +127,15 @@ input[type='number'] {
 .stars-container .stars:nth-child(1) {
     background-image: radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#e8d3d3 2px, transparent 2px);
     background-color: transparent;
-    background-position: 0 0, 200px 150px, 50px 300px, 150px 100px, 250px 80px, 300px 200px, 300px 320px, 350px 390px;
+    background-position:
+        0 0,
+        200px 150px,
+        50px 300px,
+        150px 100px,
+        250px 80px,
+        300px 200px,
+        300px 320px,
+        350px 390px;
     background-size: 400px 400px;
     animation: twinkle 5s linear 0s infinite;
     left: -10%;
@@ -136,7 +145,15 @@ input[type='number'] {
 .stars-container .stars:nth-child(2) {
     background-image: radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#e8d3d3 2px, transparent 2px);
     background-color: transparent;
-    background-position: 0 0, 200px 150px, 50px 300px, 150px 100px, 250px 80px, 300px 200px, 300px 320px, 350px 390px;
+    background-position:
+        0 0,
+        200px 150px,
+        50px 300px,
+        150px 100px,
+        250px 80px,
+        300px 200px,
+        300px 320px,
+        350px 390px;
     background-size: 400px 400px;
     animation: twinkle 3s linear 0s infinite;
     left: 0;
@@ -146,7 +163,15 @@ input[type='number'] {
 .stars-container .stars:nth-child(3) {
     background-image: radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#e8d3d3 2px, transparent 2px);
     background-color: transparent;
-    background-position: 0 0, 200px 150px, 50px 300px, 150px 100px, 250px 80px, 300px 200px, 300px 320px, 350px 390px;
+    background-position:
+        0 0,
+        200px 150px,
+        50px 300px,
+        150px 100px,
+        250px 80px,
+        300px 200px,
+        300px 320px,
+        350px 390px;
     background-size: 400px 400px;
     animation: twinkle 10s linear 0s infinite;
     left: 10%;
@@ -157,7 +182,15 @@ input[type='number'] {
 .stars-container .stars:nth-child(4) {
     background-image: radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 2px, transparent 2px), radial-gradient(#fff 1px, transparent 1px), radial-gradient(#e8d3d3 2px, transparent 2px);
     background-color: transparent;
-    background-position: 0 0, 200px 150px, 50px 300px, 150px 100px, 250px 80px, 300px 200px, 300px 320px, 350px 390px;
+    background-position:
+        0 0,
+        200px 150px,
+        50px 300px,
+        150px 100px,
+        250px 80px,
+        300px 200px,
+        300px 320px,
+        350px 390px;
     background-size: 400px 400px;
     animation: twinkle 7s linear 0s infinite;
     left: 20%;

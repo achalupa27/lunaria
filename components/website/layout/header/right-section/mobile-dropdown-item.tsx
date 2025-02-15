@@ -13,7 +13,7 @@ type Props = {
 
 const MobileDropdownItem = ({ label, summary, link }: Props) => {
     return (
-        <a href={link} className='group/item flex h-full w-full flex-col justify-between rounded px-3 py-2 transition duration-200 hover:cursor-pointer hover:bg-zinc-300'>
+        <a href={link} className='group/item flex h-full w-full flex-col justify-between rounded px-3 py-2 transition duration-200 hover:cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-800'>
             <div>
                 <div className='flex items-center space-x-2 pb-[1px]'>
                     {label === 'Dashboard' && <Logo size={32} filled={true} />}
@@ -22,7 +22,7 @@ const MobileDropdownItem = ({ label, summary, link }: Props) => {
                     {label === 'Spending Tracker' && <SpendIcon width={32} height={32} filled={true} />}
                     <span className='font-medium'>{label}</span>
                 </div>
-                <div className='mt-1 text-zinc-700'>{summary}</div>
+                <div className='mt-1 text-zinc-700 dark:text-zinc-300'>{summary}</div>
             </div>
         </a>
     );

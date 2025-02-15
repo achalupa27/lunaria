@@ -35,7 +35,7 @@ const FreeTable = ({ onSignUpClick }: Props) => {
     }, [supabase.auth]);
 
     return (
-        <div className='flex h-auto min-h-[36rem] sm:h-[36rem] w-full sm:w-[20rem] lg:w-[22rem] flex-col rounded-2xl border border-orange-50 bg-white p-1 shadow dark:bg-black'>
+        <div className='flex h-auto min-h-[36rem] sm:h-[36rem] w-full sm:w-[20rem] xl:w-[21rem] 2xl:w-[22rem] flex-col rounded-2xl border border-orange-50 bg-white p-1 shadow dark:bg-black'>
             <div className='mx-auto mt-4 text-center'>
                 <div className='text-4xl'>Free</div>
                 <div className='text-base sm:text-lg'>No Credit Card required.</div>

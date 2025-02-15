@@ -32,7 +32,7 @@ const FinalCTASection = () => {
         };
     }, [supabase.auth]);
     return (
-        <motion.section initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.2 }} className='dark:gradient-bg my-24 flex flex-col items-center justify-center rounded-[2rem] bg-gradient-to-bl from-[#f4e1b2]/80 via-[#f2ca73]/80 to-[#f9d97c]/80 px-16 py-16 sm:py-24 text-center'>
+        <motion.section initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.2 }} className='my-24 flex flex-col items-center justify-center rounded-[2rem] bg-gradient-to-bl from-[#f4e1b2]/80 via-[#f2ca73]/80 to-[#f9d97c]/80 px-16 py-16 sm:py-24 text-center'>
             <motion.h2 initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.2 }} className='mb-4 text-4xl font-semibold text-black'>
                 Take Control of Your Finances Today
             </motion.h2>
@@ -41,21 +41,13 @@ const FinalCTASection = () => {
             </motion.p>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.2, delay: 0.6 }}>
                 {session ? (
-                    <Link href='/dashboard'>
-                        <div className='flex items-center justify-center mt-4'>
-                            <Button size='lg' className='rounded-full text-base' role='button' aria-label='Go to dashboard'>
-                                Dashboard
-                            </Button>
-                            <button className='btn2 hidden transition duration-200 dark:block'></button>
-                        </div>
-                    </Link>
+                    <Button asChild size='lg' className='mt-4 rounded-full bg-zinc-50 text-zinc-950 hover:bg-zinc-100 px-8 py-3 font-medium dark:hover:bg-zinc-800 dark:bg-zinc-950 dark:text-zinc-50' role='button' aria-label='Go to Dashboard'>
+                        <Link href='/dashboard'>Go to Dashboard</Link>
+                    </Button>
                 ) : (
-                    <Link href='/pricing'>
-                        <div className='group flex items-center justify-center mt-4'>
-                            <button className='rounded-full bg-zinc-950 px-8 py-3 font-medium text-white dark:bg-white dark:text-zinc-950'>Get Started Now</button>
-                            <button className='btn2 hidden transition duration-200 dark:block'></button>
-                        </div>
-                    </Link>
+                    <Button asChild size='lg' className='mt-4 rounded-full bg-zinc-50 text-zinc-950 hover:bg-zinc-100 px-8 py-3 font-medium dark:bg-white dark:text-zinc-950' role='button' aria-label='Get Started Now'>
+                        <Link href='/pricing'>Get Started Now</Link>
+                    </Button>
                 )}
             </motion.div>
         </motion.section>

@@ -27,7 +27,7 @@ const PricingTables = () => {
             <div className='flex flex-col w-full items-center justify-center'>
                 <TermChanger term={term} setTerm={setTerm} />
             </div>
-            <div className='mt-16 flex flex-wrap justify-center gap-12'>
+            <div className='mt-16 flex flex-wrap justify-center gap-8 2xl:gap-12'>
                 <FreeTable onSignUpClick={handleSignUpClick} />
                 <ProTable term={term} onSignUpClick={handleSignUpClick} />
                 <PremiumTable term={term} onSignUpClick={handleSignUpClick} />

@@ -74,10 +74,12 @@ const RightSection = () => {
                 {currentTheme === 'dark' ? (
                     <Button id='theme-toggle' size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('light')}>
                         <Sun />
+                        <span className='sr-only'>Toggle theme</span>
                     </Button>
                 ) : (
                     <Button id='theme-toggle' size='icon' variant='ghost' className='flex cursor-pointer items-center' onClick={() => setTheme('dark')}>
                         <Moon />
+                        <span className='sr-only'>Toggle theme</span>
                     </Button>
                 )}
 
@@ -86,6 +88,7 @@ const RightSection = () => {
                         <Button id='profile-button' asChild variant='secondary' size='icon' className='hidden lg:flex'>
                             <Link href='/profile'>
                                 <User />
+                                <span className='sr-only'>Profile</span>
                             </Link>
                         </Button>
                         <Button id='dashboard-button' asChild className='hidden lg:flex'>
