@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Google from '@/components/icons/socials/google';
 import Logo from '@/components/icons/logo';
+import { Label } from '@/components/ui/label';
 
 interface LoginProps {
     onSuccess?: () => void;
@@ -43,9 +44,6 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
 
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
-            options: {
-                redirectTo: `${window.location.origin}/dashboard`,
-            },
         });
 
         if (error) {
@@ -69,10 +67,10 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
 
             <div className='relative py-4'>
                 <div className='absolute inset-0 flex items-center'>
-                    <div className='w-full border-t border-gray-300'></div>
+                    <div className='w-full border-t border-zinc-300 dark:border-zinc-700'></div>
                 </div>
                 <div className='relative flex justify-center text-sm'>
-                    <span className='bg-white px-4 text-gray-500 dark:bg-gray-900'>or</span>
+                    <span className='bg-zinc-50 px-4 text-zinc-500 dark:bg-zinc-950'>or</span>
                 </div>
             </div>
 
@@ -80,7 +78,7 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
                 <div>
                     <div className='flex justify-between'>
                         <label className='block text-sm font-medium'>Email</label>
-                        <button onClick={onForgotPasswordClick} className='text-sm text-blue-600 hover:underline'>
+                        <button type='button' onClick={onForgotPasswordClick} className='text-sm text-blue-600 dark:text-blue-400 hover:underline'>
                             Forgot Password?
                         </button>
                     </div>
@@ -88,7 +86,7 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
                 </div>
 
                 <div>
-                    <label className='block text-sm font-medium'>Password</label>
+                    <Label className='block text-sm font-medium'>Password</Label>
                     <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} className='w-full rounded border px-3 py-2' required />
                 </div>
 
@@ -100,7 +98,7 @@ const Login: FC<LoginProps> = ({ onSuccess, onSignUpClick, onForgotPasswordClick
             <div className='space-y-2 text-center pt-8'>
                 <div className='text-sm'>
                     Don&apos;t have an account?{' '}
-                    <button onClick={onSignUpClick} className='text-blue-600 hover:underline'>
+                    <button onClick={onSignUpClick} className='text-blue-600 dark:text-blue-400 hover:underline'>
                         Sign Up
                     </button>
                 </div>

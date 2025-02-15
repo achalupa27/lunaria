@@ -12,7 +12,7 @@ type CompanyLogoProps = {
 const CompanyLogo = ({ showName = true, textColor }: CompanyLogoProps) => {
     return (
         <Link href='/' className='flex w-fit items-center space-x-2 hover:cursor-pointer'>
-            <Logo filled={true} height={40} width={40} />
+            <Logo filled={true} size={40} />
             {showName && <span className={`text-3xl font-normal hidden sm:block ${textColor || 'text-zinc-950 dark:text-zinc-50'}`}>{COMPANY_NAME}</span>}
         </Link>
     );

@@ -9,7 +9,6 @@ import Auth from '@/components/website/auth';
 import Login from '@/components/website/auth/log-in';
 import SignUp from '@/components/website/auth/sign-up';
 import ForgotPassword from '@/components/website/auth/forgot-password';
-import Reset from '@/components/website/auth/reset-password';
 import ConfirmEmail from '@/components/website/auth/confirm-email';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
@@ -17,7 +16,7 @@ import Link from 'next/link';
 
 const RightSection = () => {
     const [isAuthOpen, setIsAuthOpen] = useState(false);
-    const [authView, setAuthView] = useState<'login' | 'signup' | 'forgot-password' | 'reset-password' | 'confirm-email'>('login');
+    const [authView, setAuthView] = useState<'login' | 'signup' | 'forgot-password' | 'confirm-email'>('login');
     const [email, setEmail] = useState<string>('');
 
     const supabase = createClient();
@@ -69,11 +68,6 @@ const RightSection = () => {
         setAuthView('confirm-email');
     };
 
-    const handleResetSuccess = () => {
-        setAuthView('login');
-        setIsAuthOpen(false);
-    };
-
     return (
         <>
             <div className='flex flex-1 justify-end lg:space-x-2'>
@@ -117,7 +111,6 @@ const RightSection = () => {
                 {authView === 'login' && <Login onSuccess={handleAuthSuccess} onSignUpClick={() => setAuthView('signup')} onForgotPasswordClick={() => setAuthView('forgot-password')} />}
                 {authView === 'signup' && <SignUp onSuccess={handleSignUpSuccess} onLoginClick={() => setAuthView('login')} />}
                 {authView === 'forgot-password' && <ForgotPassword onBackToLogin={() => setAuthView('login')} />}
-                {authView === 'reset-password' && <Reset onSuccess={handleResetSuccess} />}
                 {authView === 'confirm-email' && <ConfirmEmail email={email} onBackToLogin={() => setAuthView('login')} />}
             </Auth>
         </>

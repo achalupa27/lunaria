@@ -67,7 +67,7 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({ onSuccess, onBackToLogin }) =
                     </form>
 
                     <div className='text-center text-sm pt-8'>
-                        <button onClick={onBackToLogin} className='text-blue-600 hover:underline'>
+                        <button onClick={onBackToLogin} className='text-blue-600 dark:text-blue-400 hover:underline'>
                             Back to Login
                         </button>
                     </div>

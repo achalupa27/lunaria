@@ -16,7 +16,7 @@ const MobileDropdownItem = ({ label, summary, link }: Props) => {
         <a href={link} className='group/item flex h-full w-full flex-col justify-between rounded px-3 py-2 transition duration-200 hover:cursor-pointer hover:bg-zinc-300'>
             <div>
                 <div className='flex items-center space-x-2 pb-[1px]'>
-                    {label === 'Dashboard' && <Logo width={32} height={32} filled={true} />}
+                    {label === 'Dashboard' && <Logo size={32} filled={true} />}
                     {label === 'Income Tracker' && <MakeIcon width={32} height={32} filled={true} />}
                     {label === 'Savings Tracker' && <SaveIcon width={32} height={32} filled={true} />}
                     {label === 'Spending Tracker' && <SpendIcon width={32} height={32} filled={true} />}

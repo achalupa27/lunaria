@@ -26,7 +26,7 @@ const SignUp: FC<SignUpProps> = ({ onSuccess, onLoginClick }) => {
             email,
             password,
             options: {
-                emailRedirectTo: `${window.location.origin}/pricing`,
+                emailRedirectTo: `${window.location.origin}/log-in`,
             },
         });
 
@@ -68,10 +68,10 @@ const SignUp: FC<SignUpProps> = ({ onSuccess, onLoginClick }) => {
 
             <div className='relative py-4'>
                 <div className='absolute inset-0 flex items-center'>
-                    <div className='w-full border-t border-gray-300'></div>
+                    <div className='w-full border-t border-zinc-300 dark:border-zinc-700'></div>
                 </div>
                 <div className='relative flex justify-center text-sm'>
-                    <span className='bg-white px-4 text-gray-500 dark:bg-gray-900'>or</span>
+                    <span className='bg-zinc-50 px-4 text-zinc-500 dark:bg-zinc-950'>or</span>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@ const SignUp: FC<SignUpProps> = ({ onSuccess, onLoginClick }) => {
 
             <div className='pt-8 text-center text-sm'>
                 Already have an account?{' '}
-                <button onClick={onLoginClick} className='text-blue-600 hover:underline'>
+                <button onClick={onLoginClick} className='text-blue-600 dark:text-blue-400 hover:underline'>
                     Log In
                 </button>
             </div>

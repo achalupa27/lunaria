@@ -15,7 +15,7 @@ const BrandInfo = () => {
     return (
         <div className='flex flex-col w-full justify-center items-center'>
             <Link href='/' className='flex w-fit items-center space-x-2 hover:cursor-pointer'>
-                <Logo filled={true} height={40} width={40} />
+                <Logo filled={true} size={40} />
                 <span className={`text-3xl font-normal`}>{COMPANY_NAME}</span>
             </Link>
             <div className='grid w-fit grid-cols-5 gap-x-4 gap-y-2 pl-3 pt-2'>

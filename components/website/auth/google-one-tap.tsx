@@ -37,7 +37,6 @@ const OneTapComponent = () => {
             });
 
             const [nonce, hashedNonce] = await generateNonce();
-            console.log('Nonce: ', nonce, hashedNonce);
 
             const { data, error } = await supabase.auth.getSession();
             if (error) console.error('Error getting session', error);
