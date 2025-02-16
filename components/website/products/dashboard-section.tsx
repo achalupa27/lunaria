@@ -21,7 +21,7 @@ const DashboardSection = () => {
         <section id='dashboard' className='py-16 text-center'>
             <h2 className='mb-4 text-4xl font-semibold'>Your Financial Dashboard</h2>
             <p className='text-lg text-gray-600 mb-10'>Get a complete overview of your personal finances, including income, savings, and spending.</p>
-            <div className='grid items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3'>
+            <div className='grid items-stretch gap-8 lg:grid-cols-3'>
                 {dashboardFeatures.map((feature, index) => (
                     <div key={index} className='h-full'>
                         <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>

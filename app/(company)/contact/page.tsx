@@ -42,10 +42,14 @@ const Contact = () => {
         <section>
             <h1 className='mt-24 text-center font-medium'>Contact Us</h1>
             <form onSubmit={handleSubmit(onSubmit)} className='mx-auto mt-20 flex max-w-3xl flex-col space-y-2 '>
-                <input {...register('name')} required placeholder='Name' className={`rounded-lg border bg-white dark:bg-black px-3 py-2 ${isSent && `cursor-not-allowed border bg-transparent`}`} readOnly={isSent} disabled={isSending || isSent} />
-                <input {...register('email')} required placeholder='Email' className={`rounded-lg border bg-white dark:bg-black px-3 py-2 ${isSent && `cursor-not-allowed border bg-transparent`}`} type='email' readOnly={isSent} disabled={isSending || isSent} />
-                <input {...register('subject')} placeholder='Subject' className={`rounded-lg border bg-white dark:bg-black px-3 py-2 ${isSent && `cursor-not-allowed border bg-transparent`}`} required readOnly={isSent} disabled={isSending || isSent} />
-                <textarea {...register('message')} required placeholder='Message' className={`h-48 resize-none rounded-lg border bg-white dark:bg-black px-3 py-2  ${isSent && 'cursor-not-allowed border bg-transparent'}`} readOnly={isSent} disabled={isSending || isSent} />
+                <label className='block text-sm font-medium'>Name</label>
+                <input {...register('name')} required className={`rounded-lg border bg-white dark:bg-black px-3 py-2 ${isSent && `cursor-not-allowed border bg-transparent`}`} readOnly={isSent} disabled={isSending || isSent} />
+                <label className='block text-sm font-medium'>Email</label>
+                <input {...register('email')} required className={`rounded-lg border bg-white dark:bg-black px-3 py-2 ${isSent && `cursor-not-allowed border bg-transparent`}`} type='email' readOnly={isSent} disabled={isSending || isSent} />
+                <label className='block text-sm font-medium'>Subject</label>
+                <input {...register('subject')} className={`rounded-lg border bg-white dark:bg-black px-3 py-2 ${isSent && `cursor-not-allowed border bg-transparent`}`} required readOnly={isSent} disabled={isSending || isSent} />
+                <label className='block text-sm font-medium'>Message</label>
+                <textarea {...register('message')} required className={`h-48 resize-none rounded-lg border bg-white dark:bg-black px-3 py-2  ${isSent && 'cursor-not-allowed border bg-transparent'}`} readOnly={isSent} disabled={isSending || isSent} />
 
                 <Button size='lg' className={`py-3  ${isSent ? 'cursor-not-allowed' : ''} ${isSending && 'cursor-wait opacity-50'}`} disabled={isSending || isSent}>
                     {isSent ? (

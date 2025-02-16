@@ -21,7 +21,7 @@ const SaveSection = () => {
         <section id='save' className='py-16 text-center'>
             <h2 className='mb-4 text-4xl font-semibold'>Build Your Savings</h2>
             <p className='text-lg text-zinc-600 mb-10'>Set aside money for the future and watch your savings grow over time.</p>
-            <div className='grid items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3'>
+            <div className='grid items-stretch gap-8 lg:grid-cols-3'>
                 {saveFeatures.map((feature, index) => (
                     <div key={index} className='h-full'>
                         <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>

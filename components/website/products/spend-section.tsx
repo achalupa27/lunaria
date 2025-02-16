@@ -21,7 +21,7 @@ const SpendSection = () => {
         <section id='spend' className='py-16 text-center'>
             <h2 className='mb-4 text-4xl font-semibold'>Smart Spending</h2>
             <p className='text-lg text-gray-600 mb-10'>Optimize your expenses and make informed financial decisions.</p>
-            <div className='grid items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3'>
+            <div className='grid items-stretch gap-8 lg:grid-cols-3'>
                 {spendFeatures.map((feature, index) => (
                     <div key={index} className='h-full'>
                         <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>

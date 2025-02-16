@@ -21,7 +21,7 @@ const MakeSection = () => {
         <section id='make' className='py-16 text-center'>
             <h2 className='mb-4 text-4xl font-semibold text-center'>Make More Money</h2>
             <p className='text-lg text-gray-600 mb-10'>Increase your income by identifying new opportunities and optimizing your earnings.</p>
-            <div className='grid items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3'>
+            <div className='grid items-stretch gap-8 lg:grid-cols-3'>
                 {makeFeatures.map((feature, index) => (
                     <div key={index} className='h-full'>
                         <Card className='flex h-full flex-col py-12 w-full items-center justify-center'>

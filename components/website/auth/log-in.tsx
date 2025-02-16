@@ -1,9 +1,10 @@
 import { createClient } from '@/utils/supabase/client';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Google from '@/components/icons/socials/google';
 import Logo from '@/components/icons/logo';
 import { Label } from '@/components/ui/label';
+import { redirect } from 'next/navigation';
 
 interface LoginProps {
     onSuccess?: () => void;
