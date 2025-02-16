@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import Auth from '../auth';
 import SignUp from '../auth/sign-up';
-import FreeTable from './free-table';
-import PremiumTable from './premium-table';
-import ProTable from './pro-table';
-import TermChanger from './term-changer';
+import FreeTable from './components/pricing-tables/free-table';
+import PremiumTable from './components/pricing-tables/premium-table';
+import ProTable from './components/pricing-tables/pro-table';
+import TermChanger from './components/term-changer';
 
 const PricingTables = () => {
     const [authView, setAuthView] = useState<'login' | 'signup'>('signup');

@@ -1,4 +1,3 @@
-import { createClient } from '@/utils/supabase/server';
 import { NextRequest } from 'next/server';
 import Stripe from 'stripe';
 

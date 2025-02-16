@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
+type Subscription = {
+    id: string;
+    role: 'free' | 'pro' | 'premium';
+    stripe_customer_id?: string;
+    trial_end?: string | null;
+    interval?: 'month' | 'year';
+    // ... other fields
+};
+
 export function useSubscription() {
     const [subscription, setSubscription] = useState<Subscription | null>(null);
     const [loading, setLoading] = useState(true);
