@@ -15,6 +15,10 @@ i {
     line-height: 0;
 }
 
+/* h1 {
+    font-family: 'Cal Sans';
+} */
+
 .will-change-transform {
     will-change: transform, opacity;
 }

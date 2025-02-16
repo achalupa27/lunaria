@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Session } from '@supabase/supabase-js';
 import Card from '@/components/ui/card';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import Link from 'next/link';
 
 type Subscription = {
     id: string;
@@ -129,9 +130,7 @@ const ProfilePage = () => {
                     <h3 className='mb-4'>Subscription Details</h3>
                     <div className='grid grid-cols-2 gap-2 text-sm'>
                         <div className='text-zinc-600 dark:text-zinc-400'>Status</div>
-                        <div className='capitalize'>
-                            <span className={`px-2 py-1 rounded text-sm ${subscription.status === 'active' || subscription.status === 'trialing' ? 'bg-green-50 dark:bg-green-900/30 border border-green-400 text-green-500' : 'bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-400 text-yellow-500'}`}>{subscription.status}</span>
-                        </div>
+                        <div className='capitalize'>{subscription.status}</div>
 
                         <div className='text-zinc-600 dark:text-zinc-400'>Plan</div>
                         <div className='capitalize'>{subscription.role}</div>
@@ -224,6 +223,10 @@ const ProfilePage = () => {
                             </AlertDialogContent>
                         </AlertDialog>
                     )}
+
+                    <Button asChild variant='outline' className='w-full mt-2'>
+                        <Link href='/pricing'>Switch Plan</Link>
+                    </Button>
                 </Card>
             )}
 

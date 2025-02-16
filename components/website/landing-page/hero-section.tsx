@@ -35,18 +35,18 @@ const HeroSection = () => {
     return (
         <section className='flex min-h-screen flex-col items-center justify-center'>
             <div className='mb-12 text-center text-lg font-semibold md:text-3xl xl:text-4xl'>Looking to Clean Up your Money?</div>
-            <motion.h1 initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.25 }} className='text-3xl font-semibold tracking-tighter md:text-6xl xl:text-8xl text-center'>
+            <motion.h1 initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1, delay: 0.25 }} className='text-4xl font-semibold tracking-tighter md:text-6xl xl:text-8xl text-center'>
                 Welcome to your
             </motion.h1>
             <div className='flex flex-col sm:flex-row text-center sm:text-start'>
-                <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.75 }} className='text-3xl font-semibold tracking-tighter md:text-6xl xl:text-8xl'>
+                <motion.h1 initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 0.75 }} className='text-4xl font-semibold tracking-tighter md:text-6xl xl:text-8xl'>
                     Personal&nbsp;
-                </motion.div>
-                <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 1 }} className='text-3xl font-semibold tracking-tighter md:text-6xl xl:text-8xl'>
+                </motion.h1>
+                <motion.h1 initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 1 }} className='text-4xl font-semibold tracking-tighter md:text-6xl xl:text-8xl'>
                     Money&nbsp;
-                </motion.div>
-                <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 1.25 }} className='text-3xl font-semibold tracking-tighter md:text-6xl xl:text-8xl'>
-                    <div>Database.</div>
+                </motion.h1>
+                <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 1.25 }}>
+                    <h1 className='text-3xl font-semibold tracking-tighter md:text-6xl xl:text-8xl'>Database.</h1>
                     <motion.div initial={{ x: -10, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1.5, delay: 1.5 }} className='-mt-1 w-fit pl-[2.5px] text-xs font-light whitespace-nowrap tracking-normal text-zinc-950 dark:text-white sm:text-sm md:pl-1 xl:pl-[6px]'>
                         With Artificial Intelligence
                     </motion.div>

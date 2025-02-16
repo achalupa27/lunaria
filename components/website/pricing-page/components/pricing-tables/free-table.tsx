@@ -1,12 +1,12 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { freeFeatures } from '@/components/website/pricing-page/data/features-free';
 import { CheckCircle } from 'lucide-react';
 import { useSubscription } from '@/hooks/use-subscription';
 import { getButtonConfig } from '../../utils/pricing-utils';
 import { SubscriptionChangeDialog } from '../subscription-change-dialog';
 import { useState } from 'react';
+import { freeFeatures } from '../../data/features.config';
 
 type Props = {
     onSignUpClick: () => void;
@@ -24,9 +24,7 @@ const FreeTable = ({ onSignUpClick }: Props) => {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                 });
-                if (response.ok) {
-                    window.location.reload();
-                }
+                if (response.ok) window.location.reload();
             } catch (error) {
                 console.error('Error canceling subscription:', error);
             }
@@ -35,11 +33,8 @@ const FreeTable = ({ onSignUpClick }: Props) => {
     };
 
     const handleAction = () => {
-        if (buttonConfig.action === 'sign-up') {
-            onSignUpClick();
-        } else {
-            setShowDialog(true);
-        }
+        if (buttonConfig.action === 'sign-up') onSignUpClick();
+        else setShowDialog(true);
     };
 
     return (
@@ -53,7 +48,7 @@ const FreeTable = ({ onSignUpClick }: Props) => {
                     {freeFeatures.map((feature, i) => (
                         <div key={i} className='flex items-center gap-2 text-sm leading-8 sm:text-base sm:leading-8'>
                             <CheckCircle size={18} className='text-green-400' />
-                            <div>{feature.feature}</div>
+                            <div>{feature}</div>
                         </div>
                     ))}
                 </div>

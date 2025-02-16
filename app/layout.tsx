@@ -1,5 +1,7 @@
 import '../styles/globals.css';
 import '../styles/index.css';
+import 'cal-sans';
+
 import PageLayout from '@/components/website/layout/page-layout';
 import { defaultMetadata } from './metadata.config';
 import ClientProviders from '@/components/providers/client-providers';

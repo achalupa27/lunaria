@@ -2,13 +2,13 @@
 
 import { Button } from '@/components/ui/button';
 import { MONTHLY_PRO_PRICE, PRO_MONTHLY_PRICE_ID, PRO_YEARLY_PRICE_ID, YEARLY_PRO_PRICE } from '@/constants';
-import { professionalFeatures } from '../../data/features-professional';
 import { CheckCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useSubscription } from '@/hooks/use-subscription';
 import { getButtonConfig, BillingInterval } from '../../utils/pricing-utils';
 import { SubscriptionChangeDialog } from '../subscription-change-dialog';
+import { proFeatures } from '../../data/features.config';
 
 type Props = {
     term: string;
@@ -60,9 +60,7 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
                         term: term.toLowerCase(),
                     }),
                 });
-                if (response.ok) {
-                    window.location.reload();
-                }
+                if (response.ok) window.location.reload();
             } catch (error) {
                 console.error('Error updating subscription term:', error);
             }
@@ -74,9 +72,7 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ plan: 'pro' }),
                     });
-                    if (response.ok) {
-                        window.location.reload();
-                    }
+                    if (response.ok) window.location.reload();
                 } catch (error) {
                     console.error('Error updating subscription:', error);
                 }
@@ -124,9 +120,10 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
                     <div className='text-lg'>{`$${term === 'Monthly' ? MONTHLY_PRO_PRICE : YEARLY_PRO_PRICE} per month`}</div>
                 </div>
                 <div className='grow px-6 pt-4'>
-                    {professionalFeatures.map((feature, i) => (
+                    {proFeatures.map((feature, i) => (
                         <div key={i} className='flex items-center gap-2 text-sm leading-8 sm:text-base sm:leading-8'>
-                            <CheckCircle size={18} className='text-green-400' /> <div>{feature.feature}</div>
+                            <CheckCircle size={18} className='text-green-400' />
+                            <div>{feature}</div>
                         </div>
                     ))}
                 </div>

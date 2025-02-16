@@ -3,12 +3,12 @@
 import { Button } from '@/components/ui/button';
 import { MONTHLY_PREMIUM_PRICE, PREMIUM_MONTHLY_PRICE_ID, YEARLY_PREMIUM_PRICE, PREMIUM_YEARLY_PRICE_ID } from '@/constants';
 import { CheckCircle } from 'lucide-react';
-import { premiumFeatures } from '../../data/features-premium';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useSubscription } from '@/hooks/use-subscription';
 import { getButtonConfig, BillingInterval } from '../../utils/pricing-utils';
 import { SubscriptionChangeDialog } from '../subscription-change-dialog';
+import { premiumFeatures } from '../../data/features.config';
 
 type Props = {
     term: string;
@@ -114,7 +114,7 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
                 <div className='grow px-6 pt-4'>
                     {premiumFeatures.map((feature, i) => (
                         <div key={i} className='flex items-center gap-2 text-sm leading-8 sm:text-base sm:leading-8'>
-                            <CheckCircle size={18} className='text-black' /> <div>{feature.feature}</div>
+                            <CheckCircle size={18} className='text-black' /> <div>{feature}</div>
                         </div>
                     ))}
                 </div>
