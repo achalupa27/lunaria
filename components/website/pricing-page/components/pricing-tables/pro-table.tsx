@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { MONTHLY_PRO_PRICE, PRO_MONTHLY_PRICE_ID, PRO_YEARLY_PRICE_ID, YEARLY_PRO_PRICE } from '@/constants';
-import { professionalFeatures } from '@/components/website/pricing-page/data/features-professional';
+import { professionalFeatures } from '../../data/features-professional';
 import { CheckCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { useSubscription } from '@/hooks/use-subscription';
-import { getButtonConfig } from '../../utils/pricing-utils';
+import { getButtonConfig, BillingInterval } from '../../utils/pricing-utils';
 import { SubscriptionChangeDialog } from '../subscription-change-dialog';
 
 type Props = {
@@ -47,33 +47,10 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
         return () => subscription.unsubscribe();
     }, [supabase.auth]);
 
-    const handleCheckout = async (priceId: string) => {
-        if (!stripeCustomerId) return;
-
-        try {
-            const response = await fetch('/api/stripe/create-checkout-session', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    priceId,
-                    customerId: stripeCustomerId,
-                }),
-            });
-
-            const { url } = await response.json();
-            window.location.href = url;
-        } catch (error) {
-            console.error('Error creating checkout session:', error);
-        }
-    };
-
-    const buttonConfig = getButtonConfig(subscription?.role || null, 'pro', subscription?.trial_end, subscription?.interval as any, term);
+    const buttonConfig = getButtonConfig(subscription?.role || null, 'pro', subscription?.trial_end, subscription?.interval as BillingInterval, term as 'Monthly' | 'Yearly');
 
     const handleSubscriptionChange = async () => {
         if (buttonConfig.action === 'switch-term') {
-            // Handle term switch
             try {
                 const response = await fetch('/api/stripe/update-subscription', {
                     method: 'POST',
@@ -111,10 +88,29 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
     };
 
     const handleAction = () => {
-        if (buttonConfig.action === 'sign-up') {
-            onSignUpClick();
-        } else {
-            setShowDialog(true);
+        if (buttonConfig.action === 'sign-up') onSignUpClick();
+        else setShowDialog(true);
+    };
+
+    const handleCheckout = async (priceId: string) => {
+        if (!stripeCustomerId) return;
+
+        try {
+            const response = await fetch('/api/stripe/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    priceId,
+                    customerId: stripeCustomerId,
+                }),
+            });
+
+            const { url } = await response.json();
+            window.location.href = url;
+        } catch (error) {
+            console.error('Error creating checkout session:', error);
         }
     };
 
@@ -138,7 +134,7 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
                     {buttonConfig.text}
                 </Button>
             </div>
-            <SubscriptionChangeDialog isOpen={showDialog} onClose={() => setShowDialog(false)} onConfirm={handleSubscriptionChange} currentPlan={subscription?.role || 'free'} newPlan='pro' action={buttonConfig.action as 'upgrade' | 'downgrade'} />
+            <SubscriptionChangeDialog isOpen={showDialog} onClose={() => setShowDialog(false)} onConfirm={handleSubscriptionChange} currentPlan={subscription?.role || 'free'} newPlan='pro' action={buttonConfig.action as 'upgrade' | 'downgrade' | 'switch-term'} term={term as 'Monthly' | 'Yearly'} currentTerm={subscription?.interval === 'month' ? 'Monthly' : 'Yearly'} />
         </>
     );
 };

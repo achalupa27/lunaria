@@ -61,7 +61,7 @@ const FreeTable = ({ onSignUpClick }: Props) => {
                     {buttonConfig.text}
                 </Button>
             </div>
-            <SubscriptionChangeDialog isOpen={showDialog} onClose={() => setShowDialog(false)} onConfirm={handleSubscriptionChange} currentPlan={subscription?.role || 'free'} newPlan='free' action={buttonConfig.action as 'upgrade' | 'downgrade'} />
+            <SubscriptionChangeDialog isOpen={showDialog} onClose={() => setShowDialog(false)} onConfirm={handleSubscriptionChange} currentPlan={subscription?.role || 'free'} newPlan='free' action={buttonConfig.action as 'upgrade' | 'downgrade'} term={'Monthly'} currentTerm={subscription?.interval === 'month' ? 'Monthly' : 'Yearly'} />
         </>
     );
 };

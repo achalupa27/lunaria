@@ -47,7 +47,7 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
         return () => subscription.unsubscribe();
     }, [supabase.auth]);
 
-    const buttonConfig = getButtonConfig(subscription?.role || null, 'premium', subscription?.trial_end, subscription?.interval as BillingInterval, term);
+    const buttonConfig = getButtonConfig(subscription?.role || null, 'premium', subscription?.trial_end, subscription?.interval as BillingInterval, term as 'Monthly' | 'Yearly');
 
     const handleSubscriptionChange = async () => {
         if (buttonConfig.action === 'switch-term') {
@@ -122,7 +122,7 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
                     {buttonConfig.text}
                 </Button>
             </div>
-            <SubscriptionChangeDialog isOpen={showDialog} onClose={() => setShowDialog(false)} onConfirm={handleSubscriptionChange} currentPlan={subscription?.role || 'free'} newPlan='premium' action={buttonConfig.action as 'upgrade' | 'downgrade'} />
+            <SubscriptionChangeDialog isOpen={showDialog} onClose={() => setShowDialog(false)} onConfirm={handleSubscriptionChange} currentPlan={subscription?.role || 'free'} newPlan='premium' action={buttonConfig.action as 'upgrade' | 'downgrade' | 'switch-term'} term={term as 'Monthly' | 'Yearly'} currentTerm={subscription?.interval === 'month' ? 'Monthly' : 'Yearly'} />
         </>
     );
 };
