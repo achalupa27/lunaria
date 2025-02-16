@@ -105,7 +105,7 @@ const ProfilePage = () => {
 
     return (
         <section className='max-w-2xl mx-auto p-6 space-y-6 mt-12'>
-            <Card className='flex flex-row items-center space-x-4 border-2 shadow-md'>
+            <Card className='flex flex-row items-center space-x-4 border-2 shadow-md relative'>
                 {session?.user?.user_metadata.avatar_url ? (
                     <img src={session.user.user_metadata.avatar_url} alt='Profile' className='w-16 h-16 rounded-full' />
                 ) : (
@@ -116,6 +116,11 @@ const ProfilePage = () => {
                 <div>
                     <h1 className='text-2xl font-bold'>{session?.user?.user_metadata.full_name || session?.user?.user_metadata.name || (session?.user?.email ? session.user.email.split('@')[0] : 'No name provided')}</h1>
                     <p className='text-zinc-600 dark:text-zinc-400'>{session?.user?.email || 'No email provided'}</p>
+                </div>
+                <div className='absolute top-4 right-4'>
+                    {subscription?.role === 'premium' && <span className='px-2 py-1 gold-gradient rounded-lg text-sm border border-orange-100 shadow font-semibold dark:text-zinc-900'>Premium</span>}
+                    {subscription?.role === 'pro' && <span className='px-2 py-1 rounded-lg dark:bg-zinc-950 text-sm dark:text-orange-100 font-medium border border-orange-100 bg-white shadow'>Pro</span>}
+                    {(!subscription?.role || subscription.role === 'free') && <span className='px-2 py-1 text-sm'>Free</span>}
                 </div>
             </Card>
 
@@ -181,7 +186,10 @@ const ProfilePage = () => {
                     {/* Trial warning message */}
                     {subscription.trial_end && !subscription.cancel_at_period_end && (
                         <div className='mt-4 text-sm text-zinc-600 dark:text-zinc-400 border-t pt-4'>
-                            Cancel before {formatDate(subscription.trial_end)} to avoid being charged ${(subscription.price_amount / 100).toFixed(2)} {subscription.currency.toUpperCase()}.
+                            <p>
+                                Cancel <span className='font-bold'>before {formatDate(subscription.trial_end)}</span> to avoid being charged ${(subscription.price_amount / 100).toFixed(2)} {subscription.currency.toUpperCase()}.
+                            </p>
+                            <p className='mt-2'>If you need help cancelling your subscription, please reach out to us and we'll be happy to assist you.</p>
                         </div>
                     )}
 
@@ -209,7 +217,7 @@ const ProfilePage = () => {
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>Keep Subscription</AlertDialogCancel>
-                                    <AlertDialogAction onClick={handleCancelSubscription} className='bg-red-500 hover:bg-red-600'>
+                                    <AlertDialogAction onClick={handleCancelSubscription} className='bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500 dark:text-white'>
                                         Yes, Cancel
                                     </AlertDialogAction>
                                 </AlertDialogFooter>
