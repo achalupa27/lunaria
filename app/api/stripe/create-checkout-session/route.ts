@@ -22,6 +22,9 @@ export async function POST(req: NextRequest) {
                     quantity: 1,
                 },
             ],
+            subscription_data: {
+                trial_period_days: 7,
+            },
             success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?success=true`,
             cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/pricing?canceled=true`,
         });

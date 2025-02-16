@@ -47,15 +47,22 @@ export async function POST(req: Request) {
         switch (event.type) {
             case 'customer.subscription.created':
             case 'customer.subscription.updated':
+            case 'invoice.paid':
+            case 'invoice.payment_succeeded':
                 const subscription = event.data.object as Stripe.Subscription;
                 const productId = subscription.items.data[0].price.product as string;
                 const role = isKnownProduct(productId) ? PRODUCT_TO_ROLE[productId] : 'free';
 
+                // console.log('Webhook event type:', event.type);
+                // console.log('Subscription status:', subscription.status);
+                // console.log('Full subscription object:', JSON.stringify(subscription, null, 2));
+
                 // Get the customer to access metadata
                 const customer = (await stripe.customers.retrieve(subscription.customer as string)) as Stripe.Customer;
 
-                console.log('customer: ', customer);
-                console.log('subscription: ', subscription);
+                // console.log('customer: ', customer);
+                // console.log('subscription: ', subscription);
+                // console.log('subscription items: ', subscription.items.data[0]);
 
                 const { error } = await supabase
                     .from('subscriptions')
@@ -64,6 +71,17 @@ export async function POST(req: Request) {
                         stripe_subscription_id: subscription.id,
                         status: subscription.status,
                         price_id: subscription.items.data[0].price.id,
+                        current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+                        current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+                        cancel_at_period_end: subscription.cancel_at_period_end,
+                        cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
+                        canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+                        trial_start: subscription.trial_start ? new Date(subscription.trial_start * 1000).toISOString() : null,
+                        trial_end: subscription.trial_end ? new Date(subscription.trial_end * 1000).toISOString() : null,
+                        interval: subscription.items.data[0].price.recurring?.interval,
+                        interval_count: subscription.items.data[0].price.recurring?.interval_count,
+                        price_amount: subscription.items.data[0].price.unit_amount,
+                        currency: subscription.currency,
                     })
                     .eq('stripe_customer_id', subscription.customer);
 
