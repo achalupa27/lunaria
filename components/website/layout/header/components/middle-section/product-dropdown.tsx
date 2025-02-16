@@ -1,7 +1,7 @@
 'use client';
 
 import DropdownItem from './dropdown-item';
-import { products } from '../data';
+import { products } from '../../config';
 import { Separator } from '@/components/ui/separator';
 import { Fragment } from 'react';
 

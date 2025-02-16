@@ -1,8 +1,8 @@
 'use client';
 
-import LeftSection from './left-section';
-import MiddleSection from './middle-section';
-import RightSection from './right-section';
+import LeftSection from './components/left-section';
+import MiddleSection from './components/middle-section';
+import RightSection from './components/right-section';
 
 const Header = () => {
     return (

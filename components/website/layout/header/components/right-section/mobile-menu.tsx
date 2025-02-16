@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import MobileDropdownItem from './mobile-dropdown-item';
-import { products } from '../data';
+import { products } from '../../config';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import CompanyLogo from '@/components/website/company-logo';

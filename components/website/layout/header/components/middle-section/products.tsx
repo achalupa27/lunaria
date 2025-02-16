@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import ProductDropdown from './product-dropdown';
-import { products } from '../data';
+import { products } from '../../config';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 
