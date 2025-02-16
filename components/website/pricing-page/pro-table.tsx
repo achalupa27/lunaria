@@ -1,9 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { MONTHLY_PRO_PRICE, PRO_MONTHLY_URL, PRO_YEARLY_URL, YEARLY_PRO_PRICE } from '@/constants';
+import { MONTHLY_PRO_PRICE, PRO_MONTHLY_PRICE_ID, PRO_YEARLY_PRICE_ID, YEARLY_PRO_PRICE } from '@/constants';
 import { professionalFeatures } from '@/components/website/pricing-page/data/features-professional';
-import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
@@ -15,13 +14,22 @@ type Props = {
 
 const ProTable = ({ term, onSignUpClick }: Props) => {
     const [session, setSession] = useState<any | null>(null);
+    const [stripeCustomerId, setStripeCustomerId] = useState<string | null>(null);
     const supabase = createClient();
 
     useEffect(() => {
-        const getSession = async () => {
+        async function getSession() {
             const { data, error } = await supabase.auth.getSession();
-            setSession(data?.session?.user);
-        };
+            const user = data?.session?.user;
+            setSession(user);
+
+            if (user) {
+                const { data: subscription } = await supabase.from('subscriptions').select('stripe_customer_id').eq('id', user.id).single();
+                if (subscription?.stripe_customer_id) {
+                    setStripeCustomerId(subscription.stripe_customer_id);
+                }
+            }
+        }
 
         getSession();
 
@@ -31,10 +39,30 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
             setSession(session?.user ?? null);
         });
 
-        return () => {
-            subscription.unsubscribe();
-        };
+        return () => subscription.unsubscribe();
     }, [supabase.auth]);
+
+    const handleCheckout = async (priceId: string) => {
+        if (!stripeCustomerId) return;
+
+        try {
+            const response = await fetch('/api/stripe/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    priceId,
+                    customerId: stripeCustomerId,
+                }),
+            });
+
+            const { url } = await response.json();
+            window.location.href = url;
+        } catch (error) {
+            console.error('Error creating checkout session:', error);
+        }
+    };
 
     return (
         <div className='relative flex h-[36rem] w-full sm:w-[20rem] xl:w-[21rem] 2xl:w-[22rem] flex-col rounded-2xl border border-orange-100/60 bg-white p-1 dark:bg-black'>
@@ -43,7 +71,6 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
             <div className='mx-auto mt-4 text-center'>
                 <div className='text-4xl font-semibold'>Pro</div>
                 <div className='text-lg'>{`$${term === 'Monthly' ? MONTHLY_PRO_PRICE : YEARLY_PRO_PRICE} per month`}</div>
-                {/* {term === 'Yearly' && <div className='-mt-1 text-sm text-zinc-700'>Billed annually.</div>} */}
             </div>
             <div className='grow px-6 pt-4'>
                 {professionalFeatures.map((feature, i) => (
@@ -53,8 +80,8 @@ const ProTable = ({ term, onSignUpClick }: Props) => {
                 ))}
             </div>
             {session ? (
-                <Button className='rounded-b-xl' size='lg' asChild>
-                    <Link href={term === 'Monthly' ? PRO_MONTHLY_URL : PRO_YEARLY_URL}>Start Trial</Link>
+                <Button onClick={() => handleCheckout(term === 'Monthly' ? PRO_MONTHLY_PRICE_ID : PRO_YEARLY_PRICE_ID)} className='rounded-b-xl' size='lg'>
+                    Start Trial
                 </Button>
             ) : (
                 <Button onClick={onSignUpClick} className='rounded-b-xl' size='lg'>

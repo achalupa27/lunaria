@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { MONTHLY_PREMIUM_PRICE, PREMIUM_MONTHLY_URL, PREMIUM_YEARLY_URL, YEARLY_PREMIUM_PRICE } from '@/constants';
+import { MONTHLY_PREMIUM_PRICE, PREMIUM_MONTHLY_PRICE_ID, YEARLY_PREMIUM_PRICE, PREMIUM_YEARLY_PRICE_ID } from '@/constants';
 import {} from '@/components/website/pricing-page/data/features-professional';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
@@ -16,13 +16,22 @@ type Props = {
 
 const PremiumTable = ({ term, onSignUpClick }: Props) => {
     const [session, setSession] = useState<any | null>(null);
+    const [stripeCustomerId, setStripeCustomerId] = useState<string | null>(null);
     const supabase = createClient();
 
     useEffect(() => {
-        const getSession = async () => {
+        async function getSession() {
             const { data, error } = await supabase.auth.getSession();
-            setSession(data?.session?.user);
-        };
+            const user = data?.session?.user;
+            setSession(user);
+
+            if (user) {
+                const { data: subscription } = await supabase.from('subscriptions').select('stripe_customer_id').eq('id', user.id).single();
+                if (subscription?.stripe_customer_id) {
+                    setStripeCustomerId(subscription.stripe_customer_id);
+                }
+            }
+        }
 
         getSession();
 
@@ -32,10 +41,30 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
             setSession(session?.user ?? null);
         });
 
-        return () => {
-            subscription.unsubscribe();
-        };
+        return () => subscription.unsubscribe();
     }, [supabase.auth]);
+
+    const handleCheckout = async (priceId: string) => {
+        if (!stripeCustomerId) return;
+
+        try {
+            const response = await fetch('/api/stripe/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    priceId,
+                    customerId: stripeCustomerId,
+                }),
+            });
+
+            const { url } = await response.json();
+            window.location.href = url;
+        } catch (error) {
+            console.error('Error creating checkout session:', error);
+        }
+    };
 
     return (
         <div className='gold-gradient relative flex h-[36rem] w-full sm:w-[20rem] xl:w-[21rem] 2xl:w-[22rem] flex-col rounded-2xl border border-orange-200 p-1 dark:bg-black dark:text-black'>
@@ -54,8 +83,8 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
                 ))}
             </div>
             {session ? (
-                <Button asChild className='rounded-b-xl' size='lg'>
-                    <Link href={term === 'Monthly' ? PREMIUM_MONTHLY_URL : PREMIUM_YEARLY_URL}>Start Trial</Link>
+                <Button onClick={() => handleCheckout(term === 'Monthly' ? PREMIUM_MONTHLY_PRICE_ID : PREMIUM_YEARLY_PRICE_ID)} className='rounded-b-xl' size='lg'>
+                    Start Trial
                 </Button>
             ) : (
                 <Button onClick={onSignUpClick} className='rounded-b-xl' size='lg'>

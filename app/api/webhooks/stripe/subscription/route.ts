@@ -19,6 +19,11 @@ function isKnownProduct(productId: string): productId is keyof typeof PRODUCT_TO
     return productId in PRODUCT_TO_ROLE;
 }
 
+// Add type guard for Stripe Customer
+function isFullCustomer(customer: Stripe.Customer | Stripe.DeletedCustomer): customer is Stripe.Customer {
+    return (customer as Stripe.Customer).metadata !== undefined;
+}
+
 export async function POST(req: Request) {
     const body = await req.text();
     const headersList = await headers();
@@ -31,7 +36,7 @@ export async function POST(req: Request) {
     let event: Stripe.Event;
 
     try {
-        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+        event = stripe.webhooks.constructEvent(body, signature, 'whsec_MH4W6guLS6nGw4OrQFwQoAijcq6Uxf7W');
     } catch (error: any) {
         return new Response(`Webhook Error: ${error.message}`, { status: 400 });
     }
@@ -44,14 +49,15 @@ export async function POST(req: Request) {
             case 'customer.subscription.updated':
                 const subscription = event.data.object as Stripe.Subscription;
                 const productId = subscription.items.data[0].price.product as string;
-
                 const role = isKnownProduct(productId) ? PRODUCT_TO_ROLE[productId] : 'free';
-                console.log('role', role);
 
-                // Get the Supabase UUID from Stripe metadata
-                const supabaseUUID = (subscription.customer as Stripe.Customer).metadata.supabaseUUID;
+                // Get the customer to access metadata
+                const customer = (await stripe.customers.retrieve(subscription.customer as string)) as Stripe.Customer;
 
-                await supabase
+                console.log('customer: ', customer);
+                console.log('subscription: ', subscription);
+
+                const { error } = await supabase
                     .from('subscriptions')
                     .update({
                         role,
@@ -59,12 +65,16 @@ export async function POST(req: Request) {
                         status: subscription.status,
                         price_id: subscription.items.data[0].price.id,
                     })
-                    .eq('id', supabaseUUID);
+                    .eq('stripe_customer_id', subscription.customer);
+
+                if (error) {
+                    console.error('Supabase update error:', error);
+                    return new Response('Database update failed', { status: 500 });
+                }
                 break;
 
             case 'customer.subscription.deleted':
                 const deletedSubscription = event.data.object as Stripe.Subscription;
-                console.log('deletedSubscription', deletedSubscription);
 
                 await supabase
                     .from('subscriptions')
@@ -74,7 +84,7 @@ export async function POST(req: Request) {
                         status: 'canceled',
                         price_id: null,
                     })
-                    .eq('stripe_customer_id', deletedSubscription.customer);
+                    .eq('stripe_customer_id', deletedSubscription.customer); // Changed from 'id' to 'stripe_customer_id'
                 break;
 
             default:

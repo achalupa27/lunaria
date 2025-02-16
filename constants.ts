@@ -15,6 +15,11 @@ export const YEARLY_PRO_PRICE = '4';
 export const MONTHLY_PREMIUM_PRICE = '10';
 export const YEARLY_PREMIUM_PRICE = '8';
 
+export const PREMIUM_MONTHLY_PRICE_ID = 'price_1QrNapEQm4uh0NBSUQg3VI89';
+export const PREMIUM_YEARLY_PRICE_ID = 'price_1QrNbiEQm4uh0NBSQTT8rZQm';
+export const PRO_MONTHLY_PRICE_ID = 'price_1QrNeIEQm4uh0NBSQ4xOgeXQ';
+export const PRO_YEARLY_PRICE_ID = 'price_1QrNfDEQm4uh0NBS2VBZRxfg';
+
 export const X_LINK = '';
 export const INSTAGRAM_LINK = '';
 export const YOUTUBE_LINK = '';
