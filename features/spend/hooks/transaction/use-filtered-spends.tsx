@@ -26,13 +26,13 @@ export const useFilteredSpends = (spends: Spend[] | undefined, selectedTerm: Spe
         }
 
         const now = new Date();
-        let filtered: Spend[];
+        let termFilteredTransactions: Spend[];
 
         switch (selectedTerm) {
             case 'This Month': {
                 const thisMonth = now.getMonth();
                 const thisYear = now.getFullYear();
-                filtered = spends.filter((spend) => {
+                termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
                     return spendDate.getMonth() === thisMonth && spendDate.getFullYear() === thisYear;
                 });
@@ -42,7 +42,7 @@ export const useFilteredSpends = (spends: Spend[] | undefined, selectedTerm: Spe
                 const lastMonth = now.getMonth() - 1;
                 const year = lastMonth === -1 ? now.getFullYear() - 1 : now.getFullYear();
                 const month = lastMonth === -1 ? 11 : lastMonth;
-                filtered = spends.filter((spend) => {
+                termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
                     return spendDate.getMonth() === month && spendDate.getFullYear() === year;
                 });
@@ -50,7 +50,7 @@ export const useFilteredSpends = (spends: Spend[] | undefined, selectedTerm: Spe
             }
             case 'This Year': {
                 const thisYear = now.getFullYear();
-                filtered = spends.filter((spend) => {
+                termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
                     return spendDate.getFullYear() === thisYear;
                 });
@@ -58,7 +58,7 @@ export const useFilteredSpends = (spends: Spend[] | undefined, selectedTerm: Spe
             }
             case 'Last Year': {
                 const lastYear = now.getFullYear() - 1;
-                filtered = spends.filter((spend) => {
+                termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
                     return spendDate.getFullYear() === lastYear;
                 });
@@ -66,14 +66,14 @@ export const useFilteredSpends = (spends: Spend[] | undefined, selectedTerm: Spe
             }
             case 'All Time':
             default:
-                filtered = spends;
+                termFilteredTransactions = spends;
         }
 
-        setFilteredSpends(filtered);
+        setFilteredSpends(termFilteredTransactions);
 
         // Calculate totals
-        if (filtered.length > 0) {
-            const necessityTotals = filtered.reduce(
+        if (termFilteredTransactions.length > 0) {
+            const necessityTotals = termFilteredTransactions.reduce(
                 (acc, spend) => {
                     switch (spend.necessity) {
                         case 'Need':
@@ -105,7 +105,7 @@ export const useFilteredSpends = (spends: Spend[] | undefined, selectedTerm: Spe
             });
 
             // Calculate category totals
-            const catTotals = filtered.reduce(
+            const catTotals = termFilteredTransactions.reduce(
                 (acc, spend) => {
                     const category = spend.category;
                     acc[category] = (acc[category] || 0) + spend.cost;

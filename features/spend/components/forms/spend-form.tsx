@@ -21,82 +21,144 @@ import ExpenseTypeToggle from '../ui/expense-type-toggle';
 import { useRecurringExpenseMutations } from '../../hooks/recurring-expense/use-recurring-expense-mutations';
 import { useState } from 'react';
 
+// Update the Spend type to include recurring fields
+type Spend = {
+    id: string;
+    date: Date;
+    item: string;
+    cost: number;
+    store: string;
+    category: string;
+    necessity: 'Need' | 'Want' | 'Waste';
+    expenseType: 'one-time' | 'recurring';
+    // Optional recurring fields
+    period?: 'weekly' | 'monthly' | 'yearly';
+    next_billing_date?: Date;
+};
+
+const FormSchema = z.discriminatedUnion('expenseType', [
+    // One-time expense schema
+    z.object({
+        expenseType: z.literal('one-time'),
+        item: z.string({ required_error: 'Item is required.' }),
+        cost: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
+        store: z.string({ required_error: 'Store is required.' }),
+        category: z.string({ required_error: 'Category is required.' }),
+        necessity: z.enum(['Need', 'Want', 'Waste'], {
+            required_error: 'Necessity is required.',
+        }),
+        date: z.date({ required_error: 'Date is required.' }),
+    }),
+    // Recurring expense schema - matching original recurring expense form
+    z.object({
+        expenseType: z.literal('recurring'),
+        name: z.string({ required_error: 'Name is required.' }),
+        amount: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
+        period: z.enum(['weekly', 'monthly', 'yearly'], {
+            required_error: 'Period is required.',
+        }),
+        category: z.string({ required_error: 'Category is required.' }),
+        next_billing_date: z.date({ required_error: 'Next billing date is required.' }),
+    }),
+]);
+
+type FormValues = z.infer<typeof FormSchema>;
+
 type Props = {
     closeForm: any;
     selectedSpend?: Spend;
+    selectedRecurringExpense?: RecurringExpense;
 };
 
-const FormSchema = z.object({
-    expenseType: z.enum(['one-time', 'recurring']),
-    description: z.string().optional(),
-    cost: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
-    necessity: z.enum(['Need', 'Want', 'Waste'], {
-        required_error: 'A necessity level is required.',
-    }),
-    category: z.string({
-        required_error: 'A category is required.',
-    }),
-    date: z.date({
-        required_error: 'A date is required.',
-    }),
-    // Recurring expense fields
-    period: z.enum(['weekly', 'monthly', 'yearly']).optional(),
-    next_billing_date: z.date().optional(),
-});
+const SpendForm = ({ closeForm, selectedSpend, selectedRecurringExpense }: Props) => {
+    const [expenseType, setExpenseType] = useState<'one-time' | 'recurring'>(selectedRecurringExpense ? 'recurring' : 'one-time');
 
-const SpendForm = ({ closeForm, selectedSpend }: Props) => {
-    const [expenseType, setExpenseType] = useState<'one-time' | 'recurring'>('one-time');
     const { createSpendMutation, updateSpendMutation, deleteSpendMutation } = useSpendMutations();
-    const { createRecurringExpenseMutation } = useRecurringExpenseMutations();
+    const { createRecurringExpenseMutation, updateRecurringExpenseMutation, deleteRecurringExpenseMutation } = useRecurringExpenseMutations();
 
-    const form = useForm({
-        defaultValues: {
-            ...selectedSpend,
-            expenseType: 'one-time',
-        },
+    const form = useForm<FormValues>({
+        defaultValues: selectedRecurringExpense
+            ? {
+                  expenseType: 'recurring',
+                  name: selectedRecurringExpense.name,
+                  amount: selectedRecurringExpense.amount,
+                  period: selectedRecurringExpense.period,
+                  category: selectedRecurringExpense.category,
+                  next_billing_date: new Date(selectedRecurringExpense.next_billing_date),
+              }
+            : selectedSpend
+              ? {
+                    expenseType: 'one-time',
+                    item: selectedSpend.item,
+                    cost: selectedSpend.cost,
+                    store: selectedSpend.store,
+                    category: selectedSpend.category,
+                    necessity: selectedSpend.necessity,
+                    date: new Date(selectedSpend.date),
+                }
+              : {
+                    expenseType: 'one-time',
+                },
         resolver: zodResolver(FormSchema),
     });
 
-    const onSubmit: SubmitHandler<z.infer<typeof FormSchema>> = (data) => {
-        if (expenseType === 'one-time') {
-            // Handle one-time expense
-            if (selectedSpend) {
-                const updatedSpend: Spend = {
-                    ...data,
-                    id: selectedSpend.id,
-                };
-                updateSpendMutation.mutate(updatedSpend);
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        if (data.expenseType === 'recurring') {
+            // Transform the recurring expense data to match the API expectations
+            const recurringExpenseData = {
+                name: data.name,
+                amount: data.amount,
+                period: data.period,
+                category: data.category,
+                next_billing_date: data.next_billing_date,
+            };
+
+            if (selectedRecurringExpense) {
+                updateRecurringExpenseMutation.mutate({
+                    ...recurringExpenseData,
+                    id: selectedRecurringExpense.id,
+                    created_at: selectedRecurringExpense.created_at,
+                });
             } else {
-                const newSpend: Omit<Spend, 'id'> = {
-                    ...data,
-                };
-                createSpendMutation.mutate(newSpend);
+                createRecurringExpenseMutation.mutate(recurringExpenseData);
             }
         } else {
-            // Handle recurring expense
-            const recurringExpense: Omit<RecurringExpense, 'id' | 'created_at'> = {
-                name: data.description || '',
-                description: data.description,
-                amount: data.cost,
-                period: data.period!,
+            // Transform the one-time expense data
+            const spendData = {
+                item: data.item,
+                cost: data.cost,
+                store: data.store,
                 category: data.category,
-                next_billing_date: data.next_billing_date!,
+                necessity: data.necessity,
+                date: data.date,
             };
-            createRecurringExpenseMutation.mutate(recurringExpense);
+
+            if (selectedSpend) {
+                updateSpendMutation.mutate({
+                    ...spendData,
+                    id: selectedSpend.id,
+                });
+            } else {
+                createSpendMutation.mutate(spendData);
+            }
         }
         closeForm();
     };
 
     const handleDelete = () => {
-        selectedSpend && deleteSpendMutation.mutate(selectedSpend.id);
+        if (selectedRecurringExpense) {
+            deleteRecurringExpenseMutation.mutate(selectedRecurringExpense.id);
+        } else if (selectedSpend) {
+            deleteSpendMutation.mutate(selectedSpend.id);
+        }
         closeForm();
     };
 
     return (
-        <Modal title={selectedSpend ? 'Edit Expense' : 'New Expense'} closeModal={closeForm} headerStyle={'text-black'}>
+        <Modal title={selectedRecurringExpense ? 'Edit Recurring Expense' : selectedSpend ? 'Edit Expense' : 'New Expense'} closeModal={closeForm} headerStyle={'text-black'}>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-                    {!selectedSpend && (
+                    {!selectedSpend && !selectedRecurringExpense && (
                         <FormField
                             control={form.control}
                             name='expenseType'
@@ -114,108 +176,136 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                             )}
                         />
                     )}
-                    <FormField
-                        control={form.control}
-                        name='item'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Item</FormLabel>
-                                <Input {...field} placeholder='Item' />
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='cost'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Cost</FormLabel>
-                                <Input type='number' {...field} placeholder='Cost' onChange={(e) => field.onChange(e.target.valueAsNumber)} />
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='category'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Category</FormLabel>
-                                <Select value={field.value} onValueChange={field.onChange}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder='Category' />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {spendingCategories.map((category) => (
-                                            <SelectItem key={category} value={category}>
-                                                {category}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='necessity'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Necessity</FormLabel>
-                                <Select value={field.value} onValueChange={field.onChange}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder='Necessity' />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {necessityCategories.map((necessity) => (
-                                            <SelectItem key={necessity} value={necessity}>
-                                                {necessity}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='store'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Store</FormLabel>
-                                <Input {...field} placeholder='Store' />
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='date'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Purchase Date</FormLabel>
-                                <Popover>
-                                    <PopoverTrigger asChild>
-                                        <FormControl>
-                                            <Button variant={'outline'} className={cn('pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}>
-                                                {field.value ? format(field.value, 'PPP') : <span>Purchase date</span>}
-                                                <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-                                            </Button>
-                                        </FormControl>
-                                    </PopoverTrigger>
-                                    <PopoverContent className='w-auto p-0' align='start'>
-                                        <Calendar mode='single' selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date('1900-01-01')} initialFocus />
-                                    </PopoverContent>
-                                </Popover>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    {expenseType === 'recurring' && (
+
+                    {expenseType === 'one-time' ? (
+                        // One-time expense fields
                         <>
+                            <FormField
+                                control={form.control}
+                                name='item'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Item</FormLabel>
+                                        <Input {...field} placeholder='Item' />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name='cost'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Cost</FormLabel>
+                                        <Input type='number' {...field} placeholder='Cost' onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name='category'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Category</FormLabel>
+                                        <Select value={field.value} onValueChange={field.onChange}>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder='Category' />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {spendingCategories.map((category) => (
+                                                    <SelectItem key={category} value={category}>
+                                                        {category}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name='necessity'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Necessity</FormLabel>
+                                        <Select value={field.value} onValueChange={field.onChange}>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder='Necessity' />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {necessityCategories.map((necessity) => (
+                                                    <SelectItem key={necessity} value={necessity}>
+                                                        {necessity}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name='store'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Store</FormLabel>
+                                        <Input {...field} placeholder='Store' />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name='date'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Purchase Date</FormLabel>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button variant={'outline'} className={cn('pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}>
+                                                        {field.value ? format(field.value, 'PPP') : <span>Purchase date</span>}
+                                                        <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className='w-auto p-0' align='start'>
+                                                <Calendar mode='single' selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date('1900-01-01')} initialFocus />
+                                            </PopoverContent>
+                                        </Popover>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </>
+                    ) : (
+                        // Recurring expense fields - matching original form
+                        <>
+                            <FormField
+                                control={form.control}
+                                name='name'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Name</FormLabel>
+                                        <Input {...field} placeholder='Expense name' />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name='amount'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Amount</FormLabel>
+                                        <Input type='number' {...field} placeholder='Amount' onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                             <FormField
                                 control={form.control}
                                 name='period'
@@ -230,6 +320,28 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                                                 <SelectItem value='weekly'>Weekly</SelectItem>
                                                 <SelectItem value='monthly'>Monthly</SelectItem>
                                                 <SelectItem value='yearly'>Yearly</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name='category'
+                                render={({ field }) => (
+                                    <FormItem className='flex flex-col'>
+                                        <FormLabel>Category</FormLabel>
+                                        <Select value={field.value} onValueChange={field.onChange}>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder='Category' />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {spendingCategories.map((category) => (
+                                                    <SelectItem key={category} value={category}>
+                                                        {category}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />
@@ -261,8 +373,8 @@ const SpendForm = ({ closeForm, selectedSpend }: Props) => {
                             />
                         </>
                     )}
-                    <div className={`flex pt-4 ${selectedSpend ? 'justify-between' : 'justify-end'}`}>
-                        {selectedSpend && (
+                    <div className={`flex pt-4 ${selectedSpend || selectedRecurringExpense ? 'justify-between' : 'justify-end'}`}>
+                        {(selectedSpend || selectedRecurringExpense) && (
                             <Button type='button' onClick={handleDelete} variant='destructive' size='icon'>
                                 <Trash />
                             </Button>

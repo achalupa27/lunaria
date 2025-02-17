@@ -7,7 +7,7 @@ type Props = {
     onAnalyzeClick: () => void;
     onBudgetClick: () => void;
     onNewSpendClick: () => void;
-    userRole?: string;
+    userRole?: UserRole;
 };
 
 const ActionButtons = ({ onSettingsClick, onAnalyzeClick, onBudgetClick, onNewSpendClick, userRole }: Props) => {

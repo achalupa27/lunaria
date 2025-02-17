@@ -93,3 +93,5 @@ type Subscription = {
     created_at: string;
     updated_at: string;
 };
+
+type UserRole = 'free' | 'pro' | 'premium';
