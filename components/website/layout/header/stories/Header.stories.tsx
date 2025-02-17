@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Header from './index';
+import Header from '../index';
 import { ThemeProvider } from 'next-themes';
 import { userEvent, within } from '@storybook/testing-library';
 import { expect } from '@storybook/test';

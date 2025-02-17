@@ -43,6 +43,26 @@ type Spend = {
     necessity: Necessity | string;
 };
 
+type Budget = {
+    id: string;
+    user_id: string;
+    category: string;
+    amount: number;
+    period: 'monthly' | 'yearly';
+    created_at: string;
+};
+
+type RecurringExpense = {
+    id: string;
+    name: string;
+    description?: string;
+    amount: number;
+    period: 'weekly' | 'monthly' | 'yearly';
+    category: string;
+    next_billing_date: Date;
+    created_at: string;
+};
+
 type SpendDataPoint = { date: string; spent: number }[];
 
 type Necessity = 'Need' | 'Want' | 'Waste';

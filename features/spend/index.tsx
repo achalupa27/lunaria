@@ -1,78 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { formatCurrency } from '@/utils/helper';
-import SpendForm from './components/spend-form';
+import SpendForm from './components/forms/spend-form';
 import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import { spendingCategories } from '@/constants';
 import Card from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Settings } from 'lucide-react';
-import BudgetForm from './components/budget-form';
-import SettingsForm from './components/settings-form';
-import useFetchSpends from './hooks/use-fetch-spends';
+import BudgetForm from './components/forms/budget-form';
+import SettingsForm from './components/forms/settings-form';
+import useFetchSpends from './hooks/transaction/use-fetch-spends';
 import { useSpendColumns } from './hooks/use-spend-columns';
 import { useTable } from '@/hooks/use-table';
 import { useSubscription } from '@/hooks/use-subscription';
 import ProtectedFeature from '@/components/feature';
+import useFetchBudgets from './hooks/budget/use-fetch-budgets';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { useFilteredSpends, SpendingTerm } from './hooks/transaction/use-filtered-spends';
+import { useBudgetProgress } from './hooks/budget/use-budget-progress';
+import RecurringExpenseForm from './components/forms/recurring-expense-form';
+import useFetchRecurringExpenses from './hooks/recurring-expense/use-fetch-recurring-expenses';
+import TransactionTable from './components/transactions/transaction-table';
+import CategoriesAndBudgets from './components/categories/categories-and-budgets';
+import RecurringExpensesList from './components/recurring/recurring-expenses-list';
+import SpendingPeriodSelector from './components/header/spending-period-selector';
+import ActionButtons from './components/header/action-buttons';
+import SpendingSummary from './components/summary/spending-summary';
 
 const Spend = () => {
     const { data: spends } = useFetchSpends();
+    const { data: budgets } = useFetchBudgets();
+    const { data: recurringExpenses } = useFetchRecurringExpenses();
+    const [selectedTerm, setSelectedTerm] = useState<SpendingTerm>('All Time');
 
-    const spendColumns = useSpendColumns();
+    const { filteredSpends, totalNeedSpent, totalWantSpent, totalWasteSpent, totalSpent, categoryTotals } = useFilteredSpends(spends, selectedTerm);
+    const budgetProgress = useBudgetProgress(spends, budgets);
+
     const [spendFormOpen, setSpendFormOpen] = useState<boolean>(false);
     const [budgetFormOpen, setBudgetFormOpen] = useState<boolean>(false);
     const [settingsFormOpen, setSettingsFormOpen] = useState<boolean>(false);
     const [selectedSpend, setSelectedSpend] = useState<Spend | undefined>();
 
-    const [totalNeedSpent, setTotalNeedSpent] = useState<number>(0);
-    const [totalWantSpent, setTotalWantSpent] = useState<number>(0);
-    const [totalWasteSpent, setTotalWasteSpent] = useState<number>(0);
-    const [totalSpent, setTotalSpent] = useState<number>(0);
-
-    const [selectedNecessity, setSelectedNecessity] = useState<string>('All');
-
-    const { table } = useTable({ data: spends || [], columns: spendColumns });
-
     const [loading, setLoading] = useState(false);
     const [analysis, setAnalysis] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (spends && spends?.length > 0) {
-            const necessityTotals = spends?.reduce(
-                (acc, spend) => {
-                    switch (spend.necessity) {
-                        case 'Need':
-                            acc.totalNeedSpent += spend.cost;
-                            break;
-                        case 'Want':
-                            acc.totalWantSpent += spend.cost;
-                            break;
-                        case 'Waste':
-                            acc.totalWasteSpent += spend.cost;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    acc.totalSpent += spend.cost;
-
-                    return acc;
-                },
-                {
-                    totalNeedSpent: 0,
-                    totalWantSpent: 0,
-                    totalWasteSpent: 0,
-                    totalSpent: 0,
-                }
-            );
-
-            // Set the state variables for each total
-            setTotalNeedSpent(Number(necessityTotals.totalNeedSpent.toFixed(2)));
-            setTotalWantSpent(Number(necessityTotals.totalWantSpent.toFixed(2)));
-            setTotalWasteSpent(Number(necessityTotals.totalWasteSpent.toFixed(2)));
-            setTotalSpent(Number(necessityTotals.totalSpent.toFixed(2)));
-        }
-    }, [spends]);
+    const [recurringExpenseFormOpen, setRecurringExpenseFormOpen] = useState<boolean>(false);
+    const [selectedRecurringExpense, setSelectedRecurringExpense] = useState<RecurringExpense | undefined>();
 
     const handleViewSpend = (row: any) => {
         setSelectedSpend(row);
@@ -89,6 +62,7 @@ const Spend = () => {
         setSpendFormOpen(false);
         setBudgetFormOpen(false);
         setSettingsFormOpen(false);
+        setRecurringExpenseFormOpen(false);
     };
 
     const handleAnalysis = async () => {
@@ -116,6 +90,15 @@ const Spend = () => {
 
     const { subscription, loading: subscriptionLoading } = useSubscription();
 
+    const handleTermChange = (term: SpendingTerm) => {
+        setSelectedTerm(term);
+    };
+
+    const handleViewRecurringExpense = (expense: RecurringExpense) => {
+        setSelectedRecurringExpense(expense);
+        setRecurringExpenseFormOpen(true);
+    };
+
     if (subscriptionLoading) {
         return <div>Loading...</div>;
     }
@@ -123,71 +106,18 @@ const Spend = () => {
     return (
         <Page>
             <div className='flex justify-between'>
-                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200`}>
-                    <span>Spending - All Time</span>
-                    <ChevronDown />
-                </div>
+                <SpendingPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
                 <div className='flex items-center space-x-2'>
-                    <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setSettingsFormOpen(true)}>
-                        <Settings />
-                    </Button>
-                    <ProtectedFeature requiredRole='premium' userRole={subscription?.role}>
-                        <Button variant='secondary' className='rounded-lg' onClick={handleAnalysis}>
-                            Analyze Spending
-                        </Button>
-                    </ProtectedFeature>
-                    <Button variant='secondary' className='rounded-lg' onClick={() => setBudgetFormOpen(true)}>
-                        + Create Budget
-                    </Button>
-                    <Button className='rounded-lg' onClick={handleFormOpen}>
-                        + New Spending
-                    </Button>
+                    <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAnalyzeClick={handleAnalysis} onBudgetClick={() => setBudgetFormOpen(true)} onRecurringExpenseClick={() => setRecurringExpenseFormOpen(true)} onNewSpendClick={handleFormOpen} userRole={subscription?.role} />
                 </div>
             </div>
-            <div className='my-2 flex space-x-6'>
-                <Card className='gold-gradient dark:bg-l-green'>
-                    <span className='leading-none'>{'All'}</span>
-                    <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(totalSpent)}</span>
-                    </div>
-                </Card>
-                <Card className='dark:bg-l-green'>
-                    <span className='leading-none'>{'Need'}</span>
-                    <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(totalNeedSpent)}</span>
-                    </div>
-                </Card>
-                <Card className='dark:bg-l-green'>
-                    <span className='leading-none'>{'Want'}</span>
-                    <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(totalWantSpent)}</span>
-                    </div>
-                </Card>
-                <Card className='dark:bg-l-green'>
-                    <span className='leading-none'>{'Waste'}</span>
-                    <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(totalWasteSpent)}</span>
-                    </div>
-                </Card>
-            </div>
+
+            <SpendingSummary totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
+
             <div className='flex flex-1 space-x-4 overflow-auto p-1 scrollbar-none'>
                 <div className='flex h-full flex-col space-y-4'>
-                    <div className='rounded-lg border border-orange-100 bg-white shadow'>
-                        <div className='gold-gradient flex h-[40px] items-center rounded-lg rounded-b-none'>
-                            <div className='flex items-center space-x-2 rounded-md px-2'>
-                                <span>Categories</span>
-                            </div>
-                        </div>
-                        <div className='flex-1 overflow-y-auto px-3 py-2'>
-                            {spendingCategories.map((category) => (
-                                <div key={category} className='flex justify-between border-b'>
-                                    <div>{category}</div>
-                                    <div className=''>{formatCurrency(0)}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <Table table={table} handleRowClick={handleViewSpend} />
+                    <CategoriesAndBudgets categoryTotals={categoryTotals} budgetProgress={budgetProgress} />
+                    <TransactionTable spends={filteredSpends} onViewSpend={handleViewSpend} />
                     {loading ? (
                         <div className='mt-4 text-center'>Analyzing your spending patterns...</div>
                     ) : analysis ? (
@@ -197,10 +127,12 @@ const Spend = () => {
                         </Card>
                     ) : null}
                 </div>
+                <RecurringExpensesList recurringExpenses={recurringExpenses} onViewExpense={handleViewRecurringExpense} />
             </div>
             {spendFormOpen && <SpendForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
-            {budgetFormOpen && <BudgetForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
+            {budgetFormOpen && <BudgetForm closeForm={handleFormClose} />}
             {settingsFormOpen && <SettingsForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
+            {recurringExpenseFormOpen && <RecurringExpenseForm closeForm={handleFormClose} selectedRecurringExpense={selectedRecurringExpense} />}
         </Page>
     );
 };

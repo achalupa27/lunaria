@@ -2,6 +2,26 @@
 
 This document outlines all test types implemented for the header component.
 
+### Tests Covered
+
+1. Smoke Tests
+2. State Tests
+3. Interaction Tests
+4. Accessibility Tests
+5. Visual Regression Tests
+6. Snapshot Tests
+7. Performance Tests
+8. Responsive Tests
+9. User Flow Tests
+
+10. Unit Tests
+11. Integration Tests
+12. End to End Tests
+
+- Component Tests
+- Linting
+- Styling
+
 ## Test Types and Commands
 
 ### 1. Smoke Tests
