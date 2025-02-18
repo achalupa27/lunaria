@@ -9,6 +9,13 @@ import Card from '@/components/ui/card';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import Link from 'next/link';
 import Image from 'next/image';
+import { getPageMetadata } from '@/app/metadata.config';
+
+export const metadata = getPageMetadata('profile', {
+    title: 'Profile',
+    description: 'Manage your Lunaria account settings and preferences.',
+});
+
 type Subscription = {
     id: string;
     user_id: string;

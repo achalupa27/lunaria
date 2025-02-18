@@ -15,9 +15,7 @@ export const metadata: Metadata = {
     title: 'Pricing',
     description: 'Flexible pricing plans for every financial journey. Choose the perfect plan to achieve your money goals.',
     openGraph: {
-        title: 'Pricing | Lunaria',
         description: 'Flexible pricing plans for every financial journey. Choose the perfect plan to achieve your money goals.',
-        type: 'website',
     },
 };
 

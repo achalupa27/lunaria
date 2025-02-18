@@ -9,7 +9,6 @@ import ProblemSection from '@/components/website/landing-page/problem-section';
 import SocialProofSection from '@/components/website/landing-page/social-proof-section';
 import SolutionSection from '@/components/website/landing-page/solution-section';
 import TestimonialSection from '@/components/website/landing-page/testimonial-section';
-import { Metadata } from 'next';
 import { getPageMetadata } from './metadata.config';
 
 export const metadata = getPageMetadata('home', {

@@ -1,5 +1,9 @@
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { getPageMetadata } from '@/app/metadata.config';
+
+export const metadata = getPageMetadata('privacy', {
+    title: 'Privacy Policy',
+    description: 'Learn how Lunaria protects and handles your personal information.',
+});
 
 function PrivacyPolicy() {
     return (

@@ -5,6 +5,12 @@ import Card from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { ShieldCheck, User, Users, Lock, MessageCircle, Star, Earth } from 'lucide-react';
 import Link from 'next/link';
+import { getPageMetadata } from '@/app/metadata.config';
+
+export const metadata = getPageMetadata('about', {
+    title: 'About Us',
+    description: "Learn about Lunaria's mission to help you take control of your financial future.",
+});
 
 const coreValues = [
     {

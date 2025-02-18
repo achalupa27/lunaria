@@ -1,6 +1,12 @@
 'use client';
 
 import ForgotPassword from '@/components/website/auth/forgot-password';
+import { getPageMetadata } from '@/app/metadata.config';
+
+export const metadata = getPageMetadata('forgot-password', {
+    title: 'Forgot Password',
+    description: 'Reset your password to regain access to your account.',
+});
 
 const ForgotPasswordPage = () => {
     return (

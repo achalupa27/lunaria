@@ -1,4 +1,10 @@
 import Link from 'next/link';
+import { getPageMetadata } from '@/app/metadata.config';
+
+export const metadata = getPageMetadata('terms', {
+    title: 'Terms of Service',
+    description: "Read the terms and conditions for using Lunaria's financial management platform.",
+});
 
 const TermsOfUse = () => {
     return (

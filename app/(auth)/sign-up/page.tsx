@@ -1,6 +1,12 @@
 'use client';
 
 import SignUp from '@/components/website/auth/sign-up';
+import { getPageMetadata } from '@/app/metadata.config';
+
+export const metadata = getPageMetadata('sign-up', {
+    title: 'Sign Up',
+    description: 'Create your Lunaria account and start managing your finances smarter.',
+});
 
 const SignUpPage = () => {
     return (
