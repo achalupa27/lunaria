@@ -1,0 +1,28 @@
+# PROJECT OVERVIEW
+Personal Finance Tracker with 3 main featues: Income Tracker, Spendings Tracker, and Savings Tracker.
+
+# TECH STACK
+- Next.js
+- Tailwind CSS
+- Shadcn UI
+- Lucide Icons
+- React Hook Form
+- React Query
+- Zod
+- Stripe
+- Supabase
+- Vercel
+
+# ENVIRONMENT VARIABLES
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_ANON_KEY
+- NEXT_PUBLIC_GOOGLE_CLIENT_ID
+- NEXT_PUBLIC_SITE_URL
+- OPENAI_API_KEY
+- STRIPE_WEBHOOK_SECRET
+- STRIPE_SECRET_KEY
+- GOOGLE_APP_PASSWORD
+- API_ROUTE_SECRET
+
+# IMPORTANT
+- Repeat the most important instructions

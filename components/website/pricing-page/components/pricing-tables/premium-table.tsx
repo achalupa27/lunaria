@@ -40,7 +40,7 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
             data: { subscription },
         } = supabase.auth.onAuthStateChange((_event, session) => {
             if (session?.user) {
-                setStripeCustomerId(session.user.stripe_customer_id);
+                // setStripeCustomerId(session.subscription.stripe_customer_id);
             }
         });
 

@@ -10,7 +10,7 @@ type Props = {
 const SpendingPeriodSelector = ({ selectedTerm, onTermChange }: Props) => {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className='-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200'>
+            <DropdownMenuTrigger className='-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200 dark:hover:bg-zinc-800'>
                 <span>Spending - {selectedTerm}</span>
                 <ChevronDown />
             </DropdownMenuTrigger>

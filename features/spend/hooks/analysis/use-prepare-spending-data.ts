@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Spend, Budget, RecurringExpense } from '@/types';
 
 type PreparedSpendingData = {
     spendingData: string;
@@ -22,10 +21,9 @@ type BudgetProgress = {
     category: string;
     spent: number;
     budget: number;
-    percentage: number;
 };
 
-export const usePrepareSpendingData = (spends: Spend[] | undefined, budgets: Budget[] | undefined, recurringExpenses: RecurringExpense[] | undefined, categoryTotals: Record<string, number>, budgetProgress: Record<string, { spent: number; budget: number; percentage: number }>, totals: SpendingTotals): PreparedSpendingData => {
+export const usePrepareSpendingData = (spends: Spend[] | undefined, budgets: Budget[] | undefined, recurringExpenses: RecurringExpense[] | undefined, categoryTotals: Record<string, number>, budgetProgress: Record<string, { spent: number; budget: number }>, totals: SpendingTotals): PreparedSpendingData => {
     return useMemo(() => {
         if (!spends || !budgets || !recurringExpenses) {
             return { spendingData: '', tokenCount: 0 };
@@ -49,7 +47,7 @@ export const usePrepareSpendingData = (spends: Spend[] | undefined, budgets: Bud
         // New data sections
         const categoryTotalsData = ['CATEGORY TOTALS', 'category,total', ...Object.entries(categoryTotals).map(([category, total]) => `${category},${total}`)];
 
-        const budgetProgressData = ['BUDGET PROGRESS', 'category,spent,budget,percentage', ...Object.entries(budgetProgress).map(([category, data]) => `${category},${data.spent},${data.budget},${data.percentage}`)];
+        const budgetProgressData = ['BUDGET PROGRESS', 'category,spent,budget', ...Object.entries(budgetProgress).map(([category, data]) => `${category},${data.spent},${data.budget}`)];
 
         const spendingTotalsData = ['SPENDING TOTALS', `Total Spent,${totals.totalSpent}`, `Need Spending,${totals.totalNeedSpent}`, `Want Spending,${totals.totalWantSpent}`, `Waste Spending,${totals.totalWasteSpent}`];
 

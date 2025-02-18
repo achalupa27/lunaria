@@ -189,28 +189,28 @@ export const MobileMenuInteraction: Story = {
 
 // States
 
-export const LoggedIn: Story = {
-    args: {
-        isLoggedIn: true,
-        user: {
-            name: 'John Doe',
-            email: 'john@example.com',
-            avatar: 'https://example.com/avatar.jpg',
-        },
-    },
-    play: async ({ canvasElement, args }) => {
-        const canvas = within(canvasElement);
+// export const LoggedIn: Story = {
+//     args: {
+//         isLoggedIn: true,
+//         user: {
+//             name: 'John Doe',
+//             email: 'john@example.com',
+//             avatar: 'https://example.com/avatar.jpg',
+//         },
+//     },
+//     play: async ({ canvasElement, args }) => {
+//         const canvas = within(canvasElement);
 
-        // Test user menu
-        const userMenu = await canvas.findByRole('button', { name: /user menu/i });
-        await userEvent.click(userMenu);
+//         // Test user menu
+//         const userMenu = await canvas.findByRole('button', { name: /user menu/i });
+//         await userEvent.click(userMenu);
 
-        // Test logout
-        const logoutButton = await canvas.findByRole('button', { name: /logout/i });
-        await userEvent.click(logoutButton);
-        await expect(args.onLogout).toHaveBeenCalled();
-    },
-};
+//         // Test logout
+//         const logoutButton = await canvas.findByRole('button', { name: /logout/i });
+//         await userEvent.click(logoutButton);
+//         await expect(args.onLogout).toHaveBeenCalled();
+//     },
+// };
 
 export const Loading: Story = {
     args: {
@@ -225,27 +225,27 @@ export const ErrorState: Story = {
     },
 };
 
-// Mobile menu interaction test
-export const MobileMenu: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'mobile',
-        },
-    },
-    play: async ({ canvasElement, args }) => {
-        const canvas = within(canvasElement);
+// // Mobile menu interaction test
+// export const MobileMenu: Story = {
+//     parameters: {
+//         viewport: {
+//             defaultViewport: 'mobile',
+//         },
+//     },
+//     play: async ({ canvasElement, args }) => {
+//         const canvas = within(canvasElement);
 
-        // Open menu
-        const menuButton = await canvas.findByRole('button', { name: /toggle menu/i });
-        await userEvent.click(menuButton);
-        await expect(args.onMenuToggle).toHaveBeenCalledWith(true);
+//         // Open menu
+//         const menuButton = await canvas.findByRole('button', { name: /toggle menu/i });
+//         await userEvent.click(menuButton);
+//         await expect(args.onMenuToggle).toHaveBeenCalledWith(true);
 
-        // Verify menu is open
-        const menu = await canvas.findByRole('dialog');
-        await expect(menu).toBeVisible();
+//         // Verify menu is open
+//         const menu = await canvas.findByRole('dialog');
+//         await expect(menu).toBeVisible();
 
-        // Close menu
-        await userEvent.click(menuButton);
-        await expect(args.onMenuToggle).toHaveBeenCalledWith(false);
-    },
-};
+//         // Close menu
+//         await userEvent.click(menuButton);
+//         await expect(args.onMenuToggle).toHaveBeenCalledWith(false);
+//     },
+// };

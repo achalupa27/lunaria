@@ -12,9 +12,9 @@ type Props = {
 
 const Table = ({ table, handleRowClick, tableColor }: Props) => {
     return (
-        <div className={`h-full w-full overflow-y-auto rounded-xl border border-orange-100 bg-white shadow ${tableColor === 'blue' && 'border-l-blue'} ${tableColor === 'green' && 'border-l-green'} ${tableColor === 'yellow' && 'border-l-yellow'} scrollbar-none`}>
+        <div className={`h-full w-full overflow-y-auto rounded-lg border border-orange-100 bg-white shadow dark:bg-black scrollbar-none`}>
             <table className='w-full border-separate border-spacing-0 text-center'>
-                <thead className={`gold-gradient sticky inset-0 ${tableColor === 'blue' && 'bg-l-blue'} ${tableColor === 'green' && 'bg-l-green'} ${tableColor === 'yellow' && 'bg-l-yellow'} ${tableColor === undefined && 'bg-white'} h-[40px] text-primary`}>
+                <thead className={`gold-gradient sticky inset-0  h-[40px] text-primary`}>
                     {table.getHeaderGroups().map((headerGroup: any) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header: any) => (

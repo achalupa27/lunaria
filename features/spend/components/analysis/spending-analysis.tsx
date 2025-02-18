@@ -3,7 +3,6 @@ import Card from '@/components/ui/card';
 import { analyzeSpending } from '../../services/openai/analyze-spending-service';
 import { usePrepareSpendingData } from '../../hooks/analysis/use-prepare-spending-data';
 import ReactMarkdown from 'react-markdown';
-import { CategoryTotal, BudgetProgress } from '@/types';
 
 export type SpendingAnalysisRef = {
     analyze: () => void;
@@ -14,7 +13,7 @@ interface SpendingAnalysisProps {
     budgets: Budget[] | undefined;
     recurringExpenses: RecurringExpense[] | undefined;
     categoryTotals: Record<string, number>;
-    budgetProgress: Record<string, { spent: number; budget: number; percentage: number }>;
+    budgetProgress: Record<string, { spent: number; budget: number }>;
     totalSpent: number;
     totalNeedSpent: number;
     totalWantSpent: number;

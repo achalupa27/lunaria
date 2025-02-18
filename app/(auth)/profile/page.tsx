@@ -8,7 +8,7 @@ import { Session } from '@supabase/supabase-js';
 import Card from '@/components/ui/card';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import Link from 'next/link';
-
+import Image from 'next/image';
 type Subscription = {
     id: string;
     user_id: string;
@@ -108,7 +108,7 @@ const ProfilePage = () => {
         <section className='max-w-2xl mx-auto p-6 space-y-6 mt-12'>
             <Card className='flex flex-row items-center space-x-4 border-2 shadow-md relative'>
                 {session?.user?.user_metadata.avatar_url ? (
-                    <img src={session.user.user_metadata.avatar_url} alt='Profile' className='w-16 h-16 rounded-full' />
+                    <Image src={session.user.user_metadata.avatar_url} alt='Profile' className='w-16 h-16 rounded-full' width={64} height={64} />
                 ) : (
                     <div className='w-16 h-16 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center'>
                         <span className='text-2xl text-zinc-600 dark:text-zinc-400'>{(session?.user?.user_metadata.full_name?.[0] || session?.user?.user_metadata.name?.[0] || session?.user?.email?.[0] || '?').toUpperCase()}</span>
@@ -137,18 +137,18 @@ const ProfilePage = () => {
 
                         <div className='text-zinc-600 dark:text-zinc-400'>Price</div>
                         <div>
-                            ${(subscription.price_amount / 100).toFixed(2)} {subscription.currency.toUpperCase()} / {subscription.interval}
+                            ${(subscription?.price_amount / 100).toFixed(2)} {subscription?.currency?.toUpperCase()} / {subscription?.interval}
                         </div>
 
                         <div className='text-zinc-600 dark:text-zinc-400'>Current Period</div>
                         <div>
-                            {formatDate(subscription.current_period_start)} - {formatDate(subscription.current_period_end)}
+                            {formatDate(subscription?.current_period_start)} - {formatDate(subscription?.current_period_end)}
                         </div>
 
                         {subscription.trial_end && (
                             <>
                                 <div className='text-zinc-600 dark:text-zinc-400'>Trial Ends</div>
-                                <div>{formatDate(subscription.trial_end)}</div>
+                                <div>{formatDate(subscription?.trial_end)}</div>
                             </>
                         )}
 
@@ -157,9 +157,9 @@ const ProfilePage = () => {
                             <>
                                 <div className='text-zinc-600 dark:text-zinc-400'>Next Payment</div>
                                 <div>
-                                    {formatDate(subscription.current_period_end)}
+                                    {formatDate(subscription?.current_period_end)}
                                     <span className='text-zinc-500 dark:text-zinc-400 ml-1'>
-                                        (${(subscription.price_amount / 100).toFixed(2)} {subscription.currency.toUpperCase()})
+                                        (${(subscription?.price_amount / 100).toFixed(2)} {subscription?.currency?.toUpperCase()})
                                     </span>
                                 </div>
                             </>
@@ -169,7 +169,7 @@ const ProfilePage = () => {
                         {subscription.cancel_at_period_end && (
                             <>
                                 <div className='text-zinc-600 dark:text-zinc-400'>Cancels On</div>
-                                <div>{formatDate(subscription.current_period_end)}</div>
+                                <div>{formatDate(subscription?.current_period_end)}</div>
                             </>
                         )}
 
@@ -177,32 +177,32 @@ const ProfilePage = () => {
                         {subscription.canceled_at && !subscription.cancel_at_period_end && (
                             <>
                                 <div className='text-zinc-600 dark:text-zinc-400'>Cancelled On</div>
-                                <div>{formatDate(subscription.canceled_at)}</div>
+                                <div>{formatDate(subscription?.canceled_at)}</div>
                             </>
                         )}
                     </div>
 
                     {/* Trial warning message */}
-                    {subscription.trial_end && !subscription.cancel_at_period_end && (
+                    {subscription?.trial_end && !subscription?.cancel_at_period_end && (
                         <div className='mt-4 text-sm text-zinc-600 dark:text-zinc-400 border-t pt-4'>
                             <p>
-                                Cancel <span className='font-bold'>before {formatDate(subscription.trial_end)}</span> to avoid being charged ${(subscription.price_amount / 100).toFixed(2)} {subscription.currency.toUpperCase()}.
+                                Cancel <span className='font-bold'>before {formatDate(subscription?.trial_end)}</span> to avoid being charged ${(subscription?.price_amount / 100).toFixed(2)} {subscription?.currency.toUpperCase()}.
                             </p>
-                            <p className='mt-2'>If you need help cancelling your subscription, please reach out to us and we'll be happy to assist you.</p>
+                            <p className='mt-2'>If you need help cancelling your subscription, please reach out to us and we&apos;ll be happy to assist you.</p>
                         </div>
                     )}
 
                     {/* Cancellation confirmation message and reactivate button */}
-                    {subscription.cancel_at_period_end && (
+                    {subscription?.cancel_at_period_end && (
                         <>
-                            <div className='mt-4 text-sm text-zinc-600 dark:text-zinc-400 border-t pt-4'>Your subscription will remain active until {formatDate(subscription.current_period_end)}. You won't be charged again after this date.</div>
+                            <div className='mt-4 text-sm text-zinc-600 dark:text-zinc-400 border-t pt-4'>Your subscription will remain active until {formatDate(subscription?.current_period_end)}. You won&apos;t be charged again after this date.</div>
                             <Button variant='outline' className='w-full mt-4 font-medium dark:text-green-400 text-green-500  border-green-400 hover:bg-green-100 hover:text-green-600 dark:border-green-400 dark:hover:bg-green-950/70 dark:hover:text-green-300' onClick={() => router.push('/pricing')}>
                                 Reactivate Subscription
                             </Button>
                         </>
                     )}
 
-                    {subscription && subscription.status !== 'canceled' && !subscription.cancel_at_period_end && (
+                    {subscription && subscription?.status !== 'canceled' && !subscription?.cancel_at_period_end && (
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
                                 <Button variant='outline' className='w-full mt-4 text-red-500 border-red-200 hover:bg-red-50 dark:hover:bg-red-950/60 hover:text-red-600 dark:border-red-600 dark:hover:text-red-400'>
@@ -212,7 +212,7 @@ const ProfilePage = () => {
                             <AlertDialogContent>
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>Cancel Subscription</AlertDialogTitle>
-                                    <AlertDialogDescription>Are you sure you want to cancel your subscription? You'll continue to have access until the end of your current billing period ({formatDate(subscription.current_period_end)}).</AlertDialogDescription>
+                                    <AlertDialogDescription>Are you sure you want to cancel your subscription? You&apos;ll continue to have access until the end of your current billing period ({formatDate(subscription?.current_period_end)}).</AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>Keep Subscription</AlertDialogCancel>
@@ -234,10 +234,10 @@ const ProfilePage = () => {
                 <h3 className='mb-4'>Account Details</h3>
                 <div className='grid grid-cols-2 gap-2 text-sm'>
                     <div className='text-zinc-600 dark:text-zinc-400'>Member since</div>
-                    <div>{formatDate(session?.user?.created_at)}</div>
+                    <div>{formatDate(session?.user?.created_at || null)}</div>
 
                     <div className='text-zinc-600 dark:text-zinc-400'>Last sign in</div>
-                    <div>{formatDate(session?.user?.last_sign_in_at)}</div>
+                    <div>{formatDate(session?.user?.last_sign_in_at || null)}</div>
                 </div>
             </Card>
 

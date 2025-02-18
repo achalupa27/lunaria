@@ -6,12 +6,13 @@ import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
 import Card from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Settings } from 'lucide-react';
+import { ChevronDown, Settings, PlusCircle } from 'lucide-react';
 import useFetchSaves from './hooks/use-fetch-saves';
 import { useTable } from '@/hooks/use-table';
 import SettingsForm from './components/settings-form';
 import useFetchSavingsAccounts from './hooks/use-fetch-savings-accounts';
 import useFetchDebtAccounts from './hooks/use-fetch-debt-accounts';
+import AccountForm from './components/forms/account-form';
 
 const Save = () => {
     const { data: saves } = useFetchSaves();
@@ -85,6 +86,24 @@ const Save = () => {
         handleAnalysis();
     }, []);
 
+    const [accountFormOpen, setAccountFormOpen] = useState(false);
+    const [selectedAccount, setSelectedAccount] = useState<SavingsAccount | DebtAccount | undefined>();
+
+    const handleAccountFormOpen = () => {
+        setSelectedAccount(undefined);
+        setAccountFormOpen(true);
+    };
+
+    const handleAccountFormClose = () => {
+        setSelectedAccount(undefined);
+        setAccountFormOpen(false);
+    };
+
+    const handleEditAccount = (account: SavingsAccount | DebtAccount) => {
+        setSelectedAccount(account);
+        setAccountFormOpen(true);
+    };
+
     return (
         <Page>
             <div className='flex items-center justify-between'>
@@ -93,6 +112,10 @@ const Save = () => {
                     <ChevronDown />
                 </div>
                 <div className='flex items-center space-x-2'>
+                    <Button variant='secondary' className='rounded-lg' onClick={handleAccountFormOpen}>
+                        <PlusCircle className='mr-2 h-4 w-4' />
+                        Add Account
+                    </Button>
                     <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setSettingsFormOpen(true)}>
                         <Settings />
                     </Button>
@@ -129,19 +152,15 @@ const Save = () => {
                 <div className='flex h-full flex-col space-y-4 p-1'>
                     <div className='rounded-lg border border-orange-100 bg-white shadow'>
                         <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none px-2'>Savings Accounts</div>
-                        <div className='rounded-[inherit]  px-3 py-2'>
+                        <div className='rounded-[inherit] px-3 py-2'>
                             {savingsAccounts?.length === 0 ? (
-                                <div className='flex flex-col items-center justify-center text-center text-gray-500 '>
+                                <div className='flex flex-col items-center justify-center text-center text-gray-500'>
                                     <div>No savings accounts created.</div>
-                                    <div>Click</div>
-                                    <Button variant='secondary' className='rounded-lg' size='icon' disabled>
-                                        <Settings />
-                                    </Button>
-                                    <div>in the top right to create one.</div>
+                                    <div>Click "Add Account" above to create one.</div>
                                 </div>
                             ) : (
                                 savingsAccounts?.map((account) => (
-                                    <div key={account.id} className='flex justify-between'>
+                                    <div key={account.id} onClick={() => handleEditAccount(account)} className='flex cursor-pointer justify-between rounded-md p-2 transition-colors hover:bg-zinc-100'>
                                         <div>{account.name}</div>
                                         <div className='text-green-600'>{formatCurrency(account.balance)}</div>
                                     </div>
@@ -149,23 +168,18 @@ const Save = () => {
                             )}
                         </div>
                     </div>
-                    <div className='rounded-xl border border-orange-100 bg-white shadow'>
-                        <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none'>
-                            <div className='flex items-center space-x-2 rounded-lg px-2 text-primary'>Debt Accounts</div>
-                        </div>
-                        <div className='px-3 py-2'>
+
+                    <div className='rounded-lg border border-orange-100 bg-white shadow'>
+                        <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none px-2'>Debt Accounts</div>
+                        <div className='rounded-[inherit] px-3 py-2'>
                             {debtAccounts?.length === 0 ? (
                                 <div className='flex flex-col items-center justify-center text-center text-gray-500'>
                                     <div>No debt accounts created.</div>
-                                    <div>Click</div>
-                                    <Button variant='secondary' className='rounded-lg' size='icon' disabled>
-                                        <Settings />
-                                    </Button>
-                                    <div>in the top right to create one.</div>
+                                    <div>Click "Add Account" above to create one.</div>
                                 </div>
                             ) : (
                                 debtAccounts?.map((account) => (
-                                    <div key={account.id} className='flex justify-between'>
+                                    <div key={account.id} onClick={() => handleEditAccount(account)} className='flex cursor-pointer justify-between rounded-md p-2 transition-colors hover:bg-zinc-100'>
                                         <div>{account.name}</div>
                                         <div className='text-red-600'>{formatCurrency(account.balance)}</div>
                                     </div>
@@ -173,6 +187,7 @@ const Save = () => {
                             )}
                         </div>
                     </div>
+
                     <Table table={table} handleRowClick={handleViewSave} />
                 </div>
                 {loading ? (
@@ -186,6 +201,7 @@ const Save = () => {
             </div>
             {saveFormOpen && <SaveForm closeForm={handleFormClose} selectedSave={selectedSave} />}
             {settingsFormOpen && <SettingsForm closeForm={handleFormClose} />}
+            {accountFormOpen && <AccountForm closeForm={handleAccountFormClose} selectedAccount={selectedAccount} />}
         </Page>
     );
 };

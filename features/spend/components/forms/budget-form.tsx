@@ -22,7 +22,7 @@ const FormSchema = z.object({
         required_error: 'A category is required.',
     }),
     amount: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
-    period: z.enum(['weekly', 'monthly'], {
+    period: z.enum(['monthly', 'yearly'], {
         required_error: 'A period is required.',
     }),
 });
@@ -109,8 +109,8 @@ const BudgetForm = ({ closeForm, selectedBudget }: Props) => {
                                         <SelectValue placeholder='Period' />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value='weekly'>Weekly</SelectItem>
                                         <SelectItem value='monthly'>Monthly</SelectItem>
+                                        <SelectItem value='yearly'>Yearly</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />

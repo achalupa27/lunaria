@@ -21,21 +21,6 @@ import ExpenseTypeToggle from '../ui/expense-type-toggle';
 import { useRecurringExpenseMutations } from '../../hooks/recurring-expense/use-recurring-expense-mutations';
 import { useState } from 'react';
 
-// Update the Spend type to include recurring fields
-type Spend = {
-    id: string;
-    date: Date;
-    item: string;
-    cost: number;
-    store: string;
-    category: string;
-    necessity: 'Need' | 'Want' | 'Waste';
-    expenseType: 'one-time' | 'recurring';
-    // Optional recurring fields
-    period?: 'weekly' | 'monthly' | 'yearly';
-    next_billing_date?: Date;
-};
-
 const FormSchema = z.discriminatedUnion('expenseType', [
     // One-time expense schema
     z.object({
@@ -131,6 +116,7 @@ const SpendForm = ({ closeForm, selectedSpend, selectedRecurringExpense }: Props
                 category: data.category,
                 necessity: data.necessity,
                 date: data.date,
+                expenseType: 'one-time' as const,
             };
 
             if (selectedSpend) {

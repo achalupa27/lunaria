@@ -11,25 +11,25 @@ type Props = {
 const SpendingSummary = ({ totalSpent, totalNeedSpent, totalWantSpent, totalWasteSpent }: Props) => {
     return (
         <div className='my-2 flex space-x-6'>
-            <Card className='gold-gradient dark:bg-l-green'>
+            <Card className='gold-gradient dark:gold-gradient'>
                 <span className='leading-none'>{'All'}</span>
                 <div className='space-x-2'>
                     <span className='text-3xl font-semibold'>{formatCurrency(totalSpent)}</span>
                 </div>
             </Card>
-            <Card className='dark:bg-l-green'>
+            <Card className=''>
                 <span className='leading-none'>{'Need'}</span>
                 <div className='space-x-2'>
                     <span className='text-3xl font-semibold'>{formatCurrency(totalNeedSpent)}</span>
                 </div>
             </Card>
-            <Card className='dark:bg-l-green'>
+            <Card className=''>
                 <span className='leading-none'>{'Want'}</span>
                 <div className='space-x-2'>
                     <span className='text-3xl font-semibold'>{formatCurrency(totalWantSpent)}</span>
                 </div>
             </Card>
-            <Card className='dark:bg-l-green'>
+            <Card className=''>
                 <span className='leading-none'>{'Waste'}</span>
                 <div className='space-x-2'>
                     <span className='text-3xl font-semibold'>{formatCurrency(totalWasteSpent)}</span>

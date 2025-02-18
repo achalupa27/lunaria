@@ -14,9 +14,9 @@ type Props = {
 
 const CategoriesAndBudgets = ({ categoryTotals, budgetProgress }: Props) => {
     return (
-        <div className='rounded-lg border border-orange-100 bg-white shadow'>
+        <div className='rounded-lg border border-orange-100 bg-white dark:bg-black shadow'>
             <div className='gold-gradient flex h-[40px] items-center rounded-lg rounded-b-none'>
-                <div className='flex items-center space-x-2 rounded-md px-2'>
+                <div className='flex items-center space-x-2 rounded-md px-2 dark:text-black'>
                     <span>Categories & Budgets</span>
                 </div>
             </div>

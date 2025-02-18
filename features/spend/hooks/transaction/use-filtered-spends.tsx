@@ -30,37 +30,42 @@ export const useFilteredSpends = (spends: Spend[] | undefined, selectedTerm: Spe
 
         switch (selectedTerm) {
             case 'This Month': {
-                const thisMonth = now.getMonth();
-                const thisYear = now.getFullYear();
+                const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+                const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
                 termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
-                    return spendDate.getMonth() === thisMonth && spendDate.getFullYear() === thisYear;
+                    return spendDate >= firstDay && spendDate <= lastDay;
                 });
                 break;
             }
             case 'Last Month': {
-                const lastMonth = now.getMonth() - 1;
-                const year = lastMonth === -1 ? now.getFullYear() - 1 : now.getFullYear();
-                const month = lastMonth === -1 ? 11 : lastMonth;
+                const firstDay = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                const lastDay = new Date(now.getFullYear(), now.getMonth(), 0);
+
                 termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
-                    return spendDate.getMonth() === month && spendDate.getFullYear() === year;
+                    return spendDate >= firstDay && spendDate <= lastDay;
                 });
                 break;
             }
             case 'This Year': {
-                const thisYear = now.getFullYear();
+                const firstDay = new Date(now.getFullYear(), 0, 1);
+                const lastDay = new Date(now.getFullYear(), 11, 31);
+
                 termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
-                    return spendDate.getFullYear() === thisYear;
+                    return spendDate >= firstDay && spendDate <= lastDay;
                 });
                 break;
             }
             case 'Last Year': {
-                const lastYear = now.getFullYear() - 1;
+                const firstDay = new Date(now.getFullYear() - 1, 0, 1);
+                const lastDay = new Date(now.getFullYear() - 1, 11, 31);
+
                 termFilteredTransactions = spends.filter((spend) => {
                     const spendDate = new Date(spend.date);
-                    return spendDate.getFullYear() === lastYear;
+                    return spendDate >= firstDay && spendDate <= lastDay;
                 });
                 break;
             }

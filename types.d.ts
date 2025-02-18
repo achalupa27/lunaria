@@ -31,16 +31,19 @@ type SavingsAccount = {
     balance: number;
 };
 
+// Update the Spend type to include recurring fields
 type Spend = {
     id: string;
-    // user_id: string;
     date: Date;
     item: string;
     cost: number;
-    currency?: string;
     store: string;
     category: string;
-    necessity: Necessity | string;
+    necessity: 'Need' | 'Want' | 'Waste';
+    expenseType: 'one-time' | 'recurring';
+    // Optional recurring fields
+    period?: 'weekly' | 'monthly' | 'yearly';
+    next_billing_date?: Date;
 };
 
 type Budget = {
