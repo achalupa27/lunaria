@@ -1,10 +1,3 @@
-import { getPageMetadata } from '@/app/metadata.config';
-
-export const metadata = getPageMetadata('disclaimer', {
-    title: 'Disclaimer',
-    description: "Important disclaimers and legal information about using Lunaria's services.",
-});
-
 function Disclaimer() {
     return (
         <article className='max-w-5xl mx-auto leading-relaxed space-y-10'>

@@ -1,10 +1,3 @@
-import { getPageMetadata } from '@/app/metadata.config';
-
-export const metadata = getPageMetadata('privacy', {
-    title: 'Privacy Policy',
-    description: 'Learn how Lunaria protects and handles your personal information.',
-});
-
 function PrivacyPolicy() {
     return (
         <article className='max-w-5xl mx-auto leading-relaxed space-y-10'>

@@ -1,10 +1,3 @@
-import { getPageMetadata } from '@/app/metadata.config';
-
-export const metadata = getPageMetadata('cookies', {
-    title: 'Cookie Policy',
-    description: 'Learn about how Lunaria uses cookies and similar technologies.',
-});
-
 function CookiesPolicy() {
     return (
         <article className='max-w-5xl mx-auto leading-relaxed space-y-10'>

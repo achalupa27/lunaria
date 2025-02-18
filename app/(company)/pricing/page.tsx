@@ -1,5 +1,4 @@
 import PricingTables from '@/components/website/pricing-page/pricing';
-import { Metadata } from 'next';
 
 const Pricing = () => {
     return (
@@ -9,14 +8,6 @@ const Pricing = () => {
             <PricingTables />
         </div>
     );
-};
-
-export const metadata: Metadata = {
-    title: 'Pricing',
-    description: 'Flexible pricing plans for every financial journey. Choose the perfect plan to achieve your money goals.',
-    openGraph: {
-        description: 'Flexible pricing plans for every financial journey. Choose the perfect plan to achieve your money goals.',
-    },
 };
 
 export default Pricing;

@@ -5,7 +5,6 @@ import Loader from '@/components/ui/loader';
 import { CheckCircle2Icon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { getPageMetadata } from '@/app/metadata.config';
 
 type Inputs = {
     name: string;
@@ -13,11 +12,6 @@ type Inputs = {
     subject: string;
     message: string;
 };
-
-export const metadata = getPageMetadata('contact', {
-    title: 'Contact Us',
-    description: "Get in touch with the Lunaria team. We're here to help with any questions or concerns.",
-});
 
 const Contact = () => {
     const { register, handleSubmit } = useForm<Inputs>();

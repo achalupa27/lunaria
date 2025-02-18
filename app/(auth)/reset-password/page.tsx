@@ -1,16 +1,10 @@
 'use client';
 
-import { getPageMetadata } from '@/app/metadata.config';
 import Logo from '@/components/icons/logo';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/utils/supabase/client';
 import { useState } from 'react';
-
-export const metadata = getPageMetadata('reset-password', {
-    title: 'Reset Password',
-    description: 'Reset your Lunaria account password.',
-});
 
 const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
