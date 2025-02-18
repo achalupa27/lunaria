@@ -19,7 +19,8 @@ function PageLayout({ children }: any) {
         <>
             {!isDashboard && <Header />}
             <main>{children}</main>
-            {!isDashboard ? <Footer /> : <Toaster />}
+            {!isDashboard && <Footer />}
+            <Toaster />
         </>
     );
 }

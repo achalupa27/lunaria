@@ -2,11 +2,11 @@ import '../styles/globals.css';
 import '../styles/index.css';
 
 import PageLayout from '@/components/website/layout/page-layout';
-import { defaultMetadata } from './metadata.config';
+import { getPageMetadata } from './metadata.config';
 import ClientProviders from '@/components/providers/client-providers';
 import { inter } from './fonts';
 
-export const metadata = defaultMetadata;
+export const metadata = getPageMetadata('root');
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
