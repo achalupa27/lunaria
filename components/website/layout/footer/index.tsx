@@ -1,5 +1,5 @@
-import BrandInfo from './brand-info';
-import Links from './links';
+import BrandInfo from './components/brand-info';
+import Links from './components/links';
 
 const Footer = () => {
     return (

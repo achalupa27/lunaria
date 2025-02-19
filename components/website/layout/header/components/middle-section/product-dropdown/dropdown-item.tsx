@@ -18,7 +18,6 @@ const DropdownItem = ({ item }: Props) => {
                     {item.label === 'Income Tracker' && <MakeIcon filled={true} />}
                     {item.label === 'Savings Tracker' && <SaveIcon filled={true} />}
                     {item.label === 'Spending Tracker' && <SpendIcon filled={true} />}
-                    {/* <i className={`pt-[1px] ${getActivityIcon(label)}`} /> */}
                     <span className='font-medium'>{item.label}</span>
                 </div>
                 <div className='mt-1 text-zinc-700 dark:text-zinc-400'>{item.summary}</div>

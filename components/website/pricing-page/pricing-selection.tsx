@@ -8,7 +8,7 @@ import PremiumTable from './components/pricing-tables/premium-table';
 import ProTable from './components/pricing-tables/pro-table';
 import TermChanger from './components/term-changer';
 
-const PricingTables = () => {
+const PricingSelection = () => {
     const [authView, setAuthView] = useState<'login' | 'signup'>('signup');
     const [isAuthOpen, setIsAuthOpen] = useState(false);
     const [term, setTerm] = useState<'Monthly' | 'Yearly'>('Yearly');
@@ -40,4 +40,4 @@ const PricingTables = () => {
     );
 };
 
-export default PricingTables;
+export default PricingSelection;

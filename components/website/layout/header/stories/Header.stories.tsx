@@ -88,91 +88,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Add these new stories before your other viewport stories
-export const FullHD: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'fullHD',
-        },
-    },
-};
-// Add this new story along with your other viewport stories
-export const Desktop2XL: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'desktop2xl',
-        },
-    },
-};
-
-// Default story (Desktop xl and above: >= 1280px)
-export const Desktop: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'desktop',
-        },
-    },
-};
-
-// Large screens (lg: 1024px - 1279px)
-export const Large: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'large',
-        },
-    },
-};
-
-// Medium screens (md: 768px - 1023px)
-export const Medium: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'medium',
-        },
-    },
-};
-
-// Small screens (sm: 640px - 767px)
-export const Small: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'small',
-        },
-    },
-};
-
-// Mobile screens (xs: < 640px)
-export const Mobile: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'mobile',
-        },
-    },
-};
-
-export const FourK: Story = {
-    parameters: {
-        viewport: {
-            defaultViewport: 'fourK',
-        },
-    },
-};
-
-// Dark theme story (Desktop)
-export const DarkTheme: Story = {
-    decorators: [
-        (Story) => (
-            <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
-                <div className='dark'>
-                    <Story />
-                </div>
-            </ThemeProvider>
-        ),
-    ],
-};
+export const Default: Story = {};
 
 // Interactions
-
 // Add to your existing stories
 export const MobileMenuInteraction: Story = {
     play: async ({ canvasElement }) => {
