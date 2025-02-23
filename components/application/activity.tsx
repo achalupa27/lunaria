@@ -10,6 +10,7 @@ import Settings from './settings';
 import { Suspense } from 'react';
 import Loader from '../ui/loader';
 import { ErrorBoundary } from 'react-error-boundary';
+import Transactions from '../../features/transactions';
 
 const Activity = () => {
     const tab = useAppSelector(selectTab);
@@ -43,6 +44,14 @@ const Activity = () => {
             <ErrorBoundary fallbackRender={({ error }) => <div>Error: {error.message}</div>}>
                 <Suspense fallback={<Loader />}>
                     <Spend />
+                </Suspense>
+            </ErrorBoundary>
+        );
+    else if (tab === 'Transactions')
+        return (
+            <ErrorBoundary fallbackRender={({ error }) => <div>Error: {error.message}</div>}>
+                <Suspense fallback={<Loader />}>
+                    <Transactions />
                 </Suspense>
             </ErrorBoundary>
         );

@@ -10,6 +10,7 @@ import { ChevronDown, Settings } from 'lucide-react';
 import SettingsForm from './components/settings-form';
 import useFetchMakes from './hooks/use-fetch-makes';
 import { useTable } from '@/hooks/use-table';
+import RecentMakes from './components/recent-makes';
 
 const Make = () => {
     const { data: makes } = useFetchMakes();
@@ -68,7 +69,7 @@ const Make = () => {
     return (
         <Page>
             <div className='flex items-center justify-between'>
-                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200`}>
+                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200 dark:hover:bg-zinc-800`}>
                     <span>Making - All Time</span>
                     <ChevronDown />
                 </div>
@@ -113,17 +114,17 @@ const Make = () => {
             {/* <div>this year vs last year by month</div> */}
             <div className='flex flex-1 space-x-4 overflow-auto p-1 scrollbar-none'>
                 <div className='flex h-full flex-col space-y-2'>
-                    <Table table={table} handleRowClick={handleViewMake} />
+                    <RecentMakes makes={makes || []} onViewMake={handleViewMake} />
                 </div>
+                {loading ? (
+                    <div className='mt-4 text-center'>Analyzing your income data...</div>
+                ) : analysis ? (
+                    <Card className='mt-4 whitespace-pre-wrap p-4'>
+                        <h3 className='mb-2 text-lg font-semibold'>Income Analysis</h3>
+                        {analysis}
+                    </Card>
+                ) : null}
             </div>
-            {loading ? (
-                <div className='mt-4 text-center'>Analyzing your income data...</div>
-            ) : analysis ? (
-                <Card className='mt-4 whitespace-pre-wrap p-4'>
-                    <h3 className='mb-2 text-lg font-semibold'>Income Analysis</h3>
-                    {analysis}
-                </Card>
-            ) : null}
             {makeFormOpen && <MakeForm closeForm={handleFormClose} selectedMake={selectedMake} />}
             {makeSettingsOpen && <SettingsForm closeForm={handleFormClose} />}
         </Page>

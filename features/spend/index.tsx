@@ -17,6 +17,7 @@ import SpendingSummary from './components/summary/spending-summary';
 import { useRole } from '@/hooks/use-role';
 import SpendingAnalysis from './components/analysis/spending-analysis';
 import { SpendingAnalysisRef } from './components/analysis/spending-analysis';
+import RecentTransactions from './components/transactions/recent-transactions';
 
 const Spend = () => {
     const { userRole } = useRole();
@@ -84,7 +85,7 @@ const Spend = () => {
             <div className='flex flex-1 space-x-4 overflow-auto p-1 scrollbar-none'>
                 <div className='flex h-full flex-col space-y-4'>
                     <CategoriesAndBudgets categoryTotals={categoryTotals} budgetProgress={budgetProgress} />
-                    <TransactionTable spends={filteredSpends} onViewSpend={handleViewSpend} />
+                    <RecentTransactions spends={filteredSpends} onViewSpend={handleViewSpend} />
                 </div>
                 <RecurringExpensesList recurringExpenses={recurringExpenses} onViewExpense={handleViewRecurringExpense} />
 

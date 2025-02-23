@@ -10,7 +10,7 @@ type Props = {
     className?: string;
 } & React.HTMLProps<HTMLDivElement>;
 
-const cardVariants = cva('w-auto rounded-2xl flex flex-col bg-white border-orange-100 border px-6 py-4 shadow transition duration-200 dark:bg-black dark:border-orange-100 dark:bg-gradient-to-b dark:from-zinc-950 dark:to-black dark:shadow-orange-300/10 dark:shadow-lg', {
+const cardVariants = cva('w-auto rounded-2xl flex flex-col bg-white border-orange-100 border px-6 py-4 shadow transition duration-200 dark:border-orange-100 dark:bg-gradient-to-b dark:from-zinc-950 dark:to-zinc-900 dark:shadow-orange-300/10 dark:shadow-lg', {
     variants: {
         variant: {
             default: '',
