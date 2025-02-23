@@ -42,7 +42,8 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
     const form = useForm({
         defaultValues: {
             ...selectedSave,
-            type: selectedSave?.type || 'Deposit', // Set the default value of 'type'
+            type: selectedSave?.type || 'Deposit',
+            date: selectedSave?.date ? new Date(selectedSave.date) : undefined,
         },
         resolver: zodResolver(FormSchema),
     });

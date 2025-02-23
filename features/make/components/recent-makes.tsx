@@ -1,5 +1,5 @@
 import { formatCurrency } from '@/utils/helper';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppDispatch } from '@/redux/hooks';
@@ -36,11 +36,10 @@ const RecentMakes = ({ makes, onViewMake }: Props) => {
                     <div key={make.id} onClick={() => onViewMake(make)} className='mb-3 flex cursor-pointer items-center justify-between rounded-lg border p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
                         <div className='flex flex-col'>
                             <span className='font-medium'>{make.source}</span>
-                            <span className='text-sm text-gray-500'>{format(parseISO(make.date), 'MMM d, yyyy')}</span>
+                            <span className='text-sm text-gray-500'>{format(new Date(make.date), 'MMM d, yyyy')}</span>
                         </div>
                         <div className='flex flex-col items-end'>
                             <span className='font-medium text-green-600'>{formatCurrency(make.amount)}</span>
-                            <span className='text-sm text-gray-500'>{make.category}</span>
                         </div>
                     </div>
                 ))}

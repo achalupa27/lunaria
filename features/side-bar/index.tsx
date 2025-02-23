@@ -5,9 +5,10 @@ import MakeIcon from '@/components/icons/make-icon';
 import SaveIcon from '@/components/icons/save-icon';
 import SpendIcon from '@/components/icons/spend-icon';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { selectTab, setTab } from '@/redux/slices/tab-slice';
-import { Sun, Moon, Settings, Receipt } from 'lucide-react';
+import { Sun, Moon, Settings, Receipt, ChartPie } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect } from 'react';
 
@@ -52,9 +53,13 @@ const Sidebar = () => {
             </div>
 
             <div className='flex-col flex items-center space-y-3'>
+                <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => handleTabChange('Reports')}>
+                    <ChartPie />
+                </Button>
                 <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => handleTabChange('Transactions')}>
                     <Receipt />
                 </Button>
+                <Separator />
                 {currentTheme === 'dark' ? (
                     <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => setTheme('light')}>
                         <Sun />

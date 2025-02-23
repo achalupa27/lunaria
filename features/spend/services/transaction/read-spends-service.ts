@@ -12,12 +12,12 @@ export const readSpendsService = async () => {
         const { data: spending, error } = await supabase.from('spending').select(`*`).eq('user_id', user.user.id);
 
         if (error) {
-            throw new Error(`Failed to fetch trades: ${error.message}`);
+            throw new Error(`Failed to fetch spends: ${error.message}`);
         }
 
         return spending as Spend[];
     } catch (error) {
-        console.error('[ERROR] in readTradesService:', error);
-        throw new Error(error instanceof Error ? error.message : 'An unexpected error occurred while fetching trades.');
+        console.error('[ERROR] in readSpendsService:', error);
+        throw new Error(error instanceof Error ? error.message : 'An unexpected error occurred while fetching spends.');
     }
 };

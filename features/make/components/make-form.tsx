@@ -37,6 +37,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const form = useForm({
         defaultValues: {
             ...selectedMake,
+            date: selectedMake?.date ? new Date(selectedMake.date) : undefined,
         },
         resolver: zodResolver(FormSchema),
     });

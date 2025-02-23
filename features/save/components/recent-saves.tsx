@@ -36,12 +36,11 @@ const RecentSaves = ({ saves, onViewSave }: Props) => {
                 {recentSaves.map((save) => (
                     <div key={save.id} onClick={() => onViewSave(save)} className='mb-3 flex cursor-pointer items-center justify-between rounded-lg border p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
                         <div className='flex flex-col'>
-                            <span className='font-medium'>{save.goal}</span>
-                            <span className='text-sm text-gray-500'>{format(parseISO(save.date), 'MMM d, yyyy')}</span>
+                            <span className='font-medium'>{save.type}</span>
+                            <span className='text-sm text-gray-500'>{format(new Date(save.date), 'MMM d, yyyy')}</span>
                         </div>
                         <div className='flex flex-col items-end'>
                             <span className='font-medium text-green-600'>{formatCurrency(save.amount)}</span>
-                            <span className='text-sm text-gray-500'>{save.category}</span>
                         </div>
                     </div>
                 ))}

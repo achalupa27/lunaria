@@ -54,13 +54,19 @@ const SpendingAnalysis = forwardRef<SpendingAnalysisRef, SpendingAnalysisProps>(
     return (
         <>
             {loading ? (
-                <div className='mt-4 text-center'>Analyzing your spending patterns...</div>
+                <Card className='mt-4 text-center'>Analyzing your spending patterns...</Card>
             ) : analysis ? (
-                <Card className='prose prose-sm dark:prose-invert max-w-none whitespace-pre-wrap p-4'>
-                    <h3 className='mb-2 text-lg font-semibold'>Spending Analysis</h3>
-                    <ReactMarkdown className='overflow-y-auto scrollbar-none'>{analysis}</ReactMarkdown>
+                <Card className='h-full flex flex-col'>
+                    <h3 className='text-lg font-semibold p-4 pb-2'>Spending Analysis</h3>
+                    <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
+                        <div className='prose prose-sm dark:prose-invert max-w-none'>
+                            <ReactMarkdown>{analysis}</ReactMarkdown>
+                        </div>
+                    </div>
                 </Card>
-            ) : null}
+            ) : (
+                <Card className='h-full flex flex-col'>_</Card>
+            )}
         </>
     );
 });

@@ -12,7 +12,7 @@ type Props = {
 
 const ActionButtons = ({ onSettingsClick, onAnalyzeClick, onBudgetClick, onNewSpendClick, userRole }: Props) => {
     return (
-        <>
+        <div className='flex items-center space-x-2'>
             <Button variant='secondary' className='rounded-lg' size='icon' onClick={onSettingsClick}>
                 <Settings />
             </Button>
@@ -28,7 +28,7 @@ const ActionButtons = ({ onSettingsClick, onAnalyzeClick, onBudgetClick, onNewSp
             <Button className='rounded-lg' onClick={onNewSpendClick}>
                 + New Spending
             </Button>
-        </>
+        </div>
     );
 };
 

@@ -21,8 +21,6 @@ const Make = () => {
     const [loading, setLoading] = useState(false);
     const [analysis, setAnalysis] = useState<string | null>(null);
 
-    const { table } = useTable({ data: makes || [], columns: makeColumns });
-
     const handleViewMake = (row: any) => {
         setSelectedMake(row);
         setMakeFormOpen(true);
