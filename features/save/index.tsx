@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSaveColumns } from '@/hooks/use-save-columns';
 import { formatCurrency } from '@/utils/helper';
 import SaveForm from './components/forms/save-form';
@@ -14,14 +14,29 @@ import useFetchSavingsAccounts from './hooks/use-fetch-savings-accounts';
 import useFetchDebtAccounts from './hooks/use-fetch-debt-accounts';
 import AccountForm from './components/forms/account-form';
 import RecentSaves from './components/recent-saves';
+import SavingsAccounts from './components/accounts/savings-accounts';
+import DebtAccounts from './components/accounts/debt-accounts';
+import ActionButtons from './components/header/action-buttons';
+import SavingsSummary from './components/summary/savings-summary';
+import SavingsAnalysis, { SavingsAnalysisRef } from './components/analysis/savings-analysis';
+import SavingsChart from './components/visualization/savings-chart';
+import SavingsPeriodSelector from './components/header/saving-period-selector';
+import { Period } from '@/features/shared/components/period-selector';
+import { useFilteredSaves } from './hooks/use-filtered-saves';
+import AssetForm from './components/forms/asset-form';
+import Assets from './components/accounts/assets';
+import useFetchAssets from './hooks/use-fetch-assets';
 
 const Save = () => {
     const { data: saves } = useFetchSaves();
     const { data: savingsAccounts } = useFetchSavingsAccounts();
     const { data: debtAccounts } = useFetchDebtAccounts();
+    const { data: assets } = useFetchAssets();
 
     const [totalSavings, setTotalSavings] = useState(0);
     const [totalDebt, setTotalDebt] = useState(0);
+    const [assetFormOpen, setAssetFormOpen] = useState(false);
+    const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>();
 
     useEffect(() => {
         if (savingsAccounts) {
@@ -53,39 +68,15 @@ const Save = () => {
         setSelectedSave(undefined);
         setSaveFormOpen(false);
         setSettingsFormOpen(false);
+        setAssetFormOpen(false);
+        setSelectedAsset(undefined);
     };
 
-    const [loading, setLoading] = useState(false);
-    const [analysis, setAnalysis] = useState<string>('');
+    const analysisRef = useRef<SavingsAnalysisRef>(null);
 
-    const handleAnalysis = async () => {
-        setLoading(true);
-
-        try {
-            const response = await fetch('/api/openai/analyze-savings', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    saves,
-                    savingsAccounts,
-                    debtAccounts,
-                }),
-            });
-
-            const data = await response.json();
-            setAnalysis(data.analysis);
-            setLoading(false);
-        } catch (error) {
-            console.error('Error:', error);
-            setLoading(false);
-        }
+    const handleAnalysis = () => {
+        analysisRef.current?.analyze();
     };
-
-    // useEffect(() => {
-    //     handleAnalysis();
-    // }, []);
 
     const [accountFormOpen, setAccountFormOpen] = useState(false);
     const [selectedAccount, setSelectedAccount] = useState<SavingsAccount | DebtAccount | undefined>();
@@ -105,106 +96,60 @@ const Save = () => {
         setAccountFormOpen(true);
     };
 
+    const handleViewSavingsAccount = (account: SavingsAccount) => {
+        handleEditAccount(account);
+    };
+
+    const handleViewDebtAccount = (account: DebtAccount) => {
+        handleEditAccount(account);
+    };
+
+    const [selectedTerm, setSelectedTerm] = useState<Period>('All Time');
+
+    const handleTermChange = (term: Period) => {
+        setSelectedTerm(term);
+    };
+
+    const { filteredSaves, totalSaved, totalWithdrawn } = useFilteredSaves(saves, selectedTerm);
+
+    const handleNewAsset = () => {
+        setSelectedAsset(undefined);
+        setAssetFormOpen(true);
+    };
+
+    const handleViewAsset = (asset: Asset) => {
+        setSelectedAsset(asset);
+        setAssetFormOpen(true);
+    };
+
     return (
         <Page>
             <div className='flex items-center justify-between'>
-                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200 dark:hover:bg-zinc-800`}>
-                    <span>Saving - All Time</span>
-                    <ChevronDown />
+                <SavingsPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
+                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAnalyzeClick={handleAnalysis} onAddAccountClick={handleAccountFormOpen} onNewSaveClick={handleFormOpen} onNewAssetClick={handleNewAsset} />
+            </div>
+
+            <SavingsSummary totalSavings={totalSavings} totalDebt={totalDebt} netSavings={totalSavings - totalDebt} periodSaved={totalSaved} periodWithdrawn={totalWithdrawn} selectedTerm={selectedTerm} />
+
+            <div className='grid grid-cols-3 gap-4 h-full overflow-hidden'>
+                <div className='space-y-4'>
+                    <SavingsAccounts accounts={savingsAccounts || []} onViewAccount={handleViewSavingsAccount} />
+                    <DebtAccounts accounts={debtAccounts || []} onViewAccount={handleViewDebtAccount} />
+                    <Assets assets={assets || []} onViewAsset={handleViewAsset} />
                 </div>
-                <div className='flex items-center space-x-2'>
-                    <Button variant='secondary' className='rounded-lg' size='icon' onClick={() => setSettingsFormOpen(true)}>
-                        <Settings />
-                    </Button>
-                    <Button variant='secondary' className='rounded-lg' onClick={handleAccountFormOpen}>
-                        <Plus />
-                        Add Account
-                    </Button>
-                    <Button className='rounded-lg' onClick={handleFormOpen}>
-                        <Plus />
-                        New Saving
-                    </Button>
+                <div className='space-y-4'>
+                    <SavingsChart saves={filteredSaves} savingsAccounts={savingsAccounts || []} debtAccounts={debtAccounts || []} />
+                    <RecentSaves saves={filteredSaves} onViewSave={handleViewSave} />
+                </div>
+                <div className='space-y-4'>
+                    <SavingsAnalysis ref={analysisRef} saves={filteredSaves} savingsAccounts={savingsAccounts || []} debtAccounts={debtAccounts || []} totalSavings={totalSavings} totalDebt={totalDebt} />
                 </div>
             </div>
 
-            <div className='my-2 flex space-x-6'>
-                <Card className='gold-gradient dark:gold-gradient'>
-                    <span className='leading-none'>{'Net Savings'}</span>
-                    <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(totalSavings - totalDebt)}</span>
-                    </div>
-                </Card>
-                <Card className=''>
-                    <span className='leading-none'>{'Savings Accounts'}</span>
-                    <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(totalSavings)}</span>
-                    </div>
-                </Card>
-                <Card className=''>
-                    <span className='leading-none'>{'Debt Accounts'}</span>
-                    <div className='space-x-2'>
-                        <span className='text-3xl font-semibold'>{formatCurrency(totalDebt)}</span>
-                    </div>
-                </Card>
-            </div>
-
-            <div>Advanced savings/debt accounts</div>
-            <div>Assets</div>
-
-            <div className='flex flex-1 space-x-4 overflow-auto scrollbar-none'>
-                <div className='flex h-full flex-col space-y-4 p-1'>
-                    <div className='rounded-lg border border-orange-100 bg-white dark:bg-black shadow'>
-                        <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none px-2 dark:text-black'>Savings Accounts</div>
-                        <div className='rounded-[inherit] px-3 py-2'>
-                            {savingsAccounts?.length === 0 ? (
-                                <div className='flex flex-col items-center justify-center text-center text-gray-500'>
-                                    <div>No savings accounts created.</div>
-                                    <div>Click "Add Account" above to create one.</div>
-                                </div>
-                            ) : (
-                                savingsAccounts?.map((account) => (
-                                    <div key={account.id} onClick={() => handleEditAccount(account)} className='flex cursor-pointer justify-between rounded-md p-2 transition-colors hover:bg-zinc-100'>
-                                        <div>{account.name}</div>
-                                        <div className='text-green-600'>{formatCurrency(account.balance)}</div>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                    </div>
-
-                    <div className='rounded-lg border border-orange-100 bg-white dark:bg-black shadow'>
-                        <div className='gold-gradient flex h-[30px] items-center justify-between rounded-lg rounded-b-none px-2 dark:text-black'>Debt Accounts</div>
-                        <div className='rounded-[inherit] px-3 py-2'>
-                            {debtAccounts?.length === 0 ? (
-                                <div className='flex flex-col items-center justify-center text-center text-gray-500'>
-                                    <div>No debt accounts created.</div>
-                                    <div>Click "Add Account" above to create one.</div>
-                                </div>
-                            ) : (
-                                debtAccounts?.map((account) => (
-                                    <div key={account.id} onClick={() => handleEditAccount(account)} className='flex cursor-pointer justify-between rounded-md p-2 transition-colors hover:bg-zinc-100'>
-                                        <div>{account.name}</div>
-                                        <div className='text-red-600'>{formatCurrency(account.balance)}</div>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-                    </div>
-
-                    <RecentSaves saves={saves || []} onViewSave={handleViewSave} />
-                </div>
-                {loading ? (
-                    <div className='text-center'>Analyzing your financial data...</div>
-                ) : analysis ? (
-                    <Card className='whitespace-pre-wrap p-4'>
-                        <h3 className='mb-2 text-lg font-semibold'>Financial Analysis</h3>
-                        {analysis}
-                    </Card>
-                ) : null}
-            </div>
             {saveFormOpen && <SaveForm closeForm={handleFormClose} selectedSave={selectedSave} />}
             {settingsFormOpen && <SettingsForm closeForm={handleFormClose} />}
             {accountFormOpen && <AccountForm closeForm={handleAccountFormClose} selectedAccount={selectedAccount} />}
+            {assetFormOpen && <AssetForm closeForm={handleFormClose} selectedAsset={selectedAsset} />}
         </Page>
     );
 };

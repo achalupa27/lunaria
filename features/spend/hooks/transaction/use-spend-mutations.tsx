@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createSpendService } from '../../services/transaction/create-spend-service';
-import { deleteSpendService } from '../../services/transaction/delete-spend-service';
-import { updateSpendService } from '../../services/transaction/update-spend-service';
+import { createSpendService } from '../../services/transaction/create-spend.service';
+import { deleteSpendService } from '../../services/transaction/delete-spend.service';
+import { updateSpendService } from '../../services/transaction/update-spend.service';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircle, CircleX } from 'lucide-react';
 

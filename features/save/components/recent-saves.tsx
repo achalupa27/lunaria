@@ -1,9 +1,9 @@
 import { formatCurrency } from '@/utils/helper';
-import { format, parseISO } from 'date-fns';
-import { ArrowRight } from 'lucide-react';
+import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { useAppDispatch } from '@/redux/hooks';
 import { setTab } from '@/redux/slices/tab-slice';
+import Card from '@/components/ui/card';
 
 type Props = {
     saves: Save[];
@@ -24,28 +24,26 @@ const RecentSaves = ({ saves, onViewSave }: Props) => {
     };
 
     return (
-        <div className='rounded-lg border border-orange-100 bg-white dark:bg-black shadow'>
-            <div className='gold-gradient flex h-[40px] items-center justify-between rounded-lg rounded-b-none px-4'>
-                <span className='dark:text-black'>Recent Deposits</span>
-                <Button variant='ghost' className='h-7 dark:text-black hover:bg-orange-100/50' onClick={handleViewAll}>
+        <Card className='px-8 py-6'>
+            <div className='flex justify-between'>
+                <h3 className='text-lg font-semibold mb-4'>Recent Deposits</h3>
+                <Button variant='ghost' className='h-7 text-sm -mr-2 dark:text-black hover:bg-orange-50' onClick={handleViewAll}>
                     View all
-                    <ArrowRight className='ml-2 h-4 w-4' />
                 </Button>
             </div>
-            <div className='flex-1 overflow-y-auto p-4'>
+            <div className='flex-1 overflow-y-auto'>
                 {recentSaves.map((save) => (
-                    <div key={save.id} onClick={() => onViewSave(save)} className='mb-3 flex cursor-pointer items-center justify-between rounded-lg border p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
+                    <div key={save.id} onClick={() => onViewSave(save)} className='flex cursor-pointer items-center justify-between px-2 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
                         <div className='flex flex-col'>
                             <span className='font-medium'>{save.type}</span>
-                            <span className='text-sm text-gray-500'>{format(new Date(save.date), 'MMM d, yyyy')}</span>
                         </div>
                         <div className='flex flex-col items-end'>
-                            <span className='font-medium text-green-600'>{formatCurrency(save.amount)}</span>
+                            <span className='font-medium text-blue-600'>{formatCurrency(save.amount)}</span>
                         </div>
                     </div>
                 ))}
             </div>
-        </div>
+        </Card>
     );
 };
 

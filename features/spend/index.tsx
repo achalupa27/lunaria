@@ -78,14 +78,12 @@ const Spend = () => {
             <SpendingSummary totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
 
             <div className='grid grid-cols-3 gap-4 h-full overflow-hidden'>
-                <div className='col-span-1 gap-4 space-y-4'>
-                    <CategoriesAndBudgets categoryTotals={categoryTotals} budgetProgress={budgetProgress} />
+                <div className='space-y-4'>
                     <RecentTransactions spends={filteredSpends} onViewSpend={handleViewSpend} />
-                </div>
-                <div className='col-span-1'>
                     <RecurringExpensesList recurringExpenses={recurringExpenses} onViewExpense={handleViewRecurringExpense} />
                 </div>
-                <div className='col-span-1 space-y-4'>
+                <CategoriesAndBudgets categoryTotals={categoryTotals} budgetProgress={budgetProgress} />
+                <div className='space-y-4'>
                     <SpendingChart spends={filteredSpends} />
                     <SpendingAnalysis ref={analysisRef} spends={filteredSpends} budgets={budgets} recurringExpenses={recurringExpenses} categoryTotals={categoryTotals} budgetProgress={budgetProgress} totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
                 </div>

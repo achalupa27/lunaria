@@ -22,7 +22,7 @@ const CategoriesAndBudgets = ({ categoryTotals, budgetProgress }: Props) => {
                     {spendingCategories
                         .filter((category) => categoryTotals[category] > 0 || budgetProgress[category])
                         .map((category) => (
-                            <div key={category} className='flex justify-between border-b py-2'>
+                            <div key={category} className='flex justify-between py-2'>
                                 <div className='font-medium'>{category}</div>
                                 <div className='flex items-center space-x-4'>
                                     {budgetProgress[category] && (

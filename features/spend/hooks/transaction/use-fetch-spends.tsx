@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { readSpendsService } from '../../services/transaction/read-spends-service';
+import { readSpendsService } from '../../services/transaction/read-spends.service';
 
 const useFetchSpends = () => {
     return useSuspenseQuery({

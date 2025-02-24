@@ -139,7 +139,7 @@ const SpendingChart = ({ spends }: Props) => {
             <div className='p-4'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant='ghost' className='-ml-4 flex items-center space-x-2 rounded-xl px-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-lg font-semibold'>
+                        <Button variant='ghost' className='-ml-4 flex items-center rounded-xl px-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-lg font-semibold'>
                             <span>Spending by {viewLabels[view]}</span>
                             <ChevronDown className='h-5 w-5' />
                         </Button>

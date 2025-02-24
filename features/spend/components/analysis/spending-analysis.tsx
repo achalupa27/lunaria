@@ -54,7 +54,7 @@ const SpendingAnalysis = forwardRef<SpendingAnalysisRef, SpendingAnalysisProps>(
     return (
         <>
             {loading ? (
-                <Card className='mt-4 text-center'>Analyzing your spending patterns...</Card>
+                <Card className='text-center'>Analyzing your spending patterns...</Card>
             ) : analysis ? (
                 <Card className='h-full flex flex-col'>
                     <h3 className='text-lg font-semibold p-4 pb-2'>Spending Analysis</h3>
