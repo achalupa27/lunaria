@@ -1,19 +1,18 @@
 import { formatCurrency } from '@/utils/helper';
-import { format } from 'date-fns';
-import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppDispatch } from '@/redux/hooks';
 import { setTab } from '@/redux/slices/tab-slice';
 import Card from '@/components/ui/card';
+import DisplayCard from '@/features/shared/components/display-card';
 
 type Props = {
     spends: Spend[];
     onViewSpend: (spend: Spend) => void;
 };
 
-const RecentTransactions = ({ spends, onViewSpend }: Props) => {
+const RecentSpending = ({ spends, onViewSpend }: Props) => {
     // Take only the 5 most recent transactions
-    const recentSpends = spends.slice(0, 5);
+    const recentSpends = spends.slice(0, 15);
     const dispatch = useAppDispatch();
 
     const handleViewAll = () => {
@@ -25,14 +24,14 @@ const RecentTransactions = ({ spends, onViewSpend }: Props) => {
     };
 
     return (
-        <Card className='px-8 py-6'>
-            <div className='flex justify-between'>
-                <h3 className='text-lg font-semibold mb-4'>Recent Spending</h3>
+        <DisplayCard
+            title='Recent Spending'
+            button={
                 <Button variant='ghost' className='h-7 text-sm -mr-2 dark:text-black hover:bg-orange-50' onClick={handleViewAll}>
                     View all
                 </Button>
-            </div>
-            <div className='flex-1 overflow-y-auto'>
+            }>
+            <div className='flex-1 min-h-0 overflow-y-auto scrollbar-none'>
                 {recentSpends.map((spend) => (
                     <div key={spend.id} onClick={() => onViewSpend(spend)} className='flex cursor-pointer items-center justify-between px-2 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
                         <div className='flex flex-col'>
@@ -44,8 +43,8 @@ const RecentTransactions = ({ spends, onViewSpend }: Props) => {
                     </div>
                 ))}
             </div>
-        </Card>
+        </DisplayCard>
     );
 };
 
-export default RecentTransactions;
+export default RecentSpending;

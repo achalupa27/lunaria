@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { formatCurrency } from '@/utils/helper';
 import { format } from 'date-fns';
 import Card from '@/components/ui/card';
-import { ChevronDown } from 'lucide-react';
+import { ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
@@ -21,6 +21,13 @@ const viewLabels: Record<ChartView, string> = {
 
 const SpendingChart = ({ spends }: Props) => {
     const [view, setView] = useState<ChartView>('necessity');
+
+    const handleNextView = () => {
+        const views: ChartView[] = ['necessity', 'category', 'monthly'];
+        const currentIndex = views.indexOf(view);
+        const nextIndex = (currentIndex + 1) % views.length;
+        setView(views[nextIndex]);
+    };
 
     const prepareNecessityData = () => {
         const necessityGroups = spends.reduce(
@@ -105,9 +112,8 @@ const SpendingChart = ({ spends }: Props) => {
     const renderChart = () => {
         if (view === 'monthly') {
             return (
-                <ResponsiveContainer width='100%' height={300}>
+                <ResponsiveContainer width='100%' height='100%'>
                     <BarChart data={chartData}>
-                        <CartesianGrid strokeDasharray='3 3' />
                         <XAxis dataKey='name' />
                         <YAxis tickFormatter={(value) => formatCurrency(value)} />
                         <Tooltip formatter={(value) => formatCurrency(Number(value))} />
@@ -121,9 +127,8 @@ const SpendingChart = ({ spends }: Props) => {
         }
 
         return (
-            <ResponsiveContainer width='100%' height={300}>
+            <ResponsiveContainer width='100%' height='100%'>
                 <BarChart data={chartData}>
-                    <CartesianGrid strokeDasharray='3 3' />
                     <XAxis dataKey='name' />
                     <YAxis tickFormatter={(value) => formatCurrency(value)} />
                     <Tooltip formatter={(value) => formatCurrency(Number(value))} />
@@ -135,22 +140,35 @@ const SpendingChart = ({ spends }: Props) => {
     };
 
     return (
-        <Card>
-            <div className='p-4'>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant='ghost' className='-ml-4 flex items-center rounded-xl px-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-lg font-semibold'>
-                            <span>Spending by {viewLabels[view]}</span>
-                            <ChevronDown className='h-5 w-5' />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align='start'>
-                        <DropdownMenuItem onClick={() => setView('necessity')}>By Necessity</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setView('category')}>By Category</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setView('monthly')}>Monthly Trend</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-                <div className='mt-4'>{renderChart()}</div>
+        <Card className='h-full'>
+            <div className='p-4 flex flex-col h-full'>
+                <div className='flex items-center justify-between'>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant='ghost' className='-ml-4 w-fit rounded-xl px-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-lg font-semibold'>
+                                <span>Spending by {viewLabels[view]}</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align='start'>
+                            <DropdownMenuItem onClick={() => setView('necessity')} className='flex items-center justify-between'>
+                                By Necessity
+                                {view === 'necessity' && <Check className='h-4 w-4' />}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setView('category')} className='flex items-center justify-between'>
+                                By Category
+                                {view === 'category' && <Check className='h-4 w-4' />}
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setView('monthly')} className='flex items-center justify-between'>
+                                Monthly Trend
+                                {view === 'monthly' && <Check className='h-4 w-4' />}
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <Button variant='ghost' size='icon' onClick={handleNextView}>
+                        <ChevronRight className='h-5 w-5' />
+                    </Button>
+                </div>
+                <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div>
             </div>
         </Card>
     );

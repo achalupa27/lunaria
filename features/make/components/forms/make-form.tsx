@@ -1,9 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Modal from '@/components/ui/modal';
-import { currencyCategories, incomeSources } from '@/constants';
+import { incomeSources } from '@/constants';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';
-import { useMakeMutations } from '../hooks/use-make-mutations';
+import { useMakeMutations } from '../../hooks/use-make-mutations';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';

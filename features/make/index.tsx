@@ -1,44 +1,30 @@
-import { useEffect, useState, useRef } from 'react';
-import { useMakeColumns } from '@/hooks/use-make-columns';
-import { formatCurrency } from '@/utils/helper';
-import Table from '@/components/ui/table';
+import { useState, useRef } from 'react';
 import Page from '@/components/ui/page';
-import MakeForm from './components/make-form';
-import Card from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, Settings } from 'lucide-react';
-import SettingsForm from './components/settings-form';
+import MakeForm from './components/forms/make-form';
+import SettingsForm from './components/forms/settings-form';
 import useFetchMakes from './hooks/use-fetch-makes';
-import RecentMakes from './components/recent-makes';
+import RecentMakes from './components/recent/recent-makes';
 import ActionButtons from './components/header/action-buttons';
 import IncomeSummary from './components/summary/income-summary';
-import IncomeAnalysis, { IncomeAnalysisRef } from './components/analysis/income-analysis';
+import IncomeAnalysis from './components/analysis/income-analysis';
+import MakingPeriodSelector from './components/header/making-period-selector';
+import { Period } from '@/features/shared/components/period-selector';
+import { useFilteredMakes } from './hooks/use-filtered-makes';
+import IncomeChart from './components/visualization/income-chart';
+import IncomeSources from './components/sources/income-sources';
 
 const Make = () => {
     const { data: makes } = useFetchMakes();
-    const makeColumns = useMakeColumns();
     const [makeFormOpen, setMakeFormOpen] = useState(false);
     const [settingsFormOpen, setSettingsFormOpen] = useState(false);
     const [selectedMake, setSelectedMake] = useState<Make | undefined>();
-    const analysisRef = useRef<IncomeAnalysisRef>(null);
+    const [selectedTerm, setSelectedTerm] = useState<Period>('All Time');
 
-    const [incomeBySource, setIncomeBySource] = useState<Record<string, number>>({});
-    const [totalIncome, setTotalIncome] = useState(0);
+    const { filteredMakes, totalIncome, incomeBySource } = useFilteredMakes(makes, selectedTerm);
 
-    useEffect(() => {
-        if (makes) {
-            const sourceGroups = makes.reduce(
-                (acc, make) => {
-                    if (!acc[make.source]) acc[make.source] = 0;
-                    acc[make.source] += make.amount;
-                    return acc;
-                },
-                {} as Record<string, number>
-            );
-            setIncomeBySource(sourceGroups);
-            setTotalIncome(makes.reduce((sum, make) => sum + make.amount, 0));
-        }
-    }, [makes]);
+    const handleTermChange = (term: Period) => {
+        setSelectedTerm(term);
+    };
 
     const handleViewMake = (row: any) => {
         setSelectedMake(row);
@@ -59,21 +45,22 @@ const Make = () => {
     return (
         <Page>
             <div className='flex items-center justify-between'>
-                <div className='-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200 dark:hover:bg-zinc-800'>
-                    <span>Making - All Time</span>
-                    <ChevronDown />
-                </div>
-                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAnalyzeClick={() => analysisRef.current?.analyze()} onNewMakeClick={handleFormOpen} />
+                <MakingPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
+                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onNewMakeClick={handleFormOpen} />
             </div>
 
             <IncomeSummary totalIncome={totalIncome} incomeBySource={incomeBySource} />
 
-            <div className='grid grid-cols-2 gap-4 h-full overflow-hidden'>
-                <div className='space-y-4'>
-                    <RecentMakes makes={makes || []} onViewMake={handleViewMake} />
+            <div className='grid grid-cols-3 gap-4 flex-1 min-h-0'>
+                <div className='grid gap-4 min-h-0'>
+                    <RecentMakes makes={filteredMakes || []} onViewMake={handleViewMake} />
                 </div>
-                <div className='space-y-4'>
-                    <IncomeAnalysis ref={analysisRef} makes={makes || []} />
+                <div className='grid gap-4 min-h-0'>
+                    <IncomeSources incomeBySource={incomeBySource} />
+                </div>
+                <div className='grid grid-rows-2 gap-4 min-h-0'>
+                    <IncomeChart makes={filteredMakes || []} />
+                    <IncomeAnalysis makes={filteredMakes || []} />
                 </div>
             </div>
 

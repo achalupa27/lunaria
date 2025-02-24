@@ -8,86 +8,74 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 type Props = {
-    saves: Save[] | undefined;
-    savingsAccounts: SavingsAccount[] | undefined;
-    debtAccounts: DebtAccount[] | undefined;
+    makes: Make[];
 };
 
-type ChartView = 'monthly' | 'accounts' | 'distribution';
+type ChartView = 'monthly' | 'source' | 'distribution';
 
 const viewLabels: Record<ChartView, string> = {
     monthly: 'Monthly Trend',
-    accounts: 'Account Balances',
-    distribution: 'Savings Distribution',
+    source: 'Income Sources',
+    distribution: 'Income Distribution',
 };
 
 const COLORS = ['#22c55e', '#eab308', '#ef4444', '#3b82f6', '#f97316'];
 
-const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
+const IncomeChart = ({ makes }: Props) => {
     const [view, setView] = useState<ChartView>('monthly');
 
     const handleNextView = () => {
-        const views: ChartView[] = ['monthly', 'accounts', 'distribution'];
+        const views: ChartView[] = ['monthly', 'source', 'distribution'];
         const currentIndex = views.indexOf(view);
         const nextIndex = (currentIndex + 1) % views.length;
         setView(views[nextIndex]);
     };
 
     const prepareMonthlyData = () => {
-        if (!saves) return [];
-
-        const monthlyGroups = saves.reduce(
-            (acc, save) => {
-                const date = new Date(save.date);
+        const monthlyGroups = makes.reduce(
+            (acc, make) => {
+                const date = new Date(make.date);
                 const monthKey = format(date, 'MMM yyyy');
                 if (!acc[monthKey]) {
-                    acc[monthKey] = {
-                        deposits: 0,
-                        withdrawals: 0,
-                    };
+                    acc[monthKey] = 0;
                 }
-                if (save.type === 'Deposit') {
-                    acc[monthKey].deposits += save.amount;
-                } else {
-                    acc[monthKey].withdrawals += save.amount;
-                }
+                acc[monthKey] += make.amount;
                 return acc;
             },
-            {} as Record<string, { deposits: number; withdrawals: number }>
+            {} as Record<string, number>
         );
 
         return Object.entries(monthlyGroups)
-            .map(([month, data]) => ({
+            .map(([month, amount]) => ({
                 name: month,
-                ...data,
+                amount,
             }))
             .sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime())
             .slice(-6);
     };
 
-    const prepareAccountData = () => {
-        if (!savingsAccounts || !debtAccounts) return [];
+    const prepareSourceData = () => {
+        const sourceGroups = makes.reduce(
+            (acc, make) => {
+                if (!acc[make.source]) {
+                    acc[make.source] = 0;
+                }
+                acc[make.source] += make.amount;
+                return acc;
+            },
+            {} as Record<string, number>
+        );
 
-        return [
-            ...savingsAccounts.map((account) => ({
-                name: account.name,
-                balance: account.balance,
-                type: 'Savings',
-            })),
-            ...debtAccounts.map((account) => ({
-                name: account.name,
-                balance: -account.balance, // Negative for debt
-                type: 'Debt',
-            })),
-        ];
+        return Object.entries(sourceGroups).map(([source, amount]) => ({
+            name: source,
+            amount,
+        }));
     };
 
     const prepareDistributionData = () => {
-        if (!savingsAccounts) return [];
-
-        return savingsAccounts.map((account) => ({
-            name: account.name,
-            value: account.balance,
+        return prepareSourceData().map((item) => ({
+            name: item.name,
+            value: item.amount,
         }));
     };
 
@@ -102,21 +90,20 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
                             <YAxis tickFormatter={(value) => formatCurrency(value)} />
                             <Tooltip formatter={(value) => formatCurrency(Number(value))} />
                             <Legend />
-                            <Bar dataKey='deposits' fill='#22c55e' name='Deposits' />
-                            <Bar dataKey='withdrawals' fill='#ef4444' name='Withdrawals' />
+                            <Bar dataKey='amount' fill='#22c55e' name='Income' />
                         </BarChart>
                     </ResponsiveContainer>
                 );
-            case 'accounts':
+            case 'source':
                 return (
                     <ResponsiveContainer width='100%' height='100%'>
-                        <BarChart data={prepareAccountData()}>
+                        <BarChart data={prepareSourceData()}>
                             <CartesianGrid strokeDasharray='3 3' />
                             <XAxis dataKey='name' />
                             <YAxis tickFormatter={(value) => formatCurrency(value)} />
                             <Tooltip formatter={(value) => formatCurrency(Number(value))} />
                             <Legend />
-                            <Bar dataKey='balance' fill='#3b82f6' />
+                            <Bar dataKey='amount' fill='#3b82f6' name='Amount' />
                         </BarChart>
                     </ResponsiveContainer>
                 );
@@ -143,7 +130,7 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant='ghost' className='-ml-4 w-fit rounded-xl px-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-lg font-semibold'>
-                            <span>Savings by {viewLabels[view]}</span>
+                            <span>Income by {viewLabels[view]}</span>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align='start'>
@@ -151,12 +138,12 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
                             Monthly Trend
                             {view === 'monthly' && <Check className='h-4 w-4' />}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setView('accounts')} className='flex items-center justify-between'>
-                            Account Balances
-                            {view === 'accounts' && <Check className='h-4 w-4' />}
+                        <DropdownMenuItem onClick={() => setView('source')} className='flex items-center justify-between'>
+                            Income Sources
+                            {view === 'source' && <Check className='h-4 w-4' />}
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setView('distribution')} className='flex items-center justify-between'>
-                            Savings Distribution
+                            Income Distribution
                             {view === 'distribution' && <Check className='h-4 w-4' />}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -170,4 +157,4 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
     );
 };
 
-export default SavingsChart;
+export default IncomeChart;

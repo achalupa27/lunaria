@@ -1,24 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
-import { useSaveColumns } from '@/hooks/use-save-columns';
-import { formatCurrency } from '@/utils/helper';
 import SaveForm from './components/forms/save-form';
-import Table from '@/components/ui/table';
 import Page from '@/components/ui/page';
-import Card from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ChevronDown, Settings, PlusCircle, Plus } from 'lucide-react';
 import useFetchSaves from './hooks/use-fetch-saves';
-import { useTable } from '@/hooks/use-table';
 import SettingsForm from './components/forms/settings-form';
 import useFetchSavingsAccounts from './hooks/use-fetch-savings-accounts';
 import useFetchDebtAccounts from './hooks/use-fetch-debt-accounts';
 import AccountForm from './components/forms/account-form';
-import RecentSaves from './components/recent-saves';
+import RecentSaves from './components/recent/recent-saves';
 import SavingsAccounts from './components/accounts/savings-accounts';
 import DebtAccounts from './components/accounts/debt-accounts';
 import ActionButtons from './components/header/action-buttons';
 import SavingsSummary from './components/summary/savings-summary';
-import SavingsAnalysis, { SavingsAnalysisRef } from './components/analysis/savings-analysis';
+import SavingsAnalysis from './components/analysis/savings-analysis';
 import SavingsChart from './components/visualization/savings-chart';
 import SavingsPeriodSelector from './components/header/saving-period-selector';
 import { Period } from '@/features/shared/components/period-selector';
@@ -47,12 +40,9 @@ const Save = () => {
         }
     }, [savingsAccounts, debtAccounts]);
 
-    const saveColumns = useSaveColumns();
     const [saveFormOpen, setSaveFormOpen] = useState(false);
     const [settingsFormOpen, setSettingsFormOpen] = useState(false);
     const [selectedSave, setSelectedSave] = useState<Save | undefined>();
-
-    const { table } = useTable({ data: saves || [], columns: saveColumns });
 
     const handleViewSave = (row: any) => {
         setSelectedSave(row);
@@ -70,12 +60,6 @@ const Save = () => {
         setSettingsFormOpen(false);
         setAssetFormOpen(false);
         setSelectedAsset(undefined);
-    };
-
-    const analysisRef = useRef<SavingsAnalysisRef>(null);
-
-    const handleAnalysis = () => {
-        analysisRef.current?.analyze();
     };
 
     const [accountFormOpen, setAccountFormOpen] = useState(false);
@@ -126,23 +110,31 @@ const Save = () => {
         <Page>
             <div className='flex items-center justify-between'>
                 <SavingsPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
-                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAnalyzeClick={handleAnalysis} onAddAccountClick={handleAccountFormOpen} onNewSaveClick={handleFormOpen} onNewAssetClick={handleNewAsset} />
+                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAddAccountClick={handleAccountFormOpen} onNewSaveClick={handleFormOpen} onNewAssetClick={handleNewAsset} />
             </div>
 
             <SavingsSummary totalSavings={totalSavings} totalDebt={totalDebt} netSavings={totalSavings - totalDebt} periodSaved={totalSaved} periodWithdrawn={totalWithdrawn} selectedTerm={selectedTerm} />
 
-            <div className='grid grid-cols-3 gap-4 h-full overflow-hidden'>
-                <div className='space-y-4'>
-                    <SavingsAccounts accounts={savingsAccounts || []} onViewAccount={handleViewSavingsAccount} />
-                    <DebtAccounts accounts={debtAccounts || []} onViewAccount={handleViewDebtAccount} />
+            <div className='grid grid-cols-3 gap-4 flex-1 min-h-0'>
+                <div className='grid grid-rows-2 gap-4 min-h-0'>
+                    <RecentSaves saves={filteredSaves} onViewSave={handleViewSave} />
                     <Assets assets={assets || []} onViewAsset={handleViewAsset} />
                 </div>
-                <div className='space-y-4'>
-                    <SavingsChart saves={filteredSaves} savingsAccounts={savingsAccounts || []} debtAccounts={debtAccounts || []} />
-                    <RecentSaves saves={filteredSaves} onViewSave={handleViewSave} />
+                <div className='grid grid-rows-2 gap-4 min-h-0'>
+                    {debtAccounts && debtAccounts.length > 0 ? (
+                        <>
+                            <DebtAccounts accounts={debtAccounts} onViewAccount={handleViewDebtAccount} />
+                            <SavingsAccounts accounts={savingsAccounts || []} onViewAccount={handleViewSavingsAccount} />
+                        </>
+                    ) : (
+                        <div className='row-span-2'>
+                            <SavingsAccounts accounts={savingsAccounts || []} onViewAccount={handleViewSavingsAccount} />
+                        </div>
+                    )}
                 </div>
-                <div className='space-y-4'>
-                    <SavingsAnalysis ref={analysisRef} saves={filteredSaves} savingsAccounts={savingsAccounts || []} debtAccounts={debtAccounts || []} totalSavings={totalSavings} totalDebt={totalDebt} />
+                <div className='grid grid-rows-2 gap-4 min-h-0'>
+                    <SavingsChart saves={filteredSaves} savingsAccounts={savingsAccounts || []} debtAccounts={debtAccounts || []} />
+                    <SavingsAnalysis saves={filteredSaves} savingsAccounts={savingsAccounts} debtAccounts={debtAccounts} totalSavings={totalSavings} totalDebt={totalDebt} />
                 </div>
             </div>
 

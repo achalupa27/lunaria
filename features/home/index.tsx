@@ -7,7 +7,7 @@ import useFetchSaves from '../save/hooks/use-fetch-saves';
 import useFetchSpends from '../spend/hooks/transaction/use-fetch-spends';
 import RecentTransactions from './components/recent-transactions';
 import SpendForm from '../spend/components/forms/spend-form';
-import MakeForm from '../make/components/make-form';
+import MakeForm from '../make/components/forms/make-form';
 import SaveForm from '../save/components/forms/save-form';
 
 const Home = () => {
@@ -70,8 +70,8 @@ const Home = () => {
                 </Card>
             </div>
 
-            <div className='flex flex-1 space-x-4 overflow-auto p-1 scrollbar-none'>
-                <div className='flex h-full flex-col space-y-4'>
+            <div className='grid grid-cols-3 gap-4 flex-1 min-h-0'>
+                <div className='grid gap-4'>
                     <RecentTransactions makes={makes || []} saves={saves || []} spends={spends || []} onViewTransaction={handleViewTransaction} />
                 </div>
             </div>

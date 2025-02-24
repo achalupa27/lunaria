@@ -24,7 +24,7 @@ const RecentMakes = ({ makes, onViewMake }: Props) => {
     };
 
     return (
-        <Card>
+        <Card className='flex flex-col h-full p-6'>
             <div className='flex items-center justify-between'>
                 <h3 className='text-lg font-semibold p-4 pb-2'>Recent Income</h3>
                 <Button variant='ghost' className='h-7 dark:text-black hover:bg-orange-100/50' onClick={handleViewAll}>
@@ -32,12 +32,11 @@ const RecentMakes = ({ makes, onViewMake }: Props) => {
                     <ArrowRight className='ml-2 h-4 w-4' />
                 </Button>
             </div>
-            <div className='flex-1 overflow-y-auto'>
+            <div className='flex-1 min-h-0 overflow-y-auto scrollbar-none'>
                 {recentMakes.map((make) => (
                     <div key={make.id} onClick={() => onViewMake(make)} className='p-2 flex cursor-pointer items-center justify-between rounded-lg  hover:bg-zinc-50 dark:hover:bg-zinc-900'>
                         <div className='flex flex-col'>
                             <span className='font-medium'>{make.source}</span>
-                            <span className='text-sm text-gray-500'>{format(new Date(make.date), 'MMM d, yyyy')}</span>
                         </div>
                         <div className='flex flex-col items-end'>
                             <span className='font-medium text-green-600'>{formatCurrency(make.amount)}</span>

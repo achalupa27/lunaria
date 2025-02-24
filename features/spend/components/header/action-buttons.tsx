@@ -4,23 +4,17 @@ import ProtectedFeature from '@/components/feature';
 
 type Props = {
     onSettingsClick: () => void;
-    onAnalyzeClick: () => void;
     onBudgetClick: () => void;
     onNewSpendClick: () => void;
     userRole?: UserRole;
 };
 
-const ActionButtons = ({ onSettingsClick, onAnalyzeClick, onBudgetClick, onNewSpendClick, userRole }: Props) => {
+const ActionButtons = ({ onSettingsClick, onBudgetClick, onNewSpendClick, userRole }: Props) => {
     return (
         <div className='flex items-center space-x-2'>
             <Button variant='secondary' className='rounded-lg' size='icon' onClick={onSettingsClick}>
                 <Settings />
             </Button>
-            <ProtectedFeature requiredRole='premium' userRole={userRole}>
-                <Button variant='secondary' className='rounded-lg' onClick={onAnalyzeClick}>
-                    Analyze Spending
-                </Button>
-            </ProtectedFeature>
             <Button variant='secondary' className='rounded-lg' onClick={onBudgetClick}>
                 + Create Budget
             </Button>

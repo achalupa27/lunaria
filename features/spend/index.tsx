@@ -15,8 +15,7 @@ import ActionButtons from './components/header/action-buttons';
 import SpendingSummary from './components/summary/spending-summary';
 import { useRole } from '@/hooks/use-role';
 import SpendingAnalysis from './components/analysis/spending-analysis';
-import { SpendingAnalysisRef } from './components/analysis/spending-analysis';
-import RecentTransactions from './components/transactions/recent-transactions';
+import RecentSpending from './components/recent/recent-spending';
 import SpendingChart from './components/visualization/spending-chart';
 
 const Spend = () => {
@@ -25,7 +24,7 @@ const Spend = () => {
     const { data: budgets } = useFetchBudgets();
     const { data: recurringExpenses } = useFetchRecurringExpenses();
 
-    const [selectedTerm, setSelectedTerm] = useState<SpendingTerm>('All Time');
+    const [selectedTerm, setSelectedTerm] = useState<SpendingTerm>('This Month');
 
     const { filteredSpends, totalNeedSpent, totalWantSpent, totalWasteSpent, totalSpent, categoryTotals } = useFilteredSpends(spends, selectedTerm);
     const budgetProgress = useBudgetProgress(spends, budgets);
@@ -36,8 +35,6 @@ const Spend = () => {
     const [selectedSpend, setSelectedSpend] = useState<Spend | undefined>();
     const [recurringExpenseFormOpen, setRecurringExpenseFormOpen] = useState<boolean>(false);
     const [selectedRecurringExpense, setSelectedRecurringExpense] = useState<RecurringExpense | undefined>();
-
-    const analysisRef = useRef<SpendingAnalysisRef>(null);
 
     const handleViewSpend = (row: Spend) => {
         setSelectedSpend(row);
@@ -72,20 +69,20 @@ const Spend = () => {
         <Page>
             <div className='flex justify-between'>
                 <SpendingPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
-                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAnalyzeClick={() => analysisRef.current?.analyze()} onBudgetClick={() => setBudgetFormOpen(true)} onNewSpendClick={handleFormOpen} userRole={userRole} />
+                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onBudgetClick={() => setBudgetFormOpen(true)} onNewSpendClick={handleFormOpen} userRole={userRole} />
             </div>
 
             <SpendingSummary totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
 
-            <div className='grid grid-cols-3 gap-4 h-full overflow-hidden'>
-                <div className='space-y-4'>
-                    <RecentTransactions spends={filteredSpends} onViewSpend={handleViewSpend} />
+            <div className='grid grid-cols-3 gap-4 flex-1 min-h-0'>
+                <div className='grid grid-rows-2 gap-4 min-h-0'>
+                    <RecentSpending spends={filteredSpends} onViewSpend={handleViewSpend} />
                     <RecurringExpensesList recurringExpenses={recurringExpenses} onViewExpense={handleViewRecurringExpense} />
                 </div>
                 <CategoriesAndBudgets categoryTotals={categoryTotals} budgetProgress={budgetProgress} />
-                <div className='space-y-4'>
+                <div className='grid grid-rows-2 gap-4 min-h-0'>
                     <SpendingChart spends={filteredSpends} />
-                    <SpendingAnalysis ref={analysisRef} spends={filteredSpends} budgets={budgets} recurringExpenses={recurringExpenses} categoryTotals={categoryTotals} budgetProgress={budgetProgress} totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
+                    <SpendingAnalysis spends={filteredSpends} budgets={budgets} recurringExpenses={recurringExpenses} categoryTotals={categoryTotals} budgetProgress={budgetProgress} totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
                 </div>
             </div>
 

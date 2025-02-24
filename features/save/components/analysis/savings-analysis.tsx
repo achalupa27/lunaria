@@ -1,10 +1,7 @@
-import { forwardRef, useImperativeHandle, useState } from 'react';
-import Card from '@/components/ui/card';
+import { useEffect, useState } from 'react';
+import DisplayCard from '@/features/shared/components/display-card';
 import ReactMarkdown from 'react-markdown';
-
-export type SavingsAnalysisRef = {
-    analyze: () => void;
-};
+import Loader from '@/components/ui/loader';
 
 interface SavingsAnalysisProps {
     saves: Save[] | undefined;
@@ -14,7 +11,7 @@ interface SavingsAnalysisProps {
     totalDebt: number;
 }
 
-const SavingsAnalysis = forwardRef<SavingsAnalysisRef, SavingsAnalysisProps>((props, ref) => {
+const SavingsAnalysis = (props: SavingsAnalysisProps) => {
     const { saves, savingsAccounts, debtAccounts, totalSavings, totalDebt } = props;
     const [loading, setLoading] = useState(false);
     const [analysis, setAnalysis] = useState<string | null>(null);
@@ -45,28 +42,24 @@ const SavingsAnalysis = forwardRef<SavingsAnalysisRef, SavingsAnalysisProps>((pr
         }
     };
 
-    useImperativeHandle(ref, () => ({
-        analyze: handleAnalysis,
-    }));
+    useEffect(() => {
+        if (saves?.length && !loading && !analysis) {
+            handleAnalysis();
+        }
+    }, [saves, loading, analysis]);
 
     return (
-        <>
-            {loading ? (
-                <Card className='text-center'>Analyzing your financial data...</Card>
-            ) : analysis ? (
-                <Card className='h-full flex flex-col'>
-                    <h3 className='text-lg font-semibold p-4 pb-2'>Financial Analysis</h3>
-                    <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
-                        <div className='prose prose-sm dark:prose-invert max-w-none'>
-                            <ReactMarkdown>{analysis}</ReactMarkdown>
-                        </div>
+        <DisplayCard title='Financial Analysis'>
+            {loading && <Loader />}
+            {!loading && analysis && (
+                <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
+                    <div className='prose prose-sm dark:prose-invert max-w-none'>
+                        <ReactMarkdown>{analysis}</ReactMarkdown>
                     </div>
-                </Card>
-            ) : (
-                <Card className='h-full flex flex-col'>_</Card>
+                </div>
             )}
-        </>
+        </DisplayCard>
     );
-});
+};
 
 export default SavingsAnalysis;
