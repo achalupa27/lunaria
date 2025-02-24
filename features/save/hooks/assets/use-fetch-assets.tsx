@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { readAssetsService } from '../services/assets/read-assets-service';
+import { readAssetsService } from '../../services/assets/read-assets-service';
 
 const useFetchAssets = () => {
     return useSuspenseQuery({

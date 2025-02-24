@@ -7,8 +7,8 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/
 import { Input } from '@/components/ui/input';
 import Modal from '@/components/ui/modal';
 import { useState } from 'react';
-import { useSavingsAccountMutations } from '../../hooks/use-savings-account-mutations';
-import { useDebtAccountMutations } from '../../hooks/use-debt-account-mutations';
+import { useSavingsAccountMutations } from '../../hooks/savings-accounts/use-savings-account-mutations';
+import { useDebtAccountMutations } from '../../hooks/debt-accounts/use-debt-account-mutations';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 type Props = {

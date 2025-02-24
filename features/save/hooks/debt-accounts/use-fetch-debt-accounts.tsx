@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { readDebtAccountsService } from '../services/debt-accounts/read-debt-account-service';
+import { readDebtAccountsService } from '../../services/debt-accounts/read-debt-account-service';
 
 const useFetchDebtAccounts = () => {
     return useSuspenseQuery({

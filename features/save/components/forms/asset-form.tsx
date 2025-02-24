@@ -9,7 +9,7 @@ import Modal from '@/components/ui/modal';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { useState } from 'react';
-import { useAssetMutations } from '../../hooks/use-asset-mutations';
+import { useAssetMutations } from '../../hooks/assets/use-asset-mutations';
 import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';

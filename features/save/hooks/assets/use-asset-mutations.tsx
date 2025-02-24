@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircle, CircleX } from 'lucide-react';
-import { createAssetService } from '../services/assets/create-asset-service';
-import { updateAssetService } from '../services/assets/update-asset-service';
-import { deleteAssetService } from '../services/assets/delete-asset-service';
+import { createAssetService } from '../../services/assets/create-asset-service';
+import { updateAssetService } from '../../services/assets/update-asset-service';
+import { deleteAssetService } from '../../services/assets/delete-asset-service';
 
 export const useAssetMutations = () => {
     const queryClient = useQueryClient();

@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { Suspense } from 'react';
 import DisplayCard from '@/features/shared/components/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
+import { usePrepareSavingsData } from '../../hooks/analysis/use-prepare-savings-data';
+import { useSavingsAnalysis } from '../../hooks/analysis/use-savings-analysis';
+import { ErrorBoundary } from 'react-error-boundary';
 
 interface SavingsAnalysisProps {
     saves: Save[] | undefined;
@@ -11,53 +14,27 @@ interface SavingsAnalysisProps {
     totalDebt: number;
 }
 
+const AnalysisContent = ({ savingsData }: { savingsData: any }) => {
+    const { data: analysis } = useSavingsAnalysis(savingsData);
+
+    return (
+        <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
+            <div className='prose prose-sm dark:prose-invert max-w-none'>
+                <ReactMarkdown>{analysis}</ReactMarkdown>
+            </div>
+        </div>
+    );
+};
+
 const SavingsAnalysis = (props: SavingsAnalysisProps) => {
     const { saves, savingsAccounts, debtAccounts, totalSavings, totalDebt } = props;
-    const [loading, setLoading] = useState(false);
-    const [analysis, setAnalysis] = useState<string | null>(null);
-
-    const handleAnalysis = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch('/api/openai/analyze-savings', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    saves,
-                    savingsAccounts,
-                    debtAccounts,
-                    totalSavings,
-                    totalDebt,
-                }),
-            });
-
-            const data = await response.json();
-            setAnalysis(data.analysis);
-        } catch (error) {
-            console.error('Failed to analyze savings:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        if (saves?.length && !loading && !analysis) {
-            handleAnalysis();
-        }
-    }, [saves, loading, analysis]);
+    const { savingsData } = usePrepareSavingsData(saves, savingsAccounts, debtAccounts, totalSavings, totalDebt);
 
     return (
         <DisplayCard title='Financial Analysis'>
-            {loading && <Loader />}
-            {!loading && analysis && (
-                <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
-                    <div className='prose prose-sm dark:prose-invert max-w-none'>
-                        <ReactMarkdown>{analysis}</ReactMarkdown>
-                    </div>
-                </div>
-            )}
+            <ErrorBoundary fallback={<div>Error loading analysis</div>}>
+                <Suspense fallback={<Loader />}>{savingsData && <AnalysisContent savingsData={savingsData} />}</Suspense>
+            </ErrorBoundary>
         </DisplayCard>
     );
 };

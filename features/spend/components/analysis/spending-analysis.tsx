@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import { analyzeSpending } from '../../services/openai/analyze-spending-service';
-import { usePrepareSpendingData } from '../../hooks/analysis/use-prepare-spending-data';
-import ReactMarkdown from 'react-markdown';
+import { Suspense } from 'react';
 import DisplayCard from '@/features/shared/components/display-card';
+import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
+import { usePrepareSpendingData } from '../../hooks/analysis/use-prepare-spending-data';
+import { useSpendingAnalysis } from '../../hooks/analysis/use-spending-analysis';
+import { ErrorBoundary } from 'react-error-boundary';
 
 interface SpendingAnalysisProps {
     spends: Spend[] | undefined;
@@ -17,46 +18,33 @@ interface SpendingAnalysisProps {
     totalWasteSpent: number;
 }
 
+const AnalysisContent = ({ spendingData }: { spendingData: any }) => {
+    const { data: analysis } = useSpendingAnalysis(spendingData);
+
+    return (
+        <div className='flex-1 overflow-y-auto scrollbar-none'>
+            <div className='prose prose-sm dark:prose-invert max-w-none'>
+                <ReactMarkdown>{analysis}</ReactMarkdown>
+            </div>
+        </div>
+    );
+};
+
 const SpendingAnalysis = (props: SpendingAnalysisProps) => {
     const { spends, budgets, recurringExpenses, categoryTotals, budgetProgress, totalSpent, totalNeedSpent, totalWantSpent, totalWasteSpent } = props;
 
-    const { spendingData, tokenCount } = usePrepareSpendingData(spends, budgets, recurringExpenses, categoryTotals, budgetProgress, {
+    const { spendingData } = usePrepareSpendingData(spends, budgets, recurringExpenses, categoryTotals, budgetProgress, {
         totalSpent,
         totalNeedSpent,
         totalWantSpent,
         totalWasteSpent,
     });
-    const [loading, setLoading] = useState(false);
-    const [analysis, setAnalysis] = useState<string | null>(null);
-
-    const handleAnalysis = async () => {
-        try {
-            setLoading(true);
-            const response = await analyzeSpending(spendingData);
-            setAnalysis(response);
-        } catch (error) {
-            console.error('Failed to analyze spending:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        if (spends?.length && !loading && !analysis) {
-            handleAnalysis();
-        }
-    }, [spends, loading, analysis]);
 
     return (
         <DisplayCard title='Spending Analysis'>
-            {loading && <Loader />}
-            {!loading && analysis && (
-                <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
-                    <div className='prose prose-sm dark:prose-invert max-w-none'>
-                        <ReactMarkdown>{analysis}</ReactMarkdown>
-                    </div>
-                </div>
-            )}
+            <ErrorBoundary fallback={<div>Error loading analysis</div>}>
+                <Suspense fallback={<Loader />}>{spendingData && <AnalysisContent spendingData={spendingData} />}</Suspense>
+            </ErrorBoundary>
         </DisplayCard>
     );
 };

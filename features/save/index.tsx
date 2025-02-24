@@ -1,14 +1,14 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import SaveForm from './components/forms/save-form';
 import Page from '@/components/ui/page';
-import useFetchSaves from './hooks/use-fetch-saves';
+import useFetchSaves from './hooks/transactions/use-fetch-saves';
 import SettingsForm from './components/forms/settings-form';
-import useFetchSavingsAccounts from './hooks/use-fetch-savings-accounts';
-import useFetchDebtAccounts from './hooks/use-fetch-debt-accounts';
+import useFetchSavingsAccounts from './hooks/savings-accounts/use-fetch-savings-accounts';
+import useFetchDebtAccounts from './hooks/debt-accounts/use-fetch-debt-accounts';
 import AccountForm from './components/forms/account-form';
 import RecentSaves from './components/recent/recent-saves';
-import SavingsAccounts from './components/accounts/savings-accounts';
-import DebtAccounts from './components/accounts/debt-accounts';
+import SavingsAccounts from './components/savings-accounts/savings-accounts';
+import DebtAccounts from './components/debt-accounts/debt-accounts';
 import ActionButtons from './components/header/action-buttons';
 import SavingsSummary from './components/summary/savings-summary';
 import SavingsAnalysis from './components/analysis/savings-analysis';
@@ -17,8 +17,8 @@ import SavingsPeriodSelector from './components/header/saving-period-selector';
 import { Period } from '@/features/shared/components/period-selector';
 import { useFilteredSaves } from './hooks/use-filtered-saves';
 import AssetForm from './components/forms/asset-form';
-import Assets from './components/accounts/assets';
-import useFetchAssets from './hooks/use-fetch-assets';
+import Assets from './components/assets/assets';
+import useFetchAssets from './hooks/assets/use-fetch-assets';
 
 const Save = () => {
     const { data: saves } = useFetchSaves();

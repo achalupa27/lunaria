@@ -4,7 +4,7 @@ import useFetchSpends from '../spend/hooks/transaction/use-fetch-spends';
 import TransactionTable from './components/transaction-table';
 import SpendForm from '../spend/components/forms/spend-form';
 import useFetchMakes from '../make/hooks/use-fetch-makes';
-import useFetchSaves from '../save/hooks/use-fetch-saves';
+import useFetchSaves from '../save/hooks/transactions/use-fetch-saves';
 import TransactionFilters from './components/transaction-filters';
 import { useAppDispatch } from '@/redux/hooks';
 import { setTab } from '@/redux/slices/tab-slice';

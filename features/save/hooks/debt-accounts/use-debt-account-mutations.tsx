@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 import { CheckCircle, CircleX } from 'lucide-react';
-import { createDebtAccountService } from '../services/debt-accounts/create-debt-account-service';
-import { deleteDebtAccountService } from '../services/debt-accounts/delete-debt-account-service';
-import { updateDebtAccountService } from '../services/debt-accounts/update-debt-account-service';
+import { createDebtAccountService } from '../../services/debt-accounts/create-debt-account-service';
+import { deleteDebtAccountService } from '../../services/debt-accounts/delete-debt-account-service';
+import { updateDebtAccountService } from '../../services/debt-accounts/update-debt-account-service';
 
 export const useDebtAccountMutations = () => {
     const queryClient = useQueryClient();

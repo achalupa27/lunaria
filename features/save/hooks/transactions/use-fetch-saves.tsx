@@ -1,10 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { readSavingsAccountsService } from '../services/savings-accounts/read-savings-accounts-service';
+import { readSavesService } from '../../services/saves/read-saves-service';
 
-const useFetchSavingsAccounts = () => {
+const useFetchSaves = () => {
     return useSuspenseQuery({
-        queryKey: ['savingsAccounts'],
-        queryFn: () => readSavingsAccountsService(),
+        queryKey: ['saves'],
+        queryFn: () => readSavesService(),
         retry: 3, // Will retry 3 times before showing error, defaults to 1000ms and doubles with each retry attempt (1s, 2s, 4s)
         staleTime: 1000 * 60, // Will mark as stale (needs refresh) after 1 minute
         refetchOnWindowFocus: true, // Will refetch automatically when Tab becomes active
@@ -13,4 +13,4 @@ const useFetchSavingsAccounts = () => {
     });
 };
 
-export default useFetchSavingsAccounts;
+export default useFetchSaves;
