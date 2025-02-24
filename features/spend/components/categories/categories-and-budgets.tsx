@@ -11,15 +11,16 @@ type Props = {
             period: 'weekly' | 'monthly' | 'yearly';
         };
     };
+    onBudgetClick?: (category: string) => void;
 };
 
-const CategoriesAndBudgets = ({ categoryTotals, budgetProgress }: Props) => {
+const CategoriesAndBudgets = ({ categoryTotals, budgetProgress, onBudgetClick }: Props) => {
     return (
         <DisplayCard title='Categories & Budgets'>
             {spendingCategories
                 .filter((category) => categoryTotals[category] > 0 || budgetProgress[category])
                 .map((category) => (
-                    <div key={category} className='flex justify-between py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
+                    <div key={category} className='flex justify-between py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer' onClick={() => onBudgetClick?.(category)}>
                         <div className='font-medium'>{category}</div>
                         <div className='flex items-center space-x-4'>
                             {budgetProgress[category] && (

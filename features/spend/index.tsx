@@ -35,6 +35,7 @@ const Spend = () => {
     const [selectedSpend, setSelectedSpend] = useState<Spend | undefined>();
     const [recurringExpenseFormOpen, setRecurringExpenseFormOpen] = useState<boolean>(false);
     const [selectedRecurringExpense, setSelectedRecurringExpense] = useState<RecurringExpense | undefined>();
+    const [selectedBudget, setSelectedBudget] = useState<Budget | undefined>();
 
     const handleViewSpend = (row: Spend) => {
         setSelectedSpend(row);
@@ -63,6 +64,17 @@ const Spend = () => {
         setRecurringExpenseFormOpen(true);
     };
 
+    const handleBudgetClick = (category: string) => {
+        const budget = budgets?.find((b) => b.category === category);
+        if (budget) {
+            setSelectedBudget(budget);
+            setBudgetFormOpen(true);
+        } else {
+            setSelectedBudget(undefined);
+            setBudgetFormOpen(true);
+        }
+    };
+
     if (!userRole) return <div>Loading...</div>;
 
     return (
@@ -79,7 +91,7 @@ const Spend = () => {
                     <RecentSpending spends={filteredSpends} onViewSpend={handleViewSpend} />
                     <RecurringExpensesList recurringExpenses={recurringExpenses} onViewExpense={handleViewRecurringExpense} />
                 </div>
-                <CategoriesAndBudgets categoryTotals={categoryTotals} budgetProgress={budgetProgress} />
+                <CategoriesAndBudgets categoryTotals={categoryTotals} budgetProgress={budgetProgress} onBudgetClick={handleBudgetClick} />
                 <div className='grid grid-rows-2 gap-4 min-h-0'>
                     <SpendingChart spends={filteredSpends} />
                     <SpendingAnalysis spends={filteredSpends} budgets={budgets} recurringExpenses={recurringExpenses} categoryTotals={categoryTotals} budgetProgress={budgetProgress} totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
@@ -88,7 +100,15 @@ const Spend = () => {
 
             {spendFormOpen && <SpendForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
             {recurringExpenseFormOpen && <SpendForm closeForm={handleFormClose} selectedRecurringExpense={selectedRecurringExpense} />}
-            {budgetFormOpen && <BudgetForm closeForm={handleFormClose} />}
+            {budgetFormOpen && (
+                <BudgetForm
+                    closeForm={() => {
+                        handleFormClose();
+                        setSelectedBudget(undefined);
+                    }}
+                    selectedBudget={selectedBudget}
+                />
+            )}
             {settingsFormOpen && <SettingsForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
         </Page>
     );

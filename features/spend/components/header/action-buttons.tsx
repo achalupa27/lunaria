@@ -12,9 +12,9 @@ type Props = {
 const ActionButtons = ({ onSettingsClick, onBudgetClick, onNewSpendClick, userRole }: Props) => {
     return (
         <div className='flex items-center space-x-2'>
-            <Button variant='secondary' className='rounded-lg' size='icon' onClick={onSettingsClick}>
+            {/* <Button variant='secondary' className='rounded-lg' size='icon' onClick={onSettingsClick}>
                 <Settings />
-            </Button>
+            </Button> */}
             <Button variant='secondary' className='rounded-lg' onClick={onBudgetClick}>
                 + Create Budget
             </Button>

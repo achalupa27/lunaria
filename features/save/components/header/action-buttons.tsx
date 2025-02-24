@@ -11,12 +11,12 @@ type Props = {
 const ActionButtons = ({ onSettingsClick, onAddAccountClick, onNewSaveClick, onNewAssetClick }: Props) => {
     return (
         <div className='flex items-center space-x-2'>
-            <Button variant='secondary' className='rounded-lg' size='icon' onClick={onSettingsClick}>
+            {/* <Button variant='secondary' className='rounded-lg' size='icon' onClick={onSettingsClick}>
                 <Settings />
-            </Button>
+            </Button> */}
             <Button variant='secondary' className='rounded-lg' onClick={onAddAccountClick}>
                 <Plus />
-                Add Account
+                New Account
             </Button>
             <Button variant='secondary' className='rounded-lg' onClick={onNewAssetClick}>
                 <Plus />
