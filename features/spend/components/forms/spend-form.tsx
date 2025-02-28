@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { necessityCategories, spendingCategories } from '@/constants';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppSelector } from '@/store/hooks';
 import Modal from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
 import { Trash } from 'lucide-react';

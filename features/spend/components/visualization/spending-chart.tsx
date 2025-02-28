@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { formatCurrency } from '@/utils/helper';
 import { format } from 'date-fns';
 import Card from '@/components/ui/card';
 import { ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Bar, BarChart, XAxis } from 'recharts';
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 type Props = {
     spends: Spend[];
@@ -107,35 +108,42 @@ const SpendingChart = ({ spends }: Props) => {
         }
     };
 
+    const chartConfig = {
+        desktop: {
+            label: 'Desktop',
+            color: '#2563eb',
+        },
+        mobile: {
+            label: 'Mobile',
+            color: '#60a5fa',
+        },
+    } satisfies ChartConfig;
+
     const chartData = getChartData();
 
     const renderChart = () => {
         if (view === 'monthly') {
             return (
-                <ResponsiveContainer width='100%' height='100%'>
-                    <BarChart data={chartData}>
-                        <XAxis dataKey='name' />
-                        <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                        <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                        <Legend />
-                        <Bar dataKey='Need' fill='#22c55e' />
-                        <Bar dataKey='Want' fill='#eab308' />
-                        <Bar dataKey='Waste' fill='#ef4444' />
+                <ChartContainer config={chartConfig} className='w-full h-full'>
+                    <BarChart accessibilityLayer data={chartData}>
+                        <XAxis dataKey='name' tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} />
+                        <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
+                        <Bar dataKey='Need' fill='#22c55e' radius={4} />
+                        <Bar dataKey='Want' fill='#eab308' radius={4} />
+                        <Bar dataKey='Waste' fill='#ef4444' radius={4} />
                     </BarChart>
-                </ResponsiveContainer>
+                </ChartContainer>
             );
         }
 
         return (
-            <ResponsiveContainer width='100%' height='100%'>
-                <BarChart data={chartData}>
-                    <XAxis dataKey='name' />
-                    <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                    <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                    <Legend />
-                    <Bar dataKey='amount' fill='#f97316' />
+            <ChartContainer config={chartConfig} className='w-full h-full'>
+                <BarChart accessibilityLayer data={chartData}>
+                    <XAxis dataKey='name' tickLine={false} tickMargin={10} axisLine={false} />
+                    <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
+                    <Bar dataKey='amount' fill='#f97316' radius={4} />
                 </BarChart>
-            </ResponsiveContainer>
+            </ChartContainer>
         );
     };
 

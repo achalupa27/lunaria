@@ -1,7 +1,7 @@
 import { formatCurrency } from '@/utils/helper';
 import { Button } from '@/components/ui/button';
-import { useAppDispatch } from '@/redux/hooks';
-import { setTab } from '@/redux/slices/tab-slice';
+import { useAppDispatch } from '@/store/hooks';
+import { setTab } from '@/store/slices/tab-slice';
 import Card from '@/components/ui/card';
 import DisplayCard from '@/features/shared/components/display-card';
 

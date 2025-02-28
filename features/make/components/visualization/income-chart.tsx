@@ -6,6 +6,7 @@ import Card from '@/components/ui/card';
 import { ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 type Props = {
     makes: Make[];
@@ -79,47 +80,48 @@ const IncomeChart = ({ makes }: Props) => {
         }));
     };
 
+    const chartConfig = {
+        desktop: {
+            label: 'Desktop',
+            color: '#2563eb',
+        },
+    } satisfies ChartConfig;
+
     const renderChart = () => {
         switch (view) {
             case 'monthly':
                 return (
-                    <ResponsiveContainer width='100%' height='100%'>
+                    <ChartContainer config={chartConfig} className='w-full h-full'>
                         <BarChart data={prepareMonthlyData()}>
-                            <CartesianGrid strokeDasharray='3 3' />
-                            <XAxis dataKey='name' />
-                            <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                            <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                            <Legend />
-                            <Bar dataKey='amount' fill='#22c55e' name='Income' />
+                            <XAxis dataKey='name' tickLine={false} tickMargin={10} axisLine={false} />
+                            <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
+                            <Bar dataKey='amount' fill='#22c55e' name='Income' radius={4} />
                         </BarChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 );
             case 'source':
                 return (
-                    <ResponsiveContainer width='100%' height='100%'>
+                    <ChartContainer config={chartConfig} className='w-full h-full'>
                         <BarChart data={prepareSourceData()}>
-                            <CartesianGrid strokeDasharray='3 3' />
-                            <XAxis dataKey='name' />
-                            <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                            <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                            <Legend />
-                            <Bar dataKey='amount' fill='#3b82f6' name='Amount' />
+                            <XAxis dataKey='name' tickLine={false} tickMargin={10} axisLine={false} />
+                            <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
+                            <Bar dataKey='amount' fill='#3b82f6' name='Amount' radius={4} />
                         </BarChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 );
             case 'distribution':
                 return (
-                    <ResponsiveContainer width='100%' height='100%'>
+                    <ChartContainer config={chartConfig} className='w-full h-full'>
                         <PieChart>
-                            <Pie data={prepareDistributionData()} dataKey='value' nameKey='name' cx='50%' cy='50%' outerRadius={100} label={(entry) => `${entry.name} (${formatCurrency(entry.value)})`}>
+                            <Pie data={prepareDistributionData()} dataKey='value' labelLine={false} nameKey='name' cx='50%' cy='50%' outerRadius={100} label={(entry) => `${entry.name} (${formatCurrency(entry.value)})`}>
                                 {prepareDistributionData().map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
-                            <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                            <Legend />
+                            <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
+                            <ChartLegend content={<ChartLegendContent nameKey='name' />} className='-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center' />
                         </PieChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 );
         }
     };

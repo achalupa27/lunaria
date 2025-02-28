@@ -9,7 +9,7 @@ type Props = {
 const DisplayCard = ({ children, title, button }: Props) => {
     return (
         <Card className='flex flex-col h-full'>
-            <div className='p-6 flex flex-col h-full'>
+            <div className='p-4 flex flex-col h-full'>
                 <div className='flex justify-between items-center mb-4'>
                     <h3 className='text-lg font-semibold'>{title}</h3>
                     {button}

@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { formatCurrency } from '@/utils/helper';
 import { format } from 'date-fns';
 import Card from '@/components/ui/card';
 import { ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+
+import { Bar, BarChart, XAxis } from 'recharts';
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 type Props = {
     saves: Save[] | undefined;
@@ -91,48 +94,53 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
         }));
     };
 
+    const chartConfig = {
+        desktop: {
+            label: 'Desktop',
+            color: '#2563eb',
+        },
+        mobile: {
+            label: 'Mobile',
+            color: '#60a5fa',
+        },
+    } satisfies ChartConfig;
+
     const renderChart = () => {
         switch (view) {
             case 'monthly':
                 return (
-                    <ResponsiveContainer width='100%' height='100%'>
+                    <ChartContainer config={chartConfig} className='w-full h-full'>
                         <BarChart data={prepareMonthlyData()}>
-                            <CartesianGrid strokeDasharray='3 3' />
-                            <XAxis dataKey='name' />
-                            <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                            <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                            <Legend />
-                            <Bar dataKey='deposits' fill='#22c55e' name='Deposits' />
-                            <Bar dataKey='withdrawals' fill='#ef4444' name='Withdrawals' />
+                            <XAxis dataKey='name' tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(value) => value.slice(0, 3)} />
+                            <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
+                            <Bar dataKey='deposits' fill='#22c55e' name='Deposits' radius={4} />
+                            <Bar dataKey='withdrawals' fill='#ef4444' name='Withdrawals' radius={4} />
                         </BarChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 );
             case 'accounts':
                 return (
-                    <ResponsiveContainer width='100%' height='100%'>
+                    <ChartContainer config={chartConfig} className='w-full h-full'>
                         <BarChart data={prepareAccountData()}>
-                            <CartesianGrid strokeDasharray='3 3' />
-                            <XAxis dataKey='name' />
-                            <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                            <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                            <Legend />
-                            <Bar dataKey='balance' fill='#3b82f6' />
+                            <XAxis dataKey='name' tickLine={false} tickMargin={10} axisLine={false} />
+                            <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
+                            <Bar dataKey='balance' fill='#3b82f6' radius={4} />
                         </BarChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 );
             case 'distribution':
                 return (
-                    <ResponsiveContainer width='100%' height='100%'>
+                    <ChartContainer config={chartConfig} className='w-full h-full'>
                         <PieChart>
-                            <Pie data={prepareDistributionData()} dataKey='value' nameKey='name' cx='50%' cy='50%' outerRadius={100} label={(entry) => `${entry.name} (${formatCurrency(entry.value)})`}>
+                            <Pie data={prepareDistributionData()} dataKey='value' labelLine={false} nameKey='name' cx='50%' cy='50%' outerRadius={100} label={(entry) => `${entry.name} (${formatCurrency(entry.value)})`}>
                                 {prepareDistributionData().map((_, index) => (
                                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                 ))}
                             </Pie>
-                            <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+                            <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatCurrency(Number(value))} />} />
                             <Legend />
                         </PieChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 );
         }
     };
