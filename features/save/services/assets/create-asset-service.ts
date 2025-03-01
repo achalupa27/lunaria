@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/client';
 
-export const createAssetService = async (asset: Omit<Asset, 'id'>) => {
+export const createAssetService = async (asset: Omit<Asset, 'id' | 'user_id'>) => {
     const supabase = createClient();
     const { data: user, error: userError } = await supabase.auth.getUser();
 

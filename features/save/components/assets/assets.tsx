@@ -1,17 +1,26 @@
 import { formatCurrency } from '@/utils/helper';
-import Card from '@/components/ui/card';
+import DisplayCard from '@/components/ui/display-card';
 
 type Props = {
     assets: Asset[];
     onViewAsset: (asset: Asset) => void;
 };
 
+const NoAssets = () => {
+    return <div className='flex-1 min-h-0 flex items-center h-full justify-center text-zinc-500 text-sm'>No assets</div>;
+};
+
 const Assets = ({ assets, onViewAsset }: Props) => {
+    if (!assets || assets.length === 0) {
+        return (
+            <DisplayCard title='Assets'>
+                <NoAssets />
+            </DisplayCard>
+        );
+    }
+
     return (
-        <Card className='flex flex-col h-full p-6'>
-            <div className='flex justify-between'>
-                <h3 className='text-lg font-semibold mb-4'>Assets</h3>
-            </div>
+        <DisplayCard title='Assets'>
             <div className='flex-1 min-h-0 overflow-y-auto scrollbar-none'>
                 {assets.map((asset) => (
                     <div key={asset.id} onClick={() => onViewAsset(asset)} className='flex cursor-pointer items-center justify-between px-2 py-2 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
@@ -24,7 +33,7 @@ const Assets = ({ assets, onViewAsset }: Props) => {
                     </div>
                 ))}
             </div>
-        </Card>
+        </DisplayCard>
     );
 };
 

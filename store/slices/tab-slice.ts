@@ -6,7 +6,7 @@ interface TabState {
 }
 
 const initialState: TabState = {
-    tab: 'Home',
+    tab: 'Spend',
 };
 
 const tabSlice = createSlice({

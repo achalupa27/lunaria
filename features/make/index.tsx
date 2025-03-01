@@ -1,4 +1,6 @@
-import { useState, useRef } from 'react';
+'use client';
+
+import { useState } from 'react';
 import Page from '@/components/ui/page';
 import MakeForm from './components/forms/make-form';
 import SettingsForm from './components/forms/settings-form';
@@ -8,7 +10,7 @@ import ActionButtons from './components/header/action-buttons';
 import IncomeSummary from './components/summary/income-summary';
 import IncomeAnalysis from './components/analysis/income-analysis';
 import MakingPeriodSelector from './components/header/making-period-selector';
-import { Period } from '@/features/shared/components/period-selector';
+import { Period } from '@/components/ui/period-selector';
 import { useFilteredMakes } from './hooks/use-filtered-makes';
 import IncomeChart from './components/visualization/income-chart';
 import IncomeSources from './components/sources/income-sources';

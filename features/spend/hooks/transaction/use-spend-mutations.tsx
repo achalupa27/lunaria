@@ -9,7 +9,10 @@ export const useSpendMutations = () => {
     const queryClient = useQueryClient();
 
     const createSpendMutation = useMutation({
-        mutationFn: (newSpend: Omit<Spend, 'id'>) => createSpendService(newSpend),
+        mutationFn: (newSpend: Omit<Spend, 'id'>) => {
+            const { expenseType, ...spendData } = newSpend;
+            return createSpendService(spendData);
+        },
         onSuccess: (newSpend: Spend) => {
             queryClient.setQueryData(['spends'], (oldSpends: Spend[] = []) => [...oldSpends, newSpend]);
             toast({
@@ -21,6 +24,7 @@ export const useSpendMutations = () => {
             });
         },
         onError: (error) => {
+            console.error('[ERROR] Failed to save transaction:', error);
             toast({
                 description: (
                     <div className='flex items-center space-x-3'>

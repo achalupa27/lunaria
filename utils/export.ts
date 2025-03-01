@@ -20,15 +20,15 @@ export const exportToCSV = (transactions: (Spend | Make | Save)[], filename: str
             type = 'Income';
             description = transaction.source;
             amount = transaction.amount;
-            additionalDetails = `Source Type: ${transaction.source_type}`;
+            // additionalDetails = `Source Type: ${transaction.source_type}`;
         } else if ('goal' in transaction) {
             type = 'Savings';
-            description = transaction.goal;
+            // description = transaction.goal;
             amount = transaction.amount;
-            additionalDetails = `Goal Type: ${transaction.goal_type}`;
+            // additionalDetails = `Goal Type: ${transaction.goal_type}`;
         }
 
-        return [format(new Date(transaction.date), 'yyyy-MM-dd'), type, description, amount.toString(), transaction.category || '-', additionalDetails];
+        return [format(new Date(transaction.date), 'yyyy-MM-dd'), type, description, amount.toString(), '-', additionalDetails];
     });
 
     // Combine headers and rows

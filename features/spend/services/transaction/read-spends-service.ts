@@ -17,7 +17,7 @@ export const readSpendsService = async () => {
 
         return spending as Spend[];
     } catch (error) {
-        console.error('[ERROR] in readSpendsService:', error);
+        console.error('[ERROR] in read-spends-service:', error);
         throw new Error(error instanceof Error ? error.message : 'An unexpected error occurred while fetching spends.');
     }
 };

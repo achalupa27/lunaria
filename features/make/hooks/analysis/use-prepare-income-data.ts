@@ -50,7 +50,6 @@ export const usePrepareIncomeData = (makes: Make[] | undefined) => {
             date: make.date,
             amount: make.amount,
             source: make.source,
-            description: make.description,
         })),
     };
 

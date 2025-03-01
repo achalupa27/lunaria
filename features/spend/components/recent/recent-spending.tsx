@@ -2,12 +2,19 @@ import { formatCurrency } from '@/utils/helper';
 import { Button } from '@/components/ui/button';
 import { useAppDispatch } from '@/store/hooks';
 import { setTab } from '@/store/slices/tab-slice';
-import Card from '@/components/ui/card';
-import DisplayCard from '@/features/shared/components/display-card';
+import DisplayCard from '@/components/ui/display-card';
 
 type Props = {
     spends: Spend[];
     onViewSpend: (spend: Spend) => void;
+};
+
+const NoRecentSpending = () => {
+    return (
+        <div className='flex flex-col items-center justify-center h-full'>
+            <p className='text-sm text-zinc-500'>No recent spending</p>
+        </div>
+    );
 };
 
 const RecentSpending = ({ spends, onViewSpend }: Props) => {
@@ -22,6 +29,14 @@ const RecentSpending = ({ spends, onViewSpend }: Props) => {
             window.history.pushState({}, '', '?from=Spend');
         }, 0);
     };
+
+    if (!recentSpends.length) {
+        return (
+            <DisplayCard title='Recent Spending'>
+                <NoRecentSpending />
+            </DisplayCard>
+        );
+    }
 
     return (
         <DisplayCard

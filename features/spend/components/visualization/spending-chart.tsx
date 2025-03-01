@@ -20,6 +20,14 @@ const viewLabels: Record<ChartView, string> = {
     monthly: 'Monthly Trend',
 };
 
+const NoSpending = () => {
+    return (
+        <div className='flex flex-col items-center justify-center h-full'>
+            <p className='text-sm text-gray-500'>No spending</p>
+        </div>
+    );
+};
+
 const SpendingChart = ({ spends }: Props) => {
     const [view, setView] = useState<ChartView>('necessity');
 
@@ -176,7 +184,7 @@ const SpendingChart = ({ spends }: Props) => {
                         <ChevronRight className='h-5 w-5' />
                     </Button>
                 </div>
-                <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div>
+                {spends.length > 0 ? <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div> : <NoSpending />}
             </div>
         </Card>
     );

@@ -1,6 +1,3 @@
-import GreenPill from '@/components/ui/pills/green-pill';
-import RedPill from '@/components/ui/pills/red-pill';
-import YellowPill from '@/components/ui/pills/yellow-pill';
 import { format, parseISO } from 'date-fns';
 import { useMemo } from 'react';
 
@@ -39,7 +36,7 @@ export const useSpendColumns = () => {
                     if (props.row.original.currency === 'MXN') cost /= 11.35;
                     return (
                         <div className='flex items-center justify-center'>
-                            <YellowPill text={`$${cost.toFixed(2)}`} />
+                            <span className='text-yellow-500 dark:text-l-yellow'>{`$${cost.toFixed(2)}`}</span>
                         </div>
                     );
                 },

@@ -43,7 +43,6 @@ const RecentTransactions = ({ makes, saves, spends, onViewTransaction }: Props) 
             };
         } else {
             return {
-                description: transaction.goal,
                 amount: transaction.amount,
                 type: 'Savings',
                 color: 'text-blue-600',
@@ -64,7 +63,7 @@ const RecentTransactions = ({ makes, saves, spends, onViewTransaction }: Props) 
                 {allTransactions.map((transaction) => {
                     const { description, amount, type, color } = getTransactionDetails(transaction);
                     return (
-                        <div key={transaction.id} onClick={() => onViewTransaction(transaction)} className='mb-3 flex cursor-pointer items-center justify-between p-2 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
+                        <div key={transaction.id} onClick={() => onViewTransaction(transaction)} className=' flex cursor-pointer items-center rounded-md justify-between p-2 hover:bg-zinc-50 dark:hover:bg-zinc-900'>
                             <div className='flex flex-col'>
                                 <div className='flex items-center space-x-2'>
                                     <span className='font-medium'>{description}</span>

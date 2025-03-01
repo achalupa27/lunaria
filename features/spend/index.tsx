@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import SpendForm from './components/forms/spend-form';
 import Page from '@/components/ui/page';
 import BudgetForm from './components/forms/budget-form';
@@ -19,7 +19,7 @@ import RecentSpending from './components/recent/recent-spending';
 import SpendingChart from './components/visualization/spending-chart';
 
 const Spend = () => {
-    const { userRole } = useRole();
+    // const { userRole } = useRole();
     const { data: spends } = useFetchSpends();
     const { data: budgets } = useFetchBudgets();
     const { data: recurringExpenses } = useFetchRecurringExpenses();
@@ -48,6 +48,7 @@ const Spend = () => {
     };
 
     const handleFormClose = () => {
+        setSelectedBudget(undefined);
         setSelectedSpend(undefined);
         setSpendFormOpen(false);
         setBudgetFormOpen(false);
@@ -75,13 +76,13 @@ const Spend = () => {
         }
     };
 
-    if (!userRole) return <div>Loading...</div>;
+    // if (!userRole) return <div>Loading...</div>;
 
     return (
         <Page>
             <div className='flex justify-between'>
                 <SpendingPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
-                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onBudgetClick={() => setBudgetFormOpen(true)} onNewSpendClick={handleFormOpen} userRole={userRole} />
+                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onBudgetClick={() => setBudgetFormOpen(true)} onNewSpendClick={handleFormOpen} userRole={undefined} />
             </div>
 
             <SpendingSummary totalSpent={totalSpent} totalNeedSpent={totalNeedSpent} totalWantSpent={totalWantSpent} totalWasteSpent={totalWasteSpent} />
@@ -100,15 +101,7 @@ const Spend = () => {
 
             {spendFormOpen && <SpendForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
             {recurringExpenseFormOpen && <SpendForm closeForm={handleFormClose} selectedRecurringExpense={selectedRecurringExpense} />}
-            {budgetFormOpen && (
-                <BudgetForm
-                    closeForm={() => {
-                        handleFormClose();
-                        setSelectedBudget(undefined);
-                    }}
-                    selectedBudget={selectedBudget}
-                />
-            )}
+            {budgetFormOpen && <BudgetForm closeForm={handleFormClose} selectedBudget={selectedBudget} />}
             {settingsFormOpen && <SettingsForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
         </Page>
     );

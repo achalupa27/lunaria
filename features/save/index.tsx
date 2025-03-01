@@ -14,7 +14,7 @@ import SavingsSummary from './components/summary/savings-summary';
 import SavingsAnalysis from './components/analysis/savings-analysis';
 import SavingsChart from './components/visualization/savings-chart';
 import SavingsPeriodSelector from './components/header/saving-period-selector';
-import { Period } from '@/features/shared/components/period-selector';
+import { Period } from '@/components/ui/period-selector';
 import { useFilteredSaves } from './hooks/use-filtered-saves';
 import AssetForm from './components/forms/asset-form';
 import Assets from './components/assets/assets';
@@ -27,6 +27,7 @@ const Save = () => {
     const { data: assets } = useFetchAssets();
 
     const [totalSavings, setTotalSavings] = useState(0);
+    const [totalAssets, setTotalAssets] = useState(0);
     const [totalDebt, setTotalDebt] = useState(0);
     const [assetFormOpen, setAssetFormOpen] = useState(false);
     const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>();
@@ -38,7 +39,10 @@ const Save = () => {
         if (debtAccounts) {
             setTotalDebt(debtAccounts.reduce((acc, account) => acc + account.balance, 0));
         }
-    }, [savingsAccounts, debtAccounts]);
+        if (assets) {
+            setTotalAssets(assets.reduce((acc, asset) => acc + asset.value, 0));
+        }
+    }, [savingsAccounts, debtAccounts, assets]);
 
     const [saveFormOpen, setSaveFormOpen] = useState(false);
     const [settingsFormOpen, setSettingsFormOpen] = useState(false);
@@ -113,7 +117,7 @@ const Save = () => {
                 <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAddAccountClick={handleAccountFormOpen} onNewSaveClick={handleFormOpen} onNewAssetClick={handleNewAsset} />
             </div>
 
-            <SavingsSummary totalSavings={totalSavings} totalDebt={totalDebt} netSavings={totalSavings - totalDebt} periodSaved={totalSaved} periodWithdrawn={totalWithdrawn} selectedTerm={selectedTerm} />
+            <SavingsSummary totalSavings={totalSavings} totalDebt={totalDebt} totalAssets={totalAssets} netSavings={totalSavings - totalDebt} periodSaved={totalSaved} periodWithdrawn={totalWithdrawn} selectedTerm={selectedTerm} />
 
             <div className='grid grid-cols-3 gap-4 flex-1 min-h-0'>
                 <div className='grid grid-rows-2 gap-4 min-h-0'>

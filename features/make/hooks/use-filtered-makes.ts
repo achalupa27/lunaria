@@ -1,5 +1,5 @@
 import { startOfMonth, startOfYear, subMonths, subYears } from 'date-fns';
-import { Period } from '@/features/shared/components/period-selector';
+import { Period } from '@/components/ui/period-selector';
 
 export const useFilteredMakes = (makes: Make[] | undefined, selectedTerm: Period) => {
     if (!makes) return { filteredMakes: [], totalIncome: 0, incomeBySource: {} };

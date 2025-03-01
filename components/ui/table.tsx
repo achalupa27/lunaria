@@ -14,7 +14,7 @@ const Table = ({ table, handleRowClick, tableColor }: Props) => {
     return (
         <div className={`h-full w-full overflow-y-auto rounded-lg border border-orange-100 bg-white shadow dark:bg-black scrollbar-none`}>
             <table className='w-full border-separate border-spacing-0 text-center'>
-                <thead className={`gold-gradient sticky inset-0  h-[40px] text-primary`}>
+                <thead className={`sticky inset-0 h-[40px] text-primary`}>
                     {table.getHeaderGroups().map((headerGroup: any) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header: any) => (
@@ -23,10 +23,10 @@ const Table = ({ table, handleRowClick, tableColor }: Props) => {
                                     colSpan={header.colSpan}
                                     {...{
                                         onClick: header.column.getToggleSortingHandler(),
-                                        className: header.column.getIsSorted() ? 'text-selected font-normal px-4' : 'px-4 font-normal',
+                                        className: header.column.getIsSorted() ? 'text-selected font-normal' : 'font-normal',
                                     }}>
                                     {header.isPlaceholder ? null : (
-                                        <div className='main-hover flex items-center justify-center rounded'>
+                                        <div className='hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer flex h-full w-full items-center justify-center rounded'>
                                             {{
                                                 asc: <MoveUp size={16} strokeWidth={1} />,
                                                 desc: <MoveDown size={16} strokeWidth={1} />,

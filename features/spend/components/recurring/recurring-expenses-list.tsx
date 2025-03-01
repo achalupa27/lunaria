@@ -1,16 +1,20 @@
 import { formatCurrency } from '@/utils/helper';
-import DisplayCard from '@/features/shared/components/display-card';
+import DisplayCard from '@/components/ui/display-card';
 
 type Props = {
     recurringExpenses: RecurringExpense[];
     onViewExpense: (expense: RecurringExpense) => void;
 };
 
+const NoRecurringExpenses = () => {
+    return <div className='flex-1 min-h-0 flex items-center h-full justify-center text-zinc-500 text-sm'>No recurring expenses</div>;
+};
+
 const RecurringExpensesList = ({ recurringExpenses, onViewExpense }: Props) => {
     if (!recurringExpenses?.length) {
         return (
             <DisplayCard title='Recurring Spends'>
-                <div className='flex-1 min-h-0 flex items-center h-full justify-center text-gray-500'>No recurring expenses</div>
+                <NoRecurringExpenses />
             </DisplayCard>
         );
     }

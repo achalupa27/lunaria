@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import Page from '@/components/ui/page';
 import useFetchSpends from '../spend/hooks/transaction/use-fetch-spends';
@@ -11,7 +13,7 @@ import { setTab } from '@/store/slices/tab-slice';
 import { ArrowLeft, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
-import PeriodSelector, { Period } from '../shared/components/period-selector';
+import PeriodSelector, { Period } from '../../components/ui/period-selector';
 import { exportToCSV } from '@/utils/export';
 
 type TransactionType = 'spends' | 'makes' | 'saves';

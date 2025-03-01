@@ -53,7 +53,7 @@ type Spend = {
     store: string;
     category: string;
     necessity: 'Need' | 'Want' | 'Waste';
-    expenseType: 'one-time' | 'recurring';
+    expenseType?: 'one-time' | 'recurring';
     // Optional recurring fields
     period?: 'weekly' | 'monthly' | 'yearly';
     next_billing_date?: Date;

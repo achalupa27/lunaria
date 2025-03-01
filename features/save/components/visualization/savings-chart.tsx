@@ -6,7 +6,7 @@ import Card from '@/components/ui/card';
 import { ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-
+import DisplayCard from '@/components/ui/display-card';
 import { Bar, BarChart, XAxis } from 'recharts';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
@@ -25,6 +25,14 @@ const viewLabels: Record<ChartView, string> = {
 };
 
 const COLORS = ['#22c55e', '#eab308', '#ef4444', '#3b82f6', '#f97316'];
+
+const NoSavings = () => {
+    return <div className='flex-1 min-h-0 flex items-center h-full justify-center text-zinc-500 text-sm'>No savings</div>;
+};
+
+const NoSavingsAccounts = () => {
+    return <div className='flex-1 min-h-0 flex items-center h-full justify-center text-zinc-500 text-sm'>No savings or debt accounts</div>;
+};
 
 const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
     const [view, setView] = useState<ChartView>('monthly');
@@ -145,8 +153,20 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
         }
     };
 
+    const renderContent = () => {
+        if (view === 'monthly' && (!saves || saves.length === 0)) {
+            return <NoSavings />;
+        }
+
+        if (((view === 'accounts' || view === 'distribution') && (!savingsAccounts || savingsAccounts.length === 0)) || !debtAccounts || debtAccounts.length === 0) {
+            return <NoSavingsAccounts />;
+        }
+
+        return renderChart();
+    };
+
     return (
-        <Card className='flex flex-col h-full p-6'>
+        <Card title='Savings Chart'>
             <div className='flex items-center justify-between'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -173,7 +193,7 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
                     <ChevronRight className='h-5 w-5' />
                 </Button>
             </div>
-            <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div>
+            <div className='flex-1 min-h-0 mt-4'>{renderContent()}</div>
         </Card>
     );
 };

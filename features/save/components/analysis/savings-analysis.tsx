@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import DisplayCard from '@/features/shared/components/display-card';
+import DisplayCard from '@/components/ui/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
 import { usePrepareSavingsData } from '../../hooks/analysis/use-prepare-savings-data';
@@ -13,6 +13,15 @@ interface SavingsAnalysisProps {
     totalSavings: number;
     totalDebt: number;
 }
+
+const NotEnoughData = () => {
+    return (
+        <div className='flex flex-col items-center justify-center text-center h-full'>
+            <div className='text-zinc-600 dark:text-zinc-400 mb-2'>Not enough transactions for analysis</div>
+            <div className='text-sm text-zinc-500 dark:text-zinc-500'>Record at least 5 transactions to get AI-powered spending insights</div>
+        </div>
+    );
+};
 
 const AnalysisContent = ({ savingsData }: { savingsData: any }) => {
     const { data: analysis } = useSavingsAnalysis(savingsData);
@@ -29,6 +38,14 @@ const AnalysisContent = ({ savingsData }: { savingsData: any }) => {
 const SavingsAnalysis = (props: SavingsAnalysisProps) => {
     const { saves, savingsAccounts, debtAccounts, totalSavings, totalDebt } = props;
     const { savingsData } = usePrepareSavingsData(saves, savingsAccounts, debtAccounts, totalSavings, totalDebt);
+    console.log('savingsData', savingsData);
+    if (!saves || saves.length < 5) {
+        return (
+            <DisplayCard title='Financial Analysis'>
+                <NotEnoughData />
+            </DisplayCard>
+        );
+    }
 
     return (
         <DisplayCard title='Financial Analysis'>

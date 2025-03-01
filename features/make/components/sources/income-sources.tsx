@@ -1,8 +1,12 @@
 import { formatCurrency } from '@/utils/helper';
-import Card from '@/components/ui/card';
+import DisplayCard from '@/components/ui/display-card';
 
 type Props = {
     incomeBySource: Record<string, number>;
+};
+
+const NoIncomeSources = () => {
+    return <div className='flex-1 min-h-0 flex items-center h-full justify-center text-zinc-500 text-sm'>No income sources</div>;
 };
 
 const IncomeSources = ({ incomeBySource }: Props) => {
@@ -13,11 +17,16 @@ const IncomeSources = ({ incomeBySource }: Props) => {
             amount,
         }));
 
+    if (sortedSources.length === 0) {
+        return (
+            <DisplayCard title='Income Sources'>
+                <NoIncomeSources />
+            </DisplayCard>
+        );
+    }
+
     return (
-        <Card className='flex flex-col h-full p-6'>
-            <div className='flex justify-between items-center mb-4'>
-                <h3 className='text-lg font-semibold'>Income Sources</h3>
-            </div>
+        <DisplayCard title='Income Sources'>
             <div className='flex-1 min-h-0 overflow-y-auto scrollbar-none'>
                 {sortedSources.map(({ source, amount }) => (
                     <div key={source} className='flex justify-between py-2'>
@@ -27,7 +36,7 @@ const IncomeSources = ({ incomeBySource }: Props) => {
                 ))}
                 {sortedSources.length === 0 && <div className='flex items-center justify-center text-gray-500'>No income sources</div>}
             </div>
-        </Card>
+        </DisplayCard>
     );
 };
 

@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import DisplayCard from '@/features/shared/components/display-card';
+import DisplayCard from '@/components/ui/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
 import { usePrepareSpendingData } from '../../hooks/analysis/use-prepare-spending-data';
@@ -18,6 +18,15 @@ interface SpendingAnalysisProps {
     totalWasteSpent: number;
 }
 
+const NotEnoughData = () => {
+    return (
+        <div className='flex flex-col items-center justify-center text-center h-full'>
+            <div className='text-zinc-600 dark:text-zinc-400 mb-2'>Not enough transactions for analysis</div>
+            <div className='text-sm text-zinc-500 dark:text-zinc-500'>Record at least 5 transactions to get AI-powered spending insights</div>
+        </div>
+    );
+};
+
 const AnalysisContent = ({ spendingData }: { spendingData: any }) => {
     const { data: analysis } = useSpendingAnalysis(spendingData);
 
@@ -32,6 +41,15 @@ const AnalysisContent = ({ spendingData }: { spendingData: any }) => {
 
 const SpendingAnalysis = (props: SpendingAnalysisProps) => {
     const { spends, budgets, recurringExpenses, categoryTotals, budgetProgress, totalSpent, totalNeedSpent, totalWantSpent, totalWasteSpent } = props;
+
+    // Early return if not enough transactions
+    if (!spends || spends.length < 5) {
+        return (
+            <DisplayCard title='Spending Analysis'>
+                <NotEnoughData />
+            </DisplayCard>
+        );
+    }
 
     const { spendingData } = usePrepareSpendingData(spends, budgets, recurringExpenses, categoryTotals, budgetProgress, {
         totalSpent,

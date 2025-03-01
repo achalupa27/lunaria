@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import Card from '@/components/ui/card';
 import Page from '@/components/ui/page';
@@ -9,11 +11,12 @@ import RecentTransactions from './components/recent-transactions';
 import SpendForm from '../spend/components/forms/spend-form';
 import MakeForm from '../make/components/forms/make-form';
 import SaveForm from '../save/components/forms/save-form';
+import { formatCurrency } from '@/utils/helper';
 
 const Home = () => {
-    const { data: spends } = useFetchSpends();
     const { data: makes } = useFetchMakes();
     const { data: saves } = useFetchSaves();
+    const { data: spends } = useFetchSpends();
 
     const [spendFormOpen, setSpendFormOpen] = useState(false);
     const [makeFormOpen, setMakeFormOpen] = useState(false);
@@ -38,6 +41,10 @@ const Home = () => {
         setSaveFormOpen(false);
     };
 
+    const totalIncome = makes?.reduce((acc, make) => acc + make.amount, 0) || 0;
+    const totalSavings = saves?.reduce((acc, save) => acc + save.amount, 0) || 0;
+    const totalSpending = spends?.reduce((acc, spend) => acc + spend.cost, 0) || 0;
+
     return (
         <Page>
             <div className='flex items-center justify-between'>
@@ -51,21 +58,21 @@ const Home = () => {
                     <span className='leading-none'>{'Net Income'}</span>
                     <div className='space-x-2'>
                         <span className=''>{'CAD'}</span>
-                        <span className='text-3xl font-semibold'>${'30'}</span>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalIncome)}</span>
                     </div>
                 </Card>
                 <Card className=''>
                     <span className='leading-none'>{'Net Savings'}</span>
                     <div className='space-x-2'>
                         <span className=''>{'CAD'}</span>
-                        <span className='text-3xl font-semibold'>${'-12331'}</span>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalSavings)}</span>
                     </div>
                 </Card>
                 <Card className=''>
                     <span className='leading-none'>{'Net Spending'}</span>
                     <div className='space-x-2'>
                         <span className=''>{'CAD'}</span>
-                        <span className='text-3xl font-semibold'>${'30'}</span>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalSpending)}</span>
                     </div>
                 </Card>
             </div>

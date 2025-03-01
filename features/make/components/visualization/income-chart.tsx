@@ -22,6 +22,10 @@ const viewLabels: Record<ChartView, string> = {
 
 const COLORS = ['#22c55e', '#eab308', '#ef4444', '#3b82f6', '#f97316'];
 
+const NoIncome = () => {
+    return <div className='flex-1 min-h-0 flex items-center h-full justify-center text-zinc-500 text-sm'>No income</div>;
+};
+
 const IncomeChart = ({ makes }: Props) => {
     const [view, setView] = useState<ChartView>('monthly');
 
@@ -154,7 +158,7 @@ const IncomeChart = ({ makes }: Props) => {
                     <ChevronRight className='h-5 w-5' />
                 </Button>
             </div>
-            <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div>
+            {makes.length === 0 ? <NoIncome /> : <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div>}
         </Card>
     );
 };

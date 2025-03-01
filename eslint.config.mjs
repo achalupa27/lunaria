@@ -1,5 +1,15 @@
-import next from "next/eslint-plugin";
-import storybook from "@storybook/eslint-plugin";
-import { configs } from "eslint-plugin-storybook";
+import nextPlugin from '@next/eslint-plugin-next';
+import storybookPlugin from '@storybook/eslint-plugin-storybook';
 
-export default [next.configs["core-web-vitals"], configs.recommended];
+export default [
+    {
+        plugins: {
+            '@next/next': nextPlugin,
+            'storybook': storybookPlugin,
+        },
+        extends: ['plugin:@next/next/recommended', 'plugin:storybook/recommended'],
+        rules: {
+            // Add any custom rules here
+        },
+    },
+];

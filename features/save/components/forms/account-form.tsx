@@ -47,17 +47,26 @@ const AccountForm = ({ closeForm, selectedAccount }: Props) => {
     });
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
+        // Remove type field before sending to API
+        const { type, ...accountData } = data;
+
         if (selectedAccount) {
             if (accountType === 'Savings') {
-                updateSavingsAccountMutation.mutate({ ...data, id: selectedAccount.id });
+                updateSavingsAccountMutation.mutate({
+                    ...accountData,
+                    id: selectedAccount.id,
+                });
             } else {
-                updateDebtAccountMutation.mutate({ ...data, id: selectedAccount.id });
+                updateDebtAccountMutation.mutate({
+                    ...accountData,
+                    id: selectedAccount.id,
+                });
             }
         } else {
             if (accountType === 'Savings') {
-                createSavingsAccountMutation.mutate(data);
+                createSavingsAccountMutation.mutate(accountData);
             } else {
-                createDebtAccountMutation.mutate(data);
+                createDebtAccountMutation.mutate(accountData);
             }
         }
         closeForm();

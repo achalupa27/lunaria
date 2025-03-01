@@ -9,7 +9,7 @@ export const useAssetMutations = () => {
     const queryClient = useQueryClient();
 
     const createAssetMutation = useMutation({
-        mutationFn: (newAsset: Omit<Asset, 'id'>) => createAssetService(newAsset),
+        mutationFn: (newAsset: Omit<Asset, 'id' | 'user_id'>) => createAssetService(newAsset),
         onSuccess: (newAsset: Asset) => {
             queryClient.setQueryData(['assets'], (oldAssets: Asset[] = []) => [...oldAssets, newAsset]);
             toast({

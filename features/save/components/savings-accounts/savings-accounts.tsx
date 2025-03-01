@@ -1,12 +1,24 @@
 import { formatCurrency } from '@/utils/helper';
 import Card from '@/components/ui/card';
-
+import DisplayCard from '@/components/ui/display-card';
 type Props = {
     accounts: SavingsAccount[];
     onViewAccount: (account: SavingsAccount) => void;
 };
 
+const NoSavingsAccounts = () => {
+    return <div className='flex-1 min-h-0 flex items-center h-full justify-center text-zinc-500 text-sm'>No savings accounts</div>;
+};
+
 const SavingsAccounts = ({ accounts, onViewAccount }: Props) => {
+    if (!accounts || accounts.length === 0) {
+        return (
+            <DisplayCard title='Savings Accounts'>
+                <NoSavingsAccounts />
+            </DisplayCard>
+        );
+    }
+
     return (
         <Card className='flex flex-col h-full p-6'>
             <div className='flex justify-between'>

@@ -1,4 +1,4 @@
-import PeriodSelector, { Period } from '@/features/shared/components/period-selector';
+import PeriodSelector, { Period } from '@/components/ui/period-selector';
 
 type Props = {
     selectedTerm: Period;
