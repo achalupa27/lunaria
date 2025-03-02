@@ -2,9 +2,9 @@ import { Suspense } from 'react';
 import DisplayCard from '@/components/ui/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
-import { usePrepareSpendingData } from '../../hooks/openai/use-prepare-spending-data';
-import { useSpendingAnalysis } from '../../hooks/openai/use-spending-analysis';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useSpendingAnalysis } from '@/features/spend/hooks/openai/use-spending-analysis';
+import { usePrepareSpendingData } from '@/features/spend/hooks/openai/use-prepare-spending-data';
 
 interface SpendingAnalysisProps {
     spends: Spend[] | undefined;

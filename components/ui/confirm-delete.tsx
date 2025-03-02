@@ -3,17 +3,18 @@ import { AlertDialog, AlertDialogCancel, AlertDialogAction, AlertDialogContent, 
 type ConfirmDeleteProps = {
     showDeleteAlert: boolean;
     setShowDeleteAlert: (show: boolean) => void;
-    deleteMessage: string;
     handleConfirmDelete: () => void;
+    itemCategory: string;
+    itemName: string;
 };
 
-const ConfirmDelete = ({ showDeleteAlert, setShowDeleteAlert, deleteMessage, handleConfirmDelete }: ConfirmDeleteProps) => {
+const ConfirmDelete = ({ showDeleteAlert, setShowDeleteAlert, handleConfirmDelete, itemCategory, itemName }: ConfirmDeleteProps) => {
     return (
         <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Are you sure you want to delete this account?</AlertDialogTitle>
-                    <AlertDialogDescription>{deleteMessage}</AlertDialogDescription>
+                    <AlertDialogDescription>{`This action cannot be undone. This will permanently delete the ${itemCategory} "${itemName}" and remove all associated data.`}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>

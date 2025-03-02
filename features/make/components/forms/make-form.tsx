@@ -36,7 +36,7 @@ const FormSchema = createSchemaFromType<MakeCreate>({
 type FormValues = z.infer<typeof FormSchema>;
 
 const MakeForm = ({ closeForm, selectedMake }: Props) => {
-    const form = useForm({
+    const form = useForm<FormValues>({
         defaultValues: {
             ...selectedMake,
             date: selectedMake?.date ? new Date(selectedMake.date) : new Date(),
@@ -62,25 +62,21 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
         closeForm();
     };
 
-    const deleteMessage = `This action cannot be undone. This will permanently delete the making "${selectedMake?.amount}" and remove all associated data.`;
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     return (
-        <>
-            <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-black'}>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-                        <InputGroup control={form.control} name='amount' label='Amount' placeholder='Amount' type='number' step='0.01' />
-                        <SelectGroup control={form.control} name='source' label='Source' placeholder='Source' options={incomeSources} />
-                        <DateGroup control={form.control} name='date' label='Date' />
+        <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-black'}>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+                    <InputGroup control={form.control} name='amount' label='Amount' placeholder='Amount' type='number' step='0.01' />
+                    <SelectGroup control={form.control} name='source' label='Source' placeholder='Source' options={incomeSources} />
+                    <DateGroup control={form.control} name='date' label='Date' />
 
-                        <FormActions onDelete={handleDelete} onCancel={closeForm} showDelete={!!selectedMake} />
-                    </form>
-                </Form>
-            </Modal>
-
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} deleteMessage={deleteMessage} handleConfirmDelete={handleConfirmDelete} />
-        </>
+                    <FormActions onDelete={handleDelete} onCancel={closeForm} showDelete={!!selectedMake} />
+                </form>
+            </Form>
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='making' itemName={selectedMake?.amount.toString() || ''} />
+        </Modal>
     );
 };
 

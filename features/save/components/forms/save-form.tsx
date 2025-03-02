@@ -38,7 +38,7 @@ type FormValues = z.infer<typeof FormSchema>;
 const SaveForm = ({ closeForm, selectedSave }: Props) => {
     const { create: createSave, update: updateSave, delete: deleteSave } = useMutateSaves();
 
-    const form = useForm({
+    const form = useForm<FormValues>({
         defaultValues: {
             ...selectedSave,
             date: selectedSave?.date ? new Date(selectedSave.date) : undefined,
@@ -64,9 +64,7 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
     };
 
     const [type, setType] = useState<Save['type']>(selectedSave?.type || 'Deposit');
-
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-    const deleteMessage = `This action cannot be undone. This will permanently delete the saving "${selectedSave?.amount}" and remove all associated data.`;
 
     return (
         <>
@@ -103,7 +101,7 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
                 </Form>
             </Modal>
 
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} deleteMessage={deleteMessage} handleConfirmDelete={handleConfirmDelete} />
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='saving' itemName={selectedSave?.amount.toString() || ''} />
         </>
     );
 };

@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import DisplayCard from '@/components/ui/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
-import { usePrepareSavingsData } from '../../hooks/openai/use-prepare-savings-data';
-import { useSavingsAnalysis } from '../../hooks/openai/use-savings-analysis';
+import { usePrepareSavingsData } from '../../../hooks/openai/use-prepare-savings-data';
+import { useSavingsAnalysis } from '../../../hooks/openai/use-savings-analysis';
 import { ErrorBoundary } from 'react-error-boundary';
 
 interface SavingsAnalysisProps {

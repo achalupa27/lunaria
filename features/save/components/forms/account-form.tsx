@@ -25,6 +25,7 @@ const SavingsAccountFormSchema = createSchemaFromType<SavingsAccountCreate>({
     interest_rate: z.coerce.number().optional(),
     interest_period: z.string().optional(),
 });
+type SavingsAccountFormValues = z.infer<typeof SavingsAccountFormSchema>;
 
 const DebtAccountFormSchema = createSchemaFromType<DebtAccountCreate>({
     name: z.string({
@@ -36,6 +37,7 @@ const DebtAccountFormSchema = createSchemaFromType<DebtAccountCreate>({
     interest_rate: z.coerce.number(),
     interest_period: z.string(),
 });
+type DebtAccountFormValues = z.infer<typeof DebtAccountFormSchema>;
 
 // Type guard to check if account is a SavingsAccount
 const isSavingsAccount = (account: SavingsAccount | DebtAccount | {}): account is SavingsAccount => {
@@ -52,7 +54,7 @@ const AccountForm = ({ closeForm, selectedAccount }: Props) => {
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     // Create separate forms for each account type
-    const savingsForm = useForm({
+    const savingsForm = useForm<SavingsAccountFormValues>({
         defaultValues: isSavingsAccount(selectedAccount || {})
             ? selectedAccount
             : {
@@ -64,7 +66,7 @@ const AccountForm = ({ closeForm, selectedAccount }: Props) => {
         resolver: zodResolver(SavingsAccountFormSchema),
     });
 
-    const debtForm = useForm({
+    const debtForm = useForm<DebtAccountFormValues>({
         defaultValues:
             !isSavingsAccount(selectedAccount || {}) && selectedAccount
                 ? selectedAccount
@@ -91,8 +93,6 @@ const AccountForm = ({ closeForm, selectedAccount }: Props) => {
 
         closeForm();
     };
-
-    const deleteMessage = `This action cannot be undone. This will permanently delete the ${accountType.toLowerCase()} account "${selectedAccount?.name}" and remove all associated data.`;
 
     const handleDeleteClick = () => {
         setShowDeleteAlert(true);
@@ -133,49 +133,46 @@ const AccountForm = ({ closeForm, selectedAccount }: Props) => {
     const interestPeriods = ['Daily', 'Monthly', 'Quarterly', 'Annually'];
 
     return (
-        <>
-            <Modal title={selectedAccount ? 'Edit Account' : 'New Account'} closeModal={closeForm} headerStyle='text-black'>
-                <div className='border-orange-0 relative flex w-full overflow-hidden rounded-lg bg-white dark:bg-black mb-4'>
-                    <div className={`absolute left-0 top-0 h-full w-1/2 rounded-lg transition-transform duration-200 dark:bg-white ${accountType === 'Debt' ? 'translate-x-full bg-red-600' : 'translate-x-0 bg-green-500'}`}></div>
+        <Modal title={selectedAccount ? 'Edit Account' : 'New Account'} closeModal={closeForm} headerStyle='text-black'>
+            <div className='border-orange-0 relative flex w-full overflow-hidden rounded-lg bg-white dark:bg-black mb-4'>
+                <div className={`absolute left-0 top-0 h-full w-1/2 rounded-lg transition-transform duration-200 dark:bg-white ${accountType === 'Debt' ? 'translate-x-full bg-red-600' : 'translate-x-0 bg-green-500'}`}></div>
 
-                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Savings' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => switchAccountType('Savings')}>
-                        Savings Account
-                    </div>
-
-                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Debt' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => switchAccountType('Debt')}>
-                        Debt Account
-                    </div>
+                <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Savings' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => switchAccountType('Savings')}>
+                    Savings Account
                 </div>
 
-                {accountType === 'Savings' ? (
-                    <Form {...savingsForm}>
-                        <form onSubmit={savingsForm.handleSubmit(handleSavingsSubmit)} className='space-y-4'>
-                            <InputGroup control={savingsForm.control} name='name' label='Account Name' placeholder='Account Name' />
-                            <InputGroup control={savingsForm.control} name='balance' label='Balance' placeholder='0.00' type='number' step='0.01' />
-                            <InputGroup control={savingsForm.control} name='interest_rate' label='Interest Rate (%)' placeholder='0.00' type='number' step='0.01' />
-                            <SelectGroup control={savingsForm.control} name='interest_period' label='Interest Period' placeholder='Select period' options={interestPeriods} />
+                <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Debt' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => switchAccountType('Debt')}>
+                    Debt Account
+                </div>
+            </div>
 
-                            <FormActions onDelete={selectedAccount ? handleDeleteClick : undefined} onCancel={closeForm} showDelete={!!selectedAccount} />
-                        </form>
-                    </Form>
-                ) : (
-                    <Form {...debtForm}>
-                        <form onSubmit={debtForm.handleSubmit(handleDebtSubmit)} className='space-y-4'>
-                            <InputGroup control={debtForm.control} name='name' label='Account Name' placeholder='Account Name' />
-                            <InputGroup control={debtForm.control} name='initial_balance' label='Initial Balance' placeholder='0.00' type='number' step='0.01' />
-                            <InputGroup control={debtForm.control} name='current_balance' label='Current Balance' placeholder='0.00' type='number' step='0.01' />
-                            <InputGroup control={debtForm.control} name='creditor' label='Creditor' placeholder='Creditor Name' />
-                            <InputGroup control={debtForm.control} name='interest_rate' label='Interest Rate (%)' placeholder='0.00' type='number' step='0.01' />
-                            <SelectGroup control={debtForm.control} name='interest_period' label='Interest Period' placeholder='Select period' options={interestPeriods} />
+            {accountType === 'Savings' ? (
+                <Form {...savingsForm}>
+                    <form onSubmit={savingsForm.handleSubmit(handleSavingsSubmit as any)} className='space-y-4'>
+                        <InputGroup control={savingsForm.control} name='name' label='Account Name' placeholder='Account Name' />
+                        <InputGroup control={savingsForm.control} name='balance' label='Balance' placeholder='0.00' type='number' step='0.01' />
+                        <InputGroup control={savingsForm.control} name='interest_rate' label='Interest Rate (%)' placeholder='0.00' type='number' step='0.01' />
+                        <SelectGroup control={savingsForm.control} name='interest_period' label='Interest Period' placeholder='Select period' options={interestPeriods} />
 
-                            <FormActions onDelete={selectedAccount ? handleDeleteClick : undefined} onCancel={closeForm} showDelete={!!selectedAccount} />
-                        </form>
-                    </Form>
-                )}
-            </Modal>
+                        <FormActions onDelete={selectedAccount ? handleDeleteClick : undefined} onCancel={closeForm} showDelete={!!selectedAccount} />
+                    </form>
+                </Form>
+            ) : (
+                <Form {...debtForm}>
+                    <form onSubmit={debtForm.handleSubmit(handleDebtSubmit as any)} className='space-y-4'>
+                        <InputGroup control={debtForm.control} name='name' label='Account Name' placeholder='Account Name' />
+                        <InputGroup control={debtForm.control} name='initial_balance' label='Initial Balance' placeholder='0.00' type='number' step='0.01' />
+                        <InputGroup control={debtForm.control} name='current_balance' label='Current Balance' placeholder='0.00' type='number' step='0.01' />
+                        <InputGroup control={debtForm.control} name='creditor' label='Creditor' placeholder='Creditor Name' />
+                        <InputGroup control={debtForm.control} name='interest_rate' label='Interest Rate (%)' placeholder='0.00' type='number' step='0.01' />
+                        <SelectGroup control={debtForm.control} name='interest_period' label='Interest Period' placeholder='Select period' options={interestPeriods} />
 
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} deleteMessage={deleteMessage} handleConfirmDelete={handleConfirmDelete} />
-        </>
+                        <FormActions onDelete={selectedAccount ? handleDeleteClick : undefined} onCancel={closeForm} showDelete={!!selectedAccount} />
+                    </form>
+                </Form>
+            )}
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='account' itemName={selectedAccount?.name || ''} />
+        </Modal>
     );
 };
 

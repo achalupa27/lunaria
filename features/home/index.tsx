@@ -8,10 +8,10 @@ import { useReadMakes } from '../make/hooks/supabase/use-makes';
 import { useReadSaves } from '../save/hooks/supabase/use-saves';
 import { useReadSpends } from '../spend/hooks/supabase/use-spends';
 import RecentTransactions from './components/recent-transactions';
-import SpendForm from '../spend/components/forms/spend-form';
 import MakeForm from '../make/components/forms/make-form';
 import SaveForm from '../save/components/forms/save-form';
 import { formatCurrency } from '@/utils/helper';
+import SpendForm from '../spend/components/forms/expense';
 
 const Home = () => {
     const { data: makes } = useReadMakes();

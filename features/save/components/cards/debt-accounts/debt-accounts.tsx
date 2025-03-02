@@ -28,7 +28,7 @@ const DebtAccounts = ({ accounts, onViewAccount }: Props) => {
                             <span className='font-medium'>{account.name}</span>
                         </div>
                         <div className='flex flex-col items-end'>
-                            <span className='font-medium text-red-600'>{formatCurrency(account.balance)}</span>
+                            <span className='font-medium text-red-600'>{formatCurrency(account.current_balance)}</span>
                             {/* <span className='text-sm text-gray-500'>{account.interestRate}% APR</span> */}
                         </div>
                     </div>

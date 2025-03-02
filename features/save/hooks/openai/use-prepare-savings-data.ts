@@ -35,7 +35,7 @@ export const usePrepareSavingsData = (saves: Save[] | undefined, savingsAccounts
             })),
             debt: debtAccounts.map((account) => ({
                 name: account.name,
-                balance: account.balance,
+                balance: account.current_balance,
             })),
         },
         summary: {

@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-type MutationHookOptions<T, C, U> = {
+type MutationHookOptions<R, C, U> = {
     entityName: string;
     queryKey: string | string[];
     services: {
-        create: (data: C) => Promise<T>;
-        update: (item: U) => Promise<T>;
-        delete: (id: string) => Promise<T>;
+        create: (data: C) => Promise<R>;
+        update: (item: U) => Promise<R>;
+        delete: (id: string) => Promise<R>;
     };
     messages?: {
         createSuccess?: string;
@@ -21,11 +21,11 @@ type MutationHookOptions<T, C, U> = {
 
 /**
  * Create mutation hooks for an entity
- * @param T Main entity type with id field
- * @param C Create type (usually without id, user_id, created_at, updated_at)
- * @param U Update type (usually with id but without user_id, created_at, updated_at)
+ * @param R Row type
+ * @param C Create type (Row type without id, user_id, created_at, updated_at)
+ * @param U Update type (Create type with id)
  */
-export function createMutationHooks<T, C, U>(options: MutationHookOptions<T, C, U>) {
+export function createMutationHooks<R, C, U>(options: MutationHookOptions<R, C, U>) {
     const { entityName, queryKey, services, messages = {} } = options;
 
     // Default messages
@@ -60,11 +60,11 @@ export function createMutationHooks<T, C, U>(options: MutationHookOptions<T, C, 
                 const previousItems = queryClient.getQueryData(queryKeyArray);
 
                 // Optimistically update the cache
-                queryClient.setQueryData(queryKeyArray, (old: T[] = []) => {
+                queryClient.setQueryData(queryKeyArray, (old: R[] = []) => {
                     const optimisticItem = {
                         ...newItem,
                         id: `temp-${Date.now()}`,
-                    } as T;
+                    } as R;
                     return [optimisticItem, ...old];
                 });
 
@@ -95,8 +95,8 @@ export function createMutationHooks<T, C, U>(options: MutationHookOptions<T, C, 
 
                 const previousItems = queryClient.getQueryData(queryKeyArray);
 
-                queryClient.setQueryData(queryKeyArray, (old: T[] = []) => {
-                    return old.map((item) => (item.id === (updatedItem as any).id ? { ...item, ...(updatedItem as any) } : item));
+                queryClient.setQueryData(queryKeyArray, (old: R[] = []) => {
+                    return old.map((item: any) => (item.id === (updatedItem as any).id ? { ...item, ...(updatedItem as any) } : item));
                 });
 
                 return { previousItems };
@@ -124,8 +124,8 @@ export function createMutationHooks<T, C, U>(options: MutationHookOptions<T, C, 
 
                 const previousItems = queryClient.getQueryData(queryKeyArray);
 
-                queryClient.setQueryData(queryKeyArray, (old: T[] = []) => {
-                    return old.filter((item) => item.id !== id);
+                queryClient.setQueryData(queryKeyArray, (old: R[] = []) => {
+                    return old.filter((item: any) => item.id !== id);
                 });
 
                 return { previousItems };

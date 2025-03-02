@@ -3,15 +3,15 @@ import { handleServiceOperation } from '@/utils/error/service-handler';
 
 /**
  * Create CRUD services for a database table
- * @param T Main entity type with id field
- * @param C Create type (usually without id, user_id, created_at, updated_at)
- * @param U Update type (usually with id but without user_id)
+ * @param R Row type
+ * @param C Create type (Row type without id, user_id, created_at, updated_at)
+ * @param U Update type (Create type with id)
  */
-export function createCrudServices<T, C, U>(tableName: string) {
-    const create = async (data: C): Promise<T> => {
+export function createCrudServices<R, C, U>(tableName: string) {
+    const create = async (data: C): Promise<R> => {
         return handleServiceOperation(
             async () =>
-                createRecord<C, T>({
+                createRecord<C, R>({
                     table: tableName,
                     data: data as any, // Type cast needed due to generics limitations
                 }),
@@ -19,10 +19,10 @@ export function createCrudServices<T, C, U>(tableName: string) {
         );
     };
 
-    const read = async (options: Omit<Parameters<typeof readRecords>[0], 'table'> = {}): Promise<T[]> => {
+    const read = async (options: Omit<Parameters<typeof readRecords>[0], 'table'> = {}): Promise<R[]> => {
         return handleServiceOperation(
             async () =>
-                readRecords<T>({
+                readRecords<R>({
                     table: tableName,
                     ...options,
                 }),
@@ -30,11 +30,11 @@ export function createCrudServices<T, C, U>(tableName: string) {
         );
     };
 
-    const update = async (item: U): Promise<T> => {
+    const update = async (item: U): Promise<R> => {
         const { id, ...updateData } = item as any;
         return handleServiceOperation(
             async () =>
-                updateRecord<U, T>({
+                updateRecord<U, R>({
                     table: tableName,
                     id,
                     data: updateData as U,
@@ -43,10 +43,10 @@ export function createCrudServices<T, C, U>(tableName: string) {
         );
     };
 
-    const remove = async (id: string): Promise<T> => {
+    const remove = async (id: string): Promise<R> => {
         return handleServiceOperation(
             async () =>
-                deleteRecord<T>({
+                deleteRecord<R>({
                     table: tableName,
                     id,
                 }),

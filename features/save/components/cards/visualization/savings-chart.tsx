@@ -87,7 +87,7 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
             })),
             ...debtAccounts.map((account) => ({
                 name: account.name,
-                balance: -account.balance, // Negative for debt
+                balance: -account.current_balance, // Negative for debt
                 type: 'Debt',
             })),
         ];

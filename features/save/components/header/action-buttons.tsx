@@ -1,19 +1,15 @@
 import { Button } from '@/components/ui/button';
-import { Settings, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 type Props = {
-    onSettingsClick: () => void;
     onAddAccountClick: () => void;
     onNewSaveClick: () => void;
     onNewAssetClick: () => void;
 };
 
-const ActionButtons = ({ onSettingsClick, onAddAccountClick, onNewSaveClick, onNewAssetClick }: Props) => {
+const ActionButtons = ({ onAddAccountClick, onNewSaveClick, onNewAssetClick }: Props) => {
     return (
         <div className='flex items-center space-x-2'>
-            {/* <Button variant='secondary' className='rounded-lg' size='icon' onClick={onSettingsClick}>
-                <Settings />
-            </Button> */}
             <Button variant='secondary' className='rounded-lg' onClick={onAddAccountClick}>
                 <Plus />
                 New Account

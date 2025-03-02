@@ -78,7 +78,7 @@ export async function readRecords<T>(options: ReadOptions): Promise<T[]> {
             }
 
             // Execute query
-            return query;
+            return query as any;
         },
         notFoundMessage: `No data returned when reading from ${options.table}`,
     });

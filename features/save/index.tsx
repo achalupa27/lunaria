@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import SaveForm from './components/forms/save-form';
 import Page from '@/components/ui/page';
 import AccountForm from './components/forms/account-form';
-import RecentSaves from './components/recent/recent-saves';
-import SavingsAccounts from './components/savings-accounts/savings-accounts';
-import DebtAccounts from './components/debt-accounts/debt-accounts';
+import RecentSaves from './components/cards/recent/recent-saves';
+import SavingsAccounts from './components/cards/savings-accounts/savings-accounts';
+import DebtAccounts from './components/cards/debt-accounts/debt-accounts';
 import ActionButtons from './components/header/action-buttons';
-import SavingsSummary from './components/summary/savings-summary';
-import SavingsAnalysis from './components/analysis/savings-analysis';
-import SavingsChart from './components/visualization/savings-chart';
+import SavingsSummary from './components/header/summary/savings-summary';
+import SavingsAnalysis from './components/cards/analysis/savings-analysis';
+import SavingsChart from './components/cards/visualization/savings-chart';
 import SavingsPeriodSelector from './components/header/saving-period-selector';
 import { Period } from '@/components/ui/period-selector';
 import { useFilteredSaves } from './hooks/data/use-filtered-saves';
 import AssetForm from './components/forms/asset-form';
-import Assets from './components/assets/assets';
+import Assets from './components/cards/assets/assets';
 import { useReadSaves } from './hooks/supabase/use-saves';
 import { useReadSavingsAccounts } from './hooks/supabase/use-savings-accounts';
 import { useReadDebtAccounts } from './hooks/supabase/use-debt-accounts';
@@ -36,7 +36,7 @@ const Save = () => {
             setTotalSavings(savingsAccounts.reduce((acc, account) => acc + account.balance, 0));
         }
         if (debtAccounts) {
-            setTotalDebt(debtAccounts.reduce((acc, account) => acc + account.balance, 0));
+            setTotalDebt(debtAccounts.reduce((acc, account) => acc + account.current_balance, 0));
         }
         if (assets) {
             setTotalAssets(assets.reduce((acc, asset) => acc + asset.value, 0));
@@ -44,7 +44,6 @@ const Save = () => {
     }, [savingsAccounts, debtAccounts, assets]);
 
     const [saveFormOpen, setSaveFormOpen] = useState(false);
-    const [settingsFormOpen, setSettingsFormOpen] = useState(false);
     const [selectedSave, setSelectedSave] = useState<Save | undefined>();
 
     const handleViewSave = (row: any) => {
@@ -60,7 +59,6 @@ const Save = () => {
     const handleFormClose = () => {
         setSelectedSave(undefined);
         setSaveFormOpen(false);
-        setSettingsFormOpen(false);
         setAssetFormOpen(false);
         setSelectedAsset(undefined);
     };
@@ -113,7 +111,7 @@ const Save = () => {
         <Page>
             <div className='flex items-center justify-between'>
                 <SavingsPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
-                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onAddAccountClick={handleAccountFormOpen} onNewSaveClick={handleFormOpen} onNewAssetClick={handleNewAsset} />
+                <ActionButtons onAddAccountClick={handleAccountFormOpen} onNewSaveClick={handleFormOpen} onNewAssetClick={handleNewAsset} />
             </div>
 
             <SavingsSummary totalSavings={totalSavings} totalDebt={totalDebt} totalAssets={totalAssets} netSavings={totalSavings - totalDebt} periodSaved={totalSaved} periodWithdrawn={totalWithdrawn} selectedTerm={selectedTerm} />

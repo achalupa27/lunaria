@@ -4,7 +4,7 @@
  * @param serviceName Name of the service for error logging
  * @returns Result of the operation
  */
-export async function handleServiceOperation<T>(operation: () => Promise<T>, serviceName: string): Promise<T> {
+export async function handleServiceOperation<R>(operation: () => Promise<R>, serviceName: string): Promise<R> {
     try {
         return await operation();
     } catch (error) {

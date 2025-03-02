@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import SpendForm from './components/forms/spend-form';
 import Page from '@/components/ui/page';
 import BudgetForm from './components/forms/budget-form';
 import { useFilteredSpends, SpendingTerm } from './hooks/data/use-filtered-spends';
 import { useBudgetProgress } from './hooks/data/use-budget-progress';
-import CategoriesAndBudgets from './components/categories/categories-and-budgets';
-import RecurringExpensesList from './components/recurring/recurring-expenses-list';
+import CategoriesAndBudgets from './components/cards/categories/categories-and-budgets';
+import RecurringExpensesList from './components/cards/recurring/recurring-expenses-list';
 import SpendingPeriodSelector from './components/header/spending-period-selector';
 import ActionButtons from './components/header/action-buttons';
-import SpendingSummary from './components/summary/spending-summary';
-import SpendingAnalysis from './components/analysis/spending-analysis';
-import RecentSpending from './components/recent/recent-spending';
-import SpendingChart from './components/visualization/spending-chart';
+import SpendingSummary from './components/header/summary/spending-summary';
+import RecentSpending from './components/cards/recent/recent-spending';
+import SpendingChart from './components/cards/visualization/spending-chart';
 import { useReadBudgets } from './hooks/supabase/use-budget';
 import { useReadRecurringExpenses } from './hooks/supabase/use-recurring-expenses';
 import { useReadSpends } from './hooks/supabase/use-spends';
+import SpendingAnalysis from './components/cards/analysis/spending-analysis';
+import SpendForm from './components/forms/expense';
 
 const Spend = () => {
     // const { userRole } = useRole();

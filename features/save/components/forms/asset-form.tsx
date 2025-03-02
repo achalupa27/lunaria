@@ -16,8 +16,8 @@ type Props = {
     selectedAsset?: Asset;
 };
 
-const categories = ['Real Estate', 'Vehicles', 'Collectibles', 'Jewelry', 'Art', 'Business Equipment', 'Other'] as const;
-const liquidityLevels = ['High', 'Medium', 'Low'] as const;
+const categories = ['Real Estate', 'Vehicles', 'Collectibles', 'Jewelry', 'Art', 'Business Equipment', 'Other'];
+const liquidityLevels = ['High', 'Medium', 'Low'];
 
 const FormSchema = createSchemaFromType<AssetCreate>({
     name: z.string({
@@ -26,10 +26,10 @@ const FormSchema = createSchemaFromType<AssetCreate>({
     value: z.coerce.number({
         required_error: 'Asset value is required.',
     }),
-    category: z.enum(categories, {
+    category: z.enum(categories as [string, ...string[]], {
         required_error: 'Category is required.',
     }),
-    liquidity: z.enum(liquidityLevels, {
+    liquidity: z.enum(liquidityLevels as any, {
         required_error: 'Liquidity level is required.',
     }),
     appreciation_rate: z.coerce.number(),
@@ -41,7 +41,7 @@ const AssetForm = ({ closeForm, selectedAsset }: Props) => {
     const { create: createAsset, update: updateAsset, delete: deleteAsset } = useMutateAssets();
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
-    const form = useForm({
+    const form = useForm<FormValues>({
         defaultValues: selectedAsset,
         resolver: zodResolver(FormSchema),
     });
@@ -66,8 +66,6 @@ const AssetForm = ({ closeForm, selectedAsset }: Props) => {
         closeForm();
     };
 
-    const deleteMessage = `This action cannot be undone. This will permanently delete the asset "${selectedAsset?.name}" and remove all associated data.`;
-
     return (
         <>
             <Modal title={selectedAsset ? 'Edit Asset' : 'New Asset'} closeModal={closeForm} headerStyle='text-black'>
@@ -84,7 +82,7 @@ const AssetForm = ({ closeForm, selectedAsset }: Props) => {
                 </Form>
             </Modal>
 
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} deleteMessage={deleteMessage} handleConfirmDelete={handleConfirmDelete} />
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='asset' itemName={selectedAsset?.name || ''} />
         </>
     );
 };
