@@ -1,8 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-import typography from '@tailwindcss/typography';
 
 module.exports = {
-    content: ['./pages/**/*.{js,ts,jsx,tsx}', './app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './features/**/*.{js,ts,jsx,tsx}'],
+    content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './features/**/*.{js,ts,jsx,tsx}'],
     darkMode: ['class'],
     theme: {
         extend: {
@@ -11,8 +10,8 @@ module.exports = {
                     light: '#00ff00',
                     dark: '#ff0000',
                 },
-                primary: '#000000',
-                secondary: '#ffffff',
+                'primary': '#000000',
+                'secondary': '#ffffff',
                 'primary-dark': '#ffffff',
                 'secondary-dark': '#000000',
                 'primary-hover': '#189e51',

@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import SaveForm from './components/forms/save-form';
 import Page from '@/components/ui/page';
-import useFetchSaves from './hooks/transactions/use-fetch-saves';
-import SettingsForm from './components/forms/settings-form';
-import useFetchSavingsAccounts from './hooks/savings-accounts/use-fetch-savings-accounts';
-import useFetchDebtAccounts from './hooks/debt-accounts/use-fetch-debt-accounts';
 import AccountForm from './components/forms/account-form';
 import RecentSaves from './components/recent/recent-saves';
 import SavingsAccounts from './components/savings-accounts/savings-accounts';
@@ -15,16 +11,19 @@ import SavingsAnalysis from './components/analysis/savings-analysis';
 import SavingsChart from './components/visualization/savings-chart';
 import SavingsPeriodSelector from './components/header/saving-period-selector';
 import { Period } from '@/components/ui/period-selector';
-import { useFilteredSaves } from './hooks/use-filtered-saves';
+import { useFilteredSaves } from './hooks/data/use-filtered-saves';
 import AssetForm from './components/forms/asset-form';
 import Assets from './components/assets/assets';
-import useFetchAssets from './hooks/assets/use-fetch-assets';
+import { useReadSaves } from './hooks/supabase/use-saves';
+import { useReadSavingsAccounts } from './hooks/supabase/use-savings-accounts';
+import { useReadDebtAccounts } from './hooks/supabase/use-debt-accounts';
+import { useReadAssets } from './hooks/supabase/use-assets';
 
 const Save = () => {
-    const { data: saves } = useFetchSaves();
-    const { data: savingsAccounts } = useFetchSavingsAccounts();
-    const { data: debtAccounts } = useFetchDebtAccounts();
-    const { data: assets } = useFetchAssets();
+    const { data: saves } = useReadSaves();
+    const { data: savingsAccounts } = useReadSavingsAccounts();
+    const { data: debtAccounts } = useReadDebtAccounts();
+    const { data: assets } = useReadAssets();
 
     const [totalSavings, setTotalSavings] = useState(0);
     const [totalAssets, setTotalAssets] = useState(0);
@@ -143,7 +142,6 @@ const Save = () => {
             </div>
 
             {saveFormOpen && <SaveForm closeForm={handleFormClose} selectedSave={selectedSave} />}
-            {settingsFormOpen && <SettingsForm closeForm={handleFormClose} />}
             {accountFormOpen && <AccountForm closeForm={handleAccountFormClose} selectedAccount={selectedAccount} />}
             {assetFormOpen && <AssetForm closeForm={handleFormClose} selectedAsset={selectedAsset} />}
         </Page>

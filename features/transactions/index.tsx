@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Page from '@/components/ui/page';
-import useFetchSpends from '../spend/hooks/transaction/use-fetch-spends';
+import { useReadSpends } from '../spend/hooks/supabase/use-spends';
 import TransactionTable from './components/transaction-table';
 import SpendForm from '../spend/components/forms/spend-form';
-import useFetchMakes from '../make/hooks/use-fetch-makes';
-import useFetchSaves from '../save/hooks/transactions/use-fetch-saves';
+import { useReadMakes } from '../make/hooks/supabase/use-makes';
+import { useReadSaves } from '../save/hooks/supabase/use-saves';
 import TransactionFilters from './components/transaction-filters';
 import { useAppDispatch } from '@/store/hooks';
 import { setTab } from '@/store/slices/tab-slice';
@@ -19,9 +19,9 @@ import { exportToCSV } from '@/utils/export';
 type TransactionType = 'spends' | 'makes' | 'saves';
 
 const Transactions = () => {
-    const { data: spends } = useFetchSpends();
-    const { data: makes } = useFetchMakes();
-    const { data: saves } = useFetchSaves();
+    const { data: spends } = useReadSpends();
+    const { data: makes } = useReadMakes();
+    const { data: saves } = useReadSaves();
     const [spendFormOpen, setSpendFormOpen] = useState<boolean>(false);
     const [selectedSpend, setSelectedSpend] = useState<Spend | undefined>();
     const [selectedTypes, setSelectedTypes] = useState<TransactionType[]>(['spends', 'makes', 'saves']);

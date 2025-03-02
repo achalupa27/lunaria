@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import DisplayCard from '@/components/ui/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
-import { usePrepareIncomeData } from '../../hooks/analysis/use-prepare-income-data';
-import { useIncomeAnalysis } from '../../hooks/analysis/use-income-analysis';
+import { usePrepareIncomeData } from '../../hooks/openai/use-prepare-income-data';
+import { useIncomeAnalysis } from '../../hooks/openai/use-income-analysis';
 import { ErrorBoundary } from 'react-error-boundary';
 
 interface IncomeAnalysisProps {

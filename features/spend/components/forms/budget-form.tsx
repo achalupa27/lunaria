@@ -1,19 +1,18 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { spendingCategories } from '@/constants';
 import Modal from '@/components/ui/modal';
-import { Button } from '@/components/ui/button';
-import { Trash } from 'lucide-react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { useBudgetMutations } from '../../hooks/budget/use-budget-mutations';
+import { Form } from '@/components/ui/form';
+import { useMutateBudgets } from '../../hooks/supabase/use-budget';
+import FormActions from '@/components/ui/form-actions';
+import ConfirmDelete from '@/components/ui/confirm-delete';
+import { useState } from 'react';
+import SelectGroup from '@/components/ui/input-groups/select-group';
+import InputGroup from '@/components/ui/input-groups/input-group';
 
 type Props = {
-    closeForm: any;
+    closeForm: () => void;
     selectedBudget?: Budget;
 };
 
@@ -28,7 +27,7 @@ const FormSchema = z.object({
 });
 
 const BudgetForm = ({ closeForm, selectedBudget }: Props) => {
-    const { createBudgetMutation, updateBudgetMutation, deleteBudgetMutation } = useBudgetMutations();
+    const { create: createBudget, update: updateBudget, delete: deleteBudget } = useMutateBudgets();
 
     const form = useForm({
         defaultValues: selectedBudget,
@@ -36,103 +35,40 @@ const BudgetForm = ({ closeForm, selectedBudget }: Props) => {
     });
 
     const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
-        if (selectedBudget) {
-            const updatedBudget: Budget = {
-                ...data,
-                id: selectedBudget.id,
-                user_id: selectedBudget.user_id,
-                created_at: selectedBudget.created_at,
-            };
+        if (selectedBudget) updateBudget({ ...data, id: selectedBudget.id });
+        else createBudget(data);
 
-            updateBudgetMutation.mutate(updatedBudget);
-        } else {
-            const newBudget: Omit<Budget, 'id' | 'created_at'> = {
-                ...data,
-                user_id: '', // This will be set by the service
-            };
-
-            createBudgetMutation.mutate(newBudget);
-        }
         closeForm();
     };
 
     const handleDelete = () => {
-        selectedBudget && deleteBudgetMutation.mutate(selectedBudget.id);
+        setShowDeleteAlert(true);
+    };
+
+    const handleConfirmDelete = () => {
+        selectedBudget && deleteBudget(selectedBudget.id);
         closeForm();
     };
 
+    const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+    const deleteMessage = `This action cannot be undone. This will permanently delete the budget "${selectedBudget?.category}" and remove all associated data.`;
+
     return (
-        <Modal title={selectedBudget ? 'Edit Budget' : 'New Budget'} closeModal={closeForm} headerStyle={'text-black'}>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-                    <FormField
-                        control={form.control}
-                        name='category'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Category</FormLabel>
-                                <Select value={field.value} onValueChange={field.onChange}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder='Category' />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {spendingCategories.map((category) => (
-                                            <SelectItem key={category} value={category}>
-                                                {category}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='amount'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Amount</FormLabel>
-                                <Input type='number' {...field} placeholder='Amount' onChange={(e) => field.onChange(e.target.valueAsNumber)} />
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name='period'
-                        render={({ field }) => (
-                            <FormItem className='flex flex-col'>
-                                <FormLabel>Period</FormLabel>
-                                <Select value={field.value} onValueChange={field.onChange}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder='Period' />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value='monthly'>Monthly</SelectItem>
-                                        <SelectItem value='yearly'>Yearly</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <div className={`flex pt-4 ${selectedBudget ? 'justify-between' : 'justify-end'}`}>
-                        {selectedBudget && (
-                            <Button type='button' onClick={handleDelete} variant='destructive' size='icon'>
-                                <Trash />
-                            </Button>
-                        )}
-                        <div className='flex space-x-3'>
-                            <Button variant='secondary' onClick={closeForm}>
-                                Cancel
-                            </Button>
-                            <Button type='submit'>Save</Button>
-                        </div>
-                    </div>
-                </form>
-            </Form>
-        </Modal>
+        <>
+            <Modal title={selectedBudget ? 'Edit Budget' : 'New Budget'} closeModal={closeForm} headerStyle={'text-black'}>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+                        <SelectGroup control={form.control} name='category' label='Category' placeholder='Select category' options={spendingCategories} />
+                        <InputGroup control={form.control} name='amount' label='Amount' placeholder='Amount' type='number' step='0.01' />
+                        <SelectGroup control={form.control} name='period' label='Period' placeholder='Select period' options={['monthly', 'yearly']} />
+
+                        <FormActions onDelete={handleDelete} onCancel={closeForm} showDelete={!!selectedBudget} />
+                    </form>
+                </Form>
+            </Modal>
+
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} deleteMessage={deleteMessage} handleConfirmDelete={handleConfirmDelete} />
+        </>
     );
 };
 

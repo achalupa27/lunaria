@@ -3,20 +3,19 @@
 import { useState } from 'react';
 import Page from '@/components/ui/page';
 import MakeForm from './components/forms/make-form';
-import SettingsForm from './components/forms/settings-form';
-import useFetchMakes from './hooks/use-fetch-makes';
 import RecentMakes from './components/recent/recent-makes';
 import ActionButtons from './components/header/action-buttons';
 import IncomeSummary from './components/summary/income-summary';
 import IncomeAnalysis from './components/analysis/income-analysis';
 import MakingPeriodSelector from './components/header/making-period-selector';
 import { Period } from '@/components/ui/period-selector';
-import { useFilteredMakes } from './hooks/use-filtered-makes';
+import { useFilteredMakes } from './hooks/data/use-filtered-makes';
 import IncomeChart from './components/visualization/income-chart';
 import IncomeSources from './components/sources/income-sources';
+import { useReadMakes } from './hooks/supabase/use-makes';
 
 const Make = () => {
-    const { data: makes } = useFetchMakes();
+    const { data: makes } = useReadMakes();
     const [makeFormOpen, setMakeFormOpen] = useState(false);
     const [settingsFormOpen, setSettingsFormOpen] = useState(false);
     const [selectedMake, setSelectedMake] = useState<Make | undefined>();
@@ -67,7 +66,6 @@ const Make = () => {
             </div>
 
             {makeFormOpen && <MakeForm closeForm={handleFormClose} selectedMake={selectedMake} />}
-            {settingsFormOpen && <SettingsForm closeForm={handleFormClose} />}
         </Page>
     );
 };

@@ -2,27 +2,25 @@ import { useState } from 'react';
 import SpendForm from './components/forms/spend-form';
 import Page from '@/components/ui/page';
 import BudgetForm from './components/forms/budget-form';
-import SettingsForm from './components/forms/settings-form';
-import useFetchSpends from './hooks/transaction/use-fetch-spends';
-import useFetchBudgets from './hooks/budget/use-fetch-budgets';
-import { useFilteredSpends, SpendingTerm } from './hooks/transaction/use-filtered-spends';
-import { useBudgetProgress } from './hooks/budget/use-budget-progress';
-import useFetchRecurringExpenses from './hooks/recurring-expense/use-fetch-recurring-expenses';
+import { useFilteredSpends, SpendingTerm } from './hooks/data/use-filtered-spends';
+import { useBudgetProgress } from './hooks/data/use-budget-progress';
 import CategoriesAndBudgets from './components/categories/categories-and-budgets';
 import RecurringExpensesList from './components/recurring/recurring-expenses-list';
 import SpendingPeriodSelector from './components/header/spending-period-selector';
 import ActionButtons from './components/header/action-buttons';
 import SpendingSummary from './components/summary/spending-summary';
-import { useRole } from '@/hooks/use-role';
 import SpendingAnalysis from './components/analysis/spending-analysis';
 import RecentSpending from './components/recent/recent-spending';
 import SpendingChart from './components/visualization/spending-chart';
+import { useReadBudgets } from './hooks/supabase/use-budget';
+import { useReadRecurringExpenses } from './hooks/supabase/use-recurring-expenses';
+import { useReadSpends } from './hooks/supabase/use-spends';
 
 const Spend = () => {
     // const { userRole } = useRole();
-    const { data: spends } = useFetchSpends();
-    const { data: budgets } = useFetchBudgets();
-    const { data: recurringExpenses } = useFetchRecurringExpenses();
+    const { data: spends } = useReadSpends();
+    const { data: budgets } = useReadBudgets();
+    const { data: recurringExpenses } = useReadRecurringExpenses();
 
     const [selectedTerm, setSelectedTerm] = useState<SpendingTerm>('This Month');
 
@@ -102,7 +100,6 @@ const Spend = () => {
             {spendFormOpen && <SpendForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
             {recurringExpenseFormOpen && <SpendForm closeForm={handleFormClose} selectedRecurringExpense={selectedRecurringExpense} />}
             {budgetFormOpen && <BudgetForm closeForm={handleFormClose} selectedBudget={selectedBudget} />}
-            {settingsFormOpen && <SettingsForm closeForm={handleFormClose} selectedSpend={selectedSpend} />}
         </Page>
     );
 };

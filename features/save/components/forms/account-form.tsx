@@ -1,76 +1,97 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
-import { Trash } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
 import Modal from '@/components/ui/modal';
 import { useState } from 'react';
-import { useSavingsAccountMutations } from '../../hooks/savings-accounts/use-savings-account-mutations';
-import { useDebtAccountMutations } from '../../hooks/debt-accounts/use-debt-account-mutations';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import { useMutateSavingsAccounts } from '../../hooks/supabase/use-savings-accounts';
+import { useMutateDebtAccounts } from '../../hooks/supabase/use-debt-accounts';
+import FormActions from '@/components/ui/form-actions';
+import ConfirmDelete from '@/components/ui/confirm-delete';
+import InputGroup from '@/components/ui/input-groups/input-group';
+import SelectGroup from '@/components/ui/input-groups/select-group';
 
 type Props = {
     closeForm: () => void;
     selectedAccount?: SavingsAccount | DebtAccount;
 };
 
-const FormSchema = z.object({
-    type: z.enum(['Savings', 'Debt']),
+const SavingsAccountFormSchema = z.object({
     name: z.string({
         required_error: 'An account name is required.',
     }),
     balance: z.coerce.number(),
+    interest_rate: z.coerce.number().optional(),
+    interest_period: z.string().optional(),
+});
+
+const DebtAccountFormSchema = z.object({
+    name: z.string({
+        required_error: 'An account name is required.',
+    }),
+    current_balance: z.coerce.number(),
+    initial_balance: z.coerce.number(),
+    creditor: z.string(),
+    interest_rate: z.coerce.number(),
+    interest_period: z.string(),
 });
 
 // Type guard to check if account is a SavingsAccount
 const isSavingsAccount = (account: any): account is SavingsAccount => {
-    return 'user_id' in account && !('interest_rate' in account);
+    return 'balance' in account && !('creditor' in account);
 };
 
 const AccountForm = ({ closeForm, selectedAccount }: Props) => {
-    const { createSavingsAccountMutation, updateSavingsAccountMutation, deleteSavingsAccountMutation } = useSavingsAccountMutations();
-    const { createDebtAccountMutation, updateDebtAccountMutation, deleteDebtAccountMutation } = useDebtAccountMutations();
+    const { create: createSavingsAccount, update: updateSavingsAccount, delete: deleteSavingsAccount } = useMutateSavingsAccounts();
+    const { create: createDebtAccount, update: updateDebtAccount, delete: deleteDebtAccount } = useMutateDebtAccounts();
 
     // Determine initial account type using type guard
     const initialAccountType = selectedAccount ? (isSavingsAccount(selectedAccount) ? 'Savings' : 'Debt') : 'Savings';
     const [accountType, setAccountType] = useState<'Savings' | 'Debt'>(initialAccountType);
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
-    const form = useForm({
-        defaultValues: {
-            type: initialAccountType,
-            ...selectedAccount,
-        },
-        resolver: zodResolver(FormSchema),
+    // Create separate forms for each account type
+    const savingsForm = useForm({
+        defaultValues: isSavingsAccount(selectedAccount || {})
+            ? selectedAccount
+            : {
+                  name: '',
+                  balance: 0,
+                  interest_rate: 0,
+                  interest_period: 'Monthly',
+              },
+        resolver: zodResolver(SavingsAccountFormSchema),
     });
 
-    const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
-        // Remove type field before sending to API
-        const { type, ...accountData } = data;
+    const debtForm = useForm({
+        defaultValues:
+            !isSavingsAccount(selectedAccount || {}) && selectedAccount
+                ? selectedAccount
+                : {
+                      name: '',
+                      current_balance: 0,
+                      initial_balance: 0,
+                      creditor: '',
+                      interest_rate: 0,
+                  },
+        resolver: zodResolver(DebtAccountFormSchema),
+    });
 
-        if (selectedAccount) {
-            if (accountType === 'Savings') {
-                updateSavingsAccountMutation.mutate({
-                    ...accountData,
-                    id: selectedAccount.id,
-                });
-            } else {
-                updateDebtAccountMutation.mutate({
-                    ...accountData,
-                    id: selectedAccount.id,
-                });
-            }
-        } else {
-            if (accountType === 'Savings') {
-                createSavingsAccountMutation.mutate(accountData);
-            } else {
-                createDebtAccountMutation.mutate(accountData);
-            }
-        }
+    const handleSavingsSubmit: SubmitHandler<z.infer<typeof SavingsAccountFormSchema>> = (data) => {
+        if (selectedAccount && isSavingsAccount(selectedAccount)) updateSavingsAccount({ ...data, id: selectedAccount.id });
+        else createSavingsAccount(data);
+
         closeForm();
     };
+
+    const handleDebtSubmit: SubmitHandler<z.infer<typeof DebtAccountFormSchema>> = (data) => {
+        if (selectedAccount && !isSavingsAccount(selectedAccount)) updateDebtAccount({ ...data, id: selectedAccount.id });
+        else createDebtAccount(data);
+
+        closeForm();
+    };
+
+    const deleteMessage = `This action cannot be undone. This will permanently delete the ${accountType.toLowerCase()} account "${selectedAccount?.name}" and remove all associated data.`;
 
     const handleDeleteClick = () => {
         setShowDeleteAlert(true);
@@ -78,97 +99,81 @@ const AccountForm = ({ closeForm, selectedAccount }: Props) => {
 
     const handleConfirmDelete = () => {
         if (selectedAccount) {
-            if (accountType === 'Savings') {
-                deleteSavingsAccountMutation.mutate(selectedAccount.id);
-            } else {
-                deleteDebtAccountMutation.mutate(selectedAccount.id);
-            }
+            if (isSavingsAccount(selectedAccount)) deleteSavingsAccount(selectedAccount.id);
+            else deleteDebtAccount(selectedAccount.id);
         }
         closeForm();
     };
 
+    // Switch account type - reset form if creating new account
+    const switchAccountType = (type: 'Savings' | 'Debt') => {
+        setAccountType(type);
+        if (!selectedAccount) {
+            if (type === 'Savings') {
+                savingsForm.reset({
+                    name: '',
+                    balance: 0,
+                    interest_rate: 0,
+                    interest_period: 'Monthly',
+                });
+            } else {
+                debtForm.reset({
+                    name: '',
+                    current_balance: 0,
+                    initial_balance: 0,
+                    creditor: '',
+                    interest_rate: 0,
+                    interest_period: 'Monthly',
+                });
+            }
+        }
+    };
+
+    const interestPeriods = ['Daily', 'Monthly', 'Quarterly', 'Annually'];
+
     return (
         <>
             <Modal title={selectedAccount ? 'Edit Account' : 'New Account'} closeModal={closeForm} headerStyle='text-black'>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-                        <FormField
-                            control={form.control}
-                            name='type'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <div className='border-orange-0 relative flex w-full overflow-hidden rounded-lg bg-white dark:bg-black'>
-                                        <div className={`absolute left-0 top-0 h-full w-1/2 rounded-lg transition-transform duration-200 dark:bg-white ${accountType === 'Debt' ? 'translate-x-full bg-red-600' : 'translate-x-0 bg-green-500'}`}></div>
+                <div className='border-orange-0 relative flex w-full overflow-hidden rounded-lg bg-white dark:bg-black mb-4'>
+                    <div className={`absolute left-0 top-0 h-full w-1/2 rounded-lg transition-transform duration-200 dark:bg-white ${accountType === 'Debt' ? 'translate-x-full bg-red-600' : 'translate-x-0 bg-green-500'}`}></div>
 
-                                        <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Savings' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setAccountType('Savings')}>
-                                            Savings Account
-                                        </div>
+                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Savings' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => switchAccountType('Savings')}>
+                        Savings Account
+                    </div>
 
-                                        <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Debt' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => setAccountType('Debt')}>
-                                            Debt Account
-                                        </div>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
+                    <div className={`relative z-10 flex h-10 w-1/2 cursor-pointer items-center justify-center space-x-2 font-medium transition duration-200 ${accountType === 'Debt' ? 'text-white dark:text-black' : 'text-zinc-500'}`} onClick={() => switchAccountType('Debt')}>
+                        Debt Account
+                    </div>
+                </div>
 
-                        <FormField
-                            control={form.control}
-                            name='name'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <FormLabel>Account Name</FormLabel>
-                                    <Input className='transition-colors hover:bg-zinc-100' {...field} placeholder='Account Name' />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                {accountType === 'Savings' ? (
+                    <Form {...savingsForm}>
+                        <form onSubmit={savingsForm.handleSubmit(handleSavingsSubmit)} className='space-y-4'>
+                            <InputGroup control={savingsForm.control} name='name' label='Account Name' placeholder='Account Name' />
+                            <InputGroup control={savingsForm.control} name='balance' label='Balance' placeholder='0.00' type='number' step='0.01' />
+                            <InputGroup control={savingsForm.control} name='interest_rate' label='Interest Rate (%)' placeholder='0.00' type='number' step='0.01' />
+                            <SelectGroup control={savingsForm.control} name='interest_period' label='Interest Period' placeholder='Select period' options={interestPeriods} />
 
-                        <FormField
-                            control={form.control}
-                            name='balance'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <FormLabel>Balance</FormLabel>
-                                    <Input className='transition-colors hover:bg-zinc-100' type='number' {...field} placeholder='Balance' />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                            <FormActions onDelete={selectedAccount ? handleDeleteClick : undefined} onCancel={closeForm} showDelete={!!selectedAccount} />
+                        </form>
+                    </Form>
+                ) : (
+                    <Form {...debtForm}>
+                        <form onSubmit={debtForm.handleSubmit(handleDebtSubmit)} className='space-y-4'>
+                            <InputGroup control={debtForm.control} name='name' label='Account Name' placeholder='Account Name' />
+                            <InputGroup control={debtForm.control} name='initial_balance' label='Initial Balance' placeholder='0.00' type='number' step='0.01' />
+                            <InputGroup control={debtForm.control} name='current_balance' label='Current Balance' placeholder='0.00' type='number' step='0.01' />
+                            <InputGroup control={debtForm.control} name='creditor' label='Creditor' placeholder='Creditor Name' />
+                            <InputGroup control={debtForm.control} name='interest_rate' label='Interest Rate (%)' placeholder='0.00' type='number' step='0.01' />
+                            <SelectGroup control={debtForm.control} name='interest_period' label='Interest Period' placeholder='Select period' options={interestPeriods} />
 
-                        <div className={`flex pt-4 ${selectedAccount ? 'justify-between' : 'justify-end'}`}>
-                            {selectedAccount && (
-                                <Button type='button' onClick={handleDeleteClick} variant='destructive' size='icon'>
-                                    <Trash />
-                                </Button>
-                            )}
-                            <div className='flex space-x-3'>
-                                <Button variant='secondary' onClick={closeForm}>
-                                    Cancel
-                                </Button>
-                                <Button type='submit'>Save</Button>
-                            </div>
-                        </div>
-                    </form>
-                </Form>
+                            <FormActions onDelete={selectedAccount ? handleDeleteClick : undefined} onCancel={closeForm} showDelete={!!selectedAccount} />
+                        </form>
+                    </Form>
+                )}
             </Modal>
 
-            <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure you want to delete this account?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete the {accountType.toLowerCase()} account "{selectedAccount?.name}" and remove all associated data.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleConfirmDelete} className='bg-red-600 hover:bg-red-700'>
-                            Delete Account
-                        </AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} deleteMessage={deleteMessage} handleConfirmDelete={handleConfirmDelete} />
         </>
     );
 };

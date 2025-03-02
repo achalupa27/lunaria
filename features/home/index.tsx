@@ -4,9 +4,9 @@ import { useState } from 'react';
 import Card from '@/components/ui/card';
 import Page from '@/components/ui/page';
 import { ChevronDown } from 'lucide-react';
-import useFetchMakes from '../make/hooks/use-fetch-makes';
-import useFetchSaves from '../save/hooks/transactions/use-fetch-saves';
-import useFetchSpends from '../spend/hooks/transaction/use-fetch-spends';
+import { useReadMakes } from '../make/hooks/supabase/use-makes';
+import { useReadSaves } from '../save/hooks/supabase/use-saves';
+import { useReadSpends } from '../spend/hooks/supabase/use-spends';
 import RecentTransactions from './components/recent-transactions';
 import SpendForm from '../spend/components/forms/spend-form';
 import MakeForm from '../make/components/forms/make-form';
@@ -14,9 +14,9 @@ import SaveForm from '../save/components/forms/save-form';
 import { formatCurrency } from '@/utils/helper';
 
 const Home = () => {
-    const { data: makes } = useFetchMakes();
-    const { data: saves } = useFetchSaves();
-    const { data: spends } = useFetchSpends();
+    const { data: makes } = useReadMakes();
+    const { data: saves } = useReadSaves();
+    const { data: spends } = useReadSpends();
 
     const [spendFormOpen, setSpendFormOpen] = useState(false);
     const [makeFormOpen, setMakeFormOpen] = useState(false);

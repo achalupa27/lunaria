@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import DisplayCard from '@/components/ui/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
-import { usePrepareSpendingData } from '../../hooks/analysis/use-prepare-spending-data';
-import { useSpendingAnalysis } from '../../hooks/analysis/use-spending-analysis';
+import { usePrepareSpendingData } from '../../hooks/openai/use-prepare-spending-data';
+import { useSpendingAnalysis } from '../../hooks/openai/use-spending-analysis';
 import { ErrorBoundary } from 'react-error-boundary';
 
 interface SpendingAnalysisProps {

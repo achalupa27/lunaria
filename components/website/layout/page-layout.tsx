@@ -2,8 +2,9 @@
 
 import Header from './header';
 import Footer from './footer';
-import { Toaster } from '../../ui/toaster';
+import { Toaster } from '../../ui/sonner';
 import { usePathname } from 'next/navigation';
+import { CheckCircle } from 'lucide-react';
 
 function PageLayout({ children }: any) {
     const pathname = usePathname();
@@ -20,7 +21,7 @@ function PageLayout({ children }: any) {
             {!isDashboard && <Header />}
             <main>{children}</main>
             {!isDashboard && <Footer />}
-            <Toaster />
+            <Toaster icons={{ success: <CheckCircle className='text-green-500 h-4 w-4' /> }} />
         </>
     );
 }
