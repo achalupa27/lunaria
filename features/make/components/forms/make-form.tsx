@@ -11,13 +11,14 @@ import InputGroup from '@/components/ui/input-groups/input-group';
 import SelectGroup from '@/components/ui/input-groups/select-group';
 import DateGroup from '@/components/ui/input-groups/date-group';
 import { Form } from '@/components/ui/form';
+import { createSchemaFromType } from '@/utils/zod';
 
 type Props = {
     closeForm: () => void;
     selectedMake?: Make;
 };
 
-const FormSchema = z.object({
+const FormSchema = createSchemaFromType<MakeCreate>({
     amount: z.coerce
         .number({
             required_error: 'An amount is required.',
@@ -32,18 +33,20 @@ const FormSchema = z.object({
     }),
 });
 
+type FormValues = z.infer<typeof FormSchema>;
+
 const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const form = useForm({
         defaultValues: {
             ...selectedMake,
-            date: selectedMake?.date ? new Date(selectedMake.date) : undefined,
+            date: selectedMake?.date ? new Date(selectedMake.date) : new Date(),
         },
         resolver: zodResolver(FormSchema),
     });
 
     const { create: createMake, update: updateMake, delete: deleteMake } = useMutateMakes();
 
-    const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
+    const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
         if (selectedMake) updateMake({ ...data, id: selectedMake.id });
         else createMake(data);
 

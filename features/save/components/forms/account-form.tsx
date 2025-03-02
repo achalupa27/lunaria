@@ -37,7 +37,7 @@ const DebtAccountFormSchema = z.object({
 });
 
 // Type guard to check if account is a SavingsAccount
-const isSavingsAccount = (account: any): account is SavingsAccount => {
+const isSavingsAccount = (account: SavingsAccount | DebtAccount): account is SavingsAccount => {
     return 'balance' in account && !('creditor' in account);
 };
 

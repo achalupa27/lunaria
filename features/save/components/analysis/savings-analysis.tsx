@@ -38,7 +38,7 @@ const AnalysisContent = ({ savingsData }: { savingsData: any }) => {
 const SavingsAnalysis = (props: SavingsAnalysisProps) => {
     const { saves, savingsAccounts, debtAccounts, totalSavings, totalDebt } = props;
     const { savingsData } = usePrepareSavingsData(saves, savingsAccounts, debtAccounts, totalSavings, totalDebt);
-    console.log('savingsData', savingsData);
+
     if (!saves || saves.length < 5) {
         return (
             <DisplayCard title='Financial Analysis'>
