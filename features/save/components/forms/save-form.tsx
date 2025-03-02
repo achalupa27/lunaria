@@ -11,13 +11,14 @@ import ConfirmDelete from '@/components/ui/confirm-delete';
 import InputGroup from '@/components/ui/input-groups/input-group';
 import DateGroup from '@/components/ui/input-groups/date-group';
 import SelectGroup from '@/components/ui/input-groups/select-group';
+import { createSchemaFromType } from '@/utils/zod';
 
 type Props = {
     closeForm: () => void;
     selectedSave?: Save;
 };
 
-const FormSchema = z.object({
+const FormSchema = createSchemaFromType<SaveCreate>({
     type: z.enum(['Deposit', 'Withdrawal'], {
         required_error: 'A type is required.',
     }),
@@ -32,6 +33,8 @@ const FormSchema = z.object({
     }),
 });
 
+type FormValues = z.infer<typeof FormSchema>;
+
 const SaveForm = ({ closeForm, selectedSave }: Props) => {
     const { create: createSave, update: updateSave, delete: deleteSave } = useMutateSaves();
 
@@ -44,7 +47,7 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
         resolver: zodResolver(FormSchema),
     });
 
-    const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
+    const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
         if (selectedSave) updateSave({ ...data, id: selectedSave.id });
         else createSave(data);
 

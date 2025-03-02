@@ -1,14 +1,15 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Form, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
 import Modal from '@/components/ui/modal';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState } from 'react';
 import { useMutateAssets } from '../../hooks/supabase/use-assets';
 import FormActions from '@/components/ui/form-actions';
 import ConfirmDelete from '@/components/ui/confirm-delete';
+import InputGroup from '@/components/ui/input-groups/input-group';
+import SelectGroup from '@/components/ui/input-groups/select-group';
+import { createSchemaFromType } from '@/utils/zod';
 
 type Props = {
     closeForm: () => void;
@@ -18,7 +19,7 @@ type Props = {
 const categories = ['Real Estate', 'Vehicles', 'Collectibles', 'Jewelry', 'Art', 'Business Equipment', 'Other'] as const;
 const liquidityLevels = ['High', 'Medium', 'Low'] as const;
 
-const FormSchema = z.object({
+const FormSchema = createSchemaFromType<AssetCreate>({
     name: z.string({
         required_error: 'Asset name is required.',
     }),
@@ -31,8 +32,10 @@ const FormSchema = z.object({
     liquidity: z.enum(liquidityLevels, {
         required_error: 'Liquidity level is required.',
     }),
-    appreciation_rate: z.coerce.number().default(0),
+    appreciation_rate: z.coerce.number(),
 });
+
+type FormValues = z.infer<typeof FormSchema>;
 
 const AssetForm = ({ closeForm, selectedAsset }: Props) => {
     const { create: createAsset, update: updateAsset, delete: deleteAsset } = useMutateAssets();
@@ -43,7 +46,7 @@ const AssetForm = ({ closeForm, selectedAsset }: Props) => {
         resolver: zodResolver(FormSchema),
     });
 
-    const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
+    const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
         if (selectedAsset) {
             updateAsset({
                 ...data,
@@ -70,87 +73,11 @@ const AssetForm = ({ closeForm, selectedAsset }: Props) => {
             <Modal title={selectedAsset ? 'Edit Asset' : 'New Asset'} closeModal={closeForm} headerStyle='text-black'>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-                        <FormField
-                            control={form.control}
-                            name='name'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <FormLabel>Asset Name</FormLabel>
-                                    <Input {...field} placeholder='Asset Name' />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name='value'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <FormLabel>Value</FormLabel>
-                                    <Input type='number' {...field} placeholder='Value' />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name='category'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <FormLabel>Category</FormLabel>
-                                    <Select value={field.value} onValueChange={field.onChange}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder='Select category' />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {categories.map((category) => (
-                                                <SelectItem key={category} value={category}>
-                                                    {category}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name='liquidity'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <FormLabel>Liquidity</FormLabel>
-                                    <Select value={field.value} onValueChange={field.onChange}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder='Select liquidity' />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {liquidityLevels.map((level) => (
-                                                <SelectItem key={level} value={level}>
-                                                    {level}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name='appreciation_rate'
-                            render={({ field }) => (
-                                <FormItem className='flex flex-col'>
-                                    <FormLabel>Annual Appreciation Rate (%)</FormLabel>
-                                    <Input type='number' step='0.01' {...field} placeholder='0.00' />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <InputGroup control={form.control} name='name' label='Asset Name' placeholder='Asset Name' />
+                        <InputGroup control={form.control} name='value' label='Value' placeholder='Value' type='number' step='0.01' />
+                        <SelectGroup control={form.control} name='category' label='Category' placeholder='Select category' options={categories} />
+                        <SelectGroup control={form.control} name='liquidity' label='Liquidity' placeholder='Select liquidity' options={liquidityLevels} />
+                        <InputGroup control={form.control} name='appreciation_rate' label='Annual Appreciation Rate (%)' placeholder='0.00' type='number' step='0.01' />
 
                         <FormActions onDelete={handleDeleteClick} onCancel={closeForm} showDelete={!!selectedAsset} />
                     </form>

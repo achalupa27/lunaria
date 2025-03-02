@@ -1,17 +1,9 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { necessityCategories, spendingCategories } from '@/constants';
 import Modal from '@/components/ui/modal';
-import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
 import { z } from 'zod';
-import { cn } from '@/lib/utils';
-import { Calendar } from '@/components/ui/calendar';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
 import ExpenseTypeToggle from '../ui/expense-type-toggle';
 import { useState } from 'react';
 import { useMutateRecurringExpenses } from '../../hooks/supabase/use-recurring-expenses';
@@ -21,9 +13,9 @@ import ConfirmDelete from '@/components/ui/confirm-delete';
 import InputGroup from '@/components/ui/input-groups/input-group';
 import SelectGroup from '@/components/ui/input-groups/select-group';
 import DateGroup from '@/components/ui/input-groups/date-group';
+import { createSchemaFromType } from '@/utils/zod';
 
-// One-time expense schema
-const OneTimeExpenseSchema = z.object({
+const OneTimeExpenseSchema = createSchemaFromType<SpendCreate>({
     item: z.string({ required_error: 'Item is required.' }),
     cost: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
     store: z.string({ required_error: 'Store is required.' }),
@@ -34,8 +26,9 @@ const OneTimeExpenseSchema = z.object({
     date: z.date({ required_error: 'Date is required.' }),
 });
 
-// Recurring expense schema
-const RecurringExpenseSchema = z.object({
+type OneTimeExpenseFormValues = z.infer<typeof OneTimeExpenseSchema>;
+
+const RecurringExpenseSchema = createSchemaFromType<RecurringExpenseCreate>({
     name: z.string({ required_error: 'Name is required.' }),
     amount: z.coerce.number().min(0.01, 'Amount must be greater than 0'),
     period: z.enum(['weekly', 'monthly', 'yearly'], {
@@ -44,6 +37,8 @@ const RecurringExpenseSchema = z.object({
     category: z.string({ required_error: 'Category is required.' }),
     next_billing_date: z.date({ required_error: 'Next billing date is required.' }),
 });
+
+type RecurringExpenseFormValues = z.infer<typeof RecurringExpenseSchema>;
 
 type Props = {
     closeForm: () => void;
@@ -101,7 +96,7 @@ const SpendForm = ({ closeForm, selectedSpend, selectedRecurringExpense }: Props
     });
 
     // Handle one-time expense submit
-    const handleOneTimeSubmit: SubmitHandler<z.infer<typeof OneTimeExpenseSchema>> = (data) => {
+    const handleOneTimeSubmit: SubmitHandler<OneTimeExpenseFormValues> = (data: OneTimeExpenseFormValues) => {
         if (selectedSpend) {
             updateSpend({ ...data, id: selectedSpend.id });
         } else {
@@ -111,7 +106,7 @@ const SpendForm = ({ closeForm, selectedSpend, selectedRecurringExpense }: Props
     };
 
     // Handle recurring expense submit
-    const handleRecurringSubmit: SubmitHandler<z.infer<typeof RecurringExpenseSchema>> = (data) => {
+    const handleRecurringSubmit: SubmitHandler<RecurringExpenseFormValues> = (data: RecurringExpenseFormValues) => {
         if (selectedRecurringExpense) {
             updateRecurringExpense({ ...data, id: selectedRecurringExpense.id });
         } else {

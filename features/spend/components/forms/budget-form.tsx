@@ -10,13 +10,14 @@ import ConfirmDelete from '@/components/ui/confirm-delete';
 import { useState } from 'react';
 import SelectGroup from '@/components/ui/input-groups/select-group';
 import InputGroup from '@/components/ui/input-groups/input-group';
+import { createSchemaFromType } from '@/utils/zod';
 
 type Props = {
     closeForm: () => void;
     selectedBudget?: Budget;
 };
 
-const FormSchema = z.object({
+const FormSchema = createSchemaFromType<BudgetCreate>({
     category: z.string({
         required_error: 'A category is required.',
     }),
@@ -26,6 +27,8 @@ const FormSchema = z.object({
     }),
 });
 
+type FormValues = z.infer<typeof FormSchema>;
+
 const BudgetForm = ({ closeForm, selectedBudget }: Props) => {
     const { create: createBudget, update: updateBudget, delete: deleteBudget } = useMutateBudgets();
 
@@ -34,7 +37,7 @@ const BudgetForm = ({ closeForm, selectedBudget }: Props) => {
         resolver: zodResolver(FormSchema),
     });
 
-    const onSubmit: SubmitHandler<any> = (data: z.infer<typeof FormSchema>) => {
+    const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
         if (selectedBudget) updateBudget({ ...data, id: selectedBudget.id });
         else createBudget(data);
 

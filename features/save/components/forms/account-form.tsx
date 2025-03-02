@@ -10,13 +10,14 @@ import FormActions from '@/components/ui/form-actions';
 import ConfirmDelete from '@/components/ui/confirm-delete';
 import InputGroup from '@/components/ui/input-groups/input-group';
 import SelectGroup from '@/components/ui/input-groups/select-group';
+import { createSchemaFromType } from '@/utils/zod';
 
 type Props = {
     closeForm: () => void;
     selectedAccount?: SavingsAccount | DebtAccount;
 };
 
-const SavingsAccountFormSchema = z.object({
+const SavingsAccountFormSchema = createSchemaFromType<SavingsAccountCreate>({
     name: z.string({
         required_error: 'An account name is required.',
     }),
@@ -25,7 +26,7 @@ const SavingsAccountFormSchema = z.object({
     interest_period: z.string().optional(),
 });
 
-const DebtAccountFormSchema = z.object({
+const DebtAccountFormSchema = createSchemaFromType<DebtAccountCreate>({
     name: z.string({
         required_error: 'An account name is required.',
     }),
@@ -37,7 +38,7 @@ const DebtAccountFormSchema = z.object({
 });
 
 // Type guard to check if account is a SavingsAccount
-const isSavingsAccount = (account: SavingsAccount | DebtAccount): account is SavingsAccount => {
+const isSavingsAccount = (account: SavingsAccount | DebtAccount | {}): account is SavingsAccount => {
     return 'balance' in account && !('creditor' in account);
 };
 
@@ -77,14 +78,14 @@ const AccountForm = ({ closeForm, selectedAccount }: Props) => {
         resolver: zodResolver(DebtAccountFormSchema),
     });
 
-    const handleSavingsSubmit: SubmitHandler<z.infer<typeof SavingsAccountFormSchema>> = (data) => {
+    const handleSavingsSubmit: SubmitHandler<SavingsAccount> = (data: SavingsAccount) => {
         if (selectedAccount && isSavingsAccount(selectedAccount)) updateSavingsAccount({ ...data, id: selectedAccount.id });
         else createSavingsAccount(data);
 
         closeForm();
     };
 
-    const handleDebtSubmit: SubmitHandler<z.infer<typeof DebtAccountFormSchema>> = (data) => {
+    const handleDebtSubmit: SubmitHandler<DebtAccount> = (data: DebtAccount) => {
         if (selectedAccount && !isSavingsAccount(selectedAccount)) updateDebtAccount({ ...data, id: selectedAccount.id });
         else createDebtAccount(data);
 
