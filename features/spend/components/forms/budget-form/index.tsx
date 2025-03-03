@@ -56,7 +56,7 @@ const BudgetForm = ({ closeForm, selectedBudget }: Props) => {
                     <FormActions onDelete={handleDelete} onCancel={closeForm} showDelete={!!selectedBudget} />
                 </form>
             </Form>
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='budget' itemName={selectedBudget!.category} />
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='budget' itemName={selectedBudget?.category || ''} />
         </Modal>
     );
 };

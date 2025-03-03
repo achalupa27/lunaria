@@ -101,7 +101,7 @@ const SaveForm = ({ closeForm, selectedSave }: Props) => {
                 </Form>
             </Modal>
 
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='saving' itemName={selectedSave?.amount.toString() || ''} />
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='Saving' itemName={selectedSave?.amount.toString() || ''} />
         </>
     );
 };

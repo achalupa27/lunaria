@@ -13,9 +13,9 @@ interface Asset extends TableDefaults {
     name: string;
     value: number;
     currency?: string;
-    category: string;
-    liquidity: AssetLiquidity;
-    appreciation_rate: number;
+    category?: string;
+    liquidity?: AssetLiquidity;
+    appreciation_rate?: number;
 }
 type AssetCreate = Omit<Asset, keyof TableDefaults>;
 type AssetUpdate = AssetCreate & { id: string };

@@ -120,8 +120,8 @@ const ProfilePage = () => {
                     <p className='text-zinc-600 dark:text-zinc-400'>{session?.user?.email || 'No email provided'}</p>
                 </div>
                 <div className='absolute top-4 right-4'>
-                    {subscription?.role === 'premium' && <span className='px-2 py-1 gold-gradient rounded-lg text-sm border border-orange-100 shadow font-semibold dark:text-zinc-900'>Premium</span>}
-                    {subscription?.role === 'pro' && <span className='px-2 py-1 rounded-lg dark:bg-zinc-950 text-sm dark:text-orange-100 font-medium border border-orange-100 bg-white shadow'>Pro</span>}
+                    {subscription?.role === 'premium' && <span className='px-2 py-1 gold-gradient rounded-lg text-sm border border-orange-100 dark:border-orange-200 shadow font-semibold dark:text-zinc-900'>Premium</span>}
+                    {subscription?.role === 'pro' && <span className='px-2 py-1 rounded-lg dark:bg-zinc-950 text-sm dark:text-orange-100 font-medium border border-orange-100 dark:border-orange-200 bg-white shadow'>Pro</span>}
                     {(!subscription?.role || subscription.role === 'free') && <span className='px-2 py-1 text-sm'>Free</span>}
                 </div>
             </Card>

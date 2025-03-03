@@ -23,7 +23,7 @@ const AnalysisContent = ({ incomeData }: { incomeData: any }) => {
     const { data: analysis } = useIncomeAnalysis(incomeData);
 
     return (
-        <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
+        <div className='flex-1 overflow-y-auto scrollbar-none  pt-0'>
             <div className='prose prose-sm dark:prose-invert max-w-none'>
                 <ReactMarkdown>{analysis}</ReactMarkdown>
             </div>
@@ -34,6 +34,8 @@ const AnalysisContent = ({ incomeData }: { incomeData: any }) => {
 const IncomeAnalysis = (props: IncomeAnalysisProps) => {
     const { makes } = props;
     const { incomeData } = usePrepareIncomeData(makes);
+
+    console.log('incomeData', incomeData);
 
     if (!makes || makes.length < 5) {
         return (

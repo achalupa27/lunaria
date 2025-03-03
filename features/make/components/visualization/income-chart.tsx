@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, PieChart, Pie, Cell } from 'recharts';
 import { formatCurrency } from '@/utils/helper';
 import { format } from 'date-fns';
 import Card from '@/components/ui/card';

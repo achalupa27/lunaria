@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
 import PeriodSelector, { Period } from '../../components/ui/period-selector';
 import { exportToCSV } from '@/utils/export';
-import SpendForm from '../spend/components/forms/expense';
+import SpendForm from '../spend/components/forms/expense-form';
 
 type TransactionType = 'spends' | 'makes' | 'saves';
 

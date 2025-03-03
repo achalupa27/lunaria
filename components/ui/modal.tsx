@@ -8,14 +8,13 @@ type Props = {
     children: React.ReactNode;
     title: string | React.ReactNode;
     closeModal: () => void;
-    headerStyle?: string;
     handleBack?: any;
 };
 
-const Modal = ({ children, title, closeModal, headerStyle, handleBack }: Props) => {
+const Modal = ({ children, title, closeModal, handleBack }: Props) => {
     return (
         <DismissBackdrop closePopup={closeModal}>
-            <div className='z-50 w-[500px] rounded-xl border-2 border-orange-100 bg-secondary p-12 shadow dark:bg-primary'>
+            <div className='z-50 w-[500px] rounded-xl border-2 border-orange-100 dark:border-orange-200 bg-secondary p-12 shadow dark:bg-primary'>
                 <div className='mb-6 flex items-center justify-between'>
                     <div className='flex items-center space-x-2'>
                         {handleBack && (
@@ -23,7 +22,7 @@ const Modal = ({ children, title, closeModal, headerStyle, handleBack }: Props) 
                                 <MoveLeft />
                             </Button>
                         )}
-                        <h2 className={`flex w-full text-2xl ${headerStyle}`}>{title}</h2>
+                        <h2 className={`flex w-full text-2xl`}>{title}</h2>
                     </div>
                     <Button size='icon' variant='ghost' onClick={closeModal}>
                         <X />

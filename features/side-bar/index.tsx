@@ -33,7 +33,7 @@ const Sidebar = () => {
     };
 
     return (
-        <div className='flex h-screen flex-col items-center justify-center space-y-4 bg-zinc-100 dark:bg-black dark:border-r-orange-100 border-r px-2 py-3'>
+        <div className='flex h-screen flex-col items-center justify-center space-y-4 bg-zinc-100 dark:bg-zinc-920 dark:border-r-orange-200 border-r px-2 py-3'>
             <div className='border-b pb-2'>
                 <div className='h-8 w-8 rounded-full bg-blue-300'></div>
             </div>

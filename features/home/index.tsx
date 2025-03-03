@@ -11,12 +11,15 @@ import RecentTransactions from './components/recent-transactions';
 import MakeForm from '../make/components/forms/make-form';
 import SaveForm from '../save/components/forms/save-form';
 import { formatCurrency } from '@/utils/helper';
-import SpendForm from '../spend/components/forms/expense';
-
+import SpendForm from '../spend/components/forms/expense-form';
+import { useReadAssets } from '../save/hooks/supabase/use-assets';
+import { useReadDebtAccounts } from '../save/hooks/supabase/use-debt-accounts';
 const Home = () => {
     const { data: makes } = useReadMakes();
     const { data: saves } = useReadSaves();
     const { data: spends } = useReadSpends();
+    const { data: assets } = useReadAssets();
+    const { data: debtAccounts } = useReadDebtAccounts();
 
     const [spendFormOpen, setSpendFormOpen] = useState(false);
     const [makeFormOpen, setMakeFormOpen] = useState(false);
@@ -44,6 +47,9 @@ const Home = () => {
     const totalIncome = makes?.reduce((acc, make) => acc + make.amount, 0) || 0;
     const totalSavings = saves?.reduce((acc, save) => acc + save.amount, 0) || 0;
     const totalSpending = spends?.reduce((acc, spend) => acc + spend.cost, 0) || 0;
+    const totalAssets = assets?.reduce((acc, asset) => acc + asset.value, 0) || 0;
+    const totalDebt = debtAccounts?.reduce((acc, debt) => acc + debt.current_balance, 0) || 0;
+    const totalNetWorth = totalAssets + totalSavings - totalDebt;
 
     return (
         <Page>
@@ -54,24 +60,27 @@ const Home = () => {
                 </div>
             </div>
             <div className='my-2 flex space-x-6'>
+                <Card className='gold-gradient'>
+                    <span className='leading-none'>{'Net Worth'}</span>
+                    <div className='space-x-2 mt-1'>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalNetWorth)}</span>
+                    </div>
+                </Card>
                 <Card className=''>
                     <span className='leading-none'>{'Net Income'}</span>
-                    <div className='space-x-2'>
-                        <span className=''>{'CAD'}</span>
+                    <div className='space-x-2 mt-1'>
                         <span className='text-3xl font-semibold'>{formatCurrency(totalIncome)}</span>
                     </div>
                 </Card>
                 <Card className=''>
                     <span className='leading-none'>{'Net Savings'}</span>
-                    <div className='space-x-2'>
-                        <span className=''>{'CAD'}</span>
+                    <div className='space-x-2 mt-1'>
                         <span className='text-3xl font-semibold'>{formatCurrency(totalSavings)}</span>
                     </div>
                 </Card>
                 <Card className=''>
                     <span className='leading-none'>{'Net Spending'}</span>
-                    <div className='space-x-2'>
-                        <span className=''>{'CAD'}</span>
+                    <div className='space-x-2 mt-1'>
                         <span className='text-3xl font-semibold'>{formatCurrency(totalSpending)}</span>
                     </div>
                 </Card>

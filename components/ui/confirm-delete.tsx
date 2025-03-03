@@ -5,7 +5,7 @@ type ConfirmDeleteProps = {
     setShowDeleteAlert: (show: boolean) => void;
     handleConfirmDelete: () => void;
     itemCategory: string;
-    itemName: string;
+    itemName: string | undefined;
 };
 
 const ConfirmDelete = ({ showDeleteAlert, setShowDeleteAlert, handleConfirmDelete, itemCategory, itemName }: ConfirmDeleteProps) => {
@@ -13,13 +13,13 @@ const ConfirmDelete = ({ showDeleteAlert, setShowDeleteAlert, handleConfirmDelet
         <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure you want to delete this account?</AlertDialogTitle>
+                    <AlertDialogTitle>Are you sure you want to delete this {itemCategory}?</AlertDialogTitle>
                     <AlertDialogDescription>{`This action cannot be undone. This will permanently delete the ${itemCategory} "${itemName}" and remove all associated data.`}</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction onClick={handleConfirmDelete} className='bg-red-600 hover:bg-red-700'>
-                        Delete Account
+                        Delete {itemCategory}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>

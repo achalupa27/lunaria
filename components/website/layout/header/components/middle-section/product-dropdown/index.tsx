@@ -16,7 +16,7 @@ const ProductDropdown = ({ category }: Props) => {
         <>
             <div className='invisible absolute bottom-0 h-3 w-full translate-y-full group-hover:visible'></div>
             <div className='invisible fixed left-1/2 z-40 mt-2 w-max -translate-x-1/2 translate-y-[-10px] transform rounded-xl opacity-0 shadow-lg transition-all duration-200 ease-out group-hover:visible group-hover:translate-y-0 group-hover:opacity-100'>
-                <div className='z-50 flex h-fit flex-col items-center gap-3 rounded-xl border border-orange-100 bg-zinc-50 p-3 shadow-lg dark:border-zinc-700 dark:bg-zinc-950 xl:h-44 xl:flex-row'>
+                <div className='z-50 flex h-fit flex-col items-center gap-3 rounded-xl border border-orange-100 dark:border-orange-200 bg-zinc-50 p-3 shadow-lg dark:bg-zinc-950 xl:h-44 xl:flex-row'>
                     {items.map((item, index) => (
                         <Fragment key={index}>
                             <DropdownItem item={item} />

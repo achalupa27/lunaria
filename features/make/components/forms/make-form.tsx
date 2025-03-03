@@ -75,7 +75,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
                     <FormActions onDelete={handleDelete} onCancel={closeForm} showDelete={!!selectedMake} />
                 </form>
             </Form>
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='making' itemName={selectedMake?.amount.toString() || ''} />
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='Making' itemName={selectedMake?.amount.toString() || ''} />
         </Modal>
     );
 };

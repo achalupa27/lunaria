@@ -158,7 +158,7 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
             return <NoSavings />;
         }
 
-        if (((view === 'accounts' || view === 'distribution') && (!savingsAccounts || savingsAccounts.length === 0)) || !debtAccounts || debtAccounts.length === 0) {
+        if ((view === 'accounts' || view === 'distribution') && (!savingsAccounts || savingsAccounts.length === 0) && (!debtAccounts || debtAccounts.length === 0)) {
             return <NoSavingsAccounts />;
         }
 
@@ -166,7 +166,7 @@ const SavingsChart = ({ saves, savingsAccounts, debtAccounts }: Props) => {
     };
 
     return (
-        <Card title='Savings Chart'>
+        <Card className='flex flex-col h-full p-6'>
             <div className='flex items-center justify-between'>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

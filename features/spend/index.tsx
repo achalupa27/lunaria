@@ -14,7 +14,7 @@ import { useReadBudgets } from './hooks/supabase/use-budget';
 import { useReadRecurringExpenses } from './hooks/supabase/use-recurring-expenses';
 import { useReadSpends } from './hooks/supabase/use-spends';
 import SpendingAnalysis from './components/cards/analysis/spending-analysis';
-import SpendForm from './components/forms/expense';
+import SpendForm from './components/forms/expense-form';
 
 const Spend = () => {
     // const { userRole } = useRole();

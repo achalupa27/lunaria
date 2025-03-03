@@ -17,7 +17,6 @@ import { useReadMakes } from './hooks/supabase/use-makes';
 const Make = () => {
     const { data: makes } = useReadMakes();
     const [makeFormOpen, setMakeFormOpen] = useState(false);
-    const [settingsFormOpen, setSettingsFormOpen] = useState(false);
     const [selectedMake, setSelectedMake] = useState<Make | undefined>();
     const [selectedTerm, setSelectedTerm] = useState<Period>('All Time');
 
@@ -40,14 +39,13 @@ const Make = () => {
     const handleFormClose = () => {
         setSelectedMake(undefined);
         setMakeFormOpen(false);
-        setSettingsFormOpen(false);
     };
 
     return (
         <Page>
             <div className='flex items-center justify-between'>
                 <MakingPeriodSelector selectedTerm={selectedTerm} onTermChange={handleTermChange} />
-                <ActionButtons onSettingsClick={() => setSettingsFormOpen(true)} onNewMakeClick={handleFormOpen} />
+                <ActionButtons onNewMakeClick={handleFormOpen} />
             </div>
 
             <IncomeSummary totalIncome={totalIncome} incomeBySource={incomeBySource} />

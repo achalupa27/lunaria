@@ -27,7 +27,7 @@ const AnalysisContent = ({ savingsData }: { savingsData: any }) => {
     const { data: analysis } = useSavingsAnalysis(savingsData);
 
     return (
-        <div className='flex-1 overflow-y-auto scrollbar-none p-4 pt-0'>
+        <div className='flex-1 overflow-y-auto scrollbar-none'>
             <div className='prose prose-sm dark:prose-invert max-w-none'>
                 <ReactMarkdown>{analysis}</ReactMarkdown>
             </div>

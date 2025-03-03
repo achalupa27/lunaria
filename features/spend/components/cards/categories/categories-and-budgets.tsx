@@ -17,7 +17,7 @@ type Props = {
 const NoCategories = () => {
     return (
         <div className='flex flex-col items-center justify-center h-full'>
-            <p className='text-sm text-gray-500'>No categories</p>
+            <p className='text-sm text-zinc-500'>No categories</p>
         </div>
     );
 };
@@ -39,7 +39,7 @@ const CategoriesAndBudgets = ({ categoryTotals, budgetProgress, onBudgetClick }:
                                 {budgetProgress[category] && (
                                     <div className='text-sm'>
                                         <span className={`font-medium ${budgetProgress[category].spent > budgetProgress[category].budget ? 'text-red-600' : 'text-green-600'}`}>{formatCurrency(budgetProgress[category].spent)}</span>
-                                        <span className='text-gray-500'>
+                                        <span className='text-zinc-600 dark:text-zinc-400'>
                                             {' / '}
                                             {formatCurrency(budgetProgress[category].budget)} ({budgetProgress[category].period})
                                         </span>

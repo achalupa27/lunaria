@@ -124,7 +124,7 @@ const SpendForm = ({ closeForm, selectedSpend, selectedRecurringExpense }: Props
     };
 
     return (
-        <Modal title={selectedRecurringExpense ? 'Edit Recurring Expense' : selectedSpend ? 'Edit Expense' : 'New Expense'} closeModal={closeForm} headerStyle={'text-black'}>
+        <Modal title={selectedRecurringExpense ? 'Edit Recurring Expense' : selectedSpend ? 'Edit Expense' : 'New Expense'} closeModal={closeForm}>
             <ExpenseTypeToggle type={expenseType} onChange={switchExpenseType} />
 
             {expenseType === 'one-time' ? (
@@ -142,7 +142,7 @@ const SpendForm = ({ closeForm, selectedSpend, selectedRecurringExpense }: Props
                     </form>
                 </Form>
             )}
-            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory={expenseType === 'recurring' ? 'recurring expense' : 'one-time expense'} itemName={expenseType === 'recurring' ? selectedRecurringExpense!.name : selectedSpend!.item} />
+            <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory={expenseType === 'recurring' ? 'recurring expense' : 'one-time expense'} itemName={expenseType === 'recurring' ? selectedRecurringExpense?.name : selectedSpend?.item} />
         </Modal>
     );
 };

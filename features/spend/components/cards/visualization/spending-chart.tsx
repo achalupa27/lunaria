@@ -156,36 +156,34 @@ const SpendingChart = ({ spends }: Props) => {
     };
 
     return (
-        <Card className='h-full'>
-            <div className='p-4 flex flex-col h-full'>
-                <div className='flex items-center justify-between'>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant='ghost' className='-ml-4 w-fit rounded-xl px-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-lg font-semibold'>
-                                <span>Spending by {viewLabels[view]}</span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align='start'>
-                            <DropdownMenuItem onClick={() => setView('necessity')} className='flex items-center justify-between'>
-                                By Necessity
-                                {view === 'necessity' && <Check className='h-4 w-4' />}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setView('category')} className='flex items-center justify-between'>
-                                By Category
-                                {view === 'category' && <Check className='h-4 w-4' />}
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setView('monthly')} className='flex items-center justify-between'>
-                                Monthly Trend
-                                {view === 'monthly' && <Check className='h-4 w-4' />}
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                    <Button variant='ghost' size='icon' onClick={handleNextView}>
-                        <ChevronRight className='h-5 w-5' />
-                    </Button>
-                </div>
-                {spends.length > 0 ? <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div> : <NoSpending />}
+        <Card className='flex flex-col h-full p-6'>
+            <div className='flex items-center justify-between'>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant='ghost' className='-ml-4 w-fit rounded-xl px-4 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-lg font-semibold'>
+                            <span>Spending by {viewLabels[view]}</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align='start'>
+                        <DropdownMenuItem onClick={() => setView('necessity')} className='flex items-center justify-between'>
+                            By Necessity
+                            {view === 'necessity' && <Check className='h-4 w-4' />}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setView('category')} className='flex items-center justify-between'>
+                            By Category
+                            {view === 'category' && <Check className='h-4 w-4' />}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setView('monthly')} className='flex items-center justify-between'>
+                            Monthly Trend
+                            {view === 'monthly' && <Check className='h-4 w-4' />}
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                <Button variant='ghost' size='icon' onClick={handleNextView}>
+                    <ChevronRight className='h-5 w-5' />
+                </Button>
             </div>
+            {spends.length > 0 ? <div className='flex-1 min-h-0 mt-4'>{renderChart()}</div> : <NoSpending />}
         </Card>
     );
 };

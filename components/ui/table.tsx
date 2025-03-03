@@ -12,7 +12,7 @@ type Props = {
 
 const Table = ({ table, handleRowClick, tableColor }: Props) => {
     return (
-        <div className={`h-full w-full overflow-y-auto rounded-lg border border-orange-100 bg-white shadow dark:bg-black scrollbar-none`}>
+        <div className={`h-full w-full overflow-y-auto rounded-lg border border-orange-100 dark:border-orange-200 bg-white shadow dark:bg-black scrollbar-none`}>
             <table className='w-full border-separate border-spacing-0 text-center'>
                 <thead className={`sticky inset-0 h-[40px] text-primary`}>
                     {table.getHeaderGroups().map((headerGroup: any) => (

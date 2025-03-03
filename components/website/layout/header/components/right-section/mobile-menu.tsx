@@ -66,7 +66,7 @@ const MobileMenu = () => {
                     <span className='sr-only'>Toggle menu</span>
                 </Button>
             </SheetTrigger>
-            <SheetContent side='right' className='flex flex-col p-0 border border-orange-100'>
+            <SheetContent side='right' className='flex flex-col p-0 border border-orange-100 dark:border-orange-200'>
                 {/* Sticky Header */}
                 <div className='sticky top-0 border-b px-8 py-7'>
                     <SheetTitle>

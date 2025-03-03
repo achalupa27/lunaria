@@ -26,13 +26,9 @@ const FormSchema = createSchemaFromType<AssetCreate>({
     value: z.coerce.number({
         required_error: 'Asset value is required.',
     }),
-    category: z.enum(categories as [string, ...string[]], {
-        required_error: 'Category is required.',
-    }),
-    liquidity: z.enum(liquidityLevels as any, {
-        required_error: 'Liquidity level is required.',
-    }),
-    appreciation_rate: z.coerce.number(),
+    category: z.enum(categories as [string, ...string[]]).optional(),
+    liquidity: z.enum(liquidityLevels as any).optional(),
+    appreciation_rate: z.coerce.number().optional(),
 });
 
 type FormValues = z.infer<typeof FormSchema>;

@@ -9,7 +9,7 @@ type Props = {
 const TermChanger = ({ term, setTerm }: Props) => {
     return (
         <>
-            <div className='relative flex w-72 sm:w-96 rounded-full border border-orange-50 bg-white p-[4px] shadow dark:bg-black' aria-label='Term Changer'>
+            <div className='relative flex w-72 sm:w-96 rounded-full border border-orange-100 dark:border-orange-200 bg-white p-[4px] shadow dark:bg-black' aria-label='Term Changer'>
                 {/* Sliding Background */}
                 <div className={`absolute left-0 top-0 h-full w-1/2 rounded-full bg-zinc-950 transition-transform duration-200 dark:bg-white ${term === 'Yearly' ? 'translate-x-full' : 'translate-x-0'}`}></div>
 
