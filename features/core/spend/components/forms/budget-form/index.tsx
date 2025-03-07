@@ -46,7 +46,7 @@ const BudgetForm = ({ closeForm, selectedBudget }: Props) => {
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     return (
-        <Modal title={selectedBudget ? 'Edit Budget' : 'New Budget'} closeModal={closeForm} headerStyle={'text-black'}>
+        <Modal title={selectedBudget ? 'Edit Budget' : 'New Budget'} closeModal={closeForm}>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
                     <SelectGroup control={form.control} name='category' label='Category' placeholder='Select category' options={spendingCategories} />

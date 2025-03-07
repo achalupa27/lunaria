@@ -19,7 +19,6 @@ type DateGroupProps = {
 };
 
 const DateGroup = ({ control, name, label, placeholder, disableFutureDates = false, disablePastDates = false, minDate = new Date('1900-01-01'), maxDate }: DateGroupProps) => {
-    console.log('selectedDate', control._formValues[name]);
     return (
         <FormField
             control={control}
@@ -48,7 +47,6 @@ const DateGroup = ({ control, name, label, placeholder, disableFutureDates = fal
 
                                     return (disableFutureDates && isFutureDate) || (disablePastDates && isPastDate) || isPastDate || isAfterMax;
                                 }}
-                                initialFocus
                             />
                         </PopoverContent>
                     </Popover>

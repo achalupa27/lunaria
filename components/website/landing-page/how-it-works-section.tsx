@@ -18,10 +18,10 @@ const HowItWorksSection = () => {
                             <div className='-mt-[2px] text-zinc-600 dark:text-zinc-400 text-sm'>Upwards but Backwards</div>
                             <div className='pt-1'>The key to good spending habits is balance. Make sure you don&apos;t go backwards more than you go forwards.</div>
                         </div>
-                        <SpendIcon width={145} height={145} filled={true} />
+                        <SpendIcon width={145} height={145} filled={true} fillColor='fill-[#f7ebc0]' />
                     </Card>
                     <Card className='mt-0 flex flex-1 flex-col items-center p-8 text-center md:mt-6 md:flex-row md:text-start md:border-none md:shadow-none md:bg-transparent md:dark:shadow-none md:dark:bg-none'>
-                        <MakeIcon width={145} height={145} filled={true} />
+                        <MakeIcon width={145} height={145} filled={true} fillColor='fill-[#99f5d1]' />
                         <div className='flex-1'>
                             <div className='text-2xl'>Make</div>
                             <div className='-mt-[2px] text-zinc-600 dark:text-zinc-400 text-sm'>Upwards and Forward.</div>
@@ -30,7 +30,7 @@ const HowItWorksSection = () => {
                     </Card>
                 </div>
                 <Card className='mt-6 md:mt-0 md:mb-6 md:dark:shadow-none flex w-full flex-1 flex-col items-center p-8 pt-4 text-center md:border-none md:shadow-none md:bg-transparent md:dark:bg-none'>
-                    <SaveIcon width={145} height={145} filled={true} />
+                    <SaveIcon width={145} height={145} filled={true} fillColor='fill-[#93c5fd]' />
                     <div className='flex-1 text-center'>
                         <div className='text-2xl'>Save</div>
                         <div className='-mt-[2px] text-zinc-600 dark:text-zinc-400 text-sm'>Grounding.</div>

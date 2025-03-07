@@ -63,7 +63,6 @@ const ProfilePage = () => {
                     console.error('Error fetching subscription:', error);
                     return;
                 }
-                console.log(subscriptionData);
                 setSubscription(subscriptionData);
             }
         };

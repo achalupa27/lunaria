@@ -65,7 +65,7 @@ const MakeForm = ({ closeForm, selectedMake }: Props) => {
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     return (
-        <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm} headerStyle={'text-black'}>
+        <Modal title={selectedMake ? 'Edit Making' : 'New Making'} closeModal={closeForm}>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
                     <InputGroup control={form.control} name='amount' label='Amount' placeholder='Amount' type='number' step='0.01' />

@@ -53,9 +53,9 @@ const Sidebar = () => {
             </div>
 
             <div className='flex-col flex items-center space-y-3'>
-                <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => handleTabChange('Reports')}>
+                {/* <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => handleTabChange('Reports')}>
                     <ChartPie />
-                </Button>
+                </Button> */}
                 <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => handleTabChange('Transactions')}>
                     <Receipt />
                 </Button>

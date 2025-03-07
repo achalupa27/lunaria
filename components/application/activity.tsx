@@ -1,17 +1,17 @@
 'use client';
 
 import Home from '../../features/home';
-import Make from '../../features/make';
-import Save from '../../features/save';
-import Spend from '../../features/spend';
+import Make from '../../features/core/make';
+import Save from '../../features/core/save';
+import Spend from '../../features/core/spend';
 import { useAppSelector } from '@/store/hooks';
 import { selectTab } from '@/store/slices/tab-slice';
 import Settings from './settings';
 import { Suspense, useEffect, useState } from 'react';
 import Loader from '../ui/loader';
 import { ErrorBoundary } from 'react-error-boundary';
-import Transactions from '../../features/transactions';
-import Reports from '@/features/reports';
+import Transactions from '../../features/tools/transactions';
+import Reports from '@/features/tools/reports';
 import { createClient } from '@/utils/supabase/client';
 
 const Activity = () => {

@@ -7,7 +7,6 @@ type Subscription = {
     stripe_customer_id?: string;
     trial_end?: string | null;
     interval?: 'month' | 'year';
-    // ... other fields
 };
 
 export function useSubscription() {

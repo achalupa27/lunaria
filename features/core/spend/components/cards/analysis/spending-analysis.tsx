@@ -3,8 +3,8 @@ import DisplayCard from '@/components/ui/display-card';
 import ReactMarkdown from 'react-markdown';
 import Loader from '@/components/ui/loader';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useSpendingAnalysis } from '@/features/spend/hooks/openai/use-spending-analysis';
-import { usePrepareSpendingData } from '@/features/spend/hooks/openai/use-prepare-spending-data';
+import { useSpendingAnalysis } from '@/features/core/spend/hooks/openai/use-spending-analysis';
+import { usePrepareSpendingData } from '@/features/core/spend/hooks/openai/use-prepare-spending-data';
 
 interface SpendingAnalysisProps {
     spends: Spend[] | undefined;

@@ -2,19 +2,19 @@
 
 import { useState, useEffect } from 'react';
 import Page from '@/components/ui/page';
-import { useReadSpends } from '../spend/hooks/supabase/use-spends';
+import { useReadSpends } from '../../core/spend/hooks/supabase/use-spends';
 import TransactionTable from './components/transaction-table';
-import { useReadMakes } from '../make/hooks/supabase/use-makes';
-import { useReadSaves } from '../save/hooks/supabase/use-saves';
+import { useReadMakes } from '../../core/make/hooks/supabase/use-makes';
+import { useReadSaves } from '../../core/save/hooks/supabase/use-saves';
 import TransactionFilters from './components/transaction-filters';
 import { useAppDispatch } from '@/store/hooks';
 import { setTab } from '@/store/slices/tab-slice';
 import { ArrowLeft, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'next/navigation';
-import PeriodSelector, { Period } from '../../components/ui/period-selector';
+import PeriodSelector, { Period } from '../../../components/ui/period-selector';
 import { exportToCSV } from '@/utils/export';
-import SpendForm from '../spend/components/forms/expense-form';
+import SpendForm from '../../core/spend/components/forms/expense-form';
 
 type TransactionType = 'spends' | 'makes' | 'saves';
 

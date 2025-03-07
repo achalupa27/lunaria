@@ -19,8 +19,6 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const { email, id } = body.record;
 
-        console.log('email, id: ', email, id);
-
         if (!email || !id) {
             return new Response('Missing required fields', { status: 400 });
         }
@@ -30,8 +28,6 @@ export async function POST(req: NextRequest) {
             email,
             metadata: { supabaseUUID: id }, // Correct metadata syntax
         });
-
-        console.log('customer id, email: ', customer.id, customer.email);
 
         // Create Supabase client and update the customer ID
         const supabase = await createClient();

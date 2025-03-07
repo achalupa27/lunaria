@@ -10,8 +10,6 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { spendingData } = body;
 
-        console.log(spendingData);
-
         const completion = await openai.chat.completions.create({
             model: 'gpt-4o-mini',
             messages: [

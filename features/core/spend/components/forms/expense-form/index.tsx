@@ -15,7 +15,6 @@ import OneTimeExpenseFields from './one-time-expense-fields';
 
 type OneTimeExpenseFormValues = z.infer<typeof OneTimeExpenseSchema>;
 type RecurringExpenseFormValues = z.infer<typeof RecurringExpenseSchema>;
-
 type Props = {
     closeForm: () => void;
     selectedSpend?: Spend;
@@ -30,84 +29,34 @@ const SpendForm = ({ closeForm, selectedSpend, selectedRecurringExpense }: Props
     const { create: createRecurringExpense, update: updateRecurringExpense, delete: deleteRecurringExpense } = useMutateRecurringExpenses();
 
     const oneTimeForm = useForm<OneTimeExpenseFormValues>({
-        defaultValues: selectedSpend
-            ? {
-                  item: selectedSpend.item,
-                  cost: selectedSpend.cost,
-                  store: selectedSpend.store,
-                  category: selectedSpend.category,
-                  necessity: selectedSpend.necessity,
-                  date: new Date(selectedSpend.date),
-              }
-            : {
-                  item: '',
-                  cost: 0,
-                  store: '',
-                  category: '',
-                  necessity: 'Need' as const,
-                  date: new Date(),
-              },
+        defaultValues: selectedSpend,
         resolver: zodResolver(OneTimeExpenseSchema),
     });
 
     const recurringForm = useForm<RecurringExpenseFormValues>({
-        defaultValues: selectedRecurringExpense
-            ? {
-                  name: selectedRecurringExpense.name,
-                  amount: selectedRecurringExpense.amount,
-                  period: selectedRecurringExpense.period,
-                  category: selectedRecurringExpense.category,
-                  next_billing_date: new Date(selectedRecurringExpense.next_billing_date),
-              }
-            : {
-                  name: '',
-                  amount: 0,
-                  period: 'monthly' as const,
-                  category: '',
-                  next_billing_date: new Date(),
-              },
+        defaultValues: selectedRecurringExpense,
         resolver: zodResolver(RecurringExpenseSchema),
     });
 
     const handleOneTimeSubmit: SubmitHandler<OneTimeExpenseFormValues> = (data: OneTimeExpenseFormValues) => {
-        if (selectedSpend) {
-            updateSpend({ ...data, id: selectedSpend.id });
-        } else {
-            createSpend(data);
-        }
+        if (selectedSpend) updateSpend({ ...data, id: selectedSpend.id });
+        else createSpend(data);
+
         closeForm();
     };
 
     const handleRecurringSubmit: SubmitHandler<RecurringExpenseFormValues> = (data: RecurringExpenseFormValues) => {
-        if (selectedRecurringExpense) {
-            updateRecurringExpense({ ...data, id: selectedRecurringExpense.id });
-        } else {
-            createRecurringExpense(data);
-        }
+        if (selectedRecurringExpense) updateRecurringExpense({ ...data, id: selectedRecurringExpense.id });
+        else createRecurringExpense(data);
+
         closeForm();
     };
 
     const switchExpenseType = (type: 'one-time' | 'recurring') => {
         setExpenseType(type);
         if (!selectedSpend && !selectedRecurringExpense) {
-            if (type === 'one-time') {
-                oneTimeForm.reset({
-                    item: '',
-                    cost: 0,
-                    store: '',
-                    category: '',
-                    necessity: 'Need',
-                    date: new Date(),
-                });
-            } else {
-                recurringForm.reset({
-                    name: '',
-                    amount: 0,
-                    period: 'monthly',
-                    category: '',
-                    next_billing_date: new Date(),
-                });
-            }
+            if (type === 'one-time') oneTimeForm.reset();
+            else recurringForm.reset();
         }
     };
 

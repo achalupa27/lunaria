@@ -31,10 +31,10 @@ const PricingSelection = () => {
                 <FreeTable onSignUpClick={handleSignUpClick} />
                 <ProTable term={term} onSignUpClick={handleSignUpClick} />
                 <PremiumTable term={term} onSignUpClick={handleSignUpClick} />
-                {/* 
+
                 <Auth isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)}>
                     {authView === 'signup' && <SignUp onSuccess={handleSignUpSuccess} onLoginClick={() => setAuthView('login')} />}
-                </Auth> */}
+                </Auth>
             </div>
         </>
     );

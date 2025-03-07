@@ -35,8 +35,6 @@ const IncomeAnalysis = (props: IncomeAnalysisProps) => {
     const { makes } = props;
     const { incomeData } = usePrepareIncomeData(makes);
 
-    console.log('incomeData', incomeData);
-
     if (!makes || makes.length < 5) {
         return (
             <DisplayCard title='Income Analysis'>

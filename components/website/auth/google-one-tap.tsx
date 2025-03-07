@@ -24,8 +24,6 @@ const OneTapComponent = () => {
 
     useEffect(() => {
         const initializeGoogleOneTap = async () => {
-            console.log('Initializing Google One Tap');
-
             await new Promise<void>((resolve) => {
                 if (window.google) return resolve();
                 const checkGoogle = setInterval(() => {
@@ -55,7 +53,6 @@ const OneTapComponent = () => {
                             nonce,
                         });
                         if (error) throw error;
-                        console.log('Session data: ', data);
                         router.push('/');
                     } catch (error) {
                         console.error('Error logging in with Google One Tap', error);

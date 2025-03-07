@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { Form } from '@/components/ui/form';
 import Modal from '@/components/ui/modal';
 import { useState } from 'react';
-import { useMutateAssets } from '../../hooks/supabase/use-assets';
+import { useMutateAssets } from '../../../hooks/supabase/use-assets';
 import FormActions from '@/components/ui/form-actions';
 import ConfirmDelete from '@/components/ui/confirm-delete';
 import InputGroup from '@/components/ui/input-groups/input-group';
@@ -43,12 +43,8 @@ const AssetForm = ({ closeForm, selectedAsset }: Props) => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        if (selectedAsset) {
-            updateAsset({
-                ...data,
-                id: selectedAsset.id,
-            });
-        } else createAsset(data);
+        if (selectedAsset) updateAsset({ ...data, id: selectedAsset.id });
+        else createAsset(data);
 
         closeForm();
     };
@@ -63,23 +59,20 @@ const AssetForm = ({ closeForm, selectedAsset }: Props) => {
     };
 
     return (
-        <>
-            <Modal title={selectedAsset ? 'Edit Asset' : 'New Asset'} closeModal={closeForm} headerStyle='text-black'>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-                        <InputGroup control={form.control} name='name' label='Asset Name' placeholder='Asset Name' />
-                        <InputGroup control={form.control} name='value' label='Value' placeholder='Value' type='number' step='0.01' />
-                        <SelectGroup control={form.control} name='category' label='Category' placeholder='Select category' options={categories} />
-                        <SelectGroup control={form.control} name='liquidity' label='Liquidity' placeholder='Select liquidity' options={liquidityLevels} />
-                        <InputGroup control={form.control} name='appreciation_rate' label='Annual Appreciation Rate (%)' placeholder='0.00' type='number' step='0.01' />
+        <Modal title={selectedAsset ? 'Edit Asset' : 'New Asset'} closeModal={closeForm}>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+                    <InputGroup control={form.control} name='name' label='Asset Name' placeholder='Asset Name' />
+                    <InputGroup control={form.control} name='value' label='Value' placeholder='Value' type='number' step='0.01' />
+                    <SelectGroup control={form.control} name='category' label='Category' placeholder='Select category' options={categories} />
+                    <SelectGroup control={form.control} name='liquidity' label='Liquidity' placeholder='Select liquidity' options={liquidityLevels} />
+                    <InputGroup control={form.control} name='appreciation_rate' label='Annual Appreciation Rate (%)' placeholder='0.00' type='number' step='0.01' />
 
-                        <FormActions onDelete={handleDeleteClick} onCancel={closeForm} showDelete={!!selectedAsset} />
-                    </form>
-                </Form>
-            </Modal>
-
+                    <FormActions onDelete={handleDeleteClick} onCancel={closeForm} showDelete={!!selectedAsset} />
+                </form>
+            </Form>
             <ConfirmDelete showDeleteAlert={showDeleteAlert} setShowDeleteAlert={setShowDeleteAlert} handleConfirmDelete={handleConfirmDelete} itemCategory='asset' itemName={selectedAsset?.name || ''} />
-        </>
+        </Modal>
     );
 };
 

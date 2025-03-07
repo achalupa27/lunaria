@@ -17,35 +17,8 @@ type Props = {
 
 const PremiumTable = ({ term, onSignUpClick }: Props) => {
     const { subscription } = useSubscription();
-    const [stripeCustomerId, setStripeCustomerId] = useState<string | null>(null);
-    const supabase = createClient();
+    console.log('subscription', subscription);
     const [showDialog, setShowDialog] = useState(false);
-
-    useEffect(() => {
-        async function getSession() {
-            const { data, error } = await supabase.auth.getSession();
-            const user = data?.session?.user;
-
-            if (user) {
-                const { data: subscription } = await supabase.from('subscriptions').select('stripe_customer_id').eq('id', user.id).single();
-                if (subscription?.stripe_customer_id) {
-                    setStripeCustomerId(subscription.stripe_customer_id);
-                }
-            }
-        }
-
-        getSession();
-
-        const {
-            data: { subscription },
-        } = supabase.auth.onAuthStateChange((_event, session) => {
-            if (session?.user) {
-                // setStripeCustomerId(session.subscription.stripe_customer_id);
-            }
-        });
-
-        return () => subscription.unsubscribe();
-    }, [supabase.auth]);
 
     const buttonConfig = getButtonConfig(subscription?.role || null, 'premium', subscription?.trial_end, subscription?.interval as BillingInterval, term as 'Monthly' | 'Yearly');
 
@@ -73,15 +46,12 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
     };
 
     const handleAction = () => {
-        if (buttonConfig.action === 'sign-up') {
-            onSignUpClick();
-        } else {
-            setShowDialog(true);
-        }
+        if (buttonConfig.action === 'sign-up') onSignUpClick();
+        else setShowDialog(true);
     };
 
     const handleCheckout = async (priceId: string) => {
-        if (!stripeCustomerId) return;
+        if (!subscription?.stripe_customer_id) return;
 
         try {
             const response = await fetch('/api/stripe/create-checkout-session', {
@@ -91,7 +61,7 @@ const PremiumTable = ({ term, onSignUpClick }: Props) => {
                 },
                 body: JSON.stringify({
                     priceId,
-                    customerId: stripeCustomerId,
+                    customerId: subscription.stripe_customer_id,
                 }),
             });
 

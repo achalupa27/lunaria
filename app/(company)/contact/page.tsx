@@ -28,7 +28,6 @@ const Contact = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setIsSending(false);
                 setIsSent(true);
             })

@@ -13,7 +13,7 @@ type Props = {
 
 const Modal = ({ children, title, closeModal, handleBack }: Props) => {
     return (
-        <DismissBackdrop closePopup={closeModal}>
+        <DismissBackdrop closePopup={() => {}}>
             <div className='z-50 w-[500px] rounded-xl border-2 border-orange-100 dark:border-orange-200 bg-secondary p-12 shadow dark:bg-primary'>
                 <div className='mb-6 flex items-center justify-between'>
                     <div className='flex items-center space-x-2'>
