@@ -14,6 +14,7 @@ import { formatCurrency } from '@/utils/helper';
 import SpendForm from '../core/spend/components/forms/expense-form';
 import { useReadAssets } from '../core/save/hooks/supabase/use-assets';
 import { useReadDebtAccounts } from '../core/save/hooks/supabase/use-debt-accounts';
+import PeriodSelector from '@/components/ui/period-selector';
 const Home = () => {
     const { data: makes } = useReadMakes();
     const { data: saves } = useReadSaves();
@@ -54,9 +55,9 @@ const Home = () => {
     return (
         <Page>
             <div className='flex items-center justify-between'>
-                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium hover:bg-zinc-200 dark:hover:bg-zinc-800`}>
+                <div className={`-ml-4 flex cursor-pointer items-center space-x-3 rounded-xl px-4 text-[40px] font-medium `}>
                     <span>Dashboard - All Time</span>
-                    <ChevronDown />
+                    {/* <ChevronDown /> */}
                 </div>
             </div>
             <div className='my-2 flex space-x-6'>

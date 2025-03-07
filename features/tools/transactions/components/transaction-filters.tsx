@@ -16,7 +16,7 @@ const TransactionFilters = ({ selectedTypes, onToggleType }: Props) => {
     ];
 
     return (
-        <div className='mb-6 flex space-x-2'>
+        <div className='flex space-x-2'>
             {filters.map(({ type, label }) => (
                 <Button key={type} variant={selectedTypes.includes(type) ? 'default' : 'outline'} onClick={() => onToggleType(type)} className='flex items-center space-x-2'>
                     <span>{label}</span>

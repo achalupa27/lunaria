@@ -112,7 +112,7 @@ const Transactions = () => {
 
     return (
         <Page>
-            <div className='flex justify-between mb-6'>
+            <div className='flex justify-between items-center'>
                 <div className='flex items-center space-x-4'>
                     {fromTab && window.history.length > 1 && (
                         <Button variant='ghost' className='flex items-center space-x-2' onClick={handleBack}>

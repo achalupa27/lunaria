@@ -69,9 +69,9 @@ const Sidebar = () => {
                         <Moon />
                     </Button>
                 )}
-                <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => handleTabChange('Settings')}>
+                {/* <Button variant='ghost' size='icon' className='hover:bg-zinc-300' onClick={() => handleTabChange('Settings')}>
                     <Settings />
-                </Button>
+                </Button> */}
             </div>
         </div>
     );

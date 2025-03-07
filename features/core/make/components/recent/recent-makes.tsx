@@ -39,7 +39,7 @@ const RecentMakes = ({ makes, onViewMake }: Props) => {
         <DisplayCard
             title='Recent Income'
             button={
-                <Button variant='ghost' className='h-7 dark:text-black hover:bg-orange-100/50' onClick={handleViewAll}>
+                <Button variant='ghost' className='h-7 text-sm -mr-2' onClick={handleViewAll}>
                     View all
                 </Button>
             }>
