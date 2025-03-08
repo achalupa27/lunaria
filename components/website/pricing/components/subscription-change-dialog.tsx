@@ -14,14 +14,14 @@ type Props = {
     currentTerm?: 'Monthly' | 'Yearly';
 };
 
-export function SubscriptionChangeDialog({ isOpen, onClose, onConfirm, currentPlan, newPlan, action, term, currentTerm }: Props) {
+export const SubscriptionChangeDialog = ({ isOpen, onClose, onConfirm, currentPlan, newPlan, action, term, currentTerm }: Props) => {
     const title = action === 'switch-term' ? 'Change Billing Cycle' : action === 'upgrade' ? 'Upgrade Subscription' : 'Downgrade Subscription';
 
     const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
     const description = action === 'switch-term' ? `You will be switched to ${term} billing at the start of your next billing cycle.` : action === 'upgrade' ? 'You will be charged a prorated amount for the remainder of your billing period.' : 'Your current subscription benefits will continue until the end of your billing period.';
 
-    const formatPlanText = (plan: string, termType?: 'Monthly' | 'Yearly') => {
+    const formatPlanText = (plan: string, termType?: TermType) => {
         const planText = capitalize(plan);
         return plan === 'free' ? planText : `${planText} ${termType}`;
     };
@@ -49,4 +49,4 @@ export function SubscriptionChangeDialog({ isOpen, onClose, onConfirm, currentPl
             </DialogContent>
         </Dialog>
     );
-}
+};

@@ -1,4 +1,4 @@
-interface Spend extends TableDefaults {
+interface Spend extends BaseModel {
     date: Date;
     item: string;
     cost: number;
@@ -7,10 +7,10 @@ interface Spend extends TableDefaults {
     necessity: 'Need' | 'Want' | 'Waste';
     currency?: string;
 }
-type SpendCreate = Omit<Spend, keyof TableDefaults>;
+type SpendCreate = Omit<Spend, keyof BaseModel>;
 type SpendUpdate = SpendCreate & { id: string };
 
-interface RecurringExpense extends TableDefaults {
+interface RecurringExpense extends BaseModel {
     name: string;
     amount: number;
     currency?: string;
@@ -18,15 +18,15 @@ interface RecurringExpense extends TableDefaults {
     category: string;
     next_billing_date: Date;
 }
-type RecurringExpenseCreate = Omit<RecurringExpense, keyof TableDefaults>;
+type RecurringExpenseCreate = Omit<RecurringExpense, keyof BaseModel>;
 type RecurringExpenseUpdate = RecurringExpenseCreate & { id: string };
 
-interface Budget extends TableDefaults {
+interface Budget extends BaseModel {
     category: string;
     amount: number;
     period: 'monthly' | 'yearly';
 }
-type BudgetCreate = Omit<Budget, keyof TableDefaults>;
+type BudgetCreate = Omit<Budget, keyof BaseModel>;
 type BudgetUpdate = BudgetCreate & { id: string };
 
 type Necessity = 'Need' | 'Want' | 'Waste';

@@ -57,9 +57,6 @@ export async function POST(req: Request) {
                 // console.log('Subscription status:', subscription.status);
                 // console.log('Full subscription object:', JSON.stringify(subscription, null, 2));
 
-                // Get the customer to access metadata
-                const customer = (await stripe.customers.retrieve(subscription.customer as string)) as Stripe.Customer;
-
                 // console.log('customer: ', customer);
                 // console.log('subscription: ', subscription);
                 // console.log('subscription items: ', subscription.items.data[0]);

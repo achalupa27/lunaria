@@ -1,7 +1,18 @@
-type PlanType = 'free' | 'pro' | 'premium';
-export type BillingInterval = 'month' | 'year';
+type ButtonConfig = {
+    action: 'sign-up' | 'upgrade' | 'downgrade' | 'switch-term' | 'current';
+    text: string;
+    disabled: boolean;
+};
 
-export function getButtonConfig(currentRole: PlanType | null, tablePlan: PlanType, trialEnd?: string | null, currentInterval?: BillingInterval, tableTerm?: 'Monthly' | 'Yearly') {
+type ButtonConfigProps = {
+    currentRole: PlanType | null;
+    tablePlan: PlanType;
+    trialEnd?: string | null;
+    currentInterval?: BillingInterval;
+    tableTerm?: TermType;
+};
+
+export const getButtonConfig = ({ currentRole, tablePlan, trialEnd, currentInterval, tableTerm }: ButtonConfigProps): ButtonConfig => {
     if (!currentRole) {
         return {
             action: 'sign-up',
@@ -46,4 +57,4 @@ export function getButtonConfig(currentRole: PlanType | null, tablePlan: PlanTyp
         text: 'Downgrade',
         disabled: false,
     };
-}
+};

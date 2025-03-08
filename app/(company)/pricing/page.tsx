@@ -1,4 +1,4 @@
-import PricingTables from '@/components/website/pricing-page/pricing-selection';
+import PricingTables from '@/components/website/pricing/pricing-selection';
 
 const Pricing = () => {
     return (

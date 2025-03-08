@@ -18,7 +18,7 @@ const PLAN_PRICES = {
 
 export async function POST(req: Request) {
     try {
-        const { plan } = await req.json();
+        const { plan, term } = await req.json();
 
         // Get the user's session
         const supabase = await createClient();
@@ -40,12 +40,20 @@ export async function POST(req: Request) {
         // Get current subscription from Stripe
         const subscription = await stripe.subscriptions.retrieve(subscriptionData.stripe_subscription_id);
 
-        // Determine if current subscription is monthly or yearly
-        const currentInterval = subscription.items.data[0].price.recurring?.interval;
-        const interval = currentInterval === 'year' ? 'yearly' : 'monthly';
+        // Determine interval (monthly or yearly)
+        let interval = 'monthly';
 
-        // Get new price ID based on plan and current interval
-        const newPriceId = PLAN_PRICES[plan as keyof typeof PLAN_PRICES][interval];
+        // If term is specified, use it
+        if (term) {
+            interval = term === 'yearly' ? 'yearly' : 'monthly';
+        } else {
+            // Otherwise use the current interval
+            const currentInterval = subscription.items.data[0].price.recurring?.interval;
+            interval = currentInterval === 'year' ? 'yearly' : 'monthly';
+        }
+
+        // Get new price ID based on plan and interval
+        const newPriceId = PLAN_PRICES[plan as keyof typeof PLAN_PRICES][interval as 'monthly' | 'yearly'];
 
         if (!newPriceId) {
             return new Response('Invalid plan specified', { status: 400 });

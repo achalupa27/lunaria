@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Settings } from 'lucide-react';
-import ProtectedFeature from '@/components/feature';
+import ProtectedFeature from '@/components/ui/protected-feature';
 
 type Props = {
     onSettingsClick: () => void;
