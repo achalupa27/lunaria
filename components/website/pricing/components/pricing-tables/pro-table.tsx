@@ -6,10 +6,10 @@ import { CheckCircle } from 'lucide-react';
 import { useSubscriptionManagement } from '@/components/website/pricing/hooks/use-subscription-management';
 import { getButtonConfig } from '../../utils/pricing-utils';
 import { SubscriptionChangeDialog } from '../subscription-change-dialog';
-import { proFeatures } from '../../data/features.config';
+import { proFeatures } from '../../config/features.config';
 
 type Props = {
-    term: string;
+    term: TermType;
     onSignUpClick: () => void;
 };
 

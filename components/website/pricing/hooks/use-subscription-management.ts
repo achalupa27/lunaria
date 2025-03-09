@@ -4,8 +4,6 @@ import handleNewSubscription from '@/components/website/pricing/services/new-sub
 import handleUpdateSubscription from '@/components/website/pricing/services/update-subscription-service';
 import handleCancelSubscription from '@/components/website/pricing/services/cancel-subscription-service';
 
-type PlanType = 'free' | 'pro' | 'premium';
-
 export const useSubscriptionManagement = () => {
     const { subscription, hasActiveSubscription } = useUser();
     const [showDialog, setShowDialog] = useState(false);

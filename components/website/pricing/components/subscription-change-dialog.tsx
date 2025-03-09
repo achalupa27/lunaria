@@ -10,8 +10,8 @@ type Props = {
     currentPlan: string;
     newPlan: string;
     action: 'upgrade' | 'downgrade' | 'switch-term';
-    term: 'Monthly' | 'Yearly';
-    currentTerm?: 'Monthly' | 'Yearly';
+    term: TermType;
+    currentTerm?: TermType;
 };
 
 export const SubscriptionChangeDialog = ({ isOpen, onClose, onConfirm, currentPlan, newPlan, action, term, currentTerm }: Props) => {

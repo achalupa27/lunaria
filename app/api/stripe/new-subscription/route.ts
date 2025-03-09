@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
             subscription_data: {
                 trial_period_days: 7,
             },
-            success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard?success=true`,
+            success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
             cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/pricing?canceled=true`,
         });
 

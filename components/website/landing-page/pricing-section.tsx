@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import PricingTables from '../pricing/pricing-selection';
+import PricingTables from '../pricing';
 
 const PricingSection = () => {
     return (

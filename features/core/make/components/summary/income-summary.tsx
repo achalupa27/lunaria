@@ -4,9 +4,10 @@ import { formatCurrency } from '@/utils/helper';
 type Props = {
     totalIncome: number;
     incomeBySource: Record<string, number>;
+    totalReceivable: number;
 };
 
-const IncomeSummary = ({ totalIncome, incomeBySource }: Props) => {
+const IncomeSummary = ({ totalIncome, incomeBySource, totalReceivable }: Props) => {
     return (
         <div className='my-2 flex space-x-6'>
             <Card className='gold-gradient dark:text-zinc-920'>
@@ -15,6 +16,16 @@ const IncomeSummary = ({ totalIncome, incomeBySource }: Props) => {
                     <span className='text-3xl font-semibold'>{formatCurrency(totalIncome)}</span>
                 </div>
             </Card>
+
+            {totalReceivable > 0 && (
+                <Card className='amber-gradient dark:text-zinc-920'>
+                    <span className='leading-none'>Receivable</span>
+                    <div className='space-x-2 mt-1'>
+                        <span className='text-3xl font-semibold'>{formatCurrency(totalReceivable)}</span>
+                    </div>
+                </Card>
+            )}
+
             {Object.entries(incomeBySource).map(([source, amount]) => (
                 <Card key={source}>
                     <span className='leading-none'>{source}</span>

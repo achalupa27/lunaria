@@ -25,6 +25,11 @@ const Save = () => {
     const { data: debtAccounts } = useReadDebtAccounts();
     const { data: assets } = useReadAssets();
 
+    // Sort accounts and assets by value descending
+    const sortedSavingsAccounts = savingsAccounts?.slice().sort((a, b) => b.balance - a.balance) || [];
+    const sortedDebtAccounts = debtAccounts?.slice().sort((a, b) => b.current_balance - a.current_balance) || [];
+    const sortedAssets = assets?.slice().sort((a, b) => b.value - a.value) || [];
+
     const [totalSavings, setTotalSavings] = useState(0);
     const [totalAssets, setTotalAssets] = useState(0);
     const [totalDebt, setTotalDebt] = useState(0);
@@ -119,23 +124,23 @@ const Save = () => {
             <div className='grid grid-cols-3 gap-4 flex-1 min-h-0'>
                 <div className='grid grid-rows-2 gap-4 min-h-0'>
                     <RecentSaves saves={filteredSaves} onViewSave={handleViewSave} />
-                    <Assets assets={assets || []} onViewAsset={handleViewAsset} />
+                    <Assets assets={sortedAssets} onViewAsset={handleViewAsset} />
                 </div>
                 <div className='grid grid-rows-2 gap-4 min-h-0'>
                     {debtAccounts && debtAccounts.length > 0 ? (
                         <>
-                            <DebtAccounts accounts={debtAccounts} onViewAccount={handleViewDebtAccount} />
-                            <SavingsAccounts accounts={savingsAccounts || []} onViewAccount={handleViewSavingsAccount} />
+                            <DebtAccounts accounts={sortedDebtAccounts} onViewAccount={handleViewDebtAccount} />
+                            <SavingsAccounts accounts={sortedSavingsAccounts} onViewAccount={handleViewSavingsAccount} />
                         </>
                     ) : (
                         <div className='row-span-2'>
-                            <SavingsAccounts accounts={savingsAccounts || []} onViewAccount={handleViewSavingsAccount} />
+                            <SavingsAccounts accounts={sortedSavingsAccounts} onViewAccount={handleViewSavingsAccount} />
                         </div>
                     )}
                 </div>
                 <div className='grid grid-rows-2 gap-4 min-h-0'>
-                    <SavingsChart saves={filteredSaves} savingsAccounts={savingsAccounts || []} debtAccounts={debtAccounts || []} />
-                    <SavingsAnalysis saves={filteredSaves} savingsAccounts={savingsAccounts} debtAccounts={debtAccounts} totalSavings={totalSavings} totalDebt={totalDebt} />
+                    <SavingsChart saves={filteredSaves} savingsAccounts={sortedSavingsAccounts} debtAccounts={sortedDebtAccounts} />
+                    <SavingsAnalysis saves={filteredSaves} savingsAccounts={sortedSavingsAccounts} debtAccounts={sortedDebtAccounts} totalSavings={totalSavings} totalDebt={totalDebt} />
                 </div>
             </div>
 

@@ -5,7 +5,7 @@ import { CheckCircle } from 'lucide-react';
 import { useSubscriptionManagement } from '@/components/website/pricing/hooks/use-subscription-management';
 import { getButtonConfig } from '../../utils/pricing-utils';
 import { SubscriptionChangeDialog } from '../subscription-change-dialog';
-import { freeFeatures } from '../../data/features.config';
+import { freeFeatures } from '../../config/features.config';
 
 type Props = {
     onSignUpClick: () => void;

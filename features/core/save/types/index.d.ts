@@ -22,7 +22,7 @@ type AssetUpdate = AssetCreate & { id: string };
 
 interface DebtAccount extends BaseModel {
     name: string;
-    initial_balance: number;
+    initial_balance?: number;
     current_balance: number;
     currency?: string;
     creditor: string;

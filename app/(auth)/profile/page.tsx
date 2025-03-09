@@ -114,15 +114,23 @@ const ProfilePage = () => {
                         <div className='text-zinc-600 dark:text-zinc-400'>Plan</div>
                         <div className='capitalize'>{subscription.role}</div>
 
-                        <div className='text-zinc-600 dark:text-zinc-400'>Price</div>
-                        <div>
-                            ${(subscription?.price_amount / 100).toFixed(2)} {subscription?.currency?.toUpperCase()} / {subscription?.interval}
-                        </div>
+                        {subscription.role !== 'free' && (
+                            <>
+                                <div className='text-zinc-600 dark:text-zinc-400'>Price</div>
+                                <div>
+                                    ${(subscription?.price_amount / 100).toFixed(2)} {subscription?.currency?.toUpperCase()} / {subscription?.interval}
+                                </div>
+                            </>
+                        )}
 
-                        <div className='text-zinc-600 dark:text-zinc-400'>Current Period</div>
-                        <div>
-                            {formatDate(subscription?.current_period_start)} - {formatDate(subscription?.current_period_end)}
-                        </div>
+                        {subscription.role !== 'free' && (
+                            <>
+                                <div className='text-zinc-600 dark:text-zinc-400'>Current Period</div>
+                                <div>
+                                    {formatDate(subscription?.current_period_start)} - {formatDate(subscription?.current_period_end)}
+                                </div>
+                            </>
+                        )}
 
                         {subscription.trial_end && (
                             <>
@@ -132,7 +140,7 @@ const ProfilePage = () => {
                         )}
 
                         {/* Next Payment - only show if not cancelling */}
-                        {!subscription.cancel_at_period_end && (
+                        {!subscription.cancel_at_period_end && subscription.role !== 'free' && (
                             <>
                                 <div className='text-zinc-600 dark:text-zinc-400'>Next Payment</div>
                                 <div>
@@ -145,7 +153,7 @@ const ProfilePage = () => {
                         )}
 
                         {/* Cancels On - show when cancelling at period end */}
-                        {subscription.cancel_at_period_end && (
+                        {subscription.cancel_at_period_end && subscription.role !== 'free' && (
                             <>
                                 <div className='text-zinc-600 dark:text-zinc-400'>Cancels On</div>
                                 <div>{formatDate(subscription?.current_period_end)}</div>
@@ -181,7 +189,7 @@ const ProfilePage = () => {
                         </>
                     )}
 
-                    {subscription && subscription?.status !== 'canceled' && !subscription?.cancel_at_period_end && (
+                    {subscription && subscription?.status !== 'canceled' && !subscription?.cancel_at_period_end && subscription.role !== 'free' && (
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
                                 <Button variant='outline' className='w-full mt-4 text-red-500 border-red-200 hover:bg-red-50 dark:hover:bg-red-950/60 hover:text-red-600 dark:border-red-600 dark:hover:text-red-400'>

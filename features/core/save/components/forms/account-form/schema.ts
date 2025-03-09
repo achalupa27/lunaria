@@ -19,9 +19,7 @@ export const DebtAccountFormSchema = createSchemaFromType<DebtAccountCreate>({
     current_balance: z.coerce.number({
         required_error: 'A current balance is required.',
     }),
-    initial_balance: z.coerce.number({
-        required_error: 'An initial balance is required.',
-    }),
+    initial_balance: z.coerce.number().optional(),
     creditor: z.string({
         required_error: 'A creditor is required.',
     }),

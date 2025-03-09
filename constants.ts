@@ -40,13 +40,13 @@ export const companyPages = [
     { page: 'About', link: '/about' },
     { page: 'Pricing', link: '/pricing' },
     { page: 'Contact', link: '/contact' },
-    { page: 'Help Center', link: '/help' },
+    { page: 'Help', link: '/help' },
 ];
 
 export const legalPages = [
-    { page: 'Terms of Use', link: '/terms' },
-    { page: 'Privacy Policy', link: '/privacy' },
-    { page: 'Cookies Policy', link: '/cookies' },
+    { page: 'Terms', link: '/terms' },
+    { page: 'Privacy', link: '/privacy' },
+    { page: 'Cookies', link: '/cookies' },
     { page: 'Disclaimer', link: '/disclaimer' },
 ];
 

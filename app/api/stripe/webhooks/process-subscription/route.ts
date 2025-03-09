@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import { PREMIUM_MONTHLY_ID, PREMIUM_YEARLY_ID, PRO_MONTHLY_ID, PRO_YEARLY_ID } from '@/constants';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const WEBHOOK_SECRET = process.env.NODE_ENV === 'production' ? process.env.STRIPE_WEBHOOK_SECRET! : process.env.STRIPE_WEBHOOK_SECRET_DEV!;
 
 // Create a mapping of product IDs to roles
 const PRODUCT_TO_ROLE = {
@@ -19,11 +19,6 @@ function isKnownProduct(productId: string): productId is keyof typeof PRODUCT_TO
     return productId in PRODUCT_TO_ROLE;
 }
 
-// Add type guard for Stripe Customer
-function isFullCustomer(customer: Stripe.Customer | Stripe.DeletedCustomer): customer is Stripe.Customer {
-    return (customer as Stripe.Customer).metadata !== undefined;
-}
-
 export async function POST(req: Request) {
     const body = await req.text();
     const headersList = await headers();
@@ -36,7 +31,7 @@ export async function POST(req: Request) {
     let event: Stripe.Event;
 
     try {
-        event = stripe.webhooks.constructEvent(body, signature, 'whsec_MH4W6guLS6nGw4OrQFwQoAijcq6Uxf7W');
+        event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET);
     } catch (error: any) {
         return new Response(`Webhook Error: ${error.message}`, { status: 400 });
     }

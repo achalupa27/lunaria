@@ -4,7 +4,6 @@ import { NextRequest } from 'next/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-// In Next.js 13+, we need to export the HTTP methods we want to handle
 export async function POST(req: NextRequest) {
     // Get the secret from searchParams instead of query
     const { searchParams } = new URL(req.url);

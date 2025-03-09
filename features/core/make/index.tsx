@@ -13,6 +13,7 @@ import { useFilteredMakes } from './hooks/data/use-filtered-makes';
 import IncomeChart from './components/visualization/income-chart';
 import IncomeSources from './components/sources/income-sources';
 import { useReadMakes } from './hooks/supabase/use-makes';
+import AccountsReceivable from './components/accounts-receivable/accounts-receivable';
 
 const Make = () => {
     const { data: makes } = useReadMakes();
@@ -20,7 +21,7 @@ const Make = () => {
     const [selectedMake, setSelectedMake] = useState<Make | undefined>();
     const [selectedTerm, setSelectedTerm] = useState<Period>('All Time');
 
-    const { filteredMakes, totalIncome, incomeBySource } = useFilteredMakes(makes, selectedTerm);
+    const { filteredMakes, totalIncome, incomeBySource, accountsReceivable, totalReceivable } = useFilteredMakes(makes, selectedTerm);
 
     const handleTermChange = (term: Period) => {
         setSelectedTerm(term);
@@ -48,11 +49,12 @@ const Make = () => {
                 <ActionButtons onNewMakeClick={handleFormOpen} />
             </div>
 
-            <IncomeSummary totalIncome={totalIncome} incomeBySource={incomeBySource} />
+            <IncomeSummary totalIncome={totalIncome} incomeBySource={incomeBySource} totalReceivable={totalReceivable || 0} />
 
             <div className='grid grid-cols-3 gap-4 flex-1 min-h-0'>
-                <div className='grid gap-4 min-h-0'>
+                <div className='grid grid-rows-2 gap-4 min-h-0'>
                     <RecentMakes makes={filteredMakes || []} onViewMake={handleViewMake} />
+                    <AccountsReceivable receivables={accountsReceivable} onViewReceivable={handleViewMake} />
                 </div>
                 <div className='grid gap-4 min-h-0'>
                     <IncomeSources incomeBySource={incomeBySource} />

@@ -2,8 +2,8 @@ import { CornerLeftDown, CornerRightDown } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
-    term: string;
-    setTerm: Dispatch<SetStateAction<'Monthly' | 'Yearly'>>;
+    term: TermType;
+    setTerm: Dispatch<SetStateAction<TermType>>;
 };
 
 const TermChanger = ({ term, setTerm }: Props) => {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import PricingSelection from '../pricing-selection';
+import PricingSelection from '..';
 
 const meta = {
     title: 'Website/Pricing/PricingSelection',
